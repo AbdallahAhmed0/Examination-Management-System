@@ -1,0 +1,20 @@
+<div class="contianer" >
+  <p color="primary">Import Admins</p>
+  <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()"><mat-icon>menu</mat-icon> All Admins</button>
+<div class="form">
+  <p class="import">Import Admins</p>
+
+  <form   (ngSubmit)="importAdmin()" >
+
+    <mat-label>Select Excel File</mat-label>
+
+      <input id="uploadBtn" type="file" #inp (change)="handleImport($event)" name="uploadFile" required>
+
+    <button mat-raised-button [disabled]="!inp.value" class="submit" type="submit">Submit</button>
+
+  </form>
+
+</div>
+</div>
+
+

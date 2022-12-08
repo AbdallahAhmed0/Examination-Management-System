@@ -1,0 +1,105 @@
+<mat-sidenav-container>
+
+    <app-header [sidenav]="sidenav"></app-header>
+    <router-outlet></router-outlet>
+
+    <mat-sidenav #sidenav="matSidenav" [style.width.px]="!sidenav.close ? 80 : 250"
+       class="mat-elevation-z8">
+
+
+       <h2 *ngIf="!sidenav.close" >E</h2>
+        <h2 *ngIf="sidenav.close">Examination Management System</h2>
+
+        <mat-divider></mat-divider>
+
+        <button mat-button class="menu-button">
+            <mat-icon>person</mat-icon>
+            <span *ngIf="sidenav.close">Profile</span>
+        </button>
+
+        <button mat-button class="menu-button">
+            <mat-icon>dashboard</mat-icon>
+            <span *ngIf="sidenav.close">Dashboard</span>
+        </button>
+
+        <button mat-button class="menu-button">
+
+        <!-- <mat-button-toggle #exam checked disableRipple > -->
+
+            <mat-icon>assignment</mat-icon>
+
+                 <span *ngIf="sidenav.close">Exams</span>
+                <!--<span *ngIf="exam.checked" class="list"><mat-icon>keyboard_arrow_left</mat-icon></span>
+                <span *ngIf="!exam.checked" class="list"><mat-icon>keyboard_arrow_down</mat-icon></span>
+
+                <mat-nav-list *ngIf="!exam.checked">
+
+                    <a mat-list-item class="menu-button">
+                            <mat-icon>radio_button_unchecked</mat-icon>
+                            <span>Exam List</span>
+                    </a>
+                    <a mat-list-item class="menu-button">
+                            <mat-icon>radio_button_unchecked</mat-icon>
+                            <span>Exam Completed</span>
+                    </a>
+                </mat-nav-list>
+        </mat-button-toggle> -->
+        </button>
+
+        <!-- <mat-button-toggle  #quesBank checked disableRipple > -->
+            <button mat-button class="menu-button">
+            <mat-icon>assignment</mat-icon>
+            <span *ngIf="sidenav.close">Questions</span>
+            </button>
+            <!-- <span *ngIf="sidenav.close">Question Bank</span>
+            <span *ngIf="quesBank.checked" class="list"><mat-icon>keyboard_arrow_left</mat-icon></span>
+            <span *ngIf="!quesBank.checked" class="list"><mat-icon>keyboard_arrow_down</mat-icon></span>
+
+            <mat-nav-list *ngIf="!quesBank.checked">
+
+                <a mat-list-item class="menu-button">
+                        <mat-icon>radio_button_unchecked</mat-icon>
+                        <span>Questions</span>
+                </a>
+                <a mat-list-item class="menu-button">
+                        <mat-icon>radio_button_unchecked</mat-icon>
+                        <span>Add Questions</span>
+                </a>
+            </mat-nav-list>
+        </mat-button-toggle> -->
+
+        <button mat-button class="menu-button" [routerLink]="['/students']">
+            <mat-icon>accessibility_new</mat-icon>
+            <span *ngIf="sidenav.close">Students</span>
+        </button>
+
+        <button mat-button class="menu-button" [routerLink]="['/admins']">
+            <mat-icon>account_box</mat-icon>
+            <span *ngIf="sidenav.close">Admins</span>
+        </button>
+
+        <button mat-button class="menu-button">
+            <mat-icon>book</mat-icon>
+            <span *ngIf="sidenav.close">Subjects</span>
+        </button>
+
+        <button mat-button class="menu-button" [routerLink]="['/roles']">
+            <mat-icon>assessment</mat-icon>
+            <span *ngIf="sidenav.close">Roles</span>
+        </button>
+
+
+            <button mat-button class="menu-button">
+                <mat-icon>https</mat-icon>
+                <span *ngIf="sidenav.close">Change Password</span>
+            </button>
+
+            <mat-divider></mat-divider>
+
+            <button mat-button class="menu-button">
+                <mat-icon>help</mat-icon>
+                <span *ngIf="sidenav.close">Help</span>
+            </button>
+
+        </mat-sidenav>
+    </mat-sidenav-container>
