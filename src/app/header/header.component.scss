@@ -1,14 +1,14 @@
 mat-toolbar {
     //style 1
-    // background: #ffffff;
-    // color: black;
-
-    //style 2
+    background: #ffffff;
+    color: black;
+    height: 55px;
+    // style 2
     // background: #263238;
     // color: #ffffff;
-    // //style 3
-    background: #40844e;
-    color: #ffffff;
+    // style 3
+    // background: #40844e;
+    // color: #ffffff;
 
 }
 
@@ -17,8 +17,14 @@ width: 100%;
 display: flex;
 justify-content: right;
 }
+span{
+    font-size: 16px;
+}
 
 .menu-button:hover{
-    background: #2e7c3e;
-    border-radius: 5px;
+    background: #f8f7f7;
+    border-radius: 30px;
+}
+mat-icon{
+    color: rgb(124, 122, 122);
 }

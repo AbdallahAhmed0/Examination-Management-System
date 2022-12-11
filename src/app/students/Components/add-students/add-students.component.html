@@ -1,1 +1,10 @@
-<p>add-students works!</p>
+<mat-button-toggle-group #group="matButtonToggleGroup">
+    <mat-button-toggle class="audit-helpful-btn" style="margin-right: 20px;" value="up">
+        <div class="audit-helpful-btn_image"></div>
+        <div class="audit-helpful-btn_span">This was helpful</div>
+    </mat-button-toggle>
+    <mat-button-toggle class="audit-helpful-btn-down" value="down">
+        <div class="audit-helpful-btn_image-down"></div>
+        <div class="audit-helpful-btn_span">This was not helpful</div>
+    </mat-button-toggle>
+</mat-button-toggle-group>

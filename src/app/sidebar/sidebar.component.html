@@ -7,7 +7,7 @@
        class="mat-elevation-z8">
 
 
-       <h2 *ngIf="!sidenav.close" >E</h2>
+       <h2 *ngIf="!sidenav.close" >EMS</h2>
         <h2 *ngIf="sidenav.close">Examination Management System</h2>
 
         <mat-divider></mat-divider>
@@ -22,29 +22,27 @@
             <span *ngIf="sidenav.close">Dashboard</span>
         </button>
 
-        <button mat-button class="menu-button">
 
-        <!-- <mat-button-toggle #exam checked disableRipple > -->
+        <mat-button-toggle class="button-toggle" [value]="exam.checked ? 'up':'down'" #exam checked  >
 
-            <mat-icon>assignment</mat-icon>
+            <mat-icon style="margin-right: 10px;margin-left: 2px;">assignment</mat-icon>
 
                  <span *ngIf="sidenav.close">Exams</span>
-                <!--<span *ngIf="exam.checked" class="list"><mat-icon>keyboard_arrow_left</mat-icon></span>
+                <span *ngIf="exam.checked" class="list"><mat-icon>keyboard_arrow_left</mat-icon></span>
                 <span *ngIf="!exam.checked" class="list"><mat-icon>keyboard_arrow_down</mat-icon></span>
 
                 <mat-nav-list *ngIf="!exam.checked">
 
-                    <a mat-list-item class="menu-button">
+                    <a mat-list-item class="button-toggle">
                             <mat-icon>radio_button_unchecked</mat-icon>
                             <span>Exam List</span>
                     </a>
-                    <a mat-list-item class="menu-button">
+                    <a mat-list-item class="button-toggle">
                             <mat-icon>radio_button_unchecked</mat-icon>
                             <span>Exam Completed</span>
                     </a>
                 </mat-nav-list>
-        </mat-button-toggle> -->
-        </button>
+        </mat-button-toggle>
 
         <!-- <mat-button-toggle  #quesBank checked disableRipple > -->
             <button mat-button class="menu-button">

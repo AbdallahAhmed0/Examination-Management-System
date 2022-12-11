@@ -1,0 +1,19 @@
+.audit-helpful-btn {
+    display: flex;
+    background-color: rgb(166, 85, 85);
+    border: 1px solid #d5d5d5;
+    height: 40px;
+    min-height: 40px;
+    line-height: 39px !important;
+    white-space: nowrap;
+    flex-direction: row;
+    padding: 0px;
+    align-items: center;
+    color: #f2f2f2;
+
+    &:hover {
+      background-color: #f2f2f2 !important;
+      color: #808080;
+    }
+
+}
