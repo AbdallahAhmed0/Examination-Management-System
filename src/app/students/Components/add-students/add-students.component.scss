@@ -1,19 +1,60 @@
-.audit-helpful-btn {
-    display: flex;
-    background-color: rgb(166, 85, 85);
-    border: 1px solid #d5d5d5;
-    height: 40px;
-    min-height: 40px;
-    line-height: 39px !important;
-    white-space: nowrap;
-    flex-direction: row;
-    padding: 0px;
-    align-items: center;
-    color: #f2f2f2;
+.contianer{
+  margin: 35px;
 
-    &:hover {
-      background-color: #f2f2f2 !important;
-      color: #808080;
-    }
+  p{
+      font-size: 30px;
+  }
+}
+.btn-list{
+font-size: 18px;
+margin-top: 50px;
+}
+.form{
+  margin: 40px;
+  border: 2px solid rgb(211, 208, 208);
+  border-radius: 10px;
+  width: 80%;
+
+  .add{
+      background: #106167;
+      color: #ffffff;
+      height: 60px;
+      font-size: 25px;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+  }
+}
+form{
+  margin:20px 30px;
+
+  mat-form-field{
+      width: 40%;
+      display: inline-block;
+      margin: 20px 30px ;
+
+  }
+
+}
+.checkbox{
+  margin: 20px 0px ;
+  font-size: 20px;
+
+  .check{
+      margin: 0 50px;
+      font-size: 18px;
+
+  }
+
+
+}
+.submit{
+  width: 90px;
+  height: 40px;
+  font-size: 18px;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  background: rgb(14, 175, 14);
+  color: #ffffff;
 
 }

@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { utils, writeFile } from 'xlsx';
-import { Students } from '../../Models/students';
+import { Students } from '../../Models/student';
 import { StudentsService } from '../../Services/students.service';
 
 @Component({
