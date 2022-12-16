@@ -1,0 +1,22 @@
+
+<mat-tab-group (selectedTabChange)="goback()">
+
+<mat-tab label="Edit Role">
+    <div class="container">
+      <h1 >Edit Role</h1>
+      <div>
+       <form class="example-form" #form="ngForm" (ngSubmit)="save()">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Edit Role</mat-label>
+        <input matInput placeholder="Role"[(ngModel)]="editRoleName" value="{{roleEdit.role}}" name="roleName"  required>
+      </mat-form-field>
+      <button mat-raised-button type="submit" [disabled]="form.invalid" color="primary">Save</button>
+
+     </form>
+      </div>
+    </div>
+</mat-tab>
+<mat-tab label="All Role">
+</mat-tab>
+
+</mat-tab-group>

@@ -7,7 +7,7 @@ export interface Admin {
     universityId:number,
     email:string,
     password:string,
-    roles:string,
+    roles:Role[],
     locked?:boolean,
     enable?:boolean,
     specialization:string

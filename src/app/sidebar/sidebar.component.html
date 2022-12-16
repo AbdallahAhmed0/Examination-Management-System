@@ -23,9 +23,14 @@
         </button>
 
 
-        <mat-button-toggle class="button-toggle" [value]="exam.checked ? 'up':'down'" #exam checked  >
+        <!-- <mat-button-toggle class="button-toggle" [value]="exam.checked ? 'up':'down'" #exam checked  > -->
 
-            <mat-icon style="margin-right: 10px;margin-left: 2px;">assignment</mat-icon>
+            <button mat-button class="menu-button">
+                <mat-icon>assignment</mat-icon>
+                <span *ngIf="sidenav.close">Exams</span>
+                </button>
+
+            <!-- <mat-icon style="margin-right: 10px;margin-left: 2px;">assignment</mat-icon>
 
                  <span *ngIf="sidenav.close">Exams</span>
                 <span *ngIf="exam.checked" class="list"><mat-icon>keyboard_arrow_left</mat-icon></span>
@@ -42,7 +47,7 @@
                             <span>Exam Completed</span>
                     </a>
                 </mat-nav-list>
-        </mat-button-toggle>
+        </mat-button-toggle> -->
 
         <!-- <mat-button-toggle  #quesBank checked disableRipple > -->
             <button mat-button class="menu-button">

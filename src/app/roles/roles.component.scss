@@ -1,3 +1,4 @@
+
 .example-form {
   min-width: 400px;
   max-width: 700px;
@@ -10,7 +11,7 @@
 }
 .container{
 
-  margin: 20px;
+  margin: 20px 0px;
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -19,6 +20,42 @@
 
 }
 table {
-  width: 800px;
+  width: 50%;
+}
+td, th {
+  font-size: 15px;
+
 }
 
+.delete{
+background: #f20202;
+color: #fff;
+font-size: 30px;
+width: 45px;
+height: 45px;
+padding: 8px;
+margin: 10px 0px;
+border-radius: 6px;
+border: none;
+text-align: center;
+}
+.edit{
+
+color: #fff;
+border: none;
+padding: 8px;
+margin: 10px 0px;
+border-radius: 6px;
+font-size: 30px;
+background: #0cd463;
+width: 45px;
+height: 45px;
+text-align: center;
+
+}
+.delete:hover{
+  background: #dc0808;
+}
+.edit:hover{
+  background: #0aae51;
+}

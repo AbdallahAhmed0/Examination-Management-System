@@ -1,4 +1,3 @@
-
 <div class="contianer" >
     <p>Admins</p>
 
@@ -12,7 +11,7 @@
       <button mat-button class="btn-add" (click)="exportData()" style="color:#007bff;" ><mat-icon>exit_to_app</mat-icon> Export Admins</button>
       <!-- <button mat-button class="btn-add" (click)="importData()" style="color:#007bff;" ><mat-icon>assignment_returned</mat-icon> Import Admins</button> -->
 
-      <table mat-table id="adminTable" [dataSource]="dataSource"  matSort>
+      <table mat-table id="adminTable" class="mat-elevation-z8" [dataSource]="dataSource"  matSort>
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>

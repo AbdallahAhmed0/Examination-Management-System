@@ -9,8 +9,10 @@ import { Role } from './role';
   styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit  {
+
   roleName!:string;
-  displayedColumns: string[] = ['No', 'name', 'delete'];
+  editRoleName!:string;
+  displayedColumns: string[] = ['No', 'name', 'edit','delete'];
   allRoles!:Role[];
   dataSource: any ;
   role:Role={} as Role;
@@ -31,6 +33,7 @@ export class RolesComponent implements OnInit  {
 
     })
 
+
   }
 
 
@@ -43,6 +46,10 @@ export class RolesComponent implements OnInit  {
   deleteRole(id:number){
 
     this.rolesService.deleteRole(id)
+
+  }
+  editRole(id:number){
+    this.router.navigate([`roles/edit/${id}`])
 
   }
 

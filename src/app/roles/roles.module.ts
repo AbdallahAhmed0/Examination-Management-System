@@ -7,12 +7,14 @@ import { RolesComponent } from './roles.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../material/material.module';
+import { EditRoleComponent } from './edit-role/edit-role.component';
 
 
 
 @NgModule({
   declarations: [
-    RolesComponent
+    RolesComponent,
+    EditRoleComponent
   ],
   imports: [
     CommonModule,

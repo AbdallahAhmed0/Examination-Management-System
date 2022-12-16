@@ -1,5 +1,4 @@
-<p>{{newAdmin.value|json}}</p>
-    <div class="contianer" >
+<div class="contianer" >
       <p >Add Admin</p>
       <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()"><mat-icon>menu</mat-icon> All Admins</button>
 
@@ -61,7 +60,7 @@
 
       <mat-form-field appearance="fill" >
           <mat-label>university Id</mat-label>
-          <input type="number" matInput formControlName="universityId" required>
+          <input type="number" min="1" matInput formControlName="universityId" required>
 
           <mat-error *ngIf="universityId?.hasError('required')">
               UniversityId is Required!
@@ -71,20 +70,10 @@
 
       <mat-form-field appearance="fill">
           <mat-label>Enter your password</mat-label>
-          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" value="{{firstName?.value}}{{lastName?.value}}{{universityId?.value}}" required>
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-
-          <mat-error *ngIf="password?.hasError('minlength')">
-              Password should be at least 6 characters!
-
-          </mat-error>
+          <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" value="{{this.firstName?.value}}{{this.lastName?.value}}{{this.universityId?.value}}" >
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 
       </mat-form-field>
-
-      <app-chip-roles [roles]="roles"></app-chip-roles>
-
 
 
       <mat-form-field appearance="fill" >
@@ -96,11 +85,12 @@
           </mat-error>
       </mat-form-field>
 
+      <app-check-role (checkRole)="selectedRole($event)"></app-check-role>
+
       <section class="checkbox">
           <mat-checkbox  formControlName="enable" class="check" color="primary">Enable</mat-checkbox>
       </section>
-      <button mat-raised-button [disabled]="adminFrm.invalid" class="submit" type="submit">Submit</button>
+      <button mat-raised-button [disabled]="adminFrm.invalid || checkRole.length == 0" class="submit" type="submit">Submit</button>
       </form>
       </div>
-
       </div>

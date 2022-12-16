@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
+import { Role } from './../../../roles/role';
 
 @Component({
   selector: 'app-edit-admin',
@@ -16,6 +17,10 @@ export class EditAdminComponent implements OnInit {
   admin:Admin ={} as Admin;
   newAdmin!: FormGroup;
   EditAdmin!:Admin;
+  checkRole:any[]=[];
+  id!:number;
+
+  roleView!:Role[];
 
   constructor(private adminService:AdminsService,
               private router:Router,
@@ -25,42 +30,29 @@ export class EditAdminComponent implements OnInit {
   ngOnInit(): void {
 
     this.activatedRoute.paramMap.subscribe((paramMap)=>{
-      const id=Number(paramMap.get('id'));
+      this.id=Number(paramMap.get('id'));
 
-      this.adminService.getAdminById(id).subscribe(data =>{
+      this.adminService.getAdminById(this.id).subscribe(data =>{
       this.admin=data;
+      this.roleView=this.admin.roles;
+      this.newAdmin = this.fb.group({
+        firstName:[data.firstName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
+        lastName: [data.lastName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
+        universityId: [data.universityId,[Validators.required]],
+        email: [data.email, [Validators.required, Validators.email]],
+        password:[data.password,[Validators.required,Validators.minLength(6)]],
+        roles: this.fb.array([]),
+        specialization:[data.specialization,[Validators.required]],
+        enable:[true],
+        locked:[false]
 
-    this.newAdmin = new FormGroup({
-      firstName: new FormControl(data.firstName, [Validators.required, Validators.minLength(3),Validators.maxLength(20)]),
-      lastName: new FormControl(data.lastName, [Validators.required, Validators.minLength(3),Validators.maxLength(20)]),
-      universityId: new FormControl(data.universityId, [Validators.required]),
-      email: new FormControl(data.email, [Validators.required, Validators.email]),
-      password:new FormControl(data.password,[Validators.required,Validators.minLength(6)]),
-      role:new FormControl(data.roles,[Validators.required]),
-      specialization:new FormControl(data.specialization,[Validators.required]),
-      enable:new FormControl(true),
-      locked:new FormControl(false)
-
-    })
-
-    // this.newAdmin = this.fb.group({
-    //   firstName:[data.firstName,Validators.required, Validators.minLength(3),Validators.maxLength(20)],
-    //   lastName: [data.lastName,Validators.required, Validators.minLength(3),Validators.maxLength(20)],
-    //   universityId: [data.universityId,Validators.required],
-    //   email: [data.email, Validators.required, Validators.email],
-    //   password:[data.password,Validators.required,Validators.minLength(6)],
-    //   role:[data.roles,Validators.required],
-    //   specialization:[data.specialization,Validators.required],
-    //   enable:[true],
-    //   locked:[false]
-
-    // })
+      })
 
   })
 });
 
   }
-  editAdmin(id:number){
+  editAdmin(){
 
     const observer={
       next: (admin:Admin) => {
@@ -69,20 +61,17 @@ export class EditAdminComponent implements OnInit {
       },
       error: (err:Error)=>{alert(err.message)}
     }
-    this.EditAdmin=this.newAdmin.value;
-    this.EditAdmin.id=id;
-    if(!(this.EditAdmin.email == this.admin.email ||
-      this.EditAdmin.firstName == this.admin.firstName ||
-      this.EditAdmin.lastName == this.admin.lastName ||
-      this.EditAdmin.universityId == this.admin.universityId ||
-      this.EditAdmin.enable == this.admin.enable
-      )){
 
+    let testformArray = this.newAdmin.get('roles') as FormArray;
+    for (let i of this.checkRole) {
+        testformArray.push(new FormControl(i));
+    }
+
+    this.EditAdmin=this.newAdmin.value;
+    this.EditAdmin.id=this.id;
 
         this.adminService.updateAdmin(this.EditAdmin).subscribe(() =>{});
-    console.log(this.EditAdmin);
-    }
-    this.goback();
+        this.goback();
   }
 
 
@@ -91,6 +80,9 @@ goback(){
   this.router.navigate(['admins'])
 }
 
+selectedRole(role:any[]){
+  this.checkRole=role;
+  }
 
 
 get firstName() {
@@ -109,7 +101,7 @@ get password() {
   return this.newAdmin.get('password');
 }
 get role() {
-  return this.newAdmin.get('role');
+  return this.newAdmin.get('roles');
 }
 get specialization(){
   return this.newAdmin.get('specialization');

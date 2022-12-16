@@ -53,12 +53,6 @@ export class AllAdminsComponent implements OnInit,OnChanges  {
     }
   }
 
-  openDialog(): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
-      width: '350px',
-      height:'200px'
-    });
-  }
 
 
 
@@ -162,13 +156,3 @@ importData(){
 }
 
 
-@Component({
-  selector: 'dialog-animations-example-dialog',
-  templateUrl: 'dialog-animations-example-dialog.html',
-})
-
-export class DialogAnimationsExampleDialog {
-  dialogActions!:MatDialogActions;
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
-
-}
