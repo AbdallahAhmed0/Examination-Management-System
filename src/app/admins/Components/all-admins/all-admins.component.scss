@@ -28,9 +28,9 @@ mat-paginator{
 td, th {
   font-size: 17px;
 }
-th,mat-paginator{
-    background: rgb(238, 232, 232);
-}
+// th,mat-paginator{
+//     background: rgb(238, 232, 232);
+// }
 .delete-icon{
 
     background: #f20202;
@@ -44,7 +44,7 @@ th,mat-paginator{
     text-align: center;
 }
 .edit-icon{
-    
+
     color: #fff;
     padding: 8px;
     margin: 10px 0px;

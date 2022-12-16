@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
@@ -13,26 +13,32 @@ import { Admin } from './../../Models/admin';
 export class AddAdminComponent implements OnInit {
   hide = true;
 
+  
+
   newAdmin!: FormGroup;
-  roles!: string[];
+  checkRole:any[]=[];
+
     constructor(private adminService:AdminsService,
               private router:Router,
-              private fb:FormBuilder) { }
+              private fb:FormBuilder){
+
+              }
+
+
 
   ngOnInit(): void {
     this.newAdmin = this.fb.group({
-            firstName: ['',Validators.required, Validators.minLength(3),Validators.maxLength(20)],
-            lastName:['',Validators.required, Validators.minLength(3),Validators.maxLength(20)],
-            universityId: ['',Validators.required],
-            email: ['',Validators.required, Validators.email],
-            role: this.fb.array([]),
+            firstName: ['',[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
+            lastName:['',[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
+            universityId: ['',[Validators.required]],
+            email: ['',[Validators.required, Validators.email]],
+            roles: this.fb.array([]),
             password:[''],
-            specialization:['',Validators.required],
+            specialization:['',[Validators.required]],
             enable:[true],
             locked:[false]
 
           })
-console.log(this.roles);
   }
   addAdmin(){
 
@@ -43,7 +49,13 @@ console.log(this.roles);
       },
       error: (err:Error)=>{alert(err.message)}
     }
-
+    let testformArray = this.newAdmin.get('roles') as FormArray;
+    for (let i of this.checkRole) {
+        testformArray.push(new FormControl(i));
+    }
+    if(this.password?.value == ''){
+      this.password?.setValue(`${this.firstName?.value}${this.lastName?.value}${this.universityId?.value}`);
+    }
     this.adminService.addAdmin(this.newAdmin.value).subscribe(observer);
   }
 
@@ -51,6 +63,12 @@ console.log(this.roles);
 goback(){
   this.router.navigate(['admins'])
 }
+
+selectedRole(role:any[]){
+this.checkRole=role;
+}
+
+
 
 
 
@@ -70,7 +88,7 @@ get password() {
   return this.newAdmin.get('password');
 }
 get role() {
-  return this.newAdmin.get('role');
+  return this.newAdmin.get('roles');
 }
 get specialization(){
   return this.newAdmin.get('specialization');

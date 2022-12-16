@@ -2,7 +2,7 @@
     margin: 35px;
 
     p{
-        font-size: 30px;
+        font-size: 27px;
     }
 }
 .btn-list{
@@ -13,7 +13,8 @@
     margin: 40px;
     border: 2px solid rgb(211, 208, 208);
     border-radius: 10px;
-    width: 80%;
+    width: 75%;
+    background: #f6f4f4;
 
     .add{
         background: #3cb5be;
@@ -32,10 +33,10 @@ form{
         width: 40%;
         display: inline-block;
         margin: 20px 30px ;
-        
+
     }
-    
-}  
+
+}
 .checkbox{
     margin: 20px 0px ;
     font-size: 20px;
@@ -58,3 +59,4 @@ form{
     color: #ffffff;
 
 }
+
