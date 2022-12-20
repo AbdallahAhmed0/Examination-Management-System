@@ -9,8 +9,10 @@ import { RolesService } from 'src/app/roles/roles.service';
   styleUrls: ['./check-role.component.scss']
 })
 export class CheckRoleComponent implements OnInit {
-  allRoles!:Role[];
+  allRoles:Role[]=[];
   form!:FormGroup;
+  check!:any[]
+
 
   @Output()checkRole:EventEmitter<any[]>=new EventEmitter<any[]>;
   @Input()roleView:Role[]=[];
@@ -20,14 +22,10 @@ export class CheckRoleComponent implements OnInit {
       // get Roles
       roleService.getRoles().subscribe(res =>{
         this.allRoles=res;
+        this.check = new Array(this.allRoles.length).fill(0);
+        this.updateRole()
       })
 
-
-
-    this.form = this.formBuilder.group({
-
-      role: this.formBuilder.array([], [Validators.required])
-    })
   }
   onCheckboxChange(e:any) {
 
@@ -52,15 +50,30 @@ export class CheckRoleComponent implements OnInit {
     this.checkRole.emit(sentRoles);
   }
   ngOnInit(): void {
-     if(this.roleView.length > 0){
+    if(!this.roleView.length){
     this.form = this.formBuilder.group({
-
+      role: this.formBuilder.array([], [Validators.required])
+    })
+  }else{
+    this.form = this.formBuilder.group({
       role: this.formBuilder.array(this.roleView.map(role => role.role), [Validators.required])
     })
   }
-  }
+
+
+    }
+
   get role() {
     return this.form.get('role');
   }
+  updateRole(){
+    for(let i = 0;i < this.roleView.length;i++){
+      for(let j = 0;j<this.allRoles.length;j++) {
+        if(this.allRoles[j].role == this.roleView[i].role){
+          this.check[j] = 1
+      }
+    }
+  }
+}
 }
 

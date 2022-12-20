@@ -35,6 +35,7 @@ export class EditAdminComponent implements OnInit {
       this.adminService.getAdminById(this.id).subscribe(data =>{
       this.admin=data;
       this.roleView=this.admin.roles;
+      this.checkRole=this.roleView;
       this.newAdmin = this.fb.group({
         firstName:[data.firstName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
         lastName: [data.lastName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
