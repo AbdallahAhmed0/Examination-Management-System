@@ -1,16 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
 import { Role } from './../../../roles/role';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-admin',
   templateUrl: './edit-admin.component.html',
   styleUrls: ['./edit-admin.component.scss']
 })
-export class EditAdminComponent implements OnInit {
+export class EditAdminComponent implements OnInit,OnDestroy {
 
   hide = true;
 
@@ -19,17 +20,21 @@ export class EditAdminComponent implements OnInit {
   EditAdmin!:Admin;
   checkRole:any[]=[];
   id!:number;
-
   roleView!:Role[];
+
+  consoleError:any;
+  subAdmin?:Subscription;
+  subRoute?:Subscription;
 
   constructor(private adminService:AdminsService,
               private router:Router,
               private activatedRoute:ActivatedRoute,
               private fb:FormBuilder) { }
 
+
   ngOnInit(): void {
 
-    this.activatedRoute.paramMap.subscribe((paramMap)=>{
+   this.subRoute= this.activatedRoute.paramMap.subscribe((paramMap)=>{
       this.id=Number(paramMap.get('id'));
 
       this.adminService.getAdminById(this.id).subscribe(data =>{
@@ -60,7 +65,9 @@ export class EditAdminComponent implements OnInit {
         alert("Admin Updated Successfuly");
         this.router.navigateByUrl('/admins');
       },
-      error: (err:Error)=>{alert(err.message)}
+      error: (err:Error)=>{
+        this.consoleError = err.message
+        }
     }
 
     let testformArray = this.newAdmin.get('roles') as FormArray;
@@ -71,8 +78,7 @@ export class EditAdminComponent implements OnInit {
     this.EditAdmin=this.newAdmin.value;
     this.EditAdmin.id=this.id;
 
-        this.adminService.updateAdmin(this.EditAdmin).subscribe(() =>{});
-        this.goback();
+       this.subAdmin= this.adminService.updateAdmin(this.EditAdmin).subscribe(observer);
   }
 
 
@@ -110,7 +116,10 @@ get specialization(){
 get enable(){
   return this.newAdmin.get('enable');
 }
-
+ngOnDestroy(): void {
+this.subAdmin?.unsubscribe();
+this.subRoute?.unsubscribe();
+}
 
 }
 

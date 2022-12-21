@@ -1,9 +1,10 @@
-import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild,OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDialogActions } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { utils, writeFile } from 'xlsx';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
@@ -14,11 +15,12 @@ import { Admin } from './../../Models/admin';
   templateUrl: './all-admins.component.html',
   styleUrls: ['./all-admins.component.scss']
 })
-export class AllAdminsComponent implements OnInit,OnChanges  {
+export class AllAdminsComponent implements OnInit,OnChanges,OnDestroy {
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName','email', 'universityId','enable','specialization','actions'];
   dataSource!: MatTableDataSource<any>;
 
+  subAdmin?:Subscription;
   admins!:Admin[];
 
 
@@ -75,7 +77,7 @@ add(){
 
 getAdmins(){
 
-  this.adminService.getAllAdmins().subscribe(data =>{
+  this.subAdmin=this.adminService.getAllAdmins().subscribe(data =>{
 
     /** Builds and returns a new User. */
     const createNewAdmin =(id: number)=>{
@@ -150,9 +152,13 @@ writeFile(wb, 'Data of Admins.xlsx');
 //   })
 // }
 
-importData(){
-  this.router.navigate(['admins/import']);
+// importData(){
+//   this.router.navigate(['admins/import']);
+// }
+ngOnDestroy(): void {
+this.subAdmin?.unsubscribe();
 }
+
 }
 
 
