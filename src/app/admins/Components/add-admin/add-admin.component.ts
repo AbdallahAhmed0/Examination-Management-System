@@ -1,29 +1,32 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-admin',
   templateUrl: './add-admin.component.html',
   styleUrls: ['./add-admin.component.scss']
 })
-export class AddAdminComponent implements OnInit {
+export class AddAdminComponent implements OnInit,OnDestroy {
   hide = true;
 
-  
 
+  consoleError:any;
   newAdmin!: FormGroup;
   checkRole:any[]=[];
+  subAdmin?:Subscription;
 
     constructor(private adminService:AdminsService,
               private router:Router,
               private fb:FormBuilder){
 
-              }
 
+              }
 
 
   ngOnInit(): void {
@@ -47,7 +50,9 @@ export class AddAdminComponent implements OnInit {
         alert("Admin added Successfuly");
         this.router.navigateByUrl('/admins');
       },
-      error: (err:Error)=>{alert(err.message)}
+      error: (err:Error)=>{
+        this.consoleError = err.message
+        }
     }
     let testformArray = this.newAdmin.get('roles') as FormArray;
     for (let i of this.checkRole) {
@@ -56,12 +61,12 @@ export class AddAdminComponent implements OnInit {
     if(this.password?.value == ''){
       this.password?.setValue(`${this.firstName?.value}${this.lastName?.value}${this.universityId?.value}`);
     }
-    this.adminService.addAdmin(this.newAdmin.value).subscribe(observer);
+   this.subAdmin= this.adminService.addAdmin(this.newAdmin.value).subscribe(observer);
   }
 
 
 goback(){
-  this.router.navigate(['admins'])
+  this.router.navigateByUrl('/admins');
 }
 
 selectedRole(role:any[]){
@@ -96,5 +101,9 @@ get specialization(){
 get enable(){
   return this.newAdmin.get('enable');
 }
+ngOnDestroy(): void {
+this.subAdmin?.unsubscribe()
+}
+
 }
 

@@ -1,17 +1,20 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { Role } from './../../../roles/role';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RolesService } from 'src/app/roles/roles.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-check-role',
   templateUrl: './check-role.component.html',
   styleUrls: ['./check-role.component.scss']
 })
-export class CheckRoleComponent implements OnInit {
+export class CheckRoleComponent implements OnInit,OnDestroy {
   allRoles:Role[]=[];
   form!:FormGroup;
   check!:any[]
+
+  subRole?:Subscription;
 
 
   @Output()checkRole:EventEmitter<any[]>=new EventEmitter<any[]>;
@@ -20,7 +23,7 @@ export class CheckRoleComponent implements OnInit {
               private roleService:RolesService){
 
       // get Roles
-      roleService.getRoles().subscribe(res =>{
+      this.subRole= roleService.getRoles().subscribe(res =>{
         this.allRoles=res;
         this.check = new Array(this.allRoles.length).fill(0);
         this.updateRole()
@@ -75,5 +78,9 @@ export class CheckRoleComponent implements OnInit {
     }
   }
 }
+ngOnDestroy(): void {
+this.subRole?.unsubscribe();
+}
+
 }
 
