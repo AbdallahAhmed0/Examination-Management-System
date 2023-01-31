@@ -4,7 +4,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Router } from '@angular/router';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -47,8 +46,8 @@ export class AddAdminComponent implements OnInit,OnDestroy {
 
     const observer={
       next: (admin:Admin) => {
-        alert("Admin added Successfuly");
         this.router.navigateByUrl('/admins');
+        this.adminService.openSnackBar('Added');
       },
       error: (err:Error)=>{
         this.consoleError = err.message

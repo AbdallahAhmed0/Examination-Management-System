@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, tap, throwError } from 'rxjs';
 import { Admin } from './../Models/admin';
 import { environment } from './../../../environments/environment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Injectable({
@@ -35,7 +36,8 @@ export class AdminsService {
     }
   }
 
-  constructor(private httpClient:HttpClient) {
+  constructor(private httpClient:HttpClient,
+              private _snackBar: MatSnackBar) {
 
 
     this.httpOption = {
@@ -95,5 +97,11 @@ export class AdminsService {
       });
     }
 
+    openSnackBar(message: string ) {
+      this._snackBar.open(message+" sucessfully","close" ,{
+        duration:3000 ,
+
+      });
+    }
 
 }

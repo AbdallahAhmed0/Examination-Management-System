@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RolesService } from '../roles.service';
-import { Role } from './../role';
+import { RolesService } from '../../Services/roles.service';
+import { Role } from './../../Models/role';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -31,7 +31,7 @@ export class EditRoleComponent implements OnInit {
   save(){
     this.role.role=this.editRoleName;
     this.rolesService.updateRole(this.role);
-    alert('Updated Successfully');
+
     this.goback();
 
   }

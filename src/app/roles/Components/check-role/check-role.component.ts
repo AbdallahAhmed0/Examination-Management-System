@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
-import { Role } from './../../../roles/role';
+import { Role } from '../../Models/role';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RolesService } from 'src/app/roles/roles.service';
+import { RolesService } from '../../Services/roles.service';
 import { Subscription } from 'rxjs';
 
 @Component({

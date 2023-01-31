@@ -44,10 +44,16 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
+import { DialogComponent } from './dialog/dialog.component';
 
 
 @NgModule({
-  declarations: [],
+
+
+
+  declarations: [
+    DialogComponent
+  ],
   exports: [
     CommonModule,
     A11yModule,
@@ -94,7 +100,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
     OverlayModule,
     PortalModule,
     ScrollingModule,
-    
+
   ]
 })
 export class MaterialModule { }

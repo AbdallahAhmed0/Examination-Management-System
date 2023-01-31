@@ -7,7 +7,7 @@ import { ImportAdminComponent } from './Components/import-admin/import-admin.com
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CheckRoleComponent } from './Components/check-role/check-role.component';
+import { CheckRoleComponent } from '../roles/Components/check-role/check-role.component'
 
 
 @NgModule({

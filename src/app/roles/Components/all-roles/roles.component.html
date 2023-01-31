@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group (selectedTabChange)="addRole()">
   <mat-tab label="All Roles">
     <div class="container">
       <h1>All Roles</h1>
@@ -39,22 +39,10 @@
 
   </div>
   </mat-tab>
-  <mat-tab label="Add Role">
-    <div class="container" >
-      <h1 >Add Role</h1>
-      <div>
-       <form class="example-form" #form="ngForm" (ngSubmit)="addRole()">
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Add Role</mat-label>
-        <input matInput placeholder="Role" [(ngModel)]="roleName" name = "roleName" required>
-      </mat-form-field>
-      <button mat-raised-button type="submit" [disabled]="form.invalid" color="primary">Add</button>
+<mat-tab label="Add role" >
 
-     </form>
-    </div>
-  </div>
 
-  </mat-tab>
+</mat-tab>
 
 
 </mat-tab-group>
