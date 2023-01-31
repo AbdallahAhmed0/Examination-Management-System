@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { catchError, Observable, retry, throwError } from 'rxjs';
-import { Role } from './role';
-import { environment } from './../../environments/environment';
+import { Role } from '../Models/role';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,18 @@ export class RolesService {
   }
 
 
-  constructor( private http:HttpClient) {
+  constructor( private http:HttpClient,private _snackBar: MatSnackBar) {
     this.httpOption={
       headers:new HttpHeaders({
         'Content-Type':'application/json'
       })
     }
+    }
+    openSnackBar(message: string ) {
+      this._snackBar.open(message+" sucessfully","close" ,{
+        duration:3000 ,
+
+      });
     }
 
   getRoles():Observable<Role[]>{
@@ -58,7 +65,8 @@ export class RolesService {
       retry(2),
       catchError(this.handleError)
     ).subscribe()
-    window.location.reload();
+    this.openSnackBar("Added")
+
   }
   updateRole(role:Role){
     this.http.post<Role>(`${environment.APPURL}/roles/update`, JSON.stringify(role),this.httpOption)
@@ -66,6 +74,7 @@ export class RolesService {
       retry(2),
       catchError(this.handleError)
     ).subscribe()
+    this.openSnackBar("Updated")
   }
 
   deleteRole(id :number){
@@ -74,8 +83,8 @@ export class RolesService {
       retry(2),
       catchError(this.handleError)
     ).subscribe()
-    alert("deleted succesfully");
     window.location.reload();
+    this.openSnackBar("Deleted")
 
   }
 }

@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
-import { Role } from './../../../roles/role';
+import { Role } from './../../../roles/Models/role';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -62,8 +62,8 @@ export class EditAdminComponent implements OnInit,OnDestroy {
 
     const observer={
       next: (admin:Admin) => {
-        alert("Admin Updated Successfuly");
         this.router.navigateByUrl('/admins');
+        this.adminService.openSnackBar('Updated');
       },
       error: (err:Error)=>{
         this.consoleError = err.message

@@ -1,4 +1,4 @@
-import { Role } from "src/app/roles/role";
+import { Role } from "src/app/roles/Models/role";
 
 export interface Students {
   id:number,
@@ -7,8 +7,8 @@ export interface Students {
   universityId:number,
   email:string,
   password:string,
-  roles:Role,
+  roles:Role[],
   locked?:boolean,
   enable?:boolean,
-  year:string
+  year:number
 }

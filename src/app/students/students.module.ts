@@ -8,23 +8,23 @@ import { EditStudentsComponent } from './Components/edit-students/edit-students.
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CheckRoleComponent } from './Components/check-role/check-role.component';
 
 
 @NgModule({
-  declarations: [
-    AllStudentsComponent,
-    AddStudentsComponent,
-    EditStudentsComponent
-  ],
-  imports: [
-    CommonModule,
-    StudentsRoutingModule,
-    HttpClientModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    FormsModule,
-
-
-  ]
+    declarations: [
+        AllStudentsComponent,
+        AddStudentsComponent,
+        EditStudentsComponent,
+        CheckRoleComponent
+    ],
+    imports: [
+        CommonModule,
+        StudentsRoutingModule,
+        HttpClientModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        FormsModule
+    ]
 })
 export class StudentsModule { }

@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { utils, writeFile } from 'xlsx';
-import { Students } from '../../Models/students';
+import { Students } from '../../Models/student';
 import { StudentsService } from '../../Services/students.service';
 
 @Component({
@@ -92,7 +92,7 @@ getStudents(){
             lastName: data[Math.round(Math.random() * (data.length - 1))].lastName,
             universityId: data[Math.round(Math.random() * (data.length - 1))].universityId,
             email: data[Math.round(Math.random() * (data.length - 1))].email,
-            specialization: data[Math.round(Math.random() * (data.length - 1))].year,
+            year: data[Math.round(Math.random() * (data.length - 1))].year,
 
           };
     }
