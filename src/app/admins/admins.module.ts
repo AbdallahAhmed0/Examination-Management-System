@@ -5,9 +5,10 @@ import { AddAdminComponent } from './Components/add-admin/add-admin.component';
 import { EditAdminComponent } from './Components/edit-admin/edit-admin.component';
 import { ImportAdminComponent } from './Components/import-admin/import-admin.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MaterialModule } from '../material/material.module';
+import { MaterialModule } from '../Shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckRoleComponent } from '../roles/Components/check-role/check-role.component'
+import { adminRoutingModule } from './admin-routing.module';
 
 
 @NgModule({
@@ -20,11 +21,11 @@ import { CheckRoleComponent } from '../roles/Components/check-role/check-role.co
   ],
   imports: [
     CommonModule,
+    adminRoutingModule,
     HttpClientModule,
-    MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-
+    MaterialModule
 
   ]
 

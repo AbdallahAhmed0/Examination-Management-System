@@ -1,10 +1,7 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RolesService } from '../../Services/roles.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Role } from '../../Models/role';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatDialog} from '@angular/material/dialog';
-import { DialogComponent } from '../../../material/dialog/dialog.component';
 
 @Component({
   selector: 'app-roles',
@@ -21,7 +18,7 @@ export class RolesComponent implements OnInit  {
   role:Role={} as Role;
 
 
-  constructor(private rolesService:RolesService, private router:Router,public dialog: MatDialog) { }
+  constructor(private rolesService:RolesService, private router:Router) { }
 
 
   ngOnInit(): void {
@@ -42,18 +39,12 @@ export class RolesComponent implements OnInit  {
   }
   deleteRole(id:number){
     // this.openDialog()
-   this.rolesService.deleteRole(id)
+  this.rolesService.deleteRole(id);
 
   }
   editRole(id:number){
     this.router.navigate([`roles/edit/${id}`])
 
-  }
-
-
-
-  openDialog() {
-    this.dialog.open(DialogComponent);
   }
 }
 

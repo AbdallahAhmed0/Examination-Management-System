@@ -1,5 +1,4 @@
 import { Component, OnChanges, OnInit, ViewChild,OnDestroy } from '@angular/core';
-import { MatDialog, MatDialogRef, MatDialogActions } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -28,8 +27,7 @@ export class AllAdminsComponent implements OnInit,OnChanges,OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private adminService:AdminsService,
-              private router:Router,
-              public dialog: MatDialog) {
+              private router:Router) {
 
 
   }
@@ -78,23 +76,6 @@ add(){
 getAdmins(){
 
   this.subAdmin=this.adminService.getAllAdmins().subscribe(data =>{
-
-    /** Builds and returns a new User. */
-    const createNewAdmin =(id: number)=>{
-          return {
-            id: id,
-            firstName: data[Math.round(Math.random() * (data.length - 1))].firstName,
-            lastName: data[Math.round(Math.random() * (data.length - 1))].lastName,
-            universityId: data[Math.round(Math.random() * (data.length - 1))].universityId,
-            email: data[Math.round(Math.random() * (data.length - 1))].email,
-            specialization: data[Math.round(Math.random() * (data.length - 1))].specialization,
-
-          };
-    }
-
-        // Create users
-
-        const admin = Array.from({length: length}, (_, k) => createNewAdmin(k + 1));
 
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(data);

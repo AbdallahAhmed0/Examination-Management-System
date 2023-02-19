@@ -6,7 +6,7 @@ import { EditAdminComponent } from './Components/edit-admin/edit-admin.component
 import { ImportAdminComponent } from './Components/import-admin/import-admin.component';
 
 const routes: Routes = [
-  {path:'admins',component:AllAdminsComponent},
+  {path:'',component:AllAdminsComponent},
   {path:'admins/add',component:AddAdminComponent},
   {path:'admins/edit/:id',component:EditAdminComponent},
   {path:'admins/import',component:ImportAdminComponent},

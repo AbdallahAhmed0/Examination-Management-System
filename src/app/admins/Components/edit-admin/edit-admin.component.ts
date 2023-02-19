@@ -49,8 +49,8 @@ export class EditAdminComponent implements OnInit,OnDestroy {
         password:[data.password,[Validators.required,Validators.minLength(6)]],
         roles: this.fb.array([]),
         specialization:[data.specialization,[Validators.required]],
-        enable:[true],
-        locked:[false]
+        enable:[data.enable],
+        locked:[data.locked]
 
       })
 
