@@ -6,7 +6,7 @@ import { AllStudentsComponent } from './Components/all-students/all-students.com
 import { AddStudentsComponent } from './Components/add-students/add-students.component';
 import { EditStudentsComponent } from './Components/edit-students/edit-students.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MaterialModule } from '../material/material.module';
+import { MaterialModule } from '../Shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckRoleComponent } from './Components/check-role/check-role.component';
 

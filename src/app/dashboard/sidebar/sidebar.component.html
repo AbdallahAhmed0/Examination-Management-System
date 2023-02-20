@@ -22,54 +22,15 @@
             <span *ngIf="sidenav.close">Dashboard</span>
         </button>
 
-
-        <!-- <mat-button-toggle class="button-toggle" [value]="exam.checked ? 'up':'down'" #exam checked  > -->
-
             <button mat-button class="menu-button">
                 <mat-icon>assignment</mat-icon>
                 <span *ngIf="sidenav.close">Exams</span>
                 </button>
 
-            <!-- <mat-icon style="margin-right: 10px;margin-left: 2px;">assignment</mat-icon>
-
-                 <span *ngIf="sidenav.close">Exams</span>
-                <span *ngIf="exam.checked" class="list"><mat-icon>keyboard_arrow_left</mat-icon></span>
-                <span *ngIf="!exam.checked" class="list"><mat-icon>keyboard_arrow_down</mat-icon></span>
-
-                <mat-nav-list *ngIf="!exam.checked">
-
-                    <a mat-list-item class="button-toggle">
-                            <mat-icon>radio_button_unchecked</mat-icon>
-                            <span>Exam List</span>
-                    </a>
-                    <a mat-list-item class="button-toggle">
-                            <mat-icon>radio_button_unchecked</mat-icon>
-                            <span>Exam Completed</span>
-                    </a>
-                </mat-nav-list>
-        </mat-button-toggle> -->
-
-        <!-- <mat-button-toggle  #quesBank checked disableRipple > -->
             <button mat-button class="menu-button">
             <mat-icon>assignment</mat-icon>
             <span *ngIf="sidenav.close">Questions</span>
             </button>
-            <!-- <span *ngIf="sidenav.close">Question Bank</span>
-            <span *ngIf="quesBank.checked" class="list"><mat-icon>keyboard_arrow_left</mat-icon></span>
-            <span *ngIf="!quesBank.checked" class="list"><mat-icon>keyboard_arrow_down</mat-icon></span>
-
-            <mat-nav-list *ngIf="!quesBank.checked">
-
-                <a mat-list-item class="menu-button">
-                        <mat-icon>radio_button_unchecked</mat-icon>
-                        <span>Questions</span>
-                </a>
-                <a mat-list-item class="menu-button">
-                        <mat-icon>radio_button_unchecked</mat-icon>
-                        <span>Add Questions</span>
-                </a>
-            </mat-nav-list>
-        </mat-button-toggle> -->
 
         <button mat-button class="menu-button" [routerLink]="['/students']">
             <mat-icon>accessibility_new</mat-icon>
