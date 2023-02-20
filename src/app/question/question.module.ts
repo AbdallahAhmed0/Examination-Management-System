@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { QuestionRoutingModule } from './question-routing.module';
 import { SaveQuestionComponent } from './save-question/save-question.component';
-import { ChoiceQuestionsComponent } from './save-question/choice-questions/choice-questions.component';
+import { ChoiceQuestionsComponent } from './choice-questions/choice-questions.component';
+import { MaterialModule } from '../Shared/material/material.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ChoiceQuestionsComponent } from './save-question/choice-questions/choic
   ],
   imports: [
     CommonModule,
-    QuestionRoutingModule
+    QuestionRoutingModule,
+    MaterialModule
   ]
 })
 export class QuestionModule { }
