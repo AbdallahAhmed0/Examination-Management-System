@@ -22,3 +22,21 @@ p{
 .mat-menu-content {
   padding: 16px 0; /* add some padding to the top and bottom of the menu */
 }
+.btn-question{
+margin: 20px;
+color: #f6f4f4;
+background: darken(#3cb5be, 8%);
+border-radius: 8px;
+}
+
+.btn-question:hover
+  {
+  background: darken(#3cb5be, 20%);
+}
+::ng-deep .mat-menu-panel {
+  background: darken(#3cb5be, 8%);
+}
+::ng-deep .mat-menu-item {
+  color:#f6f4f4 ;
+}
+
