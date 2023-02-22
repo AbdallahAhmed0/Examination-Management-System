@@ -5,6 +5,7 @@ import { QuestionRoutingModule } from './question-routing.module';
 import { SaveQuestionComponent } from './save-question/save-question.component';
 import { ChoiceQuestionsComponent } from './choice-questions/choice-questions.component';
 import { MaterialModule } from '../Shared/material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,10 @@ import { MaterialModule } from '../Shared/material/material.module';
   imports: [
     CommonModule,
     QuestionRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    
+
   ]
 })
 export class QuestionModule { }
