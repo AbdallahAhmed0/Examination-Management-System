@@ -1,4 +1,4 @@
-interface exam {
+export interface Exam {
   id?: string,
   examName: string,
   examDate: Date,

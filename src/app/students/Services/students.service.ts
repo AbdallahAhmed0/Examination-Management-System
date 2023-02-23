@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -19,6 +20,8 @@ export class StudentsService {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
+      // Return an observable with a user-facing error message.
+      return throwError(() => new Error('Error occured, please try again'));
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
@@ -33,7 +36,7 @@ export class StudentsService {
     return throwError(() => new Error('Error occured, please try again'));
   }
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
     this.httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -46,6 +49,7 @@ export class StudentsService {
       .get<Students[]>(`${environment.APPURL}/students/getAll`)
       .pipe(retry(2), catchError(this.handleError));
   }
+  
   getStudentById(id: number): Observable<Students> {
     return this.httpClient
       .get<Students>(
@@ -78,5 +82,11 @@ export class StudentsService {
       .delete(`${environment.APPURL}/students/delete/${id}`)
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => {});
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message + ' sucessfully', 'close', {
+      duration: 3000,
+    });
   }
 }

@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 
 import { RolesRoutingModule } from './roles-routing.module';
 import { RolesComponent } from './Components/all-roles/roles.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../Shared/material/material.module';
 import { EditRoleComponent } from './Components/edit-role/edit-role.component';
 import { AddRoleComponent } from './Components/add-role/add-role.component';
+import { CheckRoleComponent } from './Components/check-role/check-role.component';
 
 
 
@@ -16,7 +17,8 @@ import { AddRoleComponent } from './Components/add-role/add-role.component';
   declarations: [
     RolesComponent,
     AddRoleComponent,
-    EditRoleComponent
+    EditRoleComponent,
+    CheckRoleComponent
   ],
   imports: [
     CommonModule,
@@ -24,8 +26,11 @@ import { AddRoleComponent } from './Components/add-role/add-role.component';
     MaterialModule,
     FormsModule,
     HttpClientModule,
-
-
+    ReactiveFormsModule
+  ]
+  ,
+  exports: [
+    CheckRoleComponent
   ]
 })
 export class RolesModule { }

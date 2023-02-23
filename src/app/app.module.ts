@@ -19,8 +19,6 @@ import { StudentsModule } from './students/students.module';
     AppComponent,
     HeaderComponent,
     SidebarComponent
-
-
   ],
   imports: [
   BrowserModule,
@@ -30,7 +28,6 @@ import { StudentsModule } from './students/students.module';
     AdminsModule,
     RolesModule,
     StudentsModule
-
 
   ],
   providers: [],
