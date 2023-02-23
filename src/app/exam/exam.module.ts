@@ -1,3 +1,4 @@
+import { MaterialModule } from './../Shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +16,8 @@ import { EditExamComponent } from './Components/edit-exam/edit-exam.component';
   ],
   imports: [
     CommonModule,
-    ExamRoutingModule
+    ExamRoutingModule,
+    MaterialModule
   ]
 })
 export class ExamModule { }
