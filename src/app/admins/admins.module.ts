@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../Shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { adminRoutingModule } from './admin-routing.module';
+import { RolesModule } from '../roles/roles.module';
 
 
 @NgModule({
@@ -26,7 +27,6 @@ import { adminRoutingModule } from './admin-routing.module';
     FormsModule,
     MaterialModule,
     RolesModule
-
   ]
 
 })
