@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-<<<<<<< HEAD
     declarations: [
         AllStudentsComponent,
         AddStudentsComponent,
@@ -27,20 +26,5 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         FormsModule,
         RolesModule
     ]
-=======
-  declarations: [
-    AllStudentsComponent,
-    AddStudentsComponent,
-    EditStudentsComponent
-  ],
-  imports: [
-    CommonModule,
-    StudentsRoutingModule,
-    HttpClientModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    FormsModule,
-  ]
->>>>>>> 662301a7e5a746bdc8b06218950d2c96b3009c74
 })
 export class StudentsModule { }

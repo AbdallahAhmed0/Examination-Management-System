@@ -39,12 +39,8 @@ export class EditStudentsComponent implements OnInit {
       password:new FormControl(data.password,[Validators.required,Validators.minLength(6)]),
       role:new FormControl(data.roles,[Validators.required]),
       enable:new FormControl(true),
-<<<<<<< HEAD
       locked:new FormControl(false),
       year:new FormControl(data.year)
-=======
-      locked:new FormControl(false)
->>>>>>> 662301a7e5a746bdc8b06218950d2c96b3009c74
 
     })
 
