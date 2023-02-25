@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -6,7 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Students } from '../Models/student';
+import { Student } from '../Models/student';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,8 @@ export class StudentsService {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
+      // Return an observable with a user-facing error message.
+      return throwError(() => new Error('Error occured, please try again'));
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
@@ -33,7 +36,7 @@ export class StudentsService {
     return throwError(() => new Error('Error occured, please try again'));
   }
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
     this.httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -41,32 +44,33 @@ export class StudentsService {
     };
   }
 
-  getAllStudents(): Observable<Students[]> {
+  getAllStudents(): Observable<Student[]> {
     return this.httpClient
-      .get<Students[]>(`${environment.APPURL}/students/getAll`)
+      .get<Student[]>(`${environment.APPURL}/students/getAll`)
       .pipe(retry(2), catchError(this.handleError));
   }
-  getStudentById(id: number): Observable<Students> {
+
+  getStudentById(id: number): Observable<Student> {
     return this.httpClient
-      .get<Students>(
+      .get<Student>(
         `${environment.APPURL}/students/get/${id}`,
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  addStudent(student: Students): Observable<Students> {
+  addStudent(student: Student): Observable<Student> {
     return this.httpClient
-      .post<Students>(
+      .post<Student>(
         `${environment.APPURL}/students/add`,
         JSON.stringify(student),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
-  updateStudents(student: Students): Observable<Students> {
+  updateStudents(student: Student): Observable<Student> {
     return this.httpClient
-      .post<Students>(
+      .post<Student>(
         `${environment.APPURL}/students/update`,
         JSON.stringify(student),
         this.httpOption
@@ -78,5 +82,11 @@ export class StudentsService {
       .delete(`${environment.APPURL}/students/delete/${id}`)
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => {});
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message + ' sucessfully', 'close', {
+      duration: 3000,
+    });
   }
 }
