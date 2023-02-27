@@ -93,6 +93,7 @@ export class AdminsService {
         catchError(this.handleError)
       ).subscribe(data => {
         window.location.reload();
+        this.openSnackBar("Deleted")
       })
     }
 
