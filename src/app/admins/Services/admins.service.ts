@@ -91,7 +91,9 @@ export class AdminsService {
       .pipe(
         retry(2),
         catchError(this.handleError)
-      );
+      ).subscribe(data => {
+        window.location.reload();
+      })
     }
 
     openSnackBar(message: string ) {
