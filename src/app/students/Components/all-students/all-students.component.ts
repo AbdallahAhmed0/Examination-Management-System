@@ -27,8 +27,7 @@ export class AllStudentsComponent implements OnInit,OnChanges {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private studentService:StudentsService,
-              private router:Router,
-              public dialog: MatDialog) {
+              private router:Router) {
 
 
   }
@@ -54,13 +53,7 @@ export class AllStudentsComponent implements OnInit,OnChanges {
     }
   }
 
-  openDialog(): void {
-    this.dialog.open(DialogAnimationsExampleDialog, {
-      width: '350px',
-      height:'200px'
-    });
-  }
-
+  
 
 
 

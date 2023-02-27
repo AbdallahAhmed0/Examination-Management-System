@@ -91,10 +91,7 @@ export class AdminsService {
       .pipe(
         retry(2),
         catchError(this.handleError)
-      )
-      .subscribe(data =>{
-
-      });
+      );
     }
 
     openSnackBar(message: string ) {

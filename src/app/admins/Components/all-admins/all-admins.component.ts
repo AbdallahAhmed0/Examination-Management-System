@@ -1,4 +1,5 @@
-import { Component, OnChanges, OnInit, ViewChild,OnDestroy } from '@angular/core';
+import { Component,  OnInit, ViewChild,OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,14 +8,14 @@ import { Subscription } from 'rxjs';
 import { utils, writeFile } from 'xlsx';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
-
+import {DialogeComponent} from '../../../Shared/material/dialoge/dialoge.component'
 
 @Component({
   selector: 'app-all-admins',
   templateUrl: './all-admins.component.html',
   styleUrls: ['./all-admins.component.scss']
 })
-export class AllAdminsComponent implements OnInit,OnChanges,OnDestroy {
+export class AllAdminsComponent implements OnInit,OnDestroy {
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName','email', 'universityId','enable','specialization','actions'];
   dataSource!: MatTableDataSource<any>;
@@ -27,20 +28,13 @@ export class AllAdminsComponent implements OnInit,OnChanges,OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private adminService:AdminsService,
-              private router:Router) {
-
-
+              private router:Router,
+              private dialog: MatDialog) {
   }
-
-  ngOnChanges(): void {
-    this.getAdmins();
-  }
-
 
   ngOnInit(): void {
 
       this.getAdmins();
-
   }
 
 
@@ -53,22 +47,25 @@ export class AllAdminsComponent implements OnInit,OnChanges,OnDestroy {
     }
   }
 
-
-
-
-
 edit(id:number){
 
   this.router.navigate(['admins/edit',id]);
 }
 delete(id:number){
 
-  this.adminService.deleteAdmin(id);
-  alert('Deleted Successfully');
-  window.location.reload();
+  const dialogRef = this.dialog.open(DialogeComponent, {
+    width: '400px',
+    height:'280px'
+    });
 
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result === 'confirm') {
 
-}
+        this.adminService.deleteAdmin(id);
+      }
+    });
+  }
+
 add(){
   this.router.navigate(['admins/add']);
 }
