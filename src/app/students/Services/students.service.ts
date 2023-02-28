@@ -52,10 +52,7 @@ export class StudentsService {
 
   getStudentById(id: number): Observable<Student> {
     return this.httpClient
-      .get<Student>(
-        `${environment.APPURL}/students/get/${id}`,
-        this.httpOption
-      )
+      .get<Student>(`${environment.APPURL}/students/get/${id}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -68,6 +65,7 @@ export class StudentsService {
       )
       .pipe(retry(2), catchError(this.handleError));
   }
+
   updateStudents(student: Student): Observable<Student> {
     return this.httpClient
       .post<Student>(
@@ -77,6 +75,7 @@ export class StudentsService {
       )
       .pipe(retry(2), catchError(this.handleError));
   }
+
   deleteStudent(id: number) {
     this.httpClient
       .delete(`${environment.APPURL}/students/delete/${id}`)

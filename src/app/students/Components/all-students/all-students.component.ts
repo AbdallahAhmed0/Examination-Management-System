@@ -1,8 +1,6 @@
 import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
-  MatDialogRef,
-  MatDialogActions,
 } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -89,7 +87,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
 
       // Create users
 
-      const admin = Array.from({ length: length }, (_, k) =>
+      const student = Array.from({ length: length }, (_, k) =>
         createNewStudent(k + 1)
       );
 
