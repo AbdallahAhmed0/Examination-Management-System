@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import { Component,  OnInit, ViewChild,OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-=======
-import { Component, OnChanges, OnInit, ViewChild,OnDestroy } from '@angular/core';
->>>>>>> main
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -32,14 +28,9 @@ export class AllAdminsComponent implements OnInit,OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private adminService:AdminsService,
-<<<<<<< HEAD
               private router:Router,
               private dialog: MatDialog) {
-=======
-              private router:Router) {
-
-
->>>>>>> main
+              
   }
 
   ngOnInit(): void {
