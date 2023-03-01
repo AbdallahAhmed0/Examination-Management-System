@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse, HttpHeaderResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry, tap, throwError } from 'rxjs';
+import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Admin } from './../Models/admin';
 import { environment } from './../../../environments/environment';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -91,17 +91,15 @@ export class AdminsService {
       .pipe(
         retry(2),
         catchError(this.handleError)
-      )
-      .subscribe(data =>{
-
-      });
+      ).subscribe(data => {
+        window.location.reload();
+        this.openSnackBar("Deleted")
+      })
     }
 
     openSnackBar(message: string ) {
       this._snackBar.open(message+" sucessfully","close" ,{
         duration:3000 ,
-
       });
     }
-
 }

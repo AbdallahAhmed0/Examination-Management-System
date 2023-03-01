@@ -9,6 +9,8 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 export class ChoiceQuestionsComponent implements OnInit {
 
   radioGroup!: FormGroup;
+  toggleState = 'radio'; // initialize to radio
+
 
   constructor(private fb: FormBuilder) {
     this.radioGroup = this.fb.group({
@@ -19,7 +21,9 @@ export class ChoiceQuestionsComponent implements OnInit {
   get options(): FormArray {
     return this.radioGroup.get('options') as FormArray;
   }
-
+  toggle() {
+    this.toggleState = (this.toggleState === 'radio') ? 'checkbox' : 'radio';
+  }
   ngOnInit(): void {
   }
   addOption(): void {
@@ -29,7 +33,7 @@ export class ChoiceQuestionsComponent implements OnInit {
     this.options.removeAt(index);
   }
   addquestion(){
-    
+
   }
 
 }

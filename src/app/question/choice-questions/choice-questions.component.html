@@ -1,17 +1,44 @@
+
+
 <div class="form">
-<form [formGroup]="radioGroup" (ngSubmit)="addquestion()">
-  <div formArrayName="options">
-    <div *ngFor="let option of options.controls; let i=index" [formGroupName]="i">
-      <mat-form-field>
-        <!-- <mat-radio-button class="example-radio-button" ></mat-radio-button> -->
-        <mat-label>Option {{ i + 1 }}</mat-label>
-        <input matInput formControlName="value">
-      </mat-form-field>
-      <button mat-icon-button color="warn" *ngIf="options.length > 1" (click)="removeOption(i)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
+
+  <form [formGroup]="radioGroup" (ngSubmit)="addquestion()">
+
+      <div *ngIf="toggleState === 'radio'">
+            <div formArrayName="options">
+              <div *ngFor="let option of options.controls; let i=index" [formGroupName]="i">
+                <mat-form-field >
+                  <mat-label>Option {{ i + 1 }}</mat-label>
+                  <span matPrefix><mat-radio-button></mat-radio-button></span>
+                    <input matInput formControlName="value">
+                </mat-form-field>
+                <button mat-icon-button color="warn" *ngIf="options.length > 1" (click)="removeOption(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+            <button mat-button class="btn-add" type="button" (click)="addOption()"><mat-icon>add</mat-icon> Add Option</button>
+      </div>
+      <div *ngIf="toggleState === 'radio'">
+        <div formArrayName="options">
+          <div *ngFor="let option of options.controls; let i=index" [formGroupName]="i">
+            <mat-form-field >
+              <mat-label>Option {{ i + 1 }}</mat-label>
+              <span matPrefix><mat-checkbox></mat-checkbox></span>
+                <input matInput formControlName="value">
+            </mat-form-field>
+            <button mat-icon-button color="warn" *ngIf="options.length > 1" (click)="removeOption(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+        <button mat-button class="btn-add" type="button" (click)="addOption()"><mat-icon>add</mat-icon> Add Option</button>
   </div>
-  <button mat-button class="btn-add" (click)="addOption()"><mat-icon>add</mat-icon> Add Option</button>
+  <div>
+    <button mat-raised-button (click)="toggle()">Toggle to {{ toggleState === 'radio' ? 'checkbox' : 'radio' }}</button>
+  </div>
+
+
 </form>
+
 </div>
