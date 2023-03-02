@@ -5,6 +5,7 @@ import { AllStudentsComponent } from './Components/all-students/all-students.com
 import { EditStudentsComponent } from './Components/edit-students/edit-students.component';
 
 const routes: Routes = [
+  {path: '', component:AllStudentsComponent},
   {path:'students',component:AllStudentsComponent},
   {path:'students/add',component:AddStudentsComponent},
   {path:'students/edit/:id',component:EditStudentsComponent}

@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './../Shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,7 +18,10 @@ import { EditExamComponent } from './Components/edit-exam/edit-exam.component';
   imports: [
     CommonModule,
     ExamRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
+
   ]
 })
 export class ExamModule { }

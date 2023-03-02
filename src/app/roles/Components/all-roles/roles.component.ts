@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RolesService } from '../../Services/roles.service';
 import { Router } from '@angular/router';
 import { Role } from '../../Models/role';
+
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../../Shared/material/dialoge/dialoge.component';
 
@@ -18,6 +19,7 @@ export class RolesComponent implements OnInit  {
   allRoles!:Role[];
   dataSource: any ;
   role:Role={} as Role;
+
 
 
   constructor(private rolesService:RolesService,
@@ -42,6 +44,7 @@ export class RolesComponent implements OnInit  {
     this.router.navigate([`roles/add`])
   }
   deleteRole(id:number){
+
 
     const dialogRef = this.dialog.open(DialogeComponent, {
       width: '400px',

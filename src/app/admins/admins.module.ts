@@ -1,3 +1,4 @@
+import { RolesModule } from './../roles/roles.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AllAdminsComponent } from './Components/all-admins/all-admins.component';

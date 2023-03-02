@@ -1,23 +1,28 @@
 import { Exam } from './../Models/exam';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExamService {
   httpOption;
 
-  constructor(private httpClient: HttpClient,
-              private _snackBar: MatSnackBar) {
-                this.httpOption = {
-                  headers: new HttpHeaders({
-                    'Content-Type': 'application/json',
-                  }),
-                };
-          }
+  constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
+    this.httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+  }
+
 
   private handleError(error: HttpErrorResponse) {
     // Generic Error handler
@@ -71,14 +76,16 @@ export class ExamService {
 
   deleteExam(id: number) {
     this.httpClient
-      .delete(`${environment.APPURL}/exam/delete/${id}`)
+      .delete(`${environment.APPURL}/exam/delete`)
+
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => {});
   }
 
-  // openSnackBar(message: string) {
-  //   this._snackBar.open(message + ' sucessfully', 'close', {
-  //     duration: 3000,
-  //   });
-  // }
+  openSnackBar(message: string) {
+    this._snackBar.open(message + ' sucessfully', 'close', {
+      duration: 3000,
+    });
+  }
+
 }

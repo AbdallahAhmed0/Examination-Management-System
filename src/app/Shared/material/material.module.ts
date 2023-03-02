@@ -50,13 +50,11 @@ import { DialogeComponent } from './dialoge/dialoge.component';
 @NgModule({
 
   declarations: [
-
     DialogeComponent
   ],
   imports:[
     MatIconModule,
     MatDialogModule
-
   ],
   exports: [
     DialogeComponent,

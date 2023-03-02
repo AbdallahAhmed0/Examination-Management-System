@@ -1,5 +1,11 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
@@ -9,28 +15,28 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-edit-admin',
   templateUrl: './edit-admin.component.html',
-  styleUrls: ['./edit-admin.component.scss']
+  styleUrls: ['./edit-admin.component.scss'],
 })
-export class EditAdminComponent implements OnInit,OnDestroy {
-
+export class EditAdminComponent implements OnInit, OnDestroy {
   hide = true;
 
-  admin:Admin ={} as Admin;
+  admin: Admin = {} as Admin;
   newAdmin!: FormGroup;
-  EditAdmin!:Admin;
-  checkRole:any[]=[];
-  id!:number;
-  roleView!:Role[];
+  EditAdmin!: Admin;
+  checkRole: any[] = [];
+  id!: number;
+  roleView!: Role[];
 
-  consoleError:any;
-  subAdmin?:Subscription;
-  subRoute?:Subscription;
+  consoleError: any;
+  subAdmin?: Subscription;
+  subRoute?: Subscription;
 
-  constructor(private adminService:AdminsService,
-              private router:Router,
-              private activatedRoute:ActivatedRoute,
-              private fb:FormBuilder) { }
-
+  constructor(
+    private adminService: AdminsService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
 
@@ -58,69 +64,64 @@ export class EditAdminComponent implements OnInit,OnDestroy {
 });
 
   }
-  editAdmin(){
-
-    const observer={
-      next: (admin:Admin) => {
+  editAdmin() {
+    const observer = {
+      next: (admin: Admin) => {
         this.router.navigateByUrl('/admins');
         this.adminService.openSnackBar('Updated');
       },
-      error: (err:Error)=>{
-        this.consoleError = err.message
-        }
-    }
+      error: (err: Error) => {
+        this.consoleError = err.message;
+      },
+    };
 
     let testformArray = this.newAdmin.get('roles') as FormArray;
     for (let i of this.checkRole) {
-        testformArray.push(new FormControl(i));
+      testformArray.push(new FormControl(i));
     }
 
-    this.EditAdmin=this.newAdmin.value;
-    this.EditAdmin.id=this.id;
+    this.EditAdmin = this.newAdmin.value;
+    this.EditAdmin.id = this.id;
 
-       this.subAdmin= this.adminService.updateAdmin(this.EditAdmin).subscribe(observer);
+    this.subAdmin = this.adminService
+      .updateAdmin(this.EditAdmin)
+      .subscribe(observer);
   }
 
-
-
-goback(){
-  this.router.navigate(['admins'])
-}
-
-selectedRole(role:any[]){
-  this.checkRole=role;
+  goback() {
+    this.router.navigate(['admins']);
   }
 
+  selectedRole(role: any[]) {
+    this.checkRole = role;
+  }
 
-get firstName() {
-  return this.newAdmin.get('firstName');
+  get firstName() {
+    return this.newAdmin.get('firstName');
+  }
+  get lastName() {
+    return this.newAdmin.get('lastName');
+  }
+  get universityId() {
+    return this.newAdmin.get('universityId');
+  }
+  get email() {
+    return this.newAdmin.get('email');
+  }
+  get password() {
+    return this.newAdmin.get('password');
+  }
+  get role() {
+    return this.newAdmin.get('roles');
+  }
+  get specialization() {
+    return this.newAdmin.get('specialization');
+  }
+  get enable() {
+    return this.newAdmin.get('enable');
+  }
+  ngOnDestroy(): void {
+    this.subAdmin?.unsubscribe();
+    this.subRoute?.unsubscribe();
+  }
 }
-get lastName() {
-  return this.newAdmin.get('lastName');
-}
-get universityId() {
-  return this.newAdmin.get('universityId');
-}
-get email() {
-  return this.newAdmin.get('email');
-}
-get password() {
-  return this.newAdmin.get('password');
-}
-get role() {
-  return this.newAdmin.get('roles');
-}
-get specialization(){
-  return this.newAdmin.get('specialization');
-}
-get enable(){
-  return this.newAdmin.get('enable');
-}
-ngOnDestroy(): void {
-this.subAdmin?.unsubscribe();
-this.subRoute?.unsubscribe();
-}
-
-}
-
-
