@@ -39,43 +39,30 @@ export class EditAdminComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subRoute = this.activatedRoute.paramMap.subscribe((paramMap) => {
-      this.id = Number(paramMap.get('id'));
 
-      this.adminService.getAdminById(this.id).subscribe((data) => {
-        this.admin = data;
-        this.roleView = this.admin.roles;
-        this.checkRole = this.roleView;
-        this.newAdmin = this.fb.group({
-          firstName: [
-            data.firstName,
-            [
-              Validators.required,
-              Validators.minLength(3),
-              Validators.maxLength(20),
-            ],
-          ],
-          lastName: [
-            data.lastName,
-            [
-              Validators.required,
-              Validators.minLength(3),
-              Validators.maxLength(20),
-            ],
-          ],
-          universityId: [data.universityId, [Validators.required]],
-          email: [data.email, [Validators.required, Validators.email]],
-          password: [
-            data.password,
-            [Validators.required, Validators.minLength(6)],
-          ],
-          roles: this.fb.array([]),
-          specialization: [data.specialization, [Validators.required]],
-          enable: [data.enable],
-          locked: [data.locked],
-        });
-      });
-    });
+   this.subRoute= this.activatedRoute.paramMap.subscribe((paramMap)=>{
+      this.id=Number(paramMap.get('id'));
+
+      this.adminService.getAdminById(this.id).subscribe(data =>{
+      this.admin=data;
+      this.roleView=this.admin.roles;
+      this.checkRole=this.roleView;
+      this.newAdmin = this.fb.group({
+        firstName:[data.firstName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
+        lastName: [data.lastName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
+        universityId: [data.universityId,[Validators.required]],
+        email: [data.email, [Validators.required, Validators.email]],
+        password:[data.password,[Validators.required,Validators.minLength(6)]],
+        roles: this.fb.array([]),
+        specialization:[data.specialization,[Validators.required]],
+        enable:[data.enable],
+        locked:[data.locked]
+
+      })
+
+  })
+});
+
   }
   editAdmin() {
     const observer = {

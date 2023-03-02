@@ -39,6 +39,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     public dialog: MatDialog
   ) {}
 
+
   ngOnChanges(): void {
     this.getStudents();
   }
@@ -149,4 +150,5 @@ export class AllStudentsComponent implements OnInit, OnChanges {
   importData() {
     this.router.navigate(['students/import']);
   }
+
 }

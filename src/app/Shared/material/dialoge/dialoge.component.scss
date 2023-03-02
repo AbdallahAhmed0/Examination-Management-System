@@ -1,0 +1,43 @@
+.dialoge{
+  border-radius: 8px;
+}
+button{
+  margin: 5px;
+  width: 70px;
+  height: 35px;
+  font-size: 17px;
+  border-radius:8px;
+  background: #eae9e9;
+  border: none;
+
+}
+
+.delete{
+  background:#f20202;
+  color: #FFF;
+}
+.delete:hover{
+  background: darken(#f20202,10%);
+}
+h2{
+  margin-bottom: 25px;
+  font-weight: 500;
+  font-size: 30px;
+  text-align: center;
+}
+mat-dialog-content{
+  margin-top: 20px;
+  text-align: center;
+}
+mat-icon{
+
+  color: #f20202;
+  width: 90px;
+  height: 85px;
+  font-size: 90px;
+margin-left:37% ;
+}
+.cancel:hover{
+  background: darken(#eae9e9, $amount: 15%);
+}
+

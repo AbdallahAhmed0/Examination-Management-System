@@ -1,0 +1,13 @@
+<div class="contianer" >
+      <p>.</p>
+
+      <div class="form">
+        <button mat-button class="btn-question" [matMenuTriggerFor]="question"><mat-icon>add</mat-icon>Add questions</button>
+        <mat-menu  #question="matMenu" xPosition="after">
+          <button   mat-menu-item >Multible Choice</button>
+          <button   mat-menu-item >Matching</button>
+        </mat-menu>
+
+      </div>
+</div>
+

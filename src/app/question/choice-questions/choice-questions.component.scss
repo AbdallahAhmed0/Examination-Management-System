@@ -1,0 +1,26 @@
+.form{
+  margin:10%;
+}
+mat-form-field{
+width: 35%;
+color: #FFF;
+
+}
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+input{
+  background: #FFF;
+  height: 33px;
+  border-radius: 2px;
+}
+.btn-add{
+  color: #f6f4f4;
+  background: darken(#3cb5be, 8%);
+  border-radius: 8px;
+}
+mat-radio-button{
+  margin-right: 20px;
+}
+

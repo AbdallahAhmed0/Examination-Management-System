@@ -4,6 +4,7 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -21,6 +22,7 @@ export class ExamService {
       }),
     };
   }
+
 
   private handleError(error: HttpErrorResponse) {
     // Generic Error handler
@@ -75,6 +77,7 @@ export class ExamService {
   deleteExam(id: number) {
     this.httpClient
       .delete(`${environment.APPURL}/exam/delete`)
+
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => {});
   }
@@ -84,4 +87,5 @@ export class ExamService {
       duration: 3000,
     });
   }
+
 }

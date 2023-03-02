@@ -21,6 +21,7 @@ import { EditExamComponent } from './Components/edit-exam/edit-exam.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule
+
   ]
 })
 export class ExamModule { }
