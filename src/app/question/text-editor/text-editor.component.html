@@ -1,0 +1,14 @@
+
+<div class="container">
+  <header class="header">
+    <h1>AngularEditor</h1>
+  </header>
+  <div class="content">
+        <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+      <h5 class="html-header">HTML Output</h5>
+      <div class="html">
+        {{ htmlContent }}
+      </div>
+  </div>
+</div>
+

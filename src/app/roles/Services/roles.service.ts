@@ -83,9 +83,7 @@ export class RolesService {
       retry(2),
       catchError(this.handleError)
     ).subscribe()
-
-    this.openSnackBar("Deleted");
-    window.location.reload();
+    this.openSnackBar("Deleted")
 
   }
 }

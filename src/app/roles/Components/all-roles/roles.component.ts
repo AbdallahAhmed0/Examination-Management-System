@@ -3,9 +3,6 @@ import { RolesService } from '../../Services/roles.service';
 import { Router } from '@angular/router';
 import { Role } from '../../Models/role';
 
-import { MatDialog } from '@angular/material/dialog';
-import { DialogeComponent } from '../../../Shared/material/dialoge/dialoge.component';
-
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
@@ -21,10 +18,7 @@ export class RolesComponent implements OnInit  {
   role:Role={} as Role;
 
 
-
-  constructor(private rolesService:RolesService,
-              private router:Router,
-              private dialog: MatDialog) { }
+  constructor(private rolesService:RolesService, private router:Router) { }
 
 
   ngOnInit(): void {
@@ -44,21 +38,10 @@ export class RolesComponent implements OnInit  {
     this.router.navigate([`roles/add`])
   }
   deleteRole(id:number){
+    // this.openDialog()
+  this.rolesService.deleteRole(id);
 
-
-    const dialogRef = this.dialog.open(DialogeComponent, {
-      width: '400px',
-      height:'280px'
-      });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'confirm') {
-
-        this.rolesService.deleteRole(id);
-      }
-      });
-    }
-  
+  }
   editRole(id:number){
     this.router.navigate([`roles/edit/${id}`])
 

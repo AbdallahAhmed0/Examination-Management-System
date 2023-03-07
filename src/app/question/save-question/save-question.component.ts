@@ -7,9 +7,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SaveQuestionComponent implements OnInit {
 
-  constructor() { }
-
+  selectedComponents:any[]=[];
+  sentArrayComponenet:any[]=[];
+  index:number=1;
   ngOnInit(): void {
+  }
+
+
+  showChoiceQuestions() {
+    this.selectedComponents.push({id:this.index,name:'choice'});
+    this.index++;
+  }
+
+  showTextQuestions() {
+    this.selectedComponents.push({id:this.index,name:'text'});
+    this.index++;
+  }
+
+  showTextEditor() {
+    this.selectedComponents.push({id:this.index,name:'coding'});
+    this.index++;
+  }
+  removeChild(child: any) {
+    const index = this.selectedComponents.indexOf(child);
+    if (index >= 0) {
+      this.selectedComponents.splice(index, 1);
+    }
+}
+  upChild(child: any) {
+    const index = this.selectedComponents.indexOf(child);
+    if (index >= 1) {
+      [this.selectedComponents[index],this.selectedComponents[index-1]]=[this.selectedComponents[index-1],this.selectedComponents[index]]
+    }
+  }
+  downChild(child: any) {
+    const index = this.selectedComponents.indexOf(child);
+    if (index < this.selectedComponents.length) {
+      [this.selectedComponents[index],this.selectedComponents[index+1]]=[this.selectedComponents[index+1],this.selectedComponents[index]]
+    }
   }
 
 }

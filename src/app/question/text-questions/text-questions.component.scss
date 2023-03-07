@@ -1,0 +1,63 @@
+
+mat-form-field{
+  width: 60%;
+}
+
+input,textarea{
+  display: inline;
+  background: #FFFFFF;
+  height: 32px;
+  width: 70%;
+  border-radius: 5px;
+  padding-left: 10px;
+
+}
+.card{
+  margin: 60px;
+  background: #efebeb;
+  border: none;
+}
+
+.question{
+  height: 38px;
+  width: 100%;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+.delete:hover{
+  color:darken(#777777, 15%);
+}
+.up:hover,.down:hover{
+  color:darken(#777777, 35%);
+}
+.point{
+  height: 25px;
+  width: 60px;
+  border-radius: 7px;
+}
+.label-point{
+  font-size: 15px;
+  margin-right:8px;
+  margin-top: 15px;
+}
+.actions{
+  float: right;
+  color: #777777;
+}
+a{
+  cursor: pointer;
+  margin: 5px;
+}
+mat-divider {
+  background-color: #b4b4b4;
+  width: 70%;
+  text-align: center;
+
+}
+::ng-deep  .mat-form-field-underline {
+  display: none;
+}
+::ng-deep  .input.mat-form-field{
+width: 40%;
+}
+

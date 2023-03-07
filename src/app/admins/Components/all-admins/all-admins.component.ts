@@ -1,6 +1,4 @@
-
-import { Component,  OnInit, ViewChild,OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnChanges, OnInit, ViewChild,OnDestroy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,36 +8,41 @@ import { utils, writeFile } from 'xlsx';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
 
-import {DialogeComponent} from '../../../Shared/material/dialoge/dialoge.component'
 
 @Component({
   selector: 'app-all-admins',
   templateUrl: './all-admins.component.html',
-  styleUrls: ['./all-admins.component.scss'],
+  styleUrls: ['./all-admins.component.scss']
 })
-
-export class AllAdminsComponent implements OnInit,OnDestroy {
+export class AllAdminsComponent implements OnInit,OnChanges,OnDestroy {
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName','email', 'universityId','enable','specialization','actions'];
   dataSource!: MatTableDataSource<any>;
 
-  subAdmin?: Subscription;
-  admins!: Admin[];
+  subAdmin?:Subscription;
+  admins!:Admin[];
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
   constructor(private adminService:AdminsService,
-              private router:Router,
-              private dialog: MatDialog) {
-              
+              private router:Router) {
+
+
   }
+
+  ngOnChanges(): void {
+    this.getAdmins();
+  }
+
 
   ngOnInit(): void {
 
       this.getAdmins();
+
   }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -51,25 +54,21 @@ export class AllAdminsComponent implements OnInit,OnDestroy {
   }
 
 
+
+
+
 edit(id:number){
 
   this.router.navigate(['admins/edit',id]);
 }
 delete(id:number){
 
-  const dialogRef = this.dialog.open(DialogeComponent, {
-    width: '400px',
-    height:'280px'
-    });
+  this.adminService.deleteAdmin(id);
+  alert('Deleted Successfully');
+  window.location.reload();
 
-  dialogRef.afterClosed().subscribe((result) => {
-    if (result === 'confirm') {
 
-        this.adminService.deleteAdmin(id);
-      }
-    });
-  }
-
+}
 add(){
   this.router.navigate(['admins/add']);
 }
@@ -142,3 +141,5 @@ this.subAdmin?.unsubscribe();
 }
 
 }
+
+
