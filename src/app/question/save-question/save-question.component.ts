@@ -42,7 +42,7 @@ export class SaveQuestionComponent implements OnInit {
   }
   downChild(child: any) {
     const index = this.selectedComponents.indexOf(child);
-    if (index < this.selectedComponents.length) {
+    if (index < this.selectedComponents.length-1) {
       [this.selectedComponents[index],this.selectedComponents[index+1]]=[this.selectedComponents[index+1],this.selectedComponents[index]]
     }
   }
