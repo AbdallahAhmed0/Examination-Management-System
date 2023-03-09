@@ -14,6 +14,8 @@ export class TextQuestionsComponent implements OnInit {
   @Output() onDown = new EventEmitter<void>();
   @Input() indexComponent!:number;
 
+  questionType:string='Matching';
+
   constructor(private fb: FormBuilder) {
 
   }
@@ -22,7 +24,7 @@ export class TextQuestionsComponent implements OnInit {
     this.form = this.fb.group({
       questionText: ['', Validators.required],
       points: [0, Validators.required],
-      questionType: ['', Validators.required],
+      questionType: [this.questionType, Validators.required],
       questionAnswers: this.fb.group({
         answerText: ['', Validators.required],
         correctAnswer: [false]

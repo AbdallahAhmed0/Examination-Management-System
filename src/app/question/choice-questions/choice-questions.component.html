@@ -1,3 +1,5 @@
+<p>{{form.value |json}}</p>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
   <mat-card class="card" >
@@ -22,7 +24,7 @@
                 </ng-container>
                 <ng-template #singleAnswer>
                   <mat-radio-group formControlName="correctAnswer">
-                    <mat-radio-button class="radio" ></mat-radio-button>
+                    <mat-radio-button class="radio" id="{{i*2}}" [value]="true"></mat-radio-button>
                   </mat-radio-group>
                 </ng-template>
                 <input matInput formControlName="answerText" required>

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatRadioChange } from '@angular/material/radio';
 
 @Component({
   selector: 'app-choice-questions',
@@ -14,7 +15,6 @@ export class ChoiceQuestionsComponent implements OnInit {
   @Input() indexComponent!:number;
 
 
-
   isMultipleChoice: boolean = false;
 
   form!: FormGroup;
@@ -27,7 +27,7 @@ export class ChoiceQuestionsComponent implements OnInit {
     this.form = this.fb.group({
       questionText: ['', Validators.required],
       points: [0, Validators.required],
-      questionType: ['', Validators.required],
+      questionType: ['Multiple Choice', Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
     });
   }
@@ -59,6 +59,11 @@ export class ChoiceQuestionsComponent implements OnInit {
 
     }
   }
+  // onRadioChange(event: MatRadioChange) {
+  //   this.form.patchValue({
+  //     correctAnswer: event.value
+  //   });
+  // }
   autoResize(textarea: any) {
     textarea.style.height = 'auto';
     textarea.style.height = `${textarea.scrollHeight}px`;
@@ -78,6 +83,11 @@ export class ChoiceQuestionsComponent implements OnInit {
     }
     btnToggle(){
       this.isMultipleChoice=!this.isMultipleChoice;
+      if(this.isMultipleChoice){
+        this.form.get('questionType')?.setValue('Multiple Answers');
+      }else{
+        this.form.get('questionType')?.setValue('Multiple Choice');
+      }
     }
   }
 
