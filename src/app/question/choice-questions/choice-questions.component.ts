@@ -11,6 +11,8 @@ export class ChoiceQuestionsComponent implements OnInit {
   @Output() onDelete = new EventEmitter<void>();
   @Output() onUP = new EventEmitter<void>();
   @Output() onDown = new EventEmitter<void>();
+  @Input() indexComponent!:number;
+
 
 
   isMultipleChoice: boolean = false;

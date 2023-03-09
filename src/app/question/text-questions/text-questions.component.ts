@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -12,6 +12,7 @@ export class TextQuestionsComponent implements OnInit {
   @Output() onDelete = new EventEmitter<void>();
   @Output() onUP = new EventEmitter<void>();
   @Output() onDown = new EventEmitter<void>();
+  @Input() indexComponent!:number;
 
   constructor(private fb: FormBuilder) {
 

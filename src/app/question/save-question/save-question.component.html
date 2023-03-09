@@ -2,13 +2,13 @@
 
       <div class="form">
 
-        <ng-container *ngFor="let selectedComponent of selectedComponents">
+        <ng-container *ngFor="let selectedComponent of selectedComponents; let i = index" >
           <app-choice-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
-          (onDelete)="removeChild(selectedComponent)"  *ngIf="selectedComponent.name === 'choice'">
+          (onDelete)="removeChild(selectedComponent)" [indexComponent]="i" *ngIf="selectedComponent.name === 'choice'">
         </app-choice-questions>
 
           <app-text-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
-          (onDelete)="removeChild(selectedComponent)" *ngIf="selectedComponent.name === 'text'">
+          (onDelete)="removeChild(selectedComponent)"  [indexComponent]="i" *ngIf="selectedComponent.name === 'text'">
 
           </app-text-questions>
 

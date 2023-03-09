@@ -7,15 +7,15 @@
       <a title="up" (click)="Up()"><mat-icon class="up">arrow_upward</mat-icon></a>
       <a title="down" (click)="Down()"><mat-icon class="down">arrow_downward</mat-icon></a>
     </div>
-
+    <span class="index">{{++indexComponent}}.</span>
     <mat-form-field>
       <mat-label>Question Text</mat-label>
       <textarea matInput class="question"  formControlName="questionText" required (input)="autoResize($event.target)"></textarea>
     </mat-form-field>
     <mat-card-content>
-      <div formArrayName="questionAnswers">
+      <div style="margin-left: 20px;" formArrayName="questionAnswers">
           <mat-form-field>
-            <textarea matInput class="question" placeholder="Write Correct Answer here" formControlName="answerText" required (input)="autoResize($event.target)"></textarea>
+            <textarea matInput  class="question" placeholder="Write Correct Answer here" formControlName="answerText" required (input)="autoResize($event.target)"></textarea>
           </mat-form-field>
       </div>
     </mat-card-content>
