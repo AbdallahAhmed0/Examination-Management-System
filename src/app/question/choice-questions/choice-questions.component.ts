@@ -35,8 +35,9 @@ export class ChoiceQuestionsComponent implements OnInit {
   createAnswer(): FormGroup {
     return this.fb.group({
       answerText: [`option ${this.index}`, Validators.required],
-      correctAnswer: [false]
+      correctAnswer: [false],
     });
+
   }
 
   get answers(): FormArray {
@@ -52,6 +53,16 @@ export class ChoiceQuestionsComponent implements OnInit {
     this.answers.removeAt(i);
     this.index--;
   }
+  onRadioChange(event:any){
+
+    for (let i = 0; i < this.answers.length; i++) {
+      if (i !== event.value) {
+        this.answers.at(i).patchValue({ correctAnswer: false });
+      }
+    }
+  
+    (<FormArray>this.form.get('questionAnswers')).at(event.value).patchValue({ correctAnswer: true });
+  }
 
   onSubmit() {
     if (this.form.valid) {
@@ -59,11 +70,6 @@ export class ChoiceQuestionsComponent implements OnInit {
 
     }
   }
-  // onRadioChange(event: MatRadioChange) {
-  //   this.form.patchValue({
-  //     correctAnswer: event.value
-  //   });
-  // }
   autoResize(textarea: any) {
     textarea.style.height = 'auto';
     textarea.style.height = `${textarea.scrollHeight}px`;

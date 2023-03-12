@@ -22,10 +22,8 @@
                 <ng-container *ngIf="isMultipleChoice; else singleAnswer">
                   <mat-checkbox class="check" formControlName="correctAnswer"></mat-checkbox>
                 </ng-container>
-                <ng-template #singleAnswer>
-                  <mat-radio-group formControlName="correctAnswer">
-                    <mat-radio-button class="radio" id="{{i*2}}" [value]="true"></mat-radio-button>
-                  </mat-radio-group>
+                <ng-template #singleAnswer >
+                    <mat-radio-button class="radio" (change)="onRadioChange($event)"[value]="i"></mat-radio-button>
                 </ng-template>
                 <input matInput formControlName="answerText" required>
               </mat-form-field>

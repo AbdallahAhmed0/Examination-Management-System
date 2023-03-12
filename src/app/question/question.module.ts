@@ -8,9 +8,9 @@ import { MaterialModule } from '../Shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { FormsModule } from '@angular/forms';
-import { AngularEditorModule } from '@kolkov/angular-editor';
 import { HttpClientModule } from '@angular/common/http';
 import { TextQuestionsComponent } from './text-questions/text-questions.component'
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 
 @NgModule({
@@ -26,8 +26,8 @@ import { TextQuestionsComponent } from './text-questions/text-questions.componen
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularEditorModule,
-    HttpClientModule
+    HttpClientModule,
+    EditorModule
 
 
   ]
