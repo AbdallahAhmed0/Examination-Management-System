@@ -108,4 +108,18 @@ width: 40%;
   font-size: 15px;
 
 }
+.message{
+  color: #777777;
+}
+.message:hover{
+  color: darken(#777777, 15%);
+}
+.input-message{
+  margin: 20px;
+  margin-left: 50px;
+}
+.mat-radio-button input:checked + .mat-radio-outer-circle .mat-radio-inner-circle {
+  background-color: #3cb5be;
+}
+
 

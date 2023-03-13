@@ -16,6 +16,7 @@ export class ChoiceQuestionsComponent implements OnInit {
 
 
   isMultipleChoice: boolean = false;
+  isHidden:boolean[]=[false];
 
   form!: FormGroup;
   index:number=1;
@@ -36,6 +37,7 @@ export class ChoiceQuestionsComponent implements OnInit {
     return this.fb.group({
       answerText: [`option ${this.index}`, Validators.required],
       correctAnswer: [false],
+      comment:['']
     });
 
   }
@@ -60,7 +62,7 @@ export class ChoiceQuestionsComponent implements OnInit {
         this.answers.at(i).patchValue({ correctAnswer: false });
       }
     }
-  
+
     (<FormArray>this.form.get('questionAnswers')).at(event.value).patchValue({ correctAnswer: true });
   }
 
@@ -95,6 +97,11 @@ export class ChoiceQuestionsComponent implements OnInit {
         this.form.get('questionType')?.setValue('Multiple Choice');
       }
     }
+    toggleInput(index:number) {
+      this.isHidden[index] = !this.isHidden[index];
+    }
+
   }
+
 
 
