@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatRadioChange } from '@angular/material/radio';
 
 @Component({
   selector: 'app-choice-questions',
   templateUrl: './choice-questions.component.html',
-  styleUrls: ['./choice-questions.component.scss']
+  styleUrls: ['./choice-questions.component.scss'],
+
 })
 export class ChoiceQuestionsComponent implements OnInit {
 

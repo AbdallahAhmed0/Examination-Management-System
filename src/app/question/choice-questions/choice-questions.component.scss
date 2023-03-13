@@ -1,7 +1,4 @@
 
-mat-form-field{
-  width: 60%;
-}
 .add-option{
   color: #FFFFFF;
   background: darken(#3cb5be, 8%);
@@ -16,10 +13,18 @@ input,textarea{
   display: inline;
   background: #FFFFFF;
   height: 32px;
-  width: 70%;
+  width: 50%;
   border-radius: 5px;
   padding-left: 10px;
+  margin-bottom: 20px;
+  border: none;
 
+}
+input:checked, textarea:checked {
+  border: 1px solid #3cb5be !important;
+}
+.input-message:checked,.question:checked{
+  border: 1px solid #3cb5be ;
 }
 .card{
   margin: 60px;
@@ -41,7 +46,7 @@ input,textarea{
 }
 .question{
   height: 38px;
-  width: 100%;
+  width: 90%;
   border-radius: 5px;
   padding-left: 10px;
 }
@@ -68,12 +73,6 @@ mat-divider {
 a{
   cursor: pointer;
   margin: 5px;
-}
-::ng-deep  .mat-form-field-underline {
-  display: none;
-}
-::ng-deep  .input.mat-form-field{
-width: 40%;
 }
 
 ::ng-deep .check .mat-checkbox-inner-container {
@@ -118,8 +117,3 @@ width: 40%;
   margin: 20px;
   margin-left: 50px;
 }
-.mat-radio-button input:checked + .mat-radio-outer-circle .mat-radio-inner-circle {
-  background-color: #3cb5be;
-}
-
-
