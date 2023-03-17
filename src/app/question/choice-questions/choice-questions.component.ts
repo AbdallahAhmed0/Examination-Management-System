@@ -72,22 +72,18 @@ export class ChoiceQuestionsComponent implements OnInit {
     this.form.get('questionText')?.setValue(this.questionTextValue);
 
   }
-  getAnswerText(value:string){
+  getAnswerText(value:string,index:number){
     this.answerTextValue=value;
-    this.answers.at(0).patchValue({ answerText: this.answerTextValue });
+    this.answers.at(index).patchValue({ answerText: this.answerTextValue });
 
   }
-  getComment(value:string){
+  getComment(value:string,index:number){
     this.commentValue=value;
-    this.answers.at(0).patchValue({ comment: this.commentValue });
+    this.answers.at(index).patchValue({ comment: this.commentValue });
 
   }
   onSubmit() {
-    this.form.get('questionText')?.setValue(this.questionTextValue);
-    this.answers.at(0).patchValue({ answerText: this.answerTextValue });
-    this.answers.at(0).patchValue({ comment: this.commentValue });
 
-    console.log(this.form.value);
   }
 
   autoResize(textarea: any) {

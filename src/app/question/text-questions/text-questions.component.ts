@@ -53,11 +53,7 @@ export class TextQuestionsComponent implements OnInit {
 
 
   onSubmit() {
-    // this.form.get('questionText')?.setValue(this.questionTextValue);
-    // this.answers.at(0).patchValue({ answerText: this.answerTextValue });
-    // this.answers.at(0).patchValue({ comment: this.commentValue });
-
-    // console.log(this.form.value);
+    
   }
   autoResize(textarea: any) {
     textarea.style.height = 'auto';
