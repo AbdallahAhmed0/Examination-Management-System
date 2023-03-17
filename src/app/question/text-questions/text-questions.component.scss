@@ -3,7 +3,7 @@ mat-form-field{
   width: 60%;
 }
 
-input,textarea{
+input{
   display: inline;
   background: #FFFFFF;
   height: 32px;
@@ -19,10 +19,12 @@ input,textarea{
 }
 
 .question{
-  height: 38px;
-  width: 100%;
-  border-radius: 5px;
-  padding-left: 10px;
+  display: inline;
+}
+.answer{
+  width: 90%;
+  margin-left: 20px;
+  display: inline;
 }
 .delete:hover{
   color:darken(#777777, 15%);
@@ -34,6 +36,7 @@ input,textarea{
   height: 25px;
   width: 60px;
   border-radius: 7px;
+  border: none;
 }
 .label-point{
   font-size: 15px;
@@ -47,6 +50,8 @@ input,textarea{
 a{
   cursor: pointer;
   margin: 5px;
+  display: inline;
+  margin-left: 25px;
 }
 mat-divider {
   background-color: #b4b4b4;
@@ -66,4 +71,16 @@ width: 40%;
   margin-right: 5px;
   font-size: 15px;
 
+}
+
+.input-message{
+  margin-left: 20px;
+}
+.message{
+  color: #777777;
+  height: 40px;
+  padding-top:15px ;
+}
+.message:hover{
+  color: darken(#777777, 15%);
 }

@@ -1,4 +1,8 @@
 
+mat-form-field{
+  width: 80%;
+  margin-top: 25px;
+}
 .add-option{
   color: #FFFFFF;
   background: darken(#3cb5be, 8%);
@@ -9,22 +13,15 @@
     background: darken(#3cb5be, 15%);
 
   }
-input,textarea{
+input{
   display: inline;
   background: #FFFFFF;
   height: 32px;
-  width: 50%;
+  width: 60%;
   border-radius: 5px;
   padding-left: 10px;
-  margin-bottom: 20px;
   border: none;
 
-}
-input:checked, textarea:checked {
-  border: 1px solid #3cb5be !important;
-}
-.input-message:checked,.question:checked{
-  border: 1px solid #3cb5be ;
 }
 .card{
   margin: 60px;
@@ -46,7 +43,7 @@ input:checked, textarea:checked {
 }
 .question{
   height: 38px;
-  width: 90%;
+  width: 100%;
   border-radius: 5px;
   padding-left: 10px;
 }
@@ -68,11 +65,18 @@ mat-divider {
 }
 .actions{
   float: right;
+  margin-right: 20px;
   color: #777777;
 }
 a{
   cursor: pointer;
   margin: 5px;
+}
+::ng-deep  .mat-form-field-underline {
+  display: none;
+}
+::ng-deep  .input.mat-form-field{
+width: 40%;
 }
 
 ::ng-deep .check .mat-checkbox-inner-container {
@@ -89,6 +93,7 @@ a{
 }
 .radio{
   margin: 5px;
+  margin-left: 0px;
   background: #FFF;
   width: 20px;
   border-radius: 20px;
@@ -114,6 +119,16 @@ a{
   color: darken(#777777, 15%);
 }
 .input-message{
-  margin: 20px;
-  margin-left: 50px;
+width: 75%;
 }
+
+
+// ::ng-deep .mat-radio-button.mat-accent .mat-radio-outer-circle {
+//   border: 1px solid #777777; /* Replace with your desired color */
+//   border-color: #777777;
+// }
+
+// ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+//   background-color: #3cb5be; /* Replace with your desired color */
+
+// }

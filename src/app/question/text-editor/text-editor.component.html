@@ -1,7 +1,30 @@
-<editor
-apiKey="gqc2fs6so21b0rdo6ifokt5fvlv4jkh93cy3oig50l9h8twa"
-[init]="{
-  selector:'textarea',
-  plugins: 'charmap emoticons'
-}"
-></editor>
+  <div class="editor">
+   <ng-container *ngIf="placeholder == 'Question Text'">
+        <textarea  [froalaEditor]="froalaOption1"
+        (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
+        (ngModelChange)="onEditorValueChange($event)">
+      </textarea>
+  </ng-container>
+
+   <ng-container *ngIf="placeholder == 'Answer Text'">
+    <textarea  [froalaEditor]="froalaOption2"
+    (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
+    (ngModelChange)="onEditorValueChange($event)">
+  </textarea>
+</ng-container>
+
+<ng-container *ngIf="placeholder == 'Comment'">
+  <textarea  [froalaEditor]="froalaOption3"
+  (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
+  (ngModelChange)="onEditorValueChange($event)">
+</textarea>
+</ng-container>
+
+<ng-container *ngIf="placeholder == 'options'">
+  <textarea  [froalaEditor]="froalaOption4"
+  (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
+  (ngModelChange)="onEditorValueChange($event)">
+</textarea>
+</ng-container>
+
+</div>

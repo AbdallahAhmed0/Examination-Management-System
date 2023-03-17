@@ -10,7 +10,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TextQuestionsComponent } from './text-questions/text-questions.component'
-import { EditorModule } from '@tinymce/tinymce-angular';
+
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 
 @NgModule({
@@ -27,8 +28,9 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    EditorModule
 
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
 
   ]
 })

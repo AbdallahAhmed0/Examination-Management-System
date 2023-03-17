@@ -14,12 +14,14 @@ export class ChoiceQuestionsComponent implements OnInit {
   @Output() onDown = new EventEmitter<void>();
   @Input() indexComponent!:number;
 
+  questionTextValue:string='';
+  answerTextValue:string='';
+  commentValue:string='';
 
   isMultipleChoice: boolean = false;
   isHidden:boolean[]=[false];
 
   form!: FormGroup;
-  index:number=1;
   constructor(private fb: FormBuilder) {
 
   }
@@ -35,7 +37,7 @@ export class ChoiceQuestionsComponent implements OnInit {
 
   createAnswer(): FormGroup {
     return this.fb.group({
-      answerText: [`option ${this.index}`, Validators.required],
+      answerText: ['', Validators.required],
       correctAnswer: [false],
       comment:['']
     });
@@ -47,13 +49,11 @@ export class ChoiceQuestionsComponent implements OnInit {
   }
 
   addAnswer() {
-    this.index++;
     this.answers.push(this.createAnswer());
   }
 
   removeAnswer(i: number) {
     this.answers.removeAt(i);
-    this.index--;
   }
   onRadioChange(event:any){
 
@@ -66,12 +66,30 @@ export class ChoiceQuestionsComponent implements OnInit {
     (<FormArray>this.form.get('questionAnswers')).at(event.value).patchValue({ correctAnswer: true });
   }
 
-  onSubmit() {
-    if (this.form.valid) {
-      console.log(this.form.value);
 
-    }
+  getQuestionText(value:string){
+    this.questionTextValue=value;
+    this.form.get('questionText')?.setValue(this.questionTextValue);
+
   }
+  getAnswerText(value:string){
+    this.answerTextValue=value;
+    this.answers.at(0).patchValue({ answerText: this.answerTextValue });
+
+  }
+  getComment(value:string){
+    this.commentValue=value;
+    this.answers.at(0).patchValue({ comment: this.commentValue });
+
+  }
+  onSubmit() {
+    this.form.get('questionText')?.setValue(this.questionTextValue);
+    this.answers.at(0).patchValue({ answerText: this.answerTextValue });
+    this.answers.at(0).patchValue({ comment: this.commentValue });
+
+    console.log(this.form.value);
+  }
+
   autoResize(textarea: any) {
     textarea.style.height = 'auto';
     textarea.style.height = `${textarea.scrollHeight}px`;

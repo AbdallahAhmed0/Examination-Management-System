@@ -8,11 +8,12 @@
       <a title="up" (click)="Up()"><mat-icon class="up">arrow_upward</mat-icon></a>
       <a title="down" (click)="Down()"><mat-icon class="down">arrow_downward</mat-icon></a>
     </div>
-    <span class="index">{{++indexComponent}}.</span>
+    <span class="index">{{indexComponent}}.</span>
 
-      <textarea  class="question" placeholder="Question Text" formControlName="questionText" required (input)="autoResize($event.target)"></textarea>
+    <app-text-editor (editorValue)="getQuestionText($event)" [placeholder]="'Question Text'" ></app-text-editor>
+    <input type="hidden" formControlName="questionText" >
 
-      <mat-card-content>
+    <mat-card-content>
       <div formArrayName="questionAnswers">
         <ng-container *ngFor="let answerItem of answers.controls; let i = index">
           <div [formGroupName]="i">
@@ -22,18 +23,23 @@
               <ng-template #singleAnswer >
                 <mat-radio-button class="radio" (change)="onRadioChange($event)"[value]="i"></mat-radio-button>
               </ng-template>
-              <input matInput class="input-message" formControlName="answerText" required>
-              <ng-container *ngIf="isHidden[i]">
-                <input matInput placeholder="Message for those who choose this" class="input-message" formControlName="comment">
-              </ng-container>
 
-            <a mat-icon-button title="message" (click)="toggleInput(i)">
-              <mat-icon class="message">message</mat-icon>
-            </a>
+              <app-text-editor (editorValue)="getQuestionText($event)" [index]="i" [placeholder]="'options'" ></app-text-editor>
+              <input type="hidden" formControlName="answerText" >
 
+              <a mat-icon-button  title="message" (click)="toggleInput(i)">
+                <mat-icon class="message">message</mat-icon>
+              </a>
             <button mat-icon-button (click)="removeAnswer(i)" *ngIf="answers.length > 1">
               <mat-icon class="delete-icon">delete</mat-icon>
             </button>
+
+              <ng-container *ngIf="isHidden[i]">
+                <app-text-editor class="input-message"  (editorValue)="getComment($event)" [placeholder]="'Comment'"></app-text-editor>
+                <input type="hidden" formControlName="comment">
+              </ng-container>
+
+
           </div>
         </ng-container>
 
@@ -49,4 +55,5 @@
       <mat-slide-toggle color="primary" class="btn-toggle"(click)="btnToggle()">Multiple Answers</mat-slide-toggle>
 
   </mat-card>
+  <button type="submit"></button>
 </form>

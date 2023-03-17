@@ -1,3 +1,4 @@
+<p>{{form.value |json}}</p>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
   <mat-card class="card">
@@ -7,16 +8,32 @@
       <a title="up" (click)="Up()"><mat-icon class="up">arrow_upward</mat-icon></a>
       <a title="down" (click)="Down()"><mat-icon class="down">arrow_downward</mat-icon></a>
     </div>
-    <span class="index">{{++indexComponent}}.</span>
-    <mat-form-field>
-      <mat-label>Question Text</mat-label>
-      <textarea matInput class="question"  formControlName="questionText" required (input)="autoResize($event.target)"></textarea>
-    </mat-form-field>
+    <span class="index">{{indexComponent}}.</span>
+      <div class="question">
+        <app-text-editor (editorValue)="getQuestionText($event)" [placeholder]="'Question Text'" ></app-text-editor>
+        <input type="hidden" formControlName="questionText" >
+    </div>
     <mat-card-content>
-      <div style="margin-left: 20px;" formArrayName="questionAnswers">
-          <mat-form-field>
-            <textarea matInput  class="question" placeholder="Write Correct Answer here" formControlName="answerText" required (input)="autoResize($event.target)"></textarea>
-          </mat-form-field>
+
+      <div class="answer" formArrayName="questionAnswers">
+        <ng-container *ngFor="let answerItem of answers.controls; let i = index">
+          <div [formGroupName]="i">
+
+                <app-text-editor class="input-message" (editorValue)="getAnswerText($event)" [placeholder]="'Answer Text'"></app-text-editor>
+                <input type="hidden" formControlName="answerText" >
+
+                <a mat-icon-button  title="message" (click)="toggleInput()">
+                  <mat-icon class="message">message</mat-icon>
+                </a>
+
+                <ng-container *ngIf="isHidden">
+                  <app-text-editor class="input-message"  (editorValue)="getComment($event)" [placeholder]="'Comment'"></app-text-editor>
+                  <input type="hidden" formControlName="comment">
+                </ng-container>
+
+
+          </div>
+        </ng-container>
       </div>
     </mat-card-content>
     <mat-divider></mat-divider>
@@ -24,6 +41,4 @@
     <input matInput class="point"  min="0" max="200" maxlength="3" type="number" formControlName="points" required>
 
   </mat-card>
-
 </form>
-
