@@ -1,4 +1,3 @@
-import { Subscription } from 'rxjs';
 import {
   FormGroup,
   FormBuilder,
@@ -6,9 +5,9 @@ import {
   FormControl,
   FormArray,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Student } from './../../Models/student';
+import { Students } from './../../Models/student';
 import { StudentsService } from '../../Services/students.service';
 
 @Component({
@@ -18,10 +17,8 @@ import { StudentsService } from '../../Services/students.service';
 })
 export class AddStudentsComponent implements OnInit {
   hide = true;
-  consoleError: any;
   newStudent!: FormGroup;
   checkRole: any[] = [];
-  subStudent?: Subscription;
 
   constructor(
     private studentsService: StudentsService,
@@ -50,22 +47,22 @@ export class AddStudentsComponent implements OnInit {
       universityId: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: [''],
-      roles: this.fb.array([]),
+      roles: this.fb.array(this.checkRole),
       enable: [true],
       locked: [false],
       year: [, [Validators.required]],
     });
   }
 
+
   addStudent() {
     const observer = {
-      next: (student: Student) => {
+      next: (student: Students) => {
         alert('Student Added Successfuly');
         this.router.navigateByUrl('/students');
-        this.studentsService.openSnackBar('Added');
       },
       error: (err: Error) => {
-        this.consoleError = err.message;
+        alert(err.message);
       },
     };
     let testformArray = this.newStudent.get('roles') as FormArray;
@@ -78,7 +75,7 @@ export class AddStudentsComponent implements OnInit {
       );
     }
     this.studentsService.addStudent(this.newStudent.value).subscribe(observer);
-    console.log(this.newStudent.value);
+    console.log(this.newStudent.value)
   }
 
   goBack() {
@@ -112,9 +109,5 @@ export class AddStudentsComponent implements OnInit {
   }
   get enable() {
     return this.newStudent.get('enable');
-  }
-
-  ngOnDestroy(): void {
-    this.subStudent?.unsubscribe();
   }
 }

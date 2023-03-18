@@ -1,44 +1,56 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
 
+  <mat-card class="card" >
+    <div class="actions">
+      <a title="delete" (click)="deleteQuestion()"><mat-icon class="delete">delete</mat-icon></a>
+      <a title="up" (click)="Up()"><mat-icon class="up">arrow_upward</mat-icon></a>
+      <a title="down" (click)="Down()"><mat-icon class="down">arrow_downward</mat-icon></a>
+    </div>
+    <span class="index">{{indexComponent}}.</span>
 
-<div class="form">
+    <app-text-editor (editorValue)="getQuestionText($event)" [placeholder]="'Question Text'" ></app-text-editor>
+    <input type="hidden" formControlName="questionText" >
 
-  <form [formGroup]="radioGroup" (ngSubmit)="addquestion()">
+    <mat-card-content>
+      <div formArrayName="questionAnswers">
+        <ng-container *ngFor="let answerItem of answers.controls; let i = index">
+          <div [formGroupName]="i">
+              <ng-container *ngIf="isMultipleChoice; else singleAnswer">
+                <mat-checkbox class="check" formControlName="correctAnswer"></mat-checkbox>
+              </ng-container>
+              <ng-template #singleAnswer >
+                <mat-radio-button class="radio" (change)="onRadioChange($event)"[value]="i"></mat-radio-button>
+              </ng-template>
 
-      <div *ngIf="toggleState === 'radio'">
-            <div formArrayName="options">
-              <div *ngFor="let option of options.controls; let i=index" [formGroupName]="i">
-                <mat-form-field >
-                  <mat-label>Option {{ i + 1 }}</mat-label>
-                  <span matPrefix><mat-radio-button></mat-radio-button></span>
-                    <input matInput formControlName="value">
-                </mat-form-field>
-                <button mat-icon-button color="warn" *ngIf="options.length > 1" (click)="removeOption(i)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-            </div>
-            <button mat-button class="btn-add" type="button" (click)="addOption()"><mat-icon>add</mat-icon> Add Option</button>
-      </div>
-      <div *ngIf="toggleState === 'radio'">
-        <div formArrayName="options">
-          <div *ngFor="let option of options.controls; let i=index" [formGroupName]="i">
-            <mat-form-field >
-              <mat-label>Option {{ i + 1 }}</mat-label>
-              <span matPrefix><mat-checkbox></mat-checkbox></span>
-                <input matInput formControlName="value">
-            </mat-form-field>
-            <button mat-icon-button color="warn" *ngIf="options.length > 1" (click)="removeOption(i)">
-              <mat-icon>delete</mat-icon>
+              <app-text-editor class="option" (editorValue)="getAnswerText($event,i)" [index]="i" [placeholder]="'options'" ></app-text-editor>
+              <input type="hidden" formControlName="answerText" >
+
+              <a mat-icon-button  title="message" (click)="toggleInput(i)">
+                <mat-icon class="message">message</mat-icon>
+              </a>
+            <button mat-icon-button (click)="removeAnswer(i)" *ngIf="answers.length > 1">
+              <mat-icon class="delete-icon">delete</mat-icon>
             </button>
+
+              <ng-container *ngIf="isHidden[i]">
+                <app-text-editor class="input-message"  (editorValue)="getComment($event,i)" [commentValue]="answers.at(i).value.comment" [placeholder]="'Comment'"></app-text-editor>
+                <input type="hidden" formControlName="comment">
+              </ng-container>
+
+
           </div>
-        </div>
-        <button mat-button class="btn-add" type="button" (click)="addOption()"><mat-icon>add</mat-icon> Add Option</button>
-  </div>
-  <div>
-    <button mat-raised-button (click)="toggle()">Toggle to {{ toggleState === 'radio' ? 'checkbox' : 'radio' }}</button>
-  </div>
+        </ng-container>
 
+    </div>
+      <button mat-raised-button class="add-option" type="button" (click)="addAnswer()">
+        <mat-icon>add</mat-icon>Add option
+      </button>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+      <label class="label-point">Points: </label>
+      <input matInput class="point"  min="0" max="200" maxlength="3" type="number" formControlName="points" required>
 
+      <mat-slide-toggle color="primary" class="btn-toggle"(click)="btnToggle()">Multiple Answers</mat-slide-toggle>
+
+  </mat-card>
 </form>
-
-</div>

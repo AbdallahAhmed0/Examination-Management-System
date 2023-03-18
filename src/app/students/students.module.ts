@@ -1,4 +1,3 @@
-import { RolesModule } from './../roles/roles.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,13 +8,15 @@ import { EditStudentsComponent } from './Components/edit-students/edit-students.
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../Shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CheckRoleComponent } from './Components/check-role/check-role.component';
 
 
 @NgModule({
     declarations: [
         AllStudentsComponent,
         AddStudentsComponent,
-        EditStudentsComponent
+        EditStudentsComponent,
+        CheckRoleComponent
     ],
     imports: [
         CommonModule,
@@ -23,8 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         HttpClientModule,
         MaterialModule,
         ReactiveFormsModule,
-        FormsModule,
-        RolesModule
+        FormsModule
     ]
 })
 export class StudentsModule { }

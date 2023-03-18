@@ -1,150 +1,104 @@
-<div class="contianer">
-  <p>Edit Student</p>
-  <button mat-button class="btn-list" style="color: #007bff" (click)="goback()">
-    <mat-icon>menu</mat-icon> All Students
-  </button>
 
-  <div class="form">
-    <p class="edit">Edit Student</p>
+<div class="contianer" >
+    <p>Edit Student</p>
+    <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()"><mat-icon>menu</mat-icon> All Students</button>
 
-    <form
-      #studentFrm="ngForm"
-      [formGroup]="newStudent"
-      *ngIf="newStudent"
-      (ngSubmit)="editStudent(student.id)"
-    >
-      <mat-form-field appearance="fill">
+    <div class="form">
+        <p class="edit">Edit Student</p>
+
+    <form #studentFrm="ngForm" [formGroup]="newStudent" (ngSubmit)="editStudent(student.id)" >
+
+    <mat-form-field appearance="fill" >
+
         <mat-label>First Name</mat-label>
-        <input
-          matInput
-          formControlName="firstName"
-          minlength="3"
-          maxlength="20"
-          name="firstName"
-          value="{{ student.firstName }}"
-          required
-        />
+        <input matInput formControlName="firstName" minlength="3" maxlength="20" name="firstName" value="{{student.firstName}}" required>
 
         <mat-error *ngIf="firstName?.hasError('required')">
-          First Name is Required!
+            First Name is Required!
         </mat-error>
         <mat-error *ngIf="firstName?.hasError('minlength')">
-          First Name should be at least 3 characters!
+            First Name should be at least 3 characters!
         </mat-error>
 
-        <mat-error *ngIf="firstName?.hasError('maxlength')">
-          First Name should be at max 20 characters!
+          <mat-error *ngIf="firstName?.hasError('maxlength')">
+            First Name should be at max 20 characters!
         </mat-error>
 
-        <!-- <mat-error *ngIf="firstName?.hasError('pattern')">
+          <!-- <mat-error *ngIf="firstName?.hasError('pattern')">
             First Name must follow this pattern!
         </mat-error> -->
-      </mat-form-field>
 
-      <mat-form-field appearance="fill">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" >
         <mat-label>Last Name</mat-label>
-        <input
-          matInput
-          formControlName="lastName"
-          minlength="3"
-          maxlength="20"
-          value="{{ student.lastName }}"
-          required
-        />
+        <input matInput formControlName="lastName" minlength="3" maxlength="20" value="{{student.lastName}}" required>
 
         <mat-error *ngIf="lastName?.hasError('required')">
-          Last Name is Required!
+            Last Name is Required!
         </mat-error>
         <mat-error *ngIf="lastName?.hasError('minlength')">
-          Last Name should be at least 3 characters!
+            Last Name should be at least 3 characters!
         </mat-error>
 
-        <mat-error *ngIf="lastName?.hasError('maxlength')">
-          Last Name should be at max 20 characters!
+          <mat-error *ngIf="lastName?.hasError('maxlength')">
+            Last Name should be at max 20 characters!
         </mat-error>
-      </mat-form-field>
 
-      <mat-form-field appearance="fill">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
         <mat-label>Enter your email</mat-label>
-        <input
-          type="email"
-          matInput
-          placeholder="pat@example.com"
-          formControlName="email"
-          value="{{ student.email }}"
-          required
-        />
+        <input type="email" matInput placeholder="pat@example.com" formControlName="email" value="{{student.email}}" required>
 
         <mat-error *ngIf="email?.hasError('required')">
-          Email is Required!
+            Email is Required!
         </mat-error>
         <mat-error *ngIf="email?.hasError('email')">
-          Email is not Vaild!
+            Email is not Vaild!
         </mat-error>
-      </mat-form-field>
+    </mat-form-field>
 
-      <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" >
         <mat-label>university Id</mat-label>
-        <input
-          type="number"
-          matInput
-          formControlName="universityId"
-          min="1"
-          value="{{ student.universityId }}"
-          required
-        />
+        <input type="number" matInput formControlName="universityId" min="1" value="{{student.universityId}}"required>
 
         <mat-error *ngIf="universityId?.hasError('required')">
-          UniversityId is Required!
+            UniversityId is Required!
         </mat-error>
-      </mat-form-field>
+    </mat-form-field>
 
-      <mat-form-field appearance="fill">
+
+    <mat-form-field appearance="fill">
         <mat-label>Enter your password</mat-label>
-        <input
-          matInput
-          formControlName="password"
-          [type]="hide ? 'password' : 'text'"
-          value="{{ student.password }}"
-          required
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="hide = !hide"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide"
-        >
-          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" value="{{student.password}}" required>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
 
         <mat-error *ngIf="password?.hasError('minlength')">
-          Password should be at least 6 characters!
+            Password should be at least 6 characters!
+
         </mat-error>
+
+    </mat-form-field>
+
+
+        <!-- <app-chip-roles></app-chip-roles> -->
+        <mat-form-field appearance="fill" >
+          <mat-label>Role</mat-label>
+          <input matInput formControlName="role" required>
+
+          <mat-error *ngIf="role?.hasError('required')">
+              Role is Required!
+          </mat-error>
       </mat-form-field>
 
-      <app-check-role
-        [roleView]="roleView"
-        (checkRole)="selectedRole($event)"
-      ></app-check-role>
-
-      <section class="checkbox">
-        <mat-checkbox
-          formControlName="enable"
-          class="check"
-          value="{{ student.enable }}"
-          color="primary"
-          >Enable</mat-checkbox
-        >
-      </section>
-      <button
-        mat-raised-button
-        [disabled]="studentFrm.invalid"
-        class="submit"
-        type="submit"
-      >
-        Save
-      </button>
+    <section class="checkbox">
+        <mat-checkbox  formControlName="enable" class="check" value="{{student.enable}}" color="primary">Enable</mat-checkbox>
+    </section>
+    <button mat-raised-button [disabled]="studentFrm.invalid" class="submit" type="submit">Save</button>
     </form>
-  </div>
-</div>
+    </div>
+
+    </div>
