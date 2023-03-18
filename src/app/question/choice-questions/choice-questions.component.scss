@@ -31,8 +31,9 @@ input{
 .delete-icon
 {
   color: #777777;
-  height: 31px;
   font-size: 26px;
+  height: 40px;
+  padding-top:15px ;
 
 }
 .delete:hover,.delete-icon:hover{
@@ -72,12 +73,6 @@ a{
   cursor: pointer;
   margin: 5px;
 }
-::ng-deep  .mat-form-field-underline {
-  display: none;
-}
-::ng-deep  .input.mat-form-field{
-width: 40%;
-}
 
 ::ng-deep .check .mat-checkbox-inner-container {
 
@@ -85,17 +80,19 @@ width: 40%;
   margin: 0px 20px;
   width: 20px;
   height: 20px;
+
 }
 ::ng-deep .check .mat-checkbox-layout {
-  height: 24px;
+  height: 50px;
+  padding-top: 20px;
   border: none;
 
 }
 .radio{
   margin: 5px;
-  margin-left: 0px;
+  margin-left: 20px;
   background: #FFF;
-  width: 20px;
+  width: 22px;
   border-radius: 20px;
   margin-right: 20px;
 }
@@ -114,21 +111,17 @@ width: 40%;
 }
 .message{
   color: #777777;
+  height: 40px;
+  padding-top:15px ;
 }
 .message:hover{
   color: darken(#777777, 15%);
 }
 .input-message{
-width: 75%;
+  width: 75%;
+  margin-left: 60px;
 }
-
-
-// ::ng-deep .mat-radio-button.mat-accent .mat-radio-outer-circle {
-//   border: 1px solid #777777; /* Replace with your desired color */
-//   border-color: #777777;
-// }
-
-// ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
-//   background-color: #3cb5be; /* Replace with your desired color */
-
-// }
+.option{
+  width: 60%;
+  display: inline;
+}

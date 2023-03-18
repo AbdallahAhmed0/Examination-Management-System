@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+
 @Component({
   selector: 'app-text-editor',
   templateUrl: './text-editor.component.html',

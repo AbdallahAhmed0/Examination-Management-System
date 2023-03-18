@@ -29,6 +29,7 @@
     "file-saver": "^2.0.5",
     "file-saver-es": "^2.0.5",
     "froala-editor": "^4.0.17",
+    "jquery": "^3.6.4",
     "js-export-excel": "^1.1.4",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

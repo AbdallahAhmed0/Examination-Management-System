@@ -1,8 +1,4 @@
 
-mat-form-field{
-  width: 60%;
-}
-
 input{
   display: inline;
   background: #FFFFFF;
@@ -58,12 +54,6 @@ mat-divider {
   width: 70%;
   text-align: center;
 
-}
-::ng-deep  .mat-form-field-underline {
-  display: none;
-}
-::ng-deep  .input.mat-form-field{
-width: 40%;
 }
 
 .index{
