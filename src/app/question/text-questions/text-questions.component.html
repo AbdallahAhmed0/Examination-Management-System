@@ -26,7 +26,7 @@
                 </a>
 
                 <ng-container *ngIf="isHidden">
-                  <app-text-editor class="input-message"  (editorValue)="getComment($event)" [placeholder]="'Comment'"></app-text-editor>
+                  <app-text-editor class="input-message"  (editorValue)="getComment($event)" [commentValue]="commentValue" [placeholder]="'Comment'"></app-text-editor>
                   <input type="hidden" formControlName="comment">
                 </ng-container>
 

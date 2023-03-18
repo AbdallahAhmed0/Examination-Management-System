@@ -14,6 +14,7 @@ export class TextEditorComponent implements OnInit {
   @Output() editorValue = new EventEmitter<string>();
   @Input() placeholder!:string;
   @Input() index:number=1;
+  @Input()commentValue!:string;
 
   constructor(){
 
