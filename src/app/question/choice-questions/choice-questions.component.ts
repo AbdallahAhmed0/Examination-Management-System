@@ -9,9 +9,13 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ChoiceQuestionsComponent implements OnInit {
 
+  form!: FormGroup;
+
   @Output() onDelete = new EventEmitter<void>();
   @Output() onUP = new EventEmitter<void>();
   @Output() onDown = new EventEmitter<void>();
+  @Output() questionData = new EventEmitter<object>();
+
   @Input() indexComponent!:number;
 
   questionTextValue:string='';
@@ -21,7 +25,7 @@ export class ChoiceQuestionsComponent implements OnInit {
   isMultipleChoice: boolean = false;
   isHidden:boolean[]=[false];
 
-  form!: FormGroup;
+
   constructor(private fb: FormBuilder) {
 
   }
@@ -33,6 +37,7 @@ export class ChoiceQuestionsComponent implements OnInit {
       questionType: ['Multiple Choice', Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
     });
+    this.form.valueChanges.subscribe(value => this.questionData.emit(this.form.value));
   }
 
   createAnswer(): FormGroup {

@@ -11,9 +11,13 @@ export class TextQuestionsComponent implements OnInit {
 
 
   form!: FormGroup;
+
   @Output() onDelete = new EventEmitter<void>();
   @Output() onUP = new EventEmitter<void>();
   @Output() onDown = new EventEmitter<void>();
+  @Output() questionData = new EventEmitter<object>();
+
+
   @Input() indexComponent!:number;
 
   questionTextValue:string='';
@@ -37,6 +41,8 @@ export class TextQuestionsComponent implements OnInit {
       questionAnswers: this.fb.array([this.createAnswer()])
 
     });
+    this.form.valueChanges.subscribe(value => this.questionData.emit(this.form.value));
+
   }
   createAnswer(): FormGroup {
     return this.fb.group({
@@ -53,7 +59,7 @@ export class TextQuestionsComponent implements OnInit {
 
 
   onSubmit() {
-    
+
   }
   autoResize(textarea: any) {
     textarea.style.height = 'auto';

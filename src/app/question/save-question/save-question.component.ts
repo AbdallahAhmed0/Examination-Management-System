@@ -10,6 +10,9 @@ export class SaveQuestionComponent implements OnInit {
   selectedComponents:any[]=[];
   sentArrayComponenet:any[]=[];
   index:number=1;
+  questionData!:object;
+
+  questions:object[]=[];
   ngOnInit(): void {
   }
 
@@ -45,6 +48,10 @@ export class SaveQuestionComponent implements OnInit {
     if (index < this.selectedComponents.length-1) {
       [this.selectedComponents[index],this.selectedComponents[index+1]]=[this.selectedComponents[index+1],this.selectedComponents[index]]
     }
+  }
+  addQuestion(data:object,index:number){
+    this.questions[index]=data;
+    console.log(this.questions)
   }
 
 }
