@@ -1,21 +1,21 @@
   <div class="editor">
-    
+
    <div class="question" *ngIf="placeholder == 'Question Text'">
-        <textarea  [froalaEditor]="froalaOption1"
+        <textarea  [froalaEditor]="froalaOptions( 'Question Text')"
         (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
         (ngModelChange)="onEditorValueChange($event)">
       </textarea>
   </div>
 
    <div class="answer" *ngIf="placeholder == 'Answer Text'">
-    <textarea  [froalaEditor]="froalaOption2"
+    <textarea  [froalaEditor]="froalaOptions( 'Answer Text')"
     (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
     (ngModelChange)="onEditorValueChange($event)">
   </textarea>
 </div>
 
 <div class="comment" *ngIf="placeholder == 'Comment'">
-  <textarea  [froalaEditor]="froalaOption3"
+  <textarea  [froalaEditor]="froalaOptions('Message for those who choose this')"
   (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
   (ngModelChange)="onEditorValueChange($event)"
   [value]="commentValue">
@@ -23,7 +23,7 @@
 </div>
 
 <div class="option" *ngIf="placeholder == 'options'" >
-  <textarea  [froalaEditor]="froalaOption4"
+  <textarea  [froalaEditor]="froalaOptions('options')"
   (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
   (ngModelChange)="onEditorValueChange($event)">
 </textarea>
