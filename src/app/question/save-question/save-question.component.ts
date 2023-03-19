@@ -51,7 +51,6 @@ export class SaveQuestionComponent implements OnInit {
   }
   addQuestion(data:object,index:number){
     this.questions[index]=data;
-    console.log(this.questions)
   }
 
 }
