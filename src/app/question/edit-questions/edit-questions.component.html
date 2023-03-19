@@ -1,0 +1,32 @@
+<div class="contianer" >
+  <div class="form">
+
+    <ng-container *ngFor="let selectedComponent of selectedComponents; let i = index" >
+      <app-choice-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
+      (onDelete)="removeChild(selectedComponent)" [indexComponent]="(i+1)"
+      (questionData)="addQuestion($event,i)"
+      *ngIf="selectedComponent.name === 'choice'">
+    </app-choice-questions>
+
+      <app-text-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
+      (onDelete)="removeChild(selectedComponent)"
+      [indexComponent]="(i+1)"  (questionData)="addQuestion($event,i)"
+       *ngIf="selectedComponent.name === 'text'">
+
+      </app-text-questions>
+
+      <app-text-editor (onDelete)="removeChild(selectedComponent)" *ngIf="selectedComponent.name === 'coding'"></app-text-editor>
+    </ng-container>
+
+    <button mat-button class="btn-question" [matMenuTriggerFor]="question"><mat-icon>add</mat-icon>Add questions</button>
+    <mat-menu #question="matMenu" xPosition="after">
+      <button mat-menu-item (click)="showChoiceQuestions()">Multible Choice</button>
+      <button mat-menu-item (click)="showTextQuestions()">Matching</button>
+      <button mat-menu-item (click)="showTextEditor()">Coding</button>
+    </mat-menu>
+
+    <button *ngIf="questions.length" mat-raised-button [disabled]="!questions.length" class="submit" type="submit">Save</button>
+  </div>
+
+</div>
+

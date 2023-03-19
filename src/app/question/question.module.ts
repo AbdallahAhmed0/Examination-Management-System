@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TextQuestionsComponent } from './text-questions/text-questions.component'
 
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     SaveQuestionComponent,
     ChoiceQuestionsComponent,
     TextEditorComponent,
-    TextQuestionsComponent
+    TextQuestionsComponent,
+    EditQuestionsComponent
   ],
   imports: [
     CommonModule,
