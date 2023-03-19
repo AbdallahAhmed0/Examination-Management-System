@@ -13,6 +13,7 @@ import { TextQuestionsComponent } from './text-questions/text-questions.componen
 
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
+import { CodeQuestionComponent } from './code-question/code-question.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { EditQuestionsComponent } from './edit-questions/edit-questions.componen
     ChoiceQuestionsComponent,
     TextEditorComponent,
     TextQuestionsComponent,
-    EditQuestionsComponent
+    EditQuestionsComponent,
+    CodeQuestionComponent
   ],
   imports: [
     CommonModule,
