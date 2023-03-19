@@ -34,7 +34,7 @@ export class ChoiceQuestionsComponent implements OnInit {
     this.form = this.fb.group({
       questionText: ['', Validators.required],
       points: [0, Validators.required],
-      questionType: ['Multiple Choice', Validators.required],
+      questionType: ['Multiple_choice', Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
     });
     this.form.valueChanges.subscribe(value => this.questionData.emit(this.form.value));
@@ -111,9 +111,9 @@ export class ChoiceQuestionsComponent implements OnInit {
     btnToggle(){
       this.isMultipleChoice=!this.isMultipleChoice;
       if(this.isMultipleChoice){
-        this.form.get('questionType')?.setValue('Multiple Answers');
+        this.form.get('questionType')?.setValue('Multiple_Answers');
       }else{
-        this.form.get('questionType')?.setValue('Multiple Choice');
+        this.form.get('questionType')?.setValue('Multiple_choice');
       }
     }
     toggleInput(index:number) {
