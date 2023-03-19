@@ -12,8 +12,15 @@
           (onDelete)="removeChild(selectedComponent)"
           [indexComponent]="(i+1)"  (questionData)="addQuestion($event,i)"
            *ngIf="selectedComponent.name === 'text'">
-
           </app-text-questions>
+
+          <app-true-false-question (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
+          (onDelete)="removeChild(selectedComponent)"
+          [indexComponent]="(i+1)"  (questionData)="addQuestion($event,i)"
+           *ngIf="selectedComponent.name === 'true_false'">
+
+          </app-true-false-question>
+
 
           <app-text-editor (onDelete)="removeChild(selectedComponent)" *ngIf="selectedComponent.name === 'coding'"></app-text-editor>
         </ng-container>
@@ -22,6 +29,7 @@
         <mat-menu #question="matMenu" xPosition="after">
           <button mat-menu-item (click)="showChoiceQuestions()">Multible Choice</button>
           <button mat-menu-item (click)="showTextQuestions()">Matching</button>
+          <button mat-menu-item (click)="showTrue_falseQuestions()">True False</button>
           <button mat-menu-item (click)="showTextEditor()">Coding</button>
         </mat-menu>
 

@@ -31,6 +31,11 @@ export class SaveQuestionComponent implements OnInit {
     this.selectedComponents.push({id:this.index,name:'coding'});
     this.index++;
   }
+  showTrue_falseQuestions(){
+    this.selectedComponents.push({id:this.index,name:'true_false'});
+    this.index++;
+
+  }
   removeChild(child: any) {
     const index = this.selectedComponents.indexOf(child);
     if (index >= 0) {
