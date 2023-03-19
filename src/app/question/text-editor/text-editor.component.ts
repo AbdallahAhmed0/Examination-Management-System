@@ -41,7 +41,7 @@ export class TextEditorComponent implements OnInit {
 
   @Output() editorValue = new EventEmitter<string>();
   @Input() placeholder!:string;
-  @Input() index:number=1;
+  @Input() index!:number;
   @Input()commentValue!:string;
 
   constructor(){
@@ -62,7 +62,7 @@ export class TextEditorComponent implements OnInit {
 
   froalaOptions(placeholder:string){
     if(placeholder == 'options'){
-      placeholder ='option '+this.index;
+      placeholder ='option '+(this.index+1);
     }
     return {
       placeholderText:placeholder,

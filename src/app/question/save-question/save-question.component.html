@@ -1,6 +1,4 @@
 <div class="contianer" >
-  <P>{{questions}}</P>
-
       <div class="form">
 
         <ng-container *ngFor="let selectedComponent of selectedComponents; let i = index" >
@@ -27,6 +25,8 @@
           <button mat-menu-item (click)="showTextEditor()">Coding</button>
         </mat-menu>
 
+        <button *ngIf="questions.length" mat-raised-button [disabled]="!questions.length" class="submit" type="submit">Save</button>
       </div>
+
 </div>
 

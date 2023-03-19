@@ -7,9 +7,9 @@
         required
         #questionText="ngModel">
       </textarea>
-      <ng-container *ngIf="questionText.invalid && (questionText.dirty || questionText.touched)">
+      <div class="error-message" *ngIf="questionText.invalid && (questionText.dirty || questionText.touched)">
         <small class="text text-danger" *ngIf="questionText.errors">Question Text is required</small>
-      </ng-container>
+      </div>
 
   </div>
 
@@ -20,9 +20,11 @@
     required
     #questionText="ngModel">
   </textarea>
-  <ng-container *ngIf="questionText.invalid && (questionText.dirty || questionText.touched)">
+
+  <div class="error-message" *ngIf="questionText.invalid && (questionText.dirty || questionText.touched)">
     <small class="text text-danger" *ngIf="questionText.errors">Answer Text is required</small>
-  </ng-container>
+  </div>
+
 </div>
 
 <div class="comment" *ngIf="placeholder == 'Comment'">
@@ -40,9 +42,11 @@
   required
   #questionText="ngModel">
 </textarea>
-<ng-container *ngIf="questionText.invalid && (questionText.dirty || questionText.touched)">
+
+<div class="error-message" *ngIf="questionText.invalid && (questionText.dirty || questionText.touched)">
   <small class="text text-danger" *ngIf="questionText.errors">Option is required</small>
-</ng-container>
+</div>
+
 </div>
 
 </div>

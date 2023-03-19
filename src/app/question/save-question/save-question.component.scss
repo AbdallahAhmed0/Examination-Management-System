@@ -39,3 +39,19 @@ border-radius: 8px;
   color:#f6f4f4 ;
 }
 
+.submit{
+  display: block;
+    width: 60%;
+    height: 40px;
+    font-size: 18px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    background: #3cb5be;
+    color: #ffffff;
+    margin:auto;
+
+}
+.submit:hover{
+  background: darken(#3cb5be, 20%);
+
+}
