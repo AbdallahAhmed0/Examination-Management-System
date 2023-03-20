@@ -1,3 +1,4 @@
+import { RolesModule } from './../roles/roles.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AllAdminsComponent } from './Components/all-admins/all-admins.component';
@@ -8,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../Shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { adminRoutingModule } from './admin-routing.module';
-import { RolesModule } from '../roles/roles.module';
 
 
 @NgModule({
@@ -16,7 +16,7 @@ import { RolesModule } from '../roles/roles.module';
     AllAdminsComponent,
     AddAdminComponent,
     EditAdminComponent,
-    ImportAdminComponent,
+    ImportAdminComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +26,7 @@ import { RolesModule } from '../roles/roles.module';
     FormsModule,
     MaterialModule,
     RolesModule
+
   ]
 
 })
