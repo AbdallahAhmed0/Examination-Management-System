@@ -126,7 +126,6 @@ export class AllExamsComponent implements OnInit, OnChanges {
   }
 
   ngOnDestroy(): void {
-    this.subExam?.unsubscribe();
   }
 }
 

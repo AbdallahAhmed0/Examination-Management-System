@@ -4,7 +4,7 @@ import { ChoiceQuestionsComponent } from './choice-questions/choice-questions.co
 import { SaveQuestionComponent } from './save-question/save-question.component';
 
 const routes: Routes = [
-  // {path:'',component:SaveQuestionComponent},
+  {path:'',component:SaveQuestionComponent},
   {path:'',component:ChoiceQuestionsComponent}
 ];
 
