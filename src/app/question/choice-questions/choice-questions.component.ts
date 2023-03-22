@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-choice-questions',
@@ -26,7 +27,8 @@ export class ChoiceQuestionsComponent implements OnInit {
   isHidden:boolean[]=[false];
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private dialog:MatDialog) {
 
   }
 
@@ -97,8 +99,18 @@ export class ChoiceQuestionsComponent implements OnInit {
   }
 
   deleteQuestion(){
+    const dialogRef = this.dialog.open(DialogeComponent, {
+      width: '400px',
+      height:'280px'
+      });
 
-    this.onDelete.emit();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+
+        this.onDelete.emit();
+      }
+      });
+
     }
 
     Up(){
