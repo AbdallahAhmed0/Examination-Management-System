@@ -1,22 +1,25 @@
-table {
+table{
   width: 100%;
 }
-.contianer{
-    margin: 40px;
 
-    p{
-        font-size: 30px;
-    }
+.contianer{
+  margin: 40px;
+
+  p{
+      font-size: 30px;
+  }
 }
+
 
 mat-paginator{
   color: #3174efe9;
   font-size: 12px;
 }
 
+
 .btn-add{
-  margin-top: 40px;
   font-size: 17px;
+  margin-top: 40px;
 }
 .mat-form-field {
 
@@ -60,22 +63,6 @@ td, th {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-}
-.active{
-  background:  #0cd463;
-  color: #fff;
-  padding: 5px;
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 500;
-}
-.Inactive{
-  background:  #f20202;
-  color: #fff;
-  padding: 5px;
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 500;
 }
 
 .center{
