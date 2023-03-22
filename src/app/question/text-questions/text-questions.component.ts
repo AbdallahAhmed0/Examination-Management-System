@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
 
 @Component({
   selector: 'app-text-questions',
@@ -29,7 +31,8 @@ export class TextQuestionsComponent implements OnInit {
 
   questionType:string='Matching';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private dialog:MatDialog) {
 
   }
 
@@ -67,7 +70,17 @@ export class TextQuestionsComponent implements OnInit {
   }
   deleteQuestion(){
 
-    this.onDelete.emit();
+    const dialogRef = this.dialog.open(DialogeComponent, {
+      width: '400px',
+      height:'280px'
+      });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+
+        this.onDelete.emit();
+      }
+      });
     }
     getQuestionText(value:string){
       this.questionTextValue=value;

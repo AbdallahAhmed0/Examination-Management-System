@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { MatDialog } from '@angular/material/dialog';
+import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
 
 @Component({
   selector: 'app-true-false-question',
@@ -26,7 +27,8 @@ export class TrueFalseQuestionComponent implements OnInit {
   isHidden:boolean[]=[false];
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private dialog:MatDialog) {
 
   }
 
@@ -81,7 +83,17 @@ export class TrueFalseQuestionComponent implements OnInit {
 
   deleteQuestion(){
 
-    this.onDelete.emit();
+    const dialogRef = this.dialog.open(DialogeComponent, {
+      width: '400px',
+      height:'280px'
+      });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+
+        this.onDelete.emit();
+      }
+      });
     }
 
     Up(){
