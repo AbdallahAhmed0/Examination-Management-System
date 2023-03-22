@@ -12,7 +12,19 @@ export class SaveQuestionComponent implements OnInit {
   index:number=1;
   questionData!:object;
 
+  exam!:any;
+
   questions:object[]=[];
+  constructor() {
+    this.exam={
+      examName: "Data Structure",
+      duration: 100,
+      startTime: "2023-03-21 01:47 PM",
+      endTime: "2023-03-29 01:47 PM",
+      successRate: 50,
+      state: true
+  };
+  }
   ngOnInit(): void {
   }
 
