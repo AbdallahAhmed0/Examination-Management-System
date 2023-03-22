@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { adminRoutingModule } from './admins/admin-routing.module';
+import { StudentsRoutingModule } from './students/students-routing.module';
 
 const routes: Routes = [
   {path:"admins",loadChildren:()=>import('./admins/admins.module').then(a=>a.AdminsModule)},
@@ -11,7 +13,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),
+            StudentsRoutingModule],
 
   exports: [RouterModule]
 })
