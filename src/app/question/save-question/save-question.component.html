@@ -5,32 +5,32 @@
 
             <mat-card>
               <div class="exam-header">
-                <div class="exam-name">{{exam.examName}}</div>
+                <div class="exam-name">{{exam?.examName}}</div>
               </div>
               <mat-card-content>
                 <div class="exam-details">
                   <div class="exam-details-left">
                     <div class="mat-grid-tile-header">
                       <span class="mat-subheading-1">Start Time:</span>
-                      <span class="mat-body-1">{{ exam.startTime }}</span>
+                      <span class="mat-body-1">{{ exam?.startTime }}</span>
                     </div>
                   </div>
                   <div class="exam-details-right">
                     <div class="mat-grid-tile-header">
                       <span class="mat-subheading-1">Success Rate: </span>
-                      <span class="mat-body-1">{{ exam.successRate}}</span>
+                      <span class="mat-body-1">{{ exam?.successRate}} %</span>
                     </div>
                   </div>
                 <div class="exam-details-left">
                   <div class="mat-grid-tile-header">
                     <span class="mat-subheading-1">End Time: </span>
-                    <span class="mat-body-1">{{ exam.endTime }}</span>
+                    <span class="mat-body-1">{{ exam?.endTime }}</span>
                   </div>
                 </div>
                 <div class="exam-details-right">
                   <div class="mat-grid-tile-header">
                     <span class="mat-subheading-1">Duration: </span>
-                    <span class="mat-body-1">{{ exam.duration }}</span>
+                    <span class="mat-body-1">{{ exam?.duration }}</span>
                   </div>
                 </div>
                 </div>
@@ -71,7 +71,7 @@
           <button mat-menu-item (click)="showTextEditor()">Coding</button>
         </mat-menu>
 
-        <button *ngIf="questions.length" mat-raised-button [disabled]="!questions.length" class="submit" type="submit">Save</button>
+        <button *ngIf="questions.length" mat-raised-button [disabled]="!questions.length" (click)="submit()" class="submit" type="submit">Save</button>
       </div>
 
 </div>

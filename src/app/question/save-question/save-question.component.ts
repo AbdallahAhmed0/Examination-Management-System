@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ExamService } from '../../exam/Services/exam.service';
+import { Exam } from './../../exam/Models/exam';
+import { Question } from './../question';
+import { QuestionService } from './../question.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-save-question',
@@ -6,26 +11,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./save-question.component.scss']
 })
 export class SaveQuestionComponent implements OnInit {
+  consoleError: any;
 
   selectedComponents:any[]=[];
   sentArrayComponenet:any[]=[];
   index:number=1;
   questionData!:object;
 
-  exam!:any;
+  exam?:Exam;
 
-  questions:object[]=[];
-  constructor() {
-    this.exam={
-      examName: "Data Structure",
-      duration: 100,
-      startTime: "2023-03-21 01:47 PM",
-      endTime: "2023-03-29 01:47 PM",
-      successRate: 50,
-      state: true
-  };
+  questions:Question[]=[];
+  constructor(private examService:ExamService,
+              private questionService:QuestionService,
+              private router:Router) {
   }
   ngOnInit(): void {
+    this.examService.getExamById(2).subscribe(data => {
+      this.exam=data;
+    })
   }
 
 
@@ -66,8 +69,20 @@ export class SaveQuestionComponent implements OnInit {
       [this.selectedComponents[index],this.selectedComponents[index+1]]=[this.selectedComponents[index+1],this.selectedComponents[index]]
     }
   }
-  addQuestion(data:object,index:number){
+  addQuestion(data:any,index:number){
     this.questions[index]=data;
   }
-
+  submit(){
+    const observer = {
+      next: (Question: Question[]) => {
+        this.router.navigateByUrl('/exams');
+        this.questionService.openSnackBar('Added');
+      },
+      error: (err: Error) => {
+        this.consoleError = err.message;
+      },
+    };
+    this.questionService.saveQuestions(this.questions,2).subscribe(observer);
+    console.log(this.questions)
+  }
 }

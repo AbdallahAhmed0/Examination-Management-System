@@ -77,7 +77,6 @@ export class TextEditorComponent implements OnInit {
         'help', 'specialCharacters', 'codeView'
       ],
       heightMin: 40,
-      width:300,
       imageUpload: true,
       imagePaste: true,
       fileUpload: true,

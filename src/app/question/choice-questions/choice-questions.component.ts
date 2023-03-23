@@ -132,6 +132,10 @@ export class ChoiceQuestionsComponent implements OnInit {
     toggleInput(index:number) {
       this.isHidden[index] = !this.isHidden[index];
     }
+    get questionText() {
+      return this.form.get('questionText');
+    }
+
 
   }
 

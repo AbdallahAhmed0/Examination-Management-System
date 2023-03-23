@@ -1,17 +1,13 @@
-import { Exam } from './../Models/exam';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Injectable({
   providedIn: 'root',
 })
-export class ExamService {
+export class QuestionService {
   httpOption;
 
   constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
@@ -40,45 +36,14 @@ export class ExamService {
     }
   }
 
-  getAllExams(): Observable<Exam[]> {
+  saveQuestions(questions: any[],id:number): Observable<any[]> {
     return this.httpClient
-      .get<Exam[]>(`${environment.APPURL}/exam/getAll`)
-      .pipe(retry(2), catchError(this.handleError));
-  }
-
-  getExamById(id: number): Observable<Exam> {
-    return this.httpClient
-      .get<Exam>(`${environment.APPURL}/exam/${id}`, this.httpOption)
-      .pipe(retry(2), catchError(this.handleError));
-  }
-
-  addExam(exam: Exam): Observable<Exam> {
-    return this.httpClient
-      .post<Exam>(
-        `${environment.APPURL}/exam/save`,
-        JSON.stringify(exam),
+      .post<any[]>( `${environment.APPURL}/exam/saveQuestions/${id}`,
+        JSON.stringify(questions),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
-
-  updateExam(exam: Exam): Observable<Exam> {
-    return this.httpClient
-      .post<Exam>(
-        `${environment.APPURL}/exam/save`,
-        JSON.stringify(exam),
-        this.httpOption
-      )
-      .pipe(retry(2), catchError(this.handleError));
-  }
-
-  deleteExam(exam: Exam) {
-    return this.httpClient
-      .delete(`${environment.APPURL}/exam/delete`,{body:exam})
-      .pipe(retry(2), catchError(this.handleError))
-      .subscribe((data) => {});
-  }
-
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {
       duration: 3000,

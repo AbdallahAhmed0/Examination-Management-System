@@ -21,7 +21,9 @@ export class TextQuestionsComponent implements OnInit {
 
 
   @Input() indexComponent!:number;
-
+  editquestion:object={
+    
+  }
   questionTextValue:string='';
   answerTextValue:string='';
   commentValue:string='';

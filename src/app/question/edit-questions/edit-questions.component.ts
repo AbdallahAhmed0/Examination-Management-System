@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Exam } from '../../exam/Models/exam';
+import { ExamService } from '../../exam/Services/exam.service';
 
 @Component({
   selector: 'app-edit-questions',
@@ -12,8 +14,15 @@ export class EditQuestionsComponent implements OnInit {
   index:number=1;
   questionData!:object;
 
+  exam!:Exam;
+
   questions:object[]=[];
+  constructor(private examService:ExamService) {
+  }
   ngOnInit(): void {
+    this.examService.getExamById(2).subscribe(data => {
+      this.exam=data;
+    })
   }
 
 
