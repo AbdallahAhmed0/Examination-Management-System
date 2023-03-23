@@ -6,45 +6,44 @@ import {
   OnInit,
   ViewChild,
   OnChanges,
-  OnDestroy,
-  SimpleChanges,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Exam } from '../../Models/exam';
+import { utils, writeFile } from 'xlsx';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-all-exams',
   templateUrl: './all-exams.component.html',
   styleUrls: ['./all-exams.component.scss'],
 })
-export class AllExamsComponent implements OnInit, OnChanges, OnDestroy {
+export class AllExamsComponent implements OnInit, OnChanges {
   displayedColumns: string[] = [
     'id',
     'examName',
-    'examDate',
     'duration',
     'startTime',
     'endTime',
+    'actions'
   ];
   dataSource!: MatTableDataSource<any>;
 
-  subExam?: Subscription;
   exams!: Exam[];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private examService: ExamService, private router: Router) {}
+  constructor(private examService: ExamService, private router: Router,
+    public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.getexams();
-    console.log();
+    this.getExams();
+    console.log(this.dataSource);
   }
 
   ngOnChanges(): void {
-    this.getexams();
+    this.getExams();
   }
 
   applyFilter(event: Event) {
@@ -56,12 +55,33 @@ export class AllExamsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  getexams() {
-    this.subExam = this.examService.getAllExams().subscribe((data) => {
+  getExams() {
+    this.examService.getAllExams().subscribe((data) => {
+      /** Builds and returns a new User. */
+      const createNewExam = (id: number) => {
+        return {
+          id: id,
+          examName:
+            data[Math.round(Math.random() * (data.length - 1))].examName,
+          duration:
+            data[Math.round(Math.random() * (data.length - 1))].duration,
+          startTime:
+            data[Math.round(Math.random() * (data.length - 1))].startTime,
+          EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
+        };
+      };
+
+      // Create users
+
+      const exam = Array.from({ length: length }, (_, k) =>
+        createNewExam(k + 1)
+      );
+
       // Assign the data to the data source for the table to render
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
       this.exams = data;
     });
   }
@@ -70,8 +90,8 @@ export class AllExamsComponent implements OnInit, OnChanges, OnDestroy {
     this.router.navigate(['exams/edit', id]);
   }
 
-  delete(id: number) {
-    this.examService.deleteExam(id);
+  delete(row: Exam) {
+    this.examService.deleteExam(row);
     alert('Deleted Successfully');
     window.location.reload();
   }
@@ -80,7 +100,24 @@ export class AllExamsComponent implements OnInit, OnChanges, OnDestroy {
     this.router.navigate(['exams/add']);
   }
 
-  ngOnDestroy(): void {
-    this.subExam?.unsubscribe();
+  exportData() {
+    const headings = [
+      [
+        'id',
+        'examName',
+        'duration',
+        'startTime',
+        'endTime',
+      ],
+    ];
+
+    const wb = utils.book_new();
+    const ws: any = utils.json_to_sheet([]);
+    utils.sheet_add_aoa(ws, headings);
+    utils.sheet_add_json(ws, this.exams, { origin: 'A2', skipHeader: true });
+    utils.book_append_sheet(wb, ws, 'Report');
+    writeFile(wb, 'Data of Exams.xlsx');
   }
+
 }
+

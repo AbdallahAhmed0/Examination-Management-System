@@ -7,7 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Students } from '../Models/student';
+import { Student } from '../Models/student';
 
 @Injectable({
   providedIn: 'root',
@@ -44,39 +44,38 @@ export class StudentsService {
     };
   }
 
-  getAllStudents(): Observable<Students[]> {
+  getAllStudents(): Observable<Student[]> {
     return this.httpClient
-      .get<Students[]>(`${environment.APPURL}/students/getAll`)
-      .pipe(retry(2), catchError(this.handleError));
-  }
-  
-  getStudentById(id: number): Observable<Students> {
-    return this.httpClient
-      .get<Students>(
-        `${environment.APPURL}/students/get/${id}`,
-        this.httpOption
-      )
+      .get<Student[]>(`${environment.APPURL}/students/getAll`)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  addStudent(student: Students): Observable<Students> {
+  getStudentById(id: number): Observable<Student> {
     return this.httpClient
-      .post<Students>(
+      .get<Student>(`${environment.APPURL}/students/get/${id}`, this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  addStudent(student: Student): Observable<Student> {
+    return this.httpClient
+      .post<Student>(
         `${environment.APPURL}/students/add`,
         JSON.stringify(student),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
-  updateStudents(student: Students): Observable<Students> {
+
+  updateStudents(student: Student): Observable<Student> {
     return this.httpClient
-      .post<Students>(
+      .post<Student>(
         `${environment.APPURL}/students/update`,
         JSON.stringify(student),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
+
   deleteStudent(id: number) {
     this.httpClient
       .delete(`${environment.APPURL}/students/delete/${id}`)

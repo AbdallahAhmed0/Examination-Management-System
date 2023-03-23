@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Students } from './../../Models/student';
+import { Student } from './../../Models/student';
 import { StudentsService } from '../../Services/students.service';
 
 @Component({
@@ -59,7 +59,7 @@ export class AddStudentsComponent implements OnInit {
 
   addStudent() {
     const observer = {
-      next: (student: Students) => {
+      next: (student: Student) => {
         alert('Student Added Successfuly');
         this.router.navigateByUrl('/students');
         this.studentsService.openSnackBar('Added');

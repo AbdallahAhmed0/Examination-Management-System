@@ -46,13 +46,15 @@
       <!-- universityId Column -->
       <ng-container matColumnDef="universityId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>University Id</th>
-        <td mat-cell *matCellDef="let row" class="center">{{ row.universityId }}</td>
+        <td mat-cell *matCellDef="let row" class="center">
+          {{ row.universityId }}
+        </td>
       </ng-container>
 
       <!-- year Column -->
-      <ng-container matColumnDef="year">
+      <ng-container matColumnDef="group">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>year</th>
-        <td mat-cell *matCellDef="let row">{{ row.year }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.group }}</td>
       </ng-container>
 
       <!-- enable Column -->
@@ -102,7 +104,7 @@
     </table>
 
     <mat-paginator
-      [pageSizeOptions]="[5, 10, 25, 100]"
+      [pageSizeOptions]="[10, 25, 100]"
       aria-label="Select page of users"
     ></mat-paginator>
   </div>
