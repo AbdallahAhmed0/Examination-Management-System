@@ -10,7 +10,7 @@
 
     <app-text-editor (editorValue)="getQuestionText($event)" [placeholder]="'Question Text'" ></app-text-editor>
     <input type="hidden" formControlName="questionText" >
-    <mat-error style="display: block;" *ngIf="questionText?.hasError('required')">
+    <mat-error *ngIf="questionText?.touched && questionText?.hasError('required')">
       Question Text is required
     </mat-error>
 

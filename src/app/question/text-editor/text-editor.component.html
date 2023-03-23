@@ -7,6 +7,8 @@
         required
         #questionText="ngModel">
       </textarea>
+      <mat-error *ngIf="questionText.touched && questionText.invalid">Question Text is required</mat-error>
+
   </div>
 
    <div class="answer" *ngIf="placeholder == 'Answer Text'">
@@ -16,6 +18,7 @@
     required
     #questionText="ngModel">
   </textarea>
+  <mat-error *ngIf="questionText.touched && questionText.invalid">Answer Text is required</mat-error>
 
 </div>
 
@@ -34,6 +37,7 @@
   required
   #questionText="ngModel">
 </textarea>
+<mat-error *ngIf="questionText.touched && questionText.invalid">option is required</mat-error>
 
 
 </div>
