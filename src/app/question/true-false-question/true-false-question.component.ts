@@ -16,6 +16,7 @@ export class TrueFalseQuestionComponent implements OnInit {
   @Output() onUP = new EventEmitter<void>();
   @Output() onDown = new EventEmitter<void>();
   @Output() questionData = new EventEmitter<object>();
+  @Output() formValid = new EventEmitter<boolean>();
 
   @Input() indexComponent!:number;
 
@@ -39,7 +40,10 @@ export class TrueFalseQuestionComponent implements OnInit {
       questionType: ['True_False', Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
     });
-    this.form.valueChanges.subscribe(value => this.questionData.emit(this.form.value));
+    this.form.valueChanges.subscribe(value =>{
+      this.questionData.emit(this.form.value);
+      this.formValid.emit(this.form.valid);
+  });
   }
 
   createAnswer(): FormGroup {

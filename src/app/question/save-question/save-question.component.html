@@ -43,18 +43,22 @@
           <app-choice-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
           (onDelete)="removeChild(selectedComponent)" [indexComponent]="(i+1)"
           (questionData)="addQuestion($event,i)"
+          (formValid)="formIsValid($event)"
           *ngIf="selectedComponent.name === 'choice'">
         </app-choice-questions>
 
           <app-text-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
           (onDelete)="removeChild(selectedComponent)"
           [indexComponent]="(i+1)"  (questionData)="addQuestion($event,i)"
+          (formValid)="formIsValid($event)"
            *ngIf="selectedComponent.name === 'text'">
           </app-text-questions>
 
           <app-true-false-question (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
           (onDelete)="removeChild(selectedComponent)"
           [indexComponent]="(i+1)"  (questionData)="addQuestion($event,i)"
+          (formValid)="formIsValid($event)"
+
            *ngIf="selectedComponent.name === 'true_false'">
 
           </app-true-false-question>
@@ -71,8 +75,8 @@
           <button mat-menu-item (click)="showTextEditor()">Coding</button>
         </mat-menu>
 
-        <button *ngIf="questions.length" mat-raised-button [disabled]="!questions.length" (click)="submit()" class="submit" type="submit">Save</button>
-      </div>
+        <button *ngIf="questions.length" mat-raised-button [disabled]="!formVaild" (click)="submit()" class="submit" type="submit">Save</button>
 
+      </div>
 </div>
 

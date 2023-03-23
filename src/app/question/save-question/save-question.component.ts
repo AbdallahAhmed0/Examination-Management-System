@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class SaveQuestionComponent implements OnInit {
   consoleError: any;
-
+  formVaild :boolean=false;
   selectedComponents:any[]=[];
   sentArrayComponenet:any[]=[];
   index:number=1;
@@ -35,20 +35,24 @@ export class SaveQuestionComponent implements OnInit {
   showChoiceQuestions() {
     this.selectedComponents.push({id:this.index,name:'choice'});
     this.index++;
+    this.formVaild=false;
   }
 
   showTextQuestions() {
     this.selectedComponents.push({id:this.index,name:'text'});
     this.index++;
+    this.formVaild=false;
   }
 
   showTextEditor() {
     this.selectedComponents.push({id:this.index,name:'coding'});
     this.index++;
+    this.formVaild=false;
   }
   showTrue_falseQuestions(){
     this.selectedComponents.push({id:this.index,name:'true_false'});
     this.index++;
+    this.formVaild=false;
 
   }
   removeChild(child: any) {
@@ -72,6 +76,9 @@ export class SaveQuestionComponent implements OnInit {
   addQuestion(data:any,index:number){
     this.questions[index]=data;
   }
+  formIsValid(valid:boolean){
+  this.formVaild=valid;
+  }
   submit(){
     const observer = {
       next: (Question: Question[]) => {
@@ -85,4 +92,5 @@ export class SaveQuestionComponent implements OnInit {
     this.questionService.saveQuestions(this.questions,2).subscribe(observer);
     console.log(this.questions)
   }
+
 }
