@@ -14,9 +14,7 @@ export class SaveQuestionComponent implements OnInit {
   consoleError: any;
   formVaild :boolean=false;
   selectedComponents:any[]=[];
-  sentArrayComponenet:any[]=[];
   index:number=1;
-  questionData!:object;
 
   exam?:Exam;
 
@@ -39,7 +37,7 @@ export class SaveQuestionComponent implements OnInit {
   }
 
   showTextQuestions() {
-    this.selectedComponents.push({id:this.index,name:'text'});
+    this.selectedComponents.push({id:this.index,name:'Matching'});
     this.index++;
     this.formVaild=false;
   }
@@ -50,7 +48,7 @@ export class SaveQuestionComponent implements OnInit {
     this.formVaild=false;
   }
   showTrue_falseQuestions(){
-    this.selectedComponents.push({id:this.index,name:'true_false'});
+    this.selectedComponents.push({id:this.index,name:'True_False'});
     this.index++;
     this.formVaild=false;
 

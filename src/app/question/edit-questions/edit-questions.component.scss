@@ -56,7 +56,6 @@ mat-card{
   height: 80%;
   overflow:auto;
 }
-
 .wide-menu {
   width: 500px; /* set the width to whatever value you need */
   text-align: center; /* center the menu items horizontally */
@@ -87,14 +86,15 @@ border-radius: 8px;
     width: 60%;
     height: 40px;
     font-size: 18px;
-    margin-left: 50px;
-    margin-bottom: 20px;
+    margin: auto;
+    margin-bottom: 40px;
     background: #3cb5be;
     color: #ffffff;
-    margin:auto;
-
 }
 .submit:hover{
   background: darken(#3cb5be, 20%);
-
 }
+.submit:disabled{
+  background: darken(#ffffff, 5%);
+}
+

@@ -44,6 +44,10 @@ export class QuestionService {
       )
       .pipe(retry(2), catchError(this.handleError));
   }
+  getExamQuestions(examId:number){
+    return this.httpClient.get(`${environment.APPURL}/exam/renderExam/${examId}`).
+    pipe(retry(2),catchError(this.handleError))
+  }
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {
       duration: 3000,
