@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { utils, writeFile } from 'xlsx';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
-import {DialogeComponent} from '../../../Shared/material/dialoge/dialoge.component'
+import {DialogeComponent} from '../../../Shared/material/dialog/dialog.component'
 
 @Component({
   selector: 'app-all-admins',
@@ -30,7 +30,7 @@ export class AllAdminsComponent implements OnInit,OnDestroy {
   constructor(private adminService:AdminsService,
               private router:Router,
               private dialog: MatDialog) {
-              
+
   }
 
   ngOnInit(): void {

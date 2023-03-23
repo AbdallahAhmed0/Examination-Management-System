@@ -1,4 +1,3 @@
-
 <div class="container">
   <h2>Add Student</h2>
   <button mat-button class="btn-list" style="color: #007bff" (click)="goBack()">
@@ -112,14 +111,15 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>Year</mat-label>
-        <input type="number" matInput formControlName="year" required />
+        <mat-label>Select group</mat-label>
+        <mat-select formControlName="group" matInput >
+          <mat-option *ngFor="let group of theGroups" [value]='group'>{{group.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="groups?.hasError('required')">
+          you must choose group
+      </mat-error>
 
-        <mat-error *ngIf="year?.hasError('required')">
-          Year is Required!
-        </mat-error>
       </mat-form-field>
-
       <app-check-role (checkRole)="selectedRole($event)"></app-check-role>
 
       <section class="checkbox">

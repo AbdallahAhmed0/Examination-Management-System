@@ -82,6 +82,11 @@ export class StudentsService {
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => {});
   }
+  getGroups(): Observable<any[]> {
+    return this.httpClient
+      .get<any[]>(`${environment.APPURL}/groups`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
 
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {
