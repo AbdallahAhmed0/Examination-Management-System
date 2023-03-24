@@ -73,9 +73,9 @@
         <mat-error *ngIf="email?.hasError('email')">
           Email is not Vaild!
         </mat-error>
-        <mat-error *ngIf="consoleError == 'Duplicate Email'">
+        <small  *ngIf="consoleError == 'Duplicate Email'">
           *{{consoleError}}
-      </mat-error>
+      </small>
 
       </mat-form-field>
 
@@ -86,9 +86,9 @@
         <mat-error *ngIf="universityId?.hasError('required')">
           UniversityId is Required!
         </mat-error>
-        <mat-error *ngIf="consoleError == 'Duplicate UniversityId'">
+        <small   *ngIf="consoleError == 'Duplicate UniversityId'">
           *{{consoleError}}
-      </mat-error>
+      </small>
 
       </mat-form-field>
 
