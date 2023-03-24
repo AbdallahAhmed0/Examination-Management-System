@@ -24,8 +24,8 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     'lastName',
     'email',
     'universityId',
-    'enable',
     'group',
+    'enable',
     'actions',
   ];
   dataSource!: MatTableDataSource<any>;
@@ -121,7 +121,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
         'role',
         'locked',
         'enable',
-        'year',
+        'groups',
       ],
     ];
 
