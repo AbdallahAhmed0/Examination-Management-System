@@ -13,6 +13,7 @@ import { Exam } from '../../Models/exam';
 import { utils, writeFile } from 'xlsx';
 import { MatDialog } from '@angular/material/dialog';
 
+
 @Component({
   selector: 'app-all-exams',
   templateUrl: './all-exams.component.html',
@@ -29,6 +30,7 @@ export class AllExamsComponent implements OnInit, OnChanges {
   ];
   dataSource!: MatTableDataSource<any>;
 
+
   exams!: Exam[];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -39,11 +41,11 @@ export class AllExamsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.getExams();
-    console.log(this.dataSource);
   }
 
   ngOnChanges(): void {
     this.getExams();
+
   }
 
   applyFilter(event: Event) {
@@ -77,10 +79,12 @@ export class AllExamsComponent implements OnInit, OnChanges {
         createNewExam(k + 1)
       );
 
+
       // Assign the data to the data source for the table to render
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
 
       this.exams = data;
     });
@@ -90,8 +94,8 @@ export class AllExamsComponent implements OnInit, OnChanges {
     this.router.navigate(['exams/edit', id]);
   }
 
-  delete(row: Exam) {
-    this.examService.deleteExam(row);
+  delete(id: number) {
+    this.examService.deleteExam(id);
     alert('Deleted Successfully');
     window.location.reload();
   }
@@ -117,7 +121,11 @@ export class AllExamsComponent implements OnInit, OnChanges {
     utils.sheet_add_json(ws, this.exams, { origin: 'A2', skipHeader: true });
     utils.book_append_sheet(wb, ws, 'Report');
     writeFile(wb, 'Data of Exams.xlsx');
+
   }
 
+  ngOnDestroy(): void {
+   // this.subExam?.unsubscribe();
+  }
 }
 

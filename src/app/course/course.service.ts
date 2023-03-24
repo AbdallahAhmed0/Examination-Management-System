@@ -1,18 +1,19 @@
-import { Exam } from './../Models/exam';
+import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-
-import { Injectable } from '@angular/core';
+import {Course} from "./course.model"
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class ExamService {
+export class CourseService {
+
   httpOption;
 
   constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
@@ -41,45 +42,45 @@ export class ExamService {
       return throwError(() => new Error(error.error.message));
     }
   }
-
-  getAllExams(): Observable<Exam[]> {
+  getAllCourses(): Observable<Course[]> {
     return this.httpClient
-      .get<Exam[]>(`${environment.APPURL}/exam/getAll`)
+      .get<Course[]>(`${environment.APPURL}/courses`)
       .pipe(retry(2), catchError(this.handleError));
   }
-
-  getExamById(id: number): Observable<Exam> {
+  getGroups(): Observable<any[]> {
     return this.httpClient
-      .get<Exam>(`${environment.APPURL}/exam/${id}`, this.httpOption)
+      .get<any[]>(`${environment.APPURL}/groups`)
       .pipe(retry(2), catchError(this.handleError));
   }
-
-  addExam(exam: Exam): Observable<Exam> {
+  addCourse(course:Course): Observable<Course> {
     return this.httpClient
-      .post<Exam>(
-        `${environment.APPURL}/exam/save`,
-        JSON.stringify(exam),
+      .post<Course>(
+        `${environment.APPURL}/courses`,
+        JSON.stringify(course),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
-
-  updateExam(exam: Exam): Observable<Exam> {
+  updateCourse(course:Course): Observable<Course> {
     return this.httpClient
-      .post<Exam>(
-        `${environment.APPURL}/exam/save`,
-        JSON.stringify(exam),
+      .post<Course>(
+        `${environment.APPURL}/courses`,
+        JSON.stringify(course),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
-
-  deleteExam(id: number) {
+  deleteCourse(id: number) {
     this.httpClient
-      .delete(`${environment.APPURL}/exam/delete`)
+      .delete(`${environment.APPURL}/courses/${id}`)
 
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => {});
+  }
+  getCourseById(id: number): Observable<Course> {
+    return this.httpClient
+      .get<Course>(`${environment.APPURL}/courses/${id}`, this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
   }
 
   openSnackBar(message: string) {
@@ -87,5 +88,6 @@ export class ExamService {
       duration: 3000,
     });
   }
+
 
 }

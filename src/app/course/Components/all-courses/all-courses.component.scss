@@ -1,0 +1,17 @@
+.example-card {
+  max-width: 30%;
+  margin: 20px ;
+}
+
+.example-header-image {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsFSe2DoXoqh8XasNizi_PHn6s3RZsdK0Y_A&usqp=CAU');
+  background-size: cover;
+}
+.container{
+  display: flex;
+  flex-wrap: wrap;
+
+}
+img{
+  cursor: pointer;
+}

@@ -16,7 +16,7 @@ import { adminRoutingModule } from './admin-routing.module';
     AllAdminsComponent,
     AddAdminComponent,
     EditAdminComponent,
-    ImportAdminComponent
+    ImportAdminComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +26,6 @@ import { adminRoutingModule } from './admin-routing.module';
     FormsModule,
     MaterialModule,
     RolesModule
-
   ]
 
 })

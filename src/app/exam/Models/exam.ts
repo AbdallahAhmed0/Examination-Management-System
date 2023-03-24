@@ -3,5 +3,7 @@ export interface Exam {
   examName: string,
   duration: number,
   startTime: Date,
+  successRate:number,
+  state:boolean,
   endTime: Date
 }

@@ -42,9 +42,9 @@
             <span *ngIf="sidenav.close">Admins</span>
         </button>
 
-        <button mat-button class="menu-button">
+        <button mat-button class="menu-button"[routerLink]="['/courses']">
             <mat-icon>book</mat-icon>
-            <span *ngIf="sidenav.close">Subjects</span>
+            <span *ngIf="sidenav.close">Courses</span>
         </button>
 
         <button mat-button class="menu-button" [routerLink]="['/roles']">

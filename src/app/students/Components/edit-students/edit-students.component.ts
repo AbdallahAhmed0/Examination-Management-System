@@ -70,7 +70,7 @@ export class EditStudentsComponent implements OnInit {
             [Validators.required, Validators.minLength(6)],
           ],
           roles: this.fb.array([]),
-          year: [data.group, [Validators.required]],
+          year: [data.year, [Validators.required]],
           enable: [data.enable],
           locked: [data.locked],
         });

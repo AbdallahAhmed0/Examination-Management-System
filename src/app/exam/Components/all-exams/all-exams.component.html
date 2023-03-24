@@ -68,7 +68,7 @@
             <button mat-button (click)="edit(row.id)">
               <mat-icon class="edit-icon">edit</mat-icon>
             </button>
-            <button mat-button (click)="delete(row)">
+            <button mat-button (click)="delete(row.id)">
               <mat-icon class="delete-icon">delete</mat-icon>
             </button>
           </div>
@@ -93,4 +93,5 @@
       aria-label="Select page of users"
     ></mat-paginator>
   </div>
+
 </div>

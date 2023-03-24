@@ -7,8 +7,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {path: '', component:AllExamsComponent},
   {path:'exams',component:AllExamsComponent},
-  {path:'exams/add',component:AddExamComponent},
-  {path:'exams/edit/:id',component:EditExamComponent}];
+  {path:'add',component:AddExamComponent},
+  {path:'edit/:id',component:EditExamComponent}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

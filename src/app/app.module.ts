@@ -1,7 +1,7 @@
 import { ExamModule } from './exam/exam.module';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+// import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './dashboard/header/header.component';
@@ -12,6 +12,8 @@ import { MaterialModule } from './Shared/material/material.module';
 import { AdminsModule } from './admins/admins.module';
 import { RolesModule } from './roles/roles.module';
 import { StudentsModule } from './students/students.module';
+import { AppRoutingModule } from './app-routing.module';
+import { CourseModule } from './course/course.module';
 
 
 
@@ -22,14 +24,15 @@ import { StudentsModule } from './students/students.module';
     SidebarComponent
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
     AdminsModule,
     RolesModule,
     StudentsModule,
-    ExamModule
+    ExamModule,
+    CourseModule
 
   ],
   providers: [],

@@ -6,11 +6,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DialogeComponent } from 'src/app/Shared/material/dialog/dialog.component';
 import { utils, writeFile } from 'xlsx';
 import { Student } from '../../Models/student';
 import { StudentsService } from '../../Services/students.service';
-
 
 @Component({
   selector: 'app-all-students',
@@ -25,7 +23,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     'email',
     'universityId',
     'enable',
-    'group',
+    'year',
     'actions',
   ];
   dataSource!: MatTableDataSource<any>;
@@ -40,6 +38,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     private router: Router,
     public dialog: MatDialog
   ) {}
+
 
   ngOnChanges(): void {
     this.getStudents();
@@ -62,17 +61,9 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     this.router.navigate(['students/edit', id]);
   }
   delete(id: number) {
-    const dialogRef = this.dialog.open(DialogeComponent, {
-      width: '400px',
-      height:'280px'
-      });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'confirm') {
-
-          this.studentService.deleteStudent(id);
-        }
-      });
+    this.studentService.deleteStudent(id);
+    alert('Deleted Successfully');
+    window.location.reload();
   }
   add() {
     this.router.navigate(['students/add']);
@@ -91,7 +82,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
           universityId:
             data[Math.round(Math.random() * (data.length - 1))].universityId,
           email: data[Math.round(Math.random() * (data.length - 1))].email,
-          group: data[Math.round(Math.random() * (data.length - 1))].group,
+          year: data[Math.round(Math.random() * (data.length - 1))].year,
         };
       };
 
@@ -159,4 +150,5 @@ export class AllStudentsComponent implements OnInit, OnChanges {
   importData() {
     this.router.navigate(['students/import']);
   }
+
 }

@@ -27,9 +27,8 @@ import { CheckRoleComponent } from './Components/check-role/check-role.component
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule
-  ]
-  ,
-  exports: [
+  ],
+  exports:[
     CheckRoleComponent
   ]
 })

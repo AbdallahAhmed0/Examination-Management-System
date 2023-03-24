@@ -10,5 +10,5 @@ export interface Student {
   roles:Role[],
   locked?:boolean,
   enable?:boolean,
-  group:[]
+  year:number
 }
