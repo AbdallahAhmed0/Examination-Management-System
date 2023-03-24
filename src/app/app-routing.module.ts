@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { adminRoutingModule } from './admins/admin-routing.module';
 import { StudentsRoutingModule } from './students/students-routing.module';
 
 const routes: Routes = [

@@ -84,4 +84,10 @@ export class ExamService {
       duration: 3000,
     });
   }
+
+  renderExam(id: number): Observable<Exam> {
+    return this.httpClient
+      .get<Exam>(`${environment.APPURL}/exam/renderExam/${id}`, this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
+  }
 }
