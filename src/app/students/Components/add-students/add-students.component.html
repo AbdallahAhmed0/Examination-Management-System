@@ -113,10 +113,10 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Select group</mat-label>
-        <mat-select formControlName="group" matinput >
-          <mat-option *ngFor="let group of theGroups" [value]=group>{{group?.name}}</mat-option>
+        <mat-select formGroupName="group" matinput >
+          <mat-option *ngFor="let group of theGroups" [value]='group'>{{group?.name}}</mat-option>
         </mat-select>
-        <mat-error *ngIf="groups?.hasError('required')">
+        <mat-error *ngIf="group?.hasError('required')">
           you must choose group
       </mat-error>
 

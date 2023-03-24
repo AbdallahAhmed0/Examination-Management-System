@@ -33,7 +33,7 @@ export class AddStudentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getGroups();
-    
+
     this.newStudent = this.fb.group({
       firstName: [
         '',
@@ -55,9 +55,9 @@ export class AddStudentsComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: [''],
       roles: this.fb.array([]),
-      enable: [true],
       locked: [false],
-      groups: this.fb.group({
+      enable: [true],
+      group: this.fb.group({
         id:[],
         name:['',[Validators.required]]
       }),
@@ -120,8 +120,8 @@ export class AddStudentsComponent implements OnInit {
   get role() {
     return this.newStudent.get('roles');
   }
-  get groups() {
-    return this.newStudent.get('groups');
+  get group() {
+    return this.newStudent.get('group');
   }
   get enable() {
     return this.newStudent.get('enable');
