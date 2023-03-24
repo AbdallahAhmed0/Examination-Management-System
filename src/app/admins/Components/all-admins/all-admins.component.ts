@@ -64,7 +64,10 @@ delete(id:number){
 
         this.adminService.deleteAdmin(id);
       }
+      window.location.reload();
+
     });
+
   }
 
 add(){
