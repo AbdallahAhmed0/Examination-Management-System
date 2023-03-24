@@ -67,12 +67,12 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header > Actions </th>
             <td mat-cell  *matCellDef="let row" >
                 <div class="actions">
-                    <button mat-button (click)="edit(row.id)">
+                    <a title="Edit" (click)="edit(row.id)">
                         <mat-icon class="edit-icon">edit</mat-icon>
-                    </button>
-                    <button mat-button  (click)="delete(row.id)">
+                    </a>
+                    <a  title="Delete" (click)="delete(row.id)">
                         <mat-icon class="delete-icon">delete</mat-icon>
-                    </button>
+                    </a>
             </div>
             </td>
           </ng-container>

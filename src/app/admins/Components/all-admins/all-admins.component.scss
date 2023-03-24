@@ -50,7 +50,7 @@ td, th {
     margin: 10px 0px;
     border-radius: 6px;
     font-size: 30px;
-    background: #0cd463;
+    background:  #0cd463;
     width: 45px;
     height: 45px;
     text-align: center;
@@ -76,4 +76,14 @@ td, th {
   border-radius: 4px;
   font-size: 15px;
   font-weight: 500;
+}
+a{
+  cursor: pointer;
+  margin-left: 10px;
+}
+.edit-icon:hover{
+background: darken(#0cd463,10%);
+}
+.delete-icon:hover{
+  background: darken(#f20202, 10%);
 }
