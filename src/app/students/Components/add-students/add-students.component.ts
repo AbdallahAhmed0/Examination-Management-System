@@ -67,7 +67,6 @@ export class AddStudentsComponent implements OnInit {
   addStudent() {
     const observer = {
       next: (student: Student) => {
-        alert('Student Added Successfuly');
         this.router.navigateByUrl('/students');
         this.studentsService.openSnackBar('Added');
       },
@@ -79,13 +78,11 @@ export class AddStudentsComponent implements OnInit {
     for (let i of this.checkRole) {
       testformArray.push(new FormControl(i));
     }
-    if (this.password?.value == '') {
-      this.password?.setValue(
-        `${this.firstName?.value}${this.lastName?.value}${this.universityId?.value}`
-      );
+    if(this.password?.value == ''){
+      this.password?.setValue(`${this.firstName?.value}${this.lastName?.value}${this.universityId?.value}`);
     }
+
     this.studentsService.addStudent(this.newStudent.value).subscribe(observer);
-    console.log(this.newStudent.value);
   }
 
   goBack() {
@@ -97,9 +94,7 @@ export class AddStudentsComponent implements OnInit {
   }
   getGroups(){
     this.studentsService.getGroups().subscribe(data=>{
-
       this.theGroups=data
-
     })
   }
   get firstName() {
