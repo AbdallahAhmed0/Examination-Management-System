@@ -1,4 +1,4 @@
-import { Component, OnInit,  } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit,  } from '@angular/core';
 import { FormBuilder,  FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -28,7 +28,8 @@ export class EditCourseComponent implements OnInit {
     private router:Router,
     private courseService:CourseService,
     private adminservice:AdminsService,
-    private activatedRoute:ActivatedRoute) { }
+    private activatedRoute:ActivatedRoute,
+    ) { }
 
 
   ngOnInit(): void {
@@ -42,6 +43,15 @@ export class EditCourseComponent implements OnInit {
 
         console.log(data);
         this.course=data
+        this.items=data.admins
+        this.newCourse=this.fb.group({
+          name:[data.courseName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
+          code:[data.courseCode,[Validators.required,Validators.minLength(3)]],
+          group:["",[Validators.required]],
+          adminIds:["",]
+
+
+        })
 
 
 
@@ -50,16 +60,6 @@ export class EditCourseComponent implements OnInit {
 
 
     })
-    this.newCourse=this.fb.group({
-      name:["",[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
-      code:["",[Validators.required,Validators.minLength(3)]],
-      group:["",[Validators.required]],
-      adminIds:["",]
-
-
-    })
-
-    console.log(this.course);
   }
 
 
@@ -77,7 +77,7 @@ export class EditCourseComponent implements OnInit {
 
     const observer={
       next: (course:Course) => {
-       // this.router.navigateByUrl('/courses');
+        this.router.navigateByUrl('/courses');
         this.courseService.openSnackBar('Added');
       },
       error: (err:Error)=>{
@@ -87,8 +87,6 @@ export class EditCourseComponent implements OnInit {
     this.EditCourse=this.newCourse.value
     this.EditCourse.id=this.id
     console.log(this.EditCourse);
-    console.log(this.newCourse.get("name"));
-
 
     this.subCourse= this.courseService.addCourse(this.EditCourse).subscribe(observer);
 
@@ -115,7 +113,7 @@ export class EditCourseComponent implements OnInit {
   addItem() {
 
     if (this.selecteditem && !this.items.includes(this.selecteditem)) {
-      this.items.push(this.selecteditem);
+      this.items.push(this.selecteditem).id;
       this.selecteditem = null;
     }
   }

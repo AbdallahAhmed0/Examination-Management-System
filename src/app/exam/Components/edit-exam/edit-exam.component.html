@@ -57,6 +57,17 @@
 </mat-error>
 
 </mat-form-field><br>
+<br>
+<mat-form-field appearance="fill">
+  <mat-label>Select Course</mat-label>
+  <mat-select formControlName="course" matinput >
+    <mat-option *ngFor="let course of theCourses" [value]=course>{{course.courseName}}</mat-option>
+  </mat-select>
+  <mat-error *ngIf="course?.hasError('required')">
+    you must choose course
+</mat-error>
+
+</mat-form-field>
 <mat-form-field appearance="fill" >
 
   <mat-label>Start time</mat-label>

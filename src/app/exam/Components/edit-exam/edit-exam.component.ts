@@ -4,6 +4,8 @@ import { ExamService } from '../../Services/exam.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Exam } from '../../Models/exam';
 import { Subscription } from 'rxjs';
+import { CourseService } from 'src/app/course/course.service';
+import { Course } from 'src/app/course/course.model';
 
 @Component({
   selector: 'app-edit-exam',
@@ -18,13 +20,15 @@ export class EditExamComponent implements OnInit {
   consoleError:any;
   subExam?:Subscription;
   subRoute?:Subscription;
+  theCourses?:Course[];
   sliderValue?:number;
 
 
   constructor(private router:Router,
      private examService:ExamService,
     private fb:FormBuilder,
-    private activatedRoute:ActivatedRoute) { }
+    private activatedRoute:ActivatedRoute,
+    private courseService:CourseService) { }
     ngOnInit(): void {
 
       this.subRoute= this.activatedRoute.paramMap.subscribe((paramMap)=>{
@@ -41,6 +45,7 @@ export class EditExamComponent implements OnInit {
               examName:[data.examName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
               duration:[data.duration,[Validators.required]],
               successRate:[data.successRate,Validators.required],
+              course:["",Validators.required],
               state:[false,[]],
               startTime:[ "",[Validators.required]],
               endTime:["",[Validators.required]]
@@ -79,6 +84,11 @@ export class EditExamComponent implements OnInit {
 
 
     }
+    getCourses(){
+      this.courseService.getAllCourses().subscribe(data=>{
+        this.theCourses=data
+      })
+    }
     transformDate(time:any){
       let transformedDate
       console.log(time);
@@ -116,6 +126,9 @@ export class EditExamComponent implements OnInit {
     }
     get successRate(){
       return this.newExam.get('succesRate')
+    }
+    get course(){
+      return this.newExam.get('course')
     }
 
   }

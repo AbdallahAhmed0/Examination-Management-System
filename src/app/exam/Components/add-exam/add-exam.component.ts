@@ -7,6 +7,8 @@ import { ExamService }  from './../../Services/exam.service'
 
 import { Subscription } from 'rxjs';
 import { Exam } from './../../Models/exam';
+import { Course } from 'src/app/course/course.model';
+import { CourseService } from 'src/app/course/course.service';
 
 
 @Component({
@@ -18,18 +20,22 @@ export class AddExamComponent implements OnInit {
   consoleError:any;
   newExam!: FormGroup;
   subExam?:Subscription;
+  theCourses?:Course[];
   sliderValue?:number;
 
 
   constructor(private router:Router,
     private fb:FormBuilder,
-    private examService:ExamService) { }
+    private examService:ExamService,
+    private courseService:CourseService) { }
 
   ngOnInit(): void {
+    this.getCourses()
     this.newExam=this.fb.group({
       examName:['',[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
       duration:["",[Validators.required]],
       successRate:[0,Validators.required],
+      course:["",[Validators.required]],
       state:[false,[]],
       startTime:["",[Validators.required]],
       endTime:["",[Validators.required]]
@@ -66,7 +72,11 @@ export class AddExamComponent implements OnInit {
 
 }
 
-
+  getCourses(){
+    this.courseService.getAllCourses().subscribe(data=>{
+      this.theCourses=data
+    })
+  }
 
   transformDate(time:any){
     let transformedDate
@@ -94,6 +104,9 @@ export class AddExamComponent implements OnInit {
 
   get duration(){
     return this.newExam.get('duration')
+  }
+  get course(){
+    return this.newExam.get('course')
   }
   get startTime(){
     return this.newExam.get('startTime')
