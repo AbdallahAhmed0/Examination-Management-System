@@ -22,7 +22,7 @@ export class AddStudentsComponent implements OnInit {
   newStudent!: FormGroup;
   checkRole: any[] = [];
   subStudent?: Subscription;
-  theGroups:any;
+
   constructor(
     private studentsService: StudentsService,
     private router: Router,
@@ -30,10 +30,6 @@ export class AddStudentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
-    this.studentsService.getGroups().subscribe(data=>{
-      this.theGroups=data });
-
     this.newStudent = this.fb.group({
       firstName: [
         '',
@@ -55,12 +51,9 @@ export class AddStudentsComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: [''],
       roles: this.fb.array([]),
-      locked: [false],
       enable: [true],
-      group: this.fb.group({
-        id:['',[Validators.required]],
-        name:['',[Validators.required]]
-      }),
+      locked: [false],
+      year: [, [Validators.required]],
     });
   }
 
@@ -114,8 +107,8 @@ export class AddStudentsComponent implements OnInit {
   get role() {
     return this.newStudent.get('roles');
   }
-  get groups() {
-    return this.newStudent.get('groups');
+  get year() {
+    return this.newStudent.get('year');
   }
   get enable() {
     return this.newStudent.get('enable');
