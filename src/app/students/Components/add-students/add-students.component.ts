@@ -57,10 +57,7 @@ export class AddStudentsComponent implements OnInit {
       roles: this.fb.array([]),
       locked: [false],
       enable: [true],
-      group: this.fb.group({
-        id:[],
-        name:['',[Validators.required]]
-      }),
+      group: [, [Validators.required]]
     });
   }
 

@@ -76,10 +76,7 @@ export class EditStudentsComponent implements OnInit {
           roles: this.fb.array([]),
           locked: [data.locked],
           enable: [data.enable],
-          group: this.fb.group({
-            id:[data.group.id],
-            name:[data.group.name,[Validators.required]]
-          }),
+          group: [data.group,[Validators.required]]
 
         });
 
