@@ -82,6 +82,7 @@ export class EditStudentsComponent implements OnInit {
           }),
 
         });
+
       });
     });
   }
@@ -115,9 +116,7 @@ export class EditStudentsComponent implements OnInit {
   }
   getGroups(){
     this.studentsService.getGroups().subscribe(data=>{
-
       this.theGroups=data
-
     })
   }
   goback() {

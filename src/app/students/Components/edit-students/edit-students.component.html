@@ -1,3 +1,4 @@
+<p>{{student |json}}</p>
 <div class="contianer">
   <p>Edit Student</p>
   <button mat-button class="btn-list" style="color: #007bff" (click)="goback()">
@@ -81,6 +82,9 @@
         <mat-error *ngIf="email?.hasError('email')">
           Email is not Vaild!
         </mat-error>
+        <small  *ngIf="consoleError == 'Duplicate Email'">
+          *{{consoleError}}
+      </small>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -97,6 +101,9 @@
         <mat-error *ngIf="universityId?.hasError('required')">
           UniversityId is Required!
         </mat-error>
+        <small   *ngIf="consoleError == 'Duplicate UniversityId'">
+          *{{consoleError}}
+      </small>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -123,9 +130,9 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Select group</mat-label>
+        <mat-label>{{student.group.name}}</mat-label>
         <mat-select formGroupName="group" matinput >
-          <mat-option *ngFor="let group of theGroups" [value]='group'>{{group?.name}}</mat-option>
+          <mat-option *ngFor="let group of theGroups"  [value]='group'>{{group?.name}}</mat-option>
         </mat-select>
         <mat-error *ngIf="group?.hasError('required')">
           you must choose group
