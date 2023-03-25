@@ -1,5 +1,4 @@
 .attempt-container {
-  // background-color: #b3b3b3;
   background-color: #fff;
   padding: 2.5rem 0;
   margin-top: 1rem;
@@ -22,8 +21,12 @@
 }
 .attempt-btn {
   // background-color: #3174efe9;
-  background: #0a7d3c;
+  background: darken(#0cd463, 7%);
   padding: 0.3rem 2rem;
   border-radius: 2rem;
   color: #fff;
+}
+.attempt-btn:hover
+{
+  background: darken(#0cd463, 15%);
 }

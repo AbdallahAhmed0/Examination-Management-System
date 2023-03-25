@@ -20,7 +20,7 @@ export class AttemptExamComponent implements OnInit {
 
   attemptExam(){
     let examId = Number(this._activatedRoute.snapshot.paramMap.get('examId')) ;
-    this._examService.getExamInfo(examId).subscribe(
+    this._examService.getExamById(examId).subscribe(
       data=>this.examInfo = data ,
       err => throwError(err || "an error happened while getting exam info")
     )
