@@ -10,7 +10,7 @@ const routes: Routes = [
   {path:'exams',component:AllExamsComponent},
   {path:'exams/add',component:AddExamComponent},
   {path:'exams/edit/:id',component:EditExamComponent},
-  {path:'exams/attemptExam/:examId',component:AttemptExamComponent}
+  {path:'exams/attempt/:examId',component:AttemptExamComponent}
 
 ];
 
