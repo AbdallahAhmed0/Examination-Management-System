@@ -84,4 +84,12 @@ export class ExamService {
       duration: 3000,
     });
   }
+
+// Get exam info for Attempt page
+getExamInfo(examID:number  ):Observable<Exam>{
+  return this.httpClient
+  .get<Exam>(`${environment.APPURL}/exam/${examID}/`)
+  .pipe(retry(2),catchError(this.handleError))
+}
+
 }

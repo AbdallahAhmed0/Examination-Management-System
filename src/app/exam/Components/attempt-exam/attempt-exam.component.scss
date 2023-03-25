@@ -1,0 +1,29 @@
+.attempt-container {
+  // background-color: #b3b3b3;
+  background-color: #fff;
+  padding: 2.5rem 0;
+  margin-top: 1rem;
+}
+.exam-info {
+  // text-align: center;
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__heading {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+  &__data {
+    margin-bottom: 2.5rem;
+  }
+}
+.attempt-btn {
+  // background-color: #3174efe9;
+  background: #0a7d3c;
+  padding: 0.3rem 2rem;
+  border-radius: 2rem;
+  color: #fff;
+}
