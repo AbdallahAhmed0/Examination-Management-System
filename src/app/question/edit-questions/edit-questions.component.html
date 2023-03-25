@@ -5,39 +5,38 @@
 
       <mat-card>
         <div class="exam-header">
-          <div class="exam-name">{{data?.examName}}</div>
+          <div class="exam-name">{{exam?.examName}}</div>
         </div>
         <mat-card-content>
           <div class="exam-details">
             <div class="exam-details-left">
               <div class="mat-grid-tile-header">
                 <span class="mat-subheading-1">Start Time:</span>
-                <span class="mat-body-1">{{ data?.startTime }}</span>
+                <span class="mat-body-1">{{ exam?.startTime }}</span>
               </div>
             </div>
             <div class="exam-details-right">
               <div class="mat-grid-tile-header">
                 <span class="mat-subheading-1">Success Rate: </span>
-                <span class="mat-body-1">{{ data?.successRate}} %</span>
+                <span class="mat-body-1">{{ exam?.successRate}} %</span>
               </div>
             </div>
           <div class="exam-details-left">
             <div class="mat-grid-tile-header">
               <span class="mat-subheading-1">End Time: </span>
-              <span class="mat-body-1">{{ data?.endTime }}</span>
+              <span class="mat-body-1">{{ exam?.endTime }}</span>
             </div>
           </div>
           <div class="exam-details-right">
             <div class="mat-grid-tile-header">
               <span class="mat-subheading-1">Duration: </span>
-              <span class="mat-body-1">{{ data?.duration }}</span>
+              <span class="mat-body-1">{{ exam?.duration }}</span>
             </div>
           </div>
           </div>
         </mat-card-content>
       </mat-card>
     </div>
-
 
     <ng-container *ngFor="let selectedComponent of selectedComponents; let i = index" >
 
@@ -50,6 +49,8 @@
       <app-text-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
       (onDelete)="removeChild(selectedComponent)"
       [indexComponent]="(i+1)"  (questionData)="addQuestion($event,i)"
+      [editQuestion]="selectedComponent.data"
+
        *ngIf="selectedComponent.name === 'Matching'">
 
       </app-text-questions>

@@ -14,35 +14,37 @@ export class EditQuestionsComponent implements OnInit {
 
   consoleError: any;
   formVaild :boolean=false;
+
   selectedComponents:any[]=[];
   index:number=1;
-  editquestions!:Question[];
-  data:any;
 
+  editquestions:Question[]=[];
+  exam?:Exam;
   questions:Question[]=[];
+
   constructor(private examService:ExamService,
               private questionService:QuestionService,
               private router:Router) {
   }
   ngOnInit(): void {
 
-    this.questionService.getExamQuestions(2).subscribe(data => {
-    this.data=data;
-    })
-    this.editquestions=this.data.questions;
-    
+  // get Questions of Exam
+    this.questionService.getQuestions(2).subscribe(data => {
+    this.editquestions=data;
+
+  // select questions in selected Components
     this.editquestions.forEach(question => {
-      if(question.questionType =='Multiple_choice' || question.questionType == 'Multiple_Answers'){
 
-        this.selectedComponents.push({id: this.index, name: 'choice', data: question});
-
-      }else{
       this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
-      }
       this.index++;
+      });
+
     });
 
-
+  // get Data of Exam
+    this.examService.getExamById(2).subscribe(data =>{
+    this.exam=data;
+})
   }
 
 
@@ -76,24 +78,29 @@ export class EditQuestionsComponent implements OnInit {
       this.selectedComponents.splice(index, 1);
     }
 }
-  upChild(child: any) {
+
+upChild(child: any) {
     const index = this.selectedComponents.indexOf(child);
     if (index >= 1) {
       [this.selectedComponents[index],this.selectedComponents[index-1]]=[this.selectedComponents[index-1],this.selectedComponents[index]]
     }
   }
+
   downChild(child: any) {
     const index = this.selectedComponents.indexOf(child);
     if (index < this.selectedComponents.length-1) {
       [this.selectedComponents[index],this.selectedComponents[index+1]]=[this.selectedComponents[index+1],this.selectedComponents[index]]
     }
   }
+
   addQuestion(data:any,index:number){
     this.questions[index]=data;
   }
+
   formIsValid(valid:boolean){
   this.formVaild=valid;
   }
+
   submit(){
     const observer = {
       next: (Question: Question[]) => {

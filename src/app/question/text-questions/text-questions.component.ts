@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
+import { Question } from './../question';
 
 @Component({
   selector: 'app-text-questions',
@@ -21,6 +22,7 @@ export class TextQuestionsComponent implements OnInit {
   @Output() formValid = new EventEmitter<boolean>();
 
   @Input() indexComponent!:number;
+  @Input() editQuestion?:Question;
   editquestion:object={
 
   }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Question } from './question';
 
 @Injectable({
   providedIn: 'root',
@@ -44,8 +45,8 @@ export class QuestionService {
       )
       .pipe(retry(2), catchError(this.handleError));
   }
-  getExamQuestions(examId:number){
-    return this.httpClient.get(`${environment.APPURL}/exam/renderExam/${examId}`).
+  getQuestions(examId:number):Observable<Question[]>{
+    return this.httpClient.get<Question[]>(`${environment.APPURL}/exam/getQuestions/${examId}`).
     pipe(retry(2),catchError(this.handleError))
   }
   openSnackBar(message: string) {
