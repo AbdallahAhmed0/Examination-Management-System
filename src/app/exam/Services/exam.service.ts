@@ -48,7 +48,7 @@ export class ExamService {
 
   getExamById(id: number): Observable<Exam> {
     return this.httpClient
-      .get<Exam>(`${environment.APPURL}/exams/get/${id}`, this.httpOption)
+      .get<Exam>(`${environment.APPURL}/exam/${id}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 
