@@ -2,16 +2,18 @@
   <section class="attempt-container">
     <div class="exam-info">
       <h2 class="mat-display-2 exam-info__heading">Exam information</h2>
-      <div class="exam-info__container">
-        <div class="exam-info__data">
-          <h3 class="">Exam Name: {{examInfo?.examName}}</h3>
-          <h3 class="">Duration: {{examInfo?.duration}}</h3>
-          <h3>Start time: {{examInfo?.startTime}}</h3>
-          <h3>End time: {{examInfo?.endTime}}</h3>
-          <h3>Success rate: {{examInfo?.successRate}}</h3>
+      <ng-container *ngIf="examInfo">
+        <div class="exam-info__container">
+          <div class="exam-info__data">
+            <h3 class="">Exam Name: {{examInfo.examName}}</h3>
+            <h3 class="">Duration: {{examInfo.duration}}</h3>
+            <h3>Start time: {{examInfo.startTime}}</h3>
+            <h3>End time: {{examInfo.endTime}}</h3>
+            <h3>Success rate: {{examInfo.successRate}}</h3>
+          </div>
+          <button mat-raised-button color="primary" class="attempt-btn">Attempt</button>
         </div>
-        <button mat-raised-button color="primary" class="attempt-btn">Attempt</button>
-      </div>
+      </ng-container>
     </div>
   </section>
 </div>
