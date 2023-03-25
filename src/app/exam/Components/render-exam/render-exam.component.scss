@@ -1,9 +1,11 @@
-*{
+ *{
   box-sizing: border-box;
 }
 
 mat-card {
   margin-top: 20px;
+  width: 100%;
+
 }
 
 mat-card-actions {
@@ -19,9 +21,7 @@ mat-card-actions {
 p{
   color:#3cb5be ;
 }
-mat-card{
-  width: 100%;
-}
+
 .exam-container {
   display: flex;
   flex-direction: column;
@@ -58,53 +58,58 @@ mat-card{
   margin-right: 10px;
 }
 
-.form{
-  margin: 5% 10%;
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+}
+
+.form {
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
   border-radius: 10px;
-  width: 75%;
-  background: #FFFFFF;
-  height: 80%;
-  overflow:auto;
-}
-.wide-menu {
-  width: 500px; /* set the width to whatever value you need */
-  text-align: center; /* center the menu items horizontally */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.mat-menu-content {
-  padding: 16px 0; /* add some padding to the top and bottom of the menu */
-}
-.btn-question{
-margin: 20px;
-color: #f6f4f4;
-background: darken(#3cb5be, 8%);
-border-radius: 8px;
+.exam-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.btn-question:hover{
-  background: darken(#3cb5be, 20%);
-}
-::ng-deep .mat-menu-panel {
-  background: darken(#3cb5be, 8%);
-}
-::ng-deep .mat-menu-item {
-  color:#f6f4f4 ;
+.exam-card {
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 600px;
 }
 
-.submit{
-  display: block;
-    width: 60%;
-    height: 40px;
-    font-size: 18px;
-    margin: auto;
-    margin-bottom: 40px;
-    background: #3cb5be;
-    color: #ffffff;
-}
-.submit:hover{
-  background: darken(#3cb5be, 20%);
-}
-.submit:disabled{
-  background: darken(#ffffff, 5%);
+.exam-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3f51b5;
+  color: #fff;
+  padding: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
+.exam-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.exam-details {
+  display: flex;
+}
+
+mat-radio-group {
+  display: flex;
+  justify-content: space-around;
+}

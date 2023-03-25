@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class RenderExamComponent implements OnInit {
 
   exam?: Exam;
+  responseString: string | undefined;
 
   question: Question[]=[];
 
@@ -19,10 +20,35 @@ export class RenderExamComponent implements OnInit {
   ngOnInit(): void {
 
     this.examService.renderExam(2).subscribe(data => {
-      this.exam = data;
       console.log(data);
-    })
+      this.exam = {
+        id: data.id,
+        examName: data.examName,
+        duration: data.duration,
+        startTime: data.startTime,
+        endTime: data.endTime,
+        successRate: data.successRate,
+        questions: data.questions.map((q) => ({
+          id: q.id,
+          questionText: this.parseHTML(q.questionText),
+          points: q.points,
+          questionType: q.questionType,
+          questionAnswers: q.questionAnswers.map((a) => ({
+            id: a.id,
+            answerText: this.parseHTML(a.answerText)
+          }))
+        }))
+      };
+      console.log(this.exam)
+    });
 
+
+  }
+
+  parseHTML(htmlString: string): string {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+    return doc.body? doc.body.textContent?.trim() || '' : '';
   }
 
 
