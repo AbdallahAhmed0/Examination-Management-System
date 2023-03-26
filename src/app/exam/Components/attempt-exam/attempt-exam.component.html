@@ -5,11 +5,11 @@
       <ng-container *ngIf="examInfo">
         <div class="exam-info__container">
           <div class="exam-info__data">
-            <h3>Exam Name: {{examInfo.examName}}</h3>
-            <h3>Duration: {{examInfo.duration}}</h3>
-            <h3>Start Time: {{examInfo.startTime}}</h3>
-            <h3>End Time: {{examInfo.endTime}}</h3>
-            <h3>Success Rate: {{examInfo.successRate}}</h3>
+            <h3>Exam Name: <span>{{examInfo.examName}}</span></h3>
+            <h3>Duration: <span>{{examInfo.duration}}</span></h3>
+            <h3>Start Time: <span>{{examInfo.startTime}}</span></h3>
+            <h3>End Time: <span>{{examInfo.endTime}}</span></h3>
+            <h3>Success Rate: <span>{{examInfo.successRate}}%</span></h3>
           </div>
           <button mat-raised-button  class="attempt-btn mat-h3">Attempt</button>
         </div>
