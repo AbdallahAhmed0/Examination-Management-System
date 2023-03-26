@@ -1,12 +1,10 @@
-.container{
-  width: 80%;
-}
 .attempt-container {
   background-color: #fff;
   padding: 2.5rem 0;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 .exam-info {
+  // text-align: center;
   &__container {
     display: flex;
     flex-direction: column;
@@ -16,27 +14,19 @@
   &__heading {
     margin-bottom: 3rem;
     text-align: center;
-
   }
   &__data {
     margin-bottom: 2.5rem;
   }
 }
 .attempt-btn {
+  // background-color: #3174efe9;
   background: darken(#0cd463, 7%);
   padding: 0.3rem 2rem;
   border-radius: 2rem;
   color: #fff;
-  &:hover {
-    background: darken(#0cd463, 15%);
-  }
 }
-h3{
-  font-size: 1.05rem;
-  font-weight: 500;
-  span{
-font-size: 1rem;
-font-weight: 400;
-margin-left: 10px;
-  }
+.attempt-btn:hover
+{
+  background: darken(#0cd463, 15%);
 }
