@@ -74,7 +74,7 @@ export class ExamService {
 
   deleteExam(exam: Exam) {
     return this.httpClient
-      .delete(`${environment.APPURL}/exam/delete`,{body:exam})
+      .delete(`${environment.APPURL}/exam/delete`, { body: exam })
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => {});
   }
@@ -85,5 +85,18 @@ export class ExamService {
     });
   }
 
-
+  // Attempt Exam
+  attemptExam(examId: number, userId: number) {
+    let body: object = {
+      examId: examId,
+      userId: userId,
+    };
+    return this.httpClient
+      .post(
+        `${environment.APPURL}/exam/attemptExam/${examId}/${userId}`,
+        JSON.stringify(body),
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
 }
