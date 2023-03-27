@@ -32,7 +32,6 @@ export class TextQuestionsComponent implements OnInit {
   isHidden:boolean=false;
 
 
-  questionType:string='Matching';
 
   constructor(private fb: FormBuilder,
               private dialog:MatDialog) {
@@ -44,7 +43,7 @@ export class TextQuestionsComponent implements OnInit {
     this.form = this.fb.group({
       questionText: ['', Validators.required],
       points: [0, Validators.required],
-      questionType: [this.questionType, Validators.required],
+      questionType: ['Matching', Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
     });
 
@@ -53,7 +52,7 @@ export class TextQuestionsComponent implements OnInit {
       this.form = this.fb.group({
         questionText: [this.editQuestion.questionText, Validators.required],
         points: [this.editQuestion.points, Validators.required],
-        questionType: [this.questionType, Validators.required],
+        questionType: ['Matching', Validators.required],
         questionAnswers: this.fb.array([this.createAnswer()])
       });
 

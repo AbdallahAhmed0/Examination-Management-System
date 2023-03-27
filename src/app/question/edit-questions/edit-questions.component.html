@@ -43,7 +43,9 @@
       <app-choice-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"
       (onDelete)="removeChild(selectedComponent)" [indexComponent]="(i+1)"
       (questionData)="addQuestion($event,i)"
-      *ngIf="selectedComponent.name === 'choice'">
+      *ngIf="selectedComponent.name === 'Multiple_Answers' ||selectedComponent.name === 'Multiple_choice'">
+      [editQuestion]="selectedComponent.data"
+
     </app-choice-questions>
 
       <app-text-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"

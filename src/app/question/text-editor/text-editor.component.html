@@ -39,7 +39,8 @@
   (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
   (ngModelChange)="onEditorValueChange($event)"
   required
-  #questionText="ngModel">
+  #questionText="ngModel"
+  [value]="answerText">
 </textarea>
 <mat-error *ngIf="questionText.touched && questionText.invalid">option is required</mat-error>
 

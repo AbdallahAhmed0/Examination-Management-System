@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
+import { Question } from '../question';
 
 @Component({
   selector: 'app-choice-questions',
@@ -18,11 +19,15 @@ export class ChoiceQuestionsComponent implements OnInit {
   @Output() onDown = new EventEmitter<void>();
   @Output() questionData = new EventEmitter<object>();
   @Output() formValid = new EventEmitter<boolean>();
+
   @Input() indexComponent!:number;
+  @Input() editQuestion!:Question;
 
   questionTextValue:string='';
   answerTextValue:string='';
   commentValue:string='';
+
+  Answer?:any;
 
   isMultipleChoice: boolean = false;
   isHidden:boolean[]=[false];
@@ -34,12 +39,29 @@ export class ChoiceQuestionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   // add questions
+   this.form = this.fb.group({
+    questionText: ['', Validators.required],
+    points: [0, Validators.required],
+    questionType: ['Multiple_choice', Validators.required],
+    questionAnswers: this.fb.array([this.createAnswer()])
+  });
+
+  // edit Questions
+  if(this.editQuestion){
     this.form = this.fb.group({
-      questionText: ['', Validators.required],
-      points: [0, Validators.required],
-      questionType: ['Multiple_choice', Validators.required],
+      questionText: [this.editQuestion.questionText, Validators.required],
+      points: [this.editQuestion.points, Validators.required],
+      questionType: [this.editQuestion.questionType, Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
     });
+
+  //select Question answer
+  this.Answer = this.editQuestion.questionAnswers[0];
+  this.answers.at(0).patchValue({
+    answerText: this.Answer.answerText,
+    comment: this.Answer.comment});
+  }
     this.form.valueChanges.subscribe(value =>{
       this.questionData.emit(this.form.value);
       this.formValid.emit(this.form.valid);
