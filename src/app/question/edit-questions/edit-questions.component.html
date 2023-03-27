@@ -58,6 +58,7 @@
       (onDelete)="removeChild(selectedComponent)"
       [indexComponent]="(i+1)"  (questionData)="addQuestion($event,i)"
       (formValid)="formIsValid($event)"
+      [editQuestion]="selectedComponent.data"
 
        *ngIf="selectedComponent.name === 'True_False'">
 

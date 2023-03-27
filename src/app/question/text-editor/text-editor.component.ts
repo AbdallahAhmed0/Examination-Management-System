@@ -29,6 +29,7 @@ import 'froala-editor/js/plugins/table.min.js';
 import 'froala-editor/js/plugins/url.min.js';
 import 'froala-editor/js/plugins/video.min.js';
 import 'froala-editor/js/plugins/word_paste.min.js';
+import { Question } from './../question';
 
 @Component({
   selector: 'app-text-editor',
@@ -43,6 +44,10 @@ export class TextEditorComponent implements OnInit {
   @Input() placeholder!:string;
   @Input() index!:number;
   @Input()commentValue!:string;
+
+  @Input() QuestionText!:string;
+  @Input() answerText!:string;
+  @Input() comment!:string;
 
   constructor(){
 

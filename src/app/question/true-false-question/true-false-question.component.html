@@ -8,16 +8,17 @@
     </div>
     <span class="index">{{indexComponent}}.</span>
 
-    <app-text-editor (editorValue)="getQuestionText($event)" [placeholder]="'Question Text'" ></app-text-editor>
+    <app-text-editor (editorValue)="getQuestionText($event)"
+    [placeholder]="'Question Text'" [QuestionText]="editQuestion.questionText"></app-text-editor>
     <input type="hidden" formControlName="questionText" >
 
     <mat-card-content>
       <div formArrayName="questionAnswers">
         <ng-container *ngFor="let answerItem of answers.controls; let i = index">
           <div [formGroupName]="i">
-              <mat-radio-group class="radio" formControlName="answerText">
-                <mat-radio-button  [value]="true">True</mat-radio-button>
-                <mat-radio-button style="margin-left: 15%;" [value]="false">False</mat-radio-button>
+              <mat-radio-group class="radio" [value]="Answer.answerText" formControlName="answerText">
+                <mat-radio-button  value="true">True</mat-radio-button>
+                <mat-radio-button style="margin-left: 15%;" value="false">False</mat-radio-button>
               </mat-radio-group>
 
               <a mat-icon-button  title="message" (click)="toggleInput(i)">
@@ -25,7 +26,8 @@
               </a>
 
               <ng-container *ngIf="isHidden[i]">
-                <app-text-editor class="input-message"  (editorValue)="getComment($event,i)" [commentValue]="answers.at(i).value.comment" [placeholder]="'Comment'"></app-text-editor>
+                <app-text-editor class="input-message"  (editorValue)="getComment($event,i)"
+                [comment]="Answer.comment" [placeholder]="'Comment'"></app-text-editor>
                 <input type="hidden" formControlName="comment">
               </ng-container>
 
@@ -37,7 +39,7 @@
     </mat-card-content>
     <mat-divider></mat-divider>
       <label class="label-point">Points: </label>
-      <input matInput class="point"  min="0" max="200" maxlength="3" type="number" formControlName="points" required>
+      <input matInput class="point"  min="0" max="200" [value]="editQuestion.points" maxlength="3" type="number" formControlName="points" required>
 
 
   </mat-card>
