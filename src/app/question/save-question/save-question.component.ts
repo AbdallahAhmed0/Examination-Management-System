@@ -31,7 +31,7 @@ export class SaveQuestionComponent implements OnInit {
 
 
   showChoiceQuestions() {
-    this.selectedComponents.push({id:this.index,name:'choice'});
+    this.selectedComponents.push({id:this.index,name:'Multiple_choice'});
     this.index++;
     this.formVaild=false;
   }

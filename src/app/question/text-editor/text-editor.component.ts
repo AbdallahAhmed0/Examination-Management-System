@@ -43,11 +43,11 @@ export class TextEditorComponent implements OnInit {
   @Output() editorValue = new EventEmitter<string>();
   @Input() placeholder!:string;
   @Input() index!:number;
-  @Input()commentValue!:string;
 
-  @Input() QuestionText!:string;
-  @Input() answerText!:string;
-  @Input() comment!:string;
+  @Input() QuestionText?:string;
+  @Input() answerText?:string;
+  @Input() comment?:string;
+  @Input() options?:string;
 
   constructor(){
 

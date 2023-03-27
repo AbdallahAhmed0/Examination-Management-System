@@ -21,7 +21,7 @@ export class ChoiceQuestionsComponent implements OnInit {
   @Output() formValid = new EventEmitter<boolean>();
 
   @Input() indexComponent!:number;
-  @Input() editQuestion!:Question;
+  @Input() editQuestion?:Question;
 
   questionTextValue:string='';
   answerTextValue:string='';
@@ -40,7 +40,7 @@ export class ChoiceQuestionsComponent implements OnInit {
 
   ngOnInit(): void {
    // add questions
-   this.form = this.fb.group({
+  this.form = this.fb.group({
     questionText: ['', Validators.required],
     points: [0, Validators.required],
     questionType: ['Multiple_choice', Validators.required],
@@ -50,17 +50,23 @@ export class ChoiceQuestionsComponent implements OnInit {
   // edit Questions
   if(this.editQuestion){
     this.form = this.fb.group({
-      questionText: [this.editQuestion.questionText, Validators.required],
-      points: [this.editQuestion.points, Validators.required],
-      questionType: [this.editQuestion.questionType, Validators.required],
+      questionText: [this.editQuestion?.questionText, Validators.required],
+      points: [this.editQuestion?.points, Validators.required],
+      questionType: [this.editQuestion?.questionType, Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
     });
 
   //select Question answer
-  this.Answer = this.editQuestion.questionAnswers[0];
-  this.answers.at(0).patchValue({
+  this.Answer = this.editQuestion?.questionAnswers;
+  for(let i = 0;i < this.Answer.length;i++){
+  this.answers.at(i).patchValue({
     answerText: this.Answer.answerText,
     comment: this.Answer.comment});
+  }
+    //select Multible Answers by btn-toggle
+    if(this.editQuestion?.questionType === 'Multiple_Answers'){
+          this.btnToggle()
+    }
   }
     this.form.valueChanges.subscribe(value =>{
       this.questionData.emit(this.form.value);

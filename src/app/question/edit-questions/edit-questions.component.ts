@@ -31,7 +31,6 @@ export class EditQuestionsComponent implements OnInit {
   // get Questions of Exam
     this.questionService.getQuestions(2).subscribe(data => {
     this.editquestions=data;
-
   // select questions in selected Components
     this.editquestions.forEach(question => {
 

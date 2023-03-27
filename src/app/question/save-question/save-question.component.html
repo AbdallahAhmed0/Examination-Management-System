@@ -44,7 +44,7 @@
       (onDelete)="removeChild(selectedComponent)" [indexComponent]="(i+1)"
       (questionData)="addQuestion($event,i)"
       (formValid)="formIsValid($event)"
-      *ngIf="selectedComponent.name === 'choice'">
+      *ngIf="selectedComponent.name === 'Multiple_choice'">
     </app-choice-questions>
 
       <app-text-questions (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)"

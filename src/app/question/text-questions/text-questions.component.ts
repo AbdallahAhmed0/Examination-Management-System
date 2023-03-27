@@ -22,7 +22,7 @@ export class TextQuestionsComponent implements OnInit {
   @Output() formValid = new EventEmitter<boolean>();
 
   @Input() indexComponent!:number;
-  @Input() editQuestion!:Question;
+  @Input() editQuestion?:Question;
 
   questionTextValue:string='';
   answerTextValue:string='';

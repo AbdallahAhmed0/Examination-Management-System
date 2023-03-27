@@ -8,7 +8,8 @@
     </div>
     <span class="index">{{indexComponent}}.</span>
 
-    <app-text-editor (editorValue)="getQuestionText($event)" [placeholder]="'Question Text'" ></app-text-editor>
+    <app-text-editor (editorValue)="getQuestionText($event)"
+    [placeholder]="'Question Text'" [QuestionText]="editQuestion?.questionText" ></app-text-editor>
     <input type="hidden" formControlName="questionText" >
     <mat-error *ngIf="questionText?.touched && questionText?.hasError('required')">
       Question Text is required
@@ -26,7 +27,8 @@
                 <mat-radio-button class="radio" (change)="onRadioChange($event)"[value]="i"></mat-radio-button>
               </ng-template>
 
-              <app-text-editor class="option" (editorValue)="getAnswerText($event,i)" [index]="i" [placeholder]="'options'" ></app-text-editor>
+              <app-text-editor class="option" (editorValue)="getAnswerText($event,i)"
+              [index]="i" [placeholder]="'options'" [answerText]="Answer[i]?.answerText" ></app-text-editor>
               <input type="hidden" formControlName="answerText" >
 
               <a mat-icon-button  title="message" (click)="toggleInput(i)">
@@ -37,7 +39,8 @@
             </button>
 
               <ng-container *ngIf="isHidden[i]">
-                <app-text-editor class="input-message"  (editorValue)="getComment($event,i)" [commentValue]="answers.at(i).value.comment" [placeholder]="'Comment'"></app-text-editor>
+                <app-text-editor class="input-message"  (editorValue)="getComment($event,i)"
+                [comment]="Answer ? Answer?.comment : answers.at(i).value.comment" [placeholder]="'Comment'"></app-text-editor>
                 <input type="hidden" formControlName="comment">
               </ng-container>
 
@@ -52,7 +55,7 @@
     </mat-card-content>
     <mat-divider></mat-divider>
       <label class="label-point">Points: </label>
-      <input matInput class="point"  min="0" max="200" maxlength="3" type="number" formControlName="points" required>
+      <input matInput class="point"  min="0" max="200" [value]="editQuestion?.points" maxlength="3" type="number" formControlName="points" required>
 
       <mat-slide-toggle color="primary" class="btn-toggle"(click)="btnToggle()">Multiple Answers</mat-slide-toggle>
 

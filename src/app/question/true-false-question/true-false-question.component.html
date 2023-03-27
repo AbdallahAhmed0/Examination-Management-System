@@ -27,7 +27,7 @@
 
               <ng-container *ngIf="isHidden[i]">
                 <app-text-editor class="input-message"  (editorValue)="getComment($event,i)"
-                [comment]="Answer.comment" [placeholder]="'Comment'"></app-text-editor>
+                [comment]="Answer ? Answer?.comment:answers.at(0).value.comment" [placeholder]="'Comment'"></app-text-editor>
                 <input type="hidden" formControlName="comment">
               </ng-container>
 

@@ -10,7 +10,7 @@
     <span class="index">{{indexComponent}}.</span>
       <div class="question">
         <app-text-editor (editorValue)="getQuestionText($event)"
-        [QuestionText]="editQuestion.questionText" [placeholder]="'Question Text'" >
+        [QuestionText]="editQuestion?.questionText" [placeholder]="'Question Text'" >
       </app-text-editor>
         <input type="hidden" formControlName="questionText" >
     </div>
@@ -30,7 +30,7 @@
 
                 <ng-container *ngIf="isHidden">
                   <app-text-editor class="input-message"  (editorValue)="getComment($event)"
-                  [placeholder]="'Comment'" [comment]="Answer?.comment"></app-text-editor>
+                  [placeholder]="'Comment'" [comment]="Answer ? Answer?.comment:answers.at(0).value.comment" ></app-text-editor>
                   <input type="hidden" formControlName="comment">
                 </ng-container>
 
@@ -41,7 +41,7 @@
     </mat-card-content>
     <mat-divider></mat-divider>
     <label class="label-point">Points: </label>
-    <input matInput class="point"  min="0" max="200" maxlength="3" [value]="editQuestion.points" type="number" formControlName="points" required>
+    <input matInput class="point"  min="0" max="200" maxlength="3" [value]="editQuestion?.points" type="number" formControlName="points" required>
 
   </mat-card>
 </form>
