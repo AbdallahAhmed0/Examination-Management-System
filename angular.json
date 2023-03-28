@@ -18,6 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": ["froala-editor"],
             "outputPath": "dist/examination-management-system",
             "index": "src/index.html",
             "main": "src/main.ts",
