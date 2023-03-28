@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import {
   FormGroup,
   FormBuilder,
@@ -5,9 +6,9 @@ import {
   FormControl,
   FormArray,
 } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Students } from './../../Models/student';
+import { Student } from './../../Models/student';
 import { StudentsService } from '../../Services/students.service';
 
 @Component({
@@ -17,8 +18,12 @@ import { StudentsService } from '../../Services/students.service';
 })
 export class AddStudentsComponent implements OnInit {
   hide = true;
+  consoleError: any;
   newStudent!: FormGroup;
   checkRole: any[] = [];
+  subStudent?: Subscription;
+
+  theGroups:any;
 
   constructor(
     private studentsService: StudentsService,
@@ -27,6 +32,8 @@ export class AddStudentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getGroups();
+
     this.newStudent = this.fb.group({
       firstName: [
         '',
@@ -47,35 +54,32 @@ export class AddStudentsComponent implements OnInit {
       universityId: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: [''],
-      roles: this.fb.array(this.checkRole),
-      enable: [true],
+      roles: this.fb.array([]),
       locked: [false],
-      year: [, [Validators.required]],
+      enable: [true],
+      group: [, [Validators.required]]
     });
   }
 
-
   addStudent() {
     const observer = {
-      next: (student: Students) => {
-        alert('Student Added Successfuly');
+      next: (student: Student) => {
         this.router.navigateByUrl('/students');
+        this.studentsService.openSnackBar('Added');
       },
       error: (err: Error) => {
-        alert(err.message);
+        this.consoleError = err.message;
       },
     };
     let testformArray = this.newStudent.get('roles') as FormArray;
     for (let i of this.checkRole) {
       testformArray.push(new FormControl(i));
     }
-    if (this.password?.value == '') {
-      this.password?.setValue(
-        `${this.firstName?.value}${this.lastName?.value}${this.universityId?.value}`
-      );
+    if(this.password?.value == ''){
+      this.password?.setValue(`${this.firstName?.value}${this.lastName?.value}${this.universityId?.value}`);
     }
+
     this.studentsService.addStudent(this.newStudent.value).subscribe(observer);
-    console.log(this.newStudent.value)
   }
 
   goBack() {
@@ -85,7 +89,11 @@ export class AddStudentsComponent implements OnInit {
   selectedRole(role: any[]) {
     this.checkRole = role;
   }
-
+  getGroups(){
+    this.studentsService.getGroups().subscribe(data=>{
+      this.theGroups=data
+    })
+  }
   get firstName() {
     return this.newStudent.get('firstName');
   }
@@ -104,10 +112,14 @@ export class AddStudentsComponent implements OnInit {
   get role() {
     return this.newStudent.get('roles');
   }
-  get year() {
-    return this.newStudent.get('year');
+  get group() {
+    return this.newStudent.get('group');
   }
   get enable() {
     return this.newStudent.get('enable');
+  }
+
+  ngOnDestroy(): void {
+    this.subStudent?.unsubscribe();
   }
 }

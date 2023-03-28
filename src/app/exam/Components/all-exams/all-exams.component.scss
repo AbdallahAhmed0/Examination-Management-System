@@ -1,0 +1,70 @@
+table{
+  width: 100%;
+}
+
+.contianer{
+  margin: 40px;
+
+  p{
+      font-size: 30px;
+  }
+}
+
+
+mat-paginator{
+  color: #3174efe9;
+  font-size: 12px;
+}
+
+
+.btn-add{
+  font-size: 17px;
+  margin-top: 40px;
+}
+.mat-form-field {
+
+  font-size: 18px;
+  width: 30%;
+  float: right;
+}
+
+td, th {
+  font-size: 17px;
+}
+// th,mat-paginator{
+//     background: rgb(238, 232, 232);
+// }
+.delete-icon{
+
+    background: #f20202;
+    color: #fff;
+    font-size: 30px;
+    width: 45px;
+    height: 45px;
+    padding: 8px;
+    margin: 10px 0px;
+    border-radius: 6px;
+    text-align: center;
+}
+.edit-icon{
+
+    color: #fff;
+    padding: 8px;
+    margin: 10px 0px;
+    border-radius: 6px;
+    font-size: 30px;
+    background: #0cd463;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+
+}
+.actions{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.center{
+  text-align: center;
+}

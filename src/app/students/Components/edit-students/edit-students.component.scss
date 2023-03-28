@@ -1,0 +1,67 @@
+.contianer{
+  margin: 35px;
+
+  p{
+      font-size: 30px;
+  }
+}
+.btn-list{
+font-size: 18px;
+margin-top: 50px;
+}
+.form{
+  margin: 40px;
+  border: 2px solid rgb(211, 208, 208);
+  border-radius: 10px;
+  width: 80%;
+
+  .edit{
+      background: #3cb5be;
+      color: #ffffff;
+      height: 60px;
+      font-size: 25px;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+  }
+}
+form{
+  margin: 20px 30px;
+
+  mat-form-field{
+      width: 40%;
+      display: inline-block;
+      margin:20px 30px;
+
+  }
+
+}
+.checkbox{
+  margin: 20px 0px ;
+  font-size: 20px;
+
+  .check{
+      margin: 0 50px;
+      font-size: 18px;
+
+  }
+
+
+}
+.submit{
+  width: 90px;
+  height: 40px;
+  font-size: 18px;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  background: rgb(14, 175, 14);
+  color: #ffffff;
+
+}
+small{
+  font-size: 14px;
+    color: #ff3232;
+    position: absolute;
+    margin: 12px 0px;
+    display: block;
+}

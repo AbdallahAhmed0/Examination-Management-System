@@ -56,7 +56,7 @@
           <mat-error *ngIf="email?.hasError('email')">
               Email is not Vaild!
           </mat-error>
-          <small class="text-danger" style="font-size: 13px; color: #ff2828;" *ngIf="consoleError == 'Duplicate Email'">
+          <small *ngIf="consoleError == 'Duplicate Email'">
             *{{consoleError}}
         </small>
       </mat-form-field>
@@ -68,7 +68,7 @@
           <mat-error *ngIf="universityId?.hasError('required')">
               UniversityId is Required!
           </mat-error>
-        <small class="text-danger" style="font-size: 13px; color: #ff3232;" *ngIf="consoleError == 'Duplicate UniversityId'">
+        <small  *ngIf="consoleError == 'Duplicate UniversityId'">
           *{{consoleError}}
       </small>
       </mat-form-field>
@@ -80,7 +80,7 @@
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 
       </mat-form-field>
-      
+
       <mat-form-field appearance="fill" >
           <mat-label>Specialization</mat-label>
           <input matInput formControlName="specialization" required>
