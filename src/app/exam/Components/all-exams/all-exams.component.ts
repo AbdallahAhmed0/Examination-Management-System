@@ -74,6 +74,7 @@ export class AllExamsComponent implements OnInit {
           EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
         };
       };
+      
 
       // Create users
 
