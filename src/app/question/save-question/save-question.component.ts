@@ -98,7 +98,7 @@ export class SaveQuestionComponent implements OnInit {
         this.consoleError = err.message;
       },
     };
-    this.questionService.saveQuestions(this.questions,2).subscribe(observer);
+    this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
     console.log(this.questions)
   }
 

@@ -25,9 +25,9 @@ export class AllExamsComponent implements OnInit {
     'id',
     'examName',
     'duration',
+    'successRate',
     'course',
     'status',
-    'successRate',
     'startTime',
     'endTime'
   ];
@@ -59,6 +59,7 @@ export class AllExamsComponent implements OnInit {
   getExams() {
     this.examService.getAllExams().subscribe((data) => {
       /** Builds and returns a new User. */
+      console.log(data)
       const createNewExam = (id: number) => {
         return {
           id: id,
