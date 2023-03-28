@@ -1,6 +1,7 @@
 import { ExamService } from './../../Services/exam.service';
-import { Question, Exam } from './../../Models/exam';
+import { Question, Exam, Answer } from './../../Models/exam';
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -12,44 +13,55 @@ export class RenderExamComponent implements OnInit {
 
   exam?: Exam;
   responseString: string | undefined;
+  answerQustion = [];
+  
+  questions: Question[]=[];
 
-  question: Question[]=[];
-
-  constructor(private examService: ExamService) { }
+  constructor(private examService: ExamService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
 
     this.examService.renderExam(2).subscribe(data => {
       console.log(data);
-      this.exam = {
-        id: data.id,
-        examName: data.examName,
-        duration: data.duration,
-        startTime: data.startTime,
-        endTime: data.endTime,
-        successRate: data.successRate,
-        questions: data.questions.map((q) => ({
-          id: q.id,
-          questionText: this.parseHTML(q.questionText),
-          points: q.points,
-          questionType: q.questionType,
-          questionAnswers: q.questionAnswers.map((a) => ({
-            id: a.id,
-            answerText: this.parseHTML(a.answerText)
-          }))
-        }))
-      };
+      this.exam = data;
+      this.questions = data.questions;
+
       console.log(this.exam)
     });
-
-
   }
 
-  parseHTML(htmlString: string): string {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, 'text/html');
-    return doc.body? doc.body.textContent?.trim() || '' : '';
+  // Sanitize the HTML content with the DomSanitizer service
+  sanitizeHtml(html: string): any {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
+
+
+
+  // parseHTML(htmlString: string): string {
+  //   const parser = new DOMParser();
+  //   const doc = parser.parseFromString(htmlString, 'text/html');
+  //   return doc.body? doc.body.textContent?.trim() || '' : '';
+  // }
+
+
+  // this.exam = {
+      //   id: data.id,
+      //   examName: data.examName,
+      //   duration: data.duration,
+      //   startTime: data.startTime,
+      //   endTime: data.endTime,
+      //   successRate: data.successRate,
+      //   questions: data.questions.map((q) => ({
+      //     id: q.id,
+      //     questionText: this.parseHTML(q.questionText),
+      //     points: q.points,
+      //     questionType: q.questionType,
+      //     questionAnswers: q.questionAnswers.map((a) => ({
+      //       id: a.id,
+      //       answerText: this.parseHTML(a.answerText)
+      //     }))
+      //   }))
+      // };
 
 
 
