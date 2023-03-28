@@ -70,7 +70,7 @@ td, th {
 .wide-menu {
   width: 500px; /* set the width to whatever value you need */
   text-align: center; /* center the menu items horizontally */
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .mat-menu-content {
@@ -79,6 +79,13 @@ td, th {
 .center{
   text-align: center;
 }
+
+
+::ng-deep .custom-menu {
+  width: 175px; /* replace with your desired width */
+  background: #FFF;;
+}
+
 .active{
   background:  #0cd463;
   color: #fff;

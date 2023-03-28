@@ -12,6 +12,7 @@ import { MatSort } from '@angular/material/sort';
 import { Exam } from '../../Models/exam';
 import { utils, writeFile } from 'xlsx';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
 
 @Component({
   selector: 'app-all-exams',
@@ -93,9 +94,21 @@ export class AllExamsComponent implements OnInit {
   }
 
   delete(row: Exam) {
-    this.examService.deleteExam(row);
-    alert('Deleted Successfully');
-    window.location.reload();
+    const dialogRef = this.dialog.open(DialogeComponent, {
+      width: '400px',
+      height:'280px'
+      });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+
+        this.examService.deleteExam(row);
+        window.location.reload();
+
+      }
+
+      });
+
   }
 
   add() {

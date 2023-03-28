@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ExamService } from '../../Services/exam.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Exam } from '../../Models/exam';
+import { Subscription } from 'rxjs';
+import { CourseService } from 'src/app/course/course.service';
+import { Course } from 'src/app/course/course.model';
 
 @Component({
   selector: 'app-edit-exam',
@@ -6,10 +13,121 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-exam.component.scss']
 })
 export class EditExamComponent implements OnInit {
+  exam:Exam ={} as Exam;
+  newExam!: FormGroup;
+  EditExam!:Exam;
+  id!:number;
+  consoleError:any;
+  subExam?:Subscription;
+  subRoute?:Subscription;
+  theCourses?:Course[];
+  sliderValue?:number;
 
-  constructor() { }
 
-  ngOnInit(): void {
+  constructor(private router:Router,
+     private examService:ExamService,
+    private fb:FormBuilder,
+    private activatedRoute:ActivatedRoute,
+    private courseService:CourseService) { }
+    ngOnInit(): void {
+
+      this.subRoute= this.activatedRoute.paramMap.subscribe((paramMap)=>{
+        this.id=Number(paramMap.get('id'));
+
+        this.examService.getExamById(this.id).subscribe(data =>{
+            this.exam=data;
+            console.log(data);
+            this.sliderValue=data.successRate
+
+
+
+            this.newExam = this.fb.group({
+              examName:[data.examName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
+              duration:[data.duration,[Validators.required]],
+              successRate:[data.successRate,Validators.required],
+              course:["",Validators.required],
+              state:[false,[]],
+              startTime:[ "",[Validators.required]],
+              endTime:["",[Validators.required]]
+
+            })
+
+    })
+  });
+    }
+    updateExam(){
+      const observer={
+        next: (exam:Exam) => {
+          this.router.navigateByUrl('/exams');
+          this.examService.openSnackBar('Updated');
+        },
+        error: (err:Error)=>{
+          this.consoleError = err.message
+          }
+      }
+      let  start = this.startTime?.value
+      let  end = this.endTime?.value
+
+      this.startTime?.setValue(this.transformDate(start))
+      this.endTime?.setValue(this.transformDate(end))
+
+
+
+      this.EditExam=this.newExam.value;
+      this.EditExam.id=this.id.toString();
+
+
+        this.subExam= this.examService.updateExam(this.EditExam).subscribe(observer);
+
+    }
+    goback(){
+      this.router.navigate(['/exams']);
+    }
+    getCourses(){
+      this.courseService.getAllCourses().subscribe(data=>{
+        this.theCourses=data
+      })
+    }
+    transformDate(time:any){
+      let transformedDate
+      console.log(time);
+
+
+     let myDate = new Date(time);
+     let year = myDate.getFullYear().toString();
+     let month = (myDate.getMonth() + 1).toString().padStart(2, '0');
+     let day = myDate.getDate().toString().padStart(2, '0');
+     let hours:any = myDate.getHours()
+     let minutes = myDate.getMinutes().toString().padStart(2, '0');
+     let ampm = hours >= 12 ? 'PM' : 'AM';
+     hours = hours % 12;
+     if(hours<10){
+      hours="0"+hours
+     }
+     hours = hours ? hours : 12;
+     transformedDate = `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
+     return transformedDate
+    }
+
+
+    get examName(){
+      return this.newExam.get('examName')
+    }
+
+    get duration(){
+      return this.newExam.get('duration')
+    }
+    get startTime(){
+      return this.newExam.get('startTime')
+    }
+    get endTime(){
+      return this.newExam.get('endTime')
+    }
+    get successRate(){
+      return this.newExam.get('succesRate')
+    }
+    get course(){
+      return this.newExam.get('course')
+    }
+
   }
-
-}

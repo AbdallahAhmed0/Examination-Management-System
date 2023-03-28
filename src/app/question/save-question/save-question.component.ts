@@ -3,7 +3,7 @@ import { ExamService } from '../../exam/Services/exam.service';
 import { Exam } from './../../exam/Models/exam';
 import { Question } from './../question';
 import { QuestionService } from './../question.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-save-question',
@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./save-question.component.scss']
 })
 export class SaveQuestionComponent implements OnInit {
+
+
   consoleError: any;
   formVaild :boolean=false;
   selectedComponents:any[]=[];
@@ -19,16 +21,23 @@ export class SaveQuestionComponent implements OnInit {
   questionData!:object;
 
   exam?:Exam;
+  examId!: number;
+
 
   questions:Question[]=[];
   constructor(private examService:ExamService,
               private questionService:QuestionService,
-              private router:Router) {
+              private router:Router,
+              private _activatedRoute:ActivatedRoute) {
   }
   ngOnInit(): void {
-    this.examService.getExamById(2).subscribe(data => {
-      this.exam=data;
-    })
+    this.getExamInfo();
+  }
+  getExamInfo() {
+    this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+    this.examService.getExamById(this.examId).subscribe((data) => {
+      this.exam = data;
+    });
   }
 
 
