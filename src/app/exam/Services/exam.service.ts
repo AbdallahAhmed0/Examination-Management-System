@@ -48,7 +48,7 @@ export class ExamService {
 
   getExamById(id: number): Observable<Exam> {
     return this.httpClient
-      .get<Exam>(`${environment.APPURL}/exams/get/${id}`, this.httpOption)
+      .get<Exam>(`${environment.APPURL}/exam/${id}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -74,7 +74,7 @@ export class ExamService {
 
   deleteExam(exam: Exam) {
     return this.httpClient
-      .delete(`${environment.APPURL}/exam/delete`,{body:exam})
+      .delete(`${environment.APPURL}/exam/delete`, { body: exam })
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => {});
   }
@@ -83,5 +83,20 @@ export class ExamService {
     this._snackBar.open(message + ' sucessfully', 'close', {
       duration: 3000,
     });
+  }
+
+  // Attempt Exam
+  attemptExam(examId: number, userId: number) {
+    let body: object = {
+      examId: examId,
+      userId: userId,
+    };
+    return this.httpClient
+      .post(
+        `${environment.APPURL}/exam/attemptExam/${examId}/${userId}`,
+        JSON.stringify(body),
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
   }
 }

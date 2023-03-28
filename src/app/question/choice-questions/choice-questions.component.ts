@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
 
 @Component({
   selector: 'app-choice-questions',
@@ -9,9 +11,13 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ChoiceQuestionsComponent implements OnInit {
 
+  form!: FormGroup;
+
   @Output() onDelete = new EventEmitter<void>();
   @Output() onUP = new EventEmitter<void>();
   @Output() onDown = new EventEmitter<void>();
+  @Output() questionData = new EventEmitter<object>();
+  @Output() formValid = new EventEmitter<boolean>();
   @Input() indexComponent!:number;
 
   questionTextValue:string='';
@@ -21,8 +27,9 @@ export class ChoiceQuestionsComponent implements OnInit {
   isMultipleChoice: boolean = false;
   isHidden:boolean[]=[false];
 
-  form!: FormGroup;
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder,
+              private dialog:MatDialog) {
 
   }
 
@@ -30,8 +37,12 @@ export class ChoiceQuestionsComponent implements OnInit {
     this.form = this.fb.group({
       questionText: ['', Validators.required],
       points: [0, Validators.required],
-      questionType: ['Multiple Choice', Validators.required],
+      questionType: ['Multiple_choice', Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
+    });
+    this.form.valueChanges.subscribe(value =>{
+      this.questionData.emit(this.form.value);
+      this.formValid.emit(this.form.valid);
     });
   }
 
@@ -92,8 +103,18 @@ export class ChoiceQuestionsComponent implements OnInit {
   }
 
   deleteQuestion(){
+    const dialogRef = this.dialog.open(DialogeComponent, {
+      width: '400px',
+      height:'280px'
+      });
 
-    this.onDelete.emit();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+
+        this.onDelete.emit();
+      }
+      });
+
     }
 
     Up(){
@@ -106,14 +127,18 @@ export class ChoiceQuestionsComponent implements OnInit {
     btnToggle(){
       this.isMultipleChoice=!this.isMultipleChoice;
       if(this.isMultipleChoice){
-        this.form.get('questionType')?.setValue('Multiple Answers');
+        this.form.get('questionType')?.setValue('Multiple_Answers');
       }else{
-        this.form.get('questionType')?.setValue('Multiple Choice');
+        this.form.get('questionType')?.setValue('Multiple_choice');
       }
     }
     toggleInput(index:number) {
       this.isHidden[index] = !this.isHidden[index];
     }
+    get questionText() {
+      return this.form.get('questionText');
+    }
+
 
   }
 

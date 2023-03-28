@@ -12,20 +12,24 @@ import { MatSort } from '@angular/material/sort';
 import { Exam } from '../../Models/exam';
 import { utils, writeFile } from 'xlsx';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
 
 @Component({
   selector: 'app-all-exams',
   templateUrl: './all-exams.component.html',
   styleUrls: ['./all-exams.component.scss'],
 })
-export class AllExamsComponent implements OnInit, OnChanges {
+export class AllExamsComponent implements OnInit {
   displayedColumns: string[] = [
+    'actions',
     'id',
     'examName',
     'duration',
+    'successRate',
+    'course',
+    'status',
     'startTime',
-    'endTime',
-    'actions'
+    'endTime'
   ];
   dataSource!: MatTableDataSource<any>;
 
@@ -39,12 +43,9 @@ export class AllExamsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.getExams();
-    console.log(this.dataSource);
   }
 
-  ngOnChanges(): void {
-    this.getExams();
-  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -58,6 +59,7 @@ export class AllExamsComponent implements OnInit, OnChanges {
   getExams() {
     this.examService.getAllExams().subscribe((data) => {
       /** Builds and returns a new User. */
+      console.log(data)
       const createNewExam = (id: number) => {
         return {
           id: id,
@@ -65,11 +67,14 @@ export class AllExamsComponent implements OnInit, OnChanges {
             data[Math.round(Math.random() * (data.length - 1))].examName,
           duration:
             data[Math.round(Math.random() * (data.length - 1))].duration,
+            course: data[Math.round(Math.random() * (data.length - 1))].course,
+            status: data[Math.round(Math.random() * (data.length - 1))].status,
           startTime:
             data[Math.round(Math.random() * (data.length - 1))].startTime,
           EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
         };
       };
+      
 
       // Create users
 
@@ -91,9 +96,21 @@ export class AllExamsComponent implements OnInit, OnChanges {
   }
 
   delete(row: Exam) {
-    this.examService.deleteExam(row);
-    alert('Deleted Successfully');
-    window.location.reload();
+    const dialogRef = this.dialog.open(DialogeComponent, {
+      width: '400px',
+      height:'280px'
+      });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+
+        this.examService.deleteExam(row);
+        window.location.reload();
+
+      }
+
+      });
+
   }
 
   add() {

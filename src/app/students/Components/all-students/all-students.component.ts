@@ -24,8 +24,8 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     'lastName',
     'email',
     'universityId',
-    'enable',
     'group',
+    'enable',
     'actions',
   ];
   dataSource!: MatTableDataSource<any>;
@@ -38,7 +38,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
   constructor(
     private studentService: StudentsService,
     private router: Router,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) {}
 
   ngOnChanges(): void {
@@ -72,7 +72,10 @@ export class AllStudentsComponent implements OnInit, OnChanges {
 
           this.studentService.deleteStudent(id);
         }
+        window.location.reload();
+
       });
+
   }
   add() {
     this.router.navigate(['students/add']);
@@ -121,7 +124,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
         'role',
         'locked',
         'enable',
-        'year',
+        'groups',
       ],
     ];
 
