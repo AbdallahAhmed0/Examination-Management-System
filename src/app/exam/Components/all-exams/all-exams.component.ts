@@ -18,14 +18,17 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './all-exams.component.html',
   styleUrls: ['./all-exams.component.scss'],
 })
-export class AllExamsComponent implements OnInit, OnChanges {
+export class AllExamsComponent implements OnInit {
   displayedColumns: string[] = [
+    'actions',
     'id',
     'examName',
     'duration',
+    'course',
+    'status',
+    'successRate',
     'startTime',
-    'endTime',
-    'actions'
+    'endTime'
   ];
   dataSource!: MatTableDataSource<any>;
 
@@ -39,12 +42,9 @@ export class AllExamsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.getExams();
-    console.log(this.dataSource);
   }
 
-  ngOnChanges(): void {
-    this.getExams();
-  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -65,6 +65,8 @@ export class AllExamsComponent implements OnInit, OnChanges {
             data[Math.round(Math.random() * (data.length - 1))].examName,
           duration:
             data[Math.round(Math.random() * (data.length - 1))].duration,
+            course: data[Math.round(Math.random() * (data.length - 1))].course,
+            status: data[Math.round(Math.random() * (data.length - 1))].status,
           startTime:
             data[Math.round(Math.random() * (data.length - 1))].startTime,
           EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
