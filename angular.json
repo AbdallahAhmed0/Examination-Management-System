@@ -18,7 +18,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["froala-editor"],
             "outputPath": "dist/examination-management-system",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -32,16 +31,11 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss",
-              "./node_modules/froala-editor/css/froala_editor.pkgd.min.css",
-              "./node_modules/froala-editor/css/froala_style.min.css"
-
+              "src/styles.scss"
             ],
             "scripts": [
 
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./node_modules/froala-editor/js/froala_editor.pkgd.min.js"
-
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -117,9 +111,6 @@
 
   }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }
 
