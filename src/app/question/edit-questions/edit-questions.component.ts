@@ -3,7 +3,7 @@ import { ExamService } from '../../exam/Services/exam.service';
 import { Exam } from './../../exam/Models/exam';
 import { Question } from './../question';
 import { QuestionService } from './../question.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-questions',
@@ -21,15 +21,17 @@ export class EditQuestionsComponent implements OnInit {
   editquestions:Question[]=[];
   exam?:Exam;
   questions:Question[]=[];
-
+  examId!:number;
   constructor(private examService:ExamService,
               private questionService:QuestionService,
-              private router:Router) {
+              private router:Router,
+              private _activatedRoute:ActivatedRoute) {
   }
   ngOnInit(): void {
 
+    this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
   // get Questions of Exam
-    this.questionService.getQuestions(2).subscribe(data => {
+    this.questionService.getQuestions(this.examId).subscribe(data => {
     this.editquestions=data;
   // select questions in selected Components
     this.editquestions.forEach(question => {
@@ -41,9 +43,11 @@ export class EditQuestionsComponent implements OnInit {
     });
 
   // get Data of Exam
-    this.examService.getExamById(2).subscribe(data =>{
-    this.exam=data;
-})
+  this.examService.getExamById(this.examId).subscribe((data) => {
+    this.exam = data;
+    // err => throwError(err || "an error happened while getting exam info")
+  });
+
   }
 
 
