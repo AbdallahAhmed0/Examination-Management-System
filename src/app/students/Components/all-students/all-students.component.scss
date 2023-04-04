@@ -81,3 +81,13 @@ td, th {
 .center{
   text-align: center;
 }
+a{
+  cursor: pointer;
+  margin-left: 15px;
+}
+.edit-icon:hover{
+background: darken(#0cd463,10%);
+}
+.delete-icon:hover{
+  background: darken(#f20202, 10%);
+}

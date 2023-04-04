@@ -31,6 +31,8 @@ export class EditStudentsComponent implements OnInit {
   subStudent?: Subscription;
   subRoute?: Subscription;
 
+  theGroups:any;
+
   constructor(
     private studentsService: StudentsService,
     private router: Router,
@@ -39,6 +41,8 @@ export class EditStudentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getGroups();
+
     this.subRoute = this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.id = Number(paramMap.get('id'));
 
@@ -70,10 +74,12 @@ export class EditStudentsComponent implements OnInit {
             [Validators.required, Validators.minLength(6)],
           ],
           roles: this.fb.array([]),
-          year: [data.group, [Validators.required]],
-          enable: [data.enable],
           locked: [data.locked],
+          enable: [data.enable],
+          group: [data.group,[Validators.required]]
+
         });
+
       });
     });
   }
@@ -105,7 +111,11 @@ export class EditStudentsComponent implements OnInit {
   selectedRole(role: any[]) {
     this.checkRole = role;
   }
-
+  getGroups(){
+    this.studentsService.getGroups().subscribe(data=>{
+      this.theGroups=data
+    })
+  }
   goback() {
     this.router.navigate(['students']);
   }
@@ -128,8 +138,8 @@ export class EditStudentsComponent implements OnInit {
   get role() {
     return this.newStudent.get('roles');
   }
-  get year() {
-    return this.newStudent.get('year');
+  get group() {
+    return this.newStudent.get('group');
   }
   get enable() {
     return this.newStudent.get('enable');

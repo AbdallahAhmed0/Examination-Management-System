@@ -1,3 +1,5 @@
+import { Course } from "src/app/course/course.model";
+
 export interface Exam {
   id?: string,
   examName: string,
@@ -5,5 +7,6 @@ export interface Exam {
   startTime: Date,
   endTime: Date,
   successRate:number,
-  state:boolean
+  status:boolean,
+  course: Course
 }

@@ -14,9 +14,11 @@
   border-radius: 5px;
   margin: 20px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+}
+form{
+  display:grid;
+
 
 }
 
@@ -28,7 +30,7 @@
 mat-form-field {
   margin: 0 auto;
 
-  width: 100%;
+  width: 50%;
 }
 
 mat-slider {
@@ -40,10 +42,15 @@ mat-slider {
   color: #fff;
 }
 
+
 .submit:disabled {
   background-color: #ccc;
   color: #000;
   cursor: not-allowed;
+}
+h6{
+  font-size:1px ;
+  visibility: hidden;
 }
 
 

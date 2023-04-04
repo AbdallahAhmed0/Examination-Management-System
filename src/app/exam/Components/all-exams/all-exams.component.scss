@@ -60,11 +60,44 @@ td, th {
 
 }
 .actions{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+  font-size: 16px;
+  margin: 15px 0px;
+  color: #f6f4f4;
+  background: darken($color: #0cd463, $amount: 5%);
+
 }
 
+.wide-menu {
+  width: 500px; /* set the width to whatever value you need */
+  text-align: center; /* center the menu items horizontally */
+  font-size: 16px;
+}
+
+.mat-menu-content {
+  padding: 16px; /* add some padding to the top and bottom of the menu */
+}
 .center{
   text-align: center;
+}
+
+
+::ng-deep .custom-menu {
+  width: 175px; /* replace with your desired width */
+}
+
+.active{
+  background:  #0cd463;
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.Inactive{
+  background:  #f20202;
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
 }

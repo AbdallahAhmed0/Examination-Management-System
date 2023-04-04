@@ -1,0 +1,21 @@
+<button mat-flat-button color="accent" class="btn-list" style="margin: 10px 30px; padding: 10px;"  [routerLink]="['/courses/add']"><mat-icon>add</mat-icon> Add new Course</button>
+<div class="container">
+<mat-card class="example-card"*ngFor="let course of courses" >
+    <!-- <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{course.courseName}}</mat-card-title>
+      <mat-card-subtitle>{{course.courseCode}}</mat-card-subtitle>
+    </mat-card-header> -->
+    <img mat-card-image [routerLink]="['/courses/edit',course.id]"   src="https://www.sonicourses.com/uploads/thumbnails/course_thumbnails/course_thumbnail_soni_39.jpg" alt="Photo of course">
+    <mat-card-content>
+      <p>
+        <mat-card-title>{{course.courseName}}</mat-card-title>
+        <mat-card-subtitle>{{course.courseCode}}</mat-card-subtitle>
+
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" >Edit course</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

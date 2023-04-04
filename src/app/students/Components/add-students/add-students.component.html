@@ -1,6 +1,5 @@
-
 <div class="container">
-  <h2>Add Student</h2>
+  <h1>Add Student</h1>
   <button mat-button class="btn-list" style="color: #007bff" (click)="goBack()">
     <mat-icon>menu</mat-icon>All Students
   </button>
@@ -74,6 +73,10 @@
         <mat-error *ngIf="email?.hasError('email')">
           Email is not Vaild!
         </mat-error>
+        <small  *ngIf="consoleError == 'Duplicate Email'">
+          *{{consoleError}}
+      </small>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -83,43 +86,29 @@
         <mat-error *ngIf="universityId?.hasError('required')">
           UniversityId is Required!
         </mat-error>
+        <small   *ngIf="consoleError == 'Duplicate UniversityId'">
+          *{{consoleError}}
+      </small>
+
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Enter your password</mat-label>
-        <input
-          matInput
-          formControlName="password"
-          [type]="hide ? 'password' : 'text'"
-          value="{{ firstName?.value }}{{ lastName?.value }}{{
-            universityId?.value
-          }}"
-          required
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="hide = !hide"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide"
-        >
-          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-        </button>
-
-        <mat-error *ngIf="password?.hasError('minlength')">
-          Password should be at least 6 characters!
-        </mat-error>
-      </mat-form-field>
+        <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" value="{{this.firstName?.value}}{{this.lastName?.value}}{{this.universityId?.value}}" >
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>Year</mat-label>
-        <input type="number" matInput formControlName="year" required />
+        <mat-label>Select group</mat-label>
 
-        <mat-error *ngIf="year?.hasError('required')">
-          Year is Required!
+        <mat-select  formControlName="group" matinput >
+            <mat-option *ngFor="let group of theGroups" [value]='group'>{{group.name}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="group?.hasError('required')">
+            you must choose group
         </mat-error>
-      </mat-form-field>
 
+      </mat-form-field>
       <app-check-role (checkRole)="selectedRole($event)"></app-check-role>
 
       <section class="checkbox">

@@ -1,4 +1,5 @@
-.contianer{
+.container{
+
   margin: 35px;
 
   p{
@@ -58,4 +59,11 @@ form{
   background: rgb(14, 175, 14);
   color: #ffffff;
 
+}
+small{
+  font-size: 14px;
+    color: #ff3232;
+    position: absolute;
+    margin: 12px 0px;
+    display: block;
 }

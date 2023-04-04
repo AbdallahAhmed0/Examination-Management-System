@@ -23,6 +23,8 @@ export class AddStudentsComponent implements OnInit {
   checkRole: any[] = [];
   subStudent?: Subscription;
 
+  theGroups:any;
+
   constructor(
     private studentsService: StudentsService,
     private router: Router,
@@ -30,6 +32,8 @@ export class AddStudentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getGroups();
+
     this.newStudent = this.fb.group({
       firstName: [
         '',
@@ -51,16 +55,15 @@ export class AddStudentsComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: [''],
       roles: this.fb.array([]),
-      enable: [true],
       locked: [false],
-      year: [, [Validators.required]],
+      enable: [true],
+      group: [, [Validators.required]]
     });
   }
 
   addStudent() {
     const observer = {
       next: (student: Student) => {
-        alert('Student Added Successfuly');
         this.router.navigateByUrl('/students');
         this.studentsService.openSnackBar('Added');
       },
@@ -72,13 +75,11 @@ export class AddStudentsComponent implements OnInit {
     for (let i of this.checkRole) {
       testformArray.push(new FormControl(i));
     }
-    if (this.password?.value == '') {
-      this.password?.setValue(
-        `${this.firstName?.value}${this.lastName?.value}${this.universityId?.value}`
-      );
+    if(this.password?.value == ''){
+      this.password?.setValue(`${this.firstName?.value}${this.lastName?.value}${this.universityId?.value}`);
     }
+
     this.studentsService.addStudent(this.newStudent.value).subscribe(observer);
-    console.log(this.newStudent.value);
   }
 
   goBack() {
@@ -88,7 +89,11 @@ export class AddStudentsComponent implements OnInit {
   selectedRole(role: any[]) {
     this.checkRole = role;
   }
-
+  getGroups(){
+    this.studentsService.getGroups().subscribe(data=>{
+      this.theGroups=data
+    })
+  }
   get firstName() {
     return this.newStudent.get('firstName');
   }
@@ -107,8 +112,8 @@ export class AddStudentsComponent implements OnInit {
   get role() {
     return this.newStudent.get('roles');
   }
-  get year() {
-    return this.newStudent.get('year');
+  get group() {
+    return this.newStudent.get('group');
   }
   get enable() {
     return this.newStudent.get('enable');
