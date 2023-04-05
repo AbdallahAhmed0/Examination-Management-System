@@ -1,3 +1,4 @@
+<p>{{questions |json}}</p>
 <div class="contianer" >
   <div class="form">
 
@@ -79,7 +80,7 @@
       <button mat-menu-item (click)="showTextEditor()">Coding</button>
     </mat-menu>
 
-    <button *ngIf="questions.length" mat-raised-button [disabled]="!formVaild" (click)="submit()" class="submit" type="submit">Save</button>
+    <button *ngIf="questions.length" mat-raised-button  (click)="submit()" class="submit" type="submit">Save</button>
   </div>
 
 </div>

@@ -30,7 +30,7 @@ export class SaveQuestionComponent implements OnInit {
 
 
   getExamInfo() {
-    this.examId = Number(this._activatedRoute.snapshot.paramMap.get('examId'));
+    this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
     this.examService.getExamById(this.examId).subscribe((data) => {
       this.exam = data;
       // err => throwError(err || "an error happened while getting exam info")

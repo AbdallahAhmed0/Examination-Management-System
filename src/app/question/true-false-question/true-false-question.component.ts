@@ -20,13 +20,13 @@ export class TrueFalseQuestionComponent implements OnInit {
   @Output() formValid = new EventEmitter<boolean>();
 
   @Input() indexComponent!:number;
-  @Input() editQuestion!:Question;
+  @Input() editQuestion?:Question;
 
   questionTextValue:string='';
   answerTextValue:string='';
   commentValue:string='';
 
-  Answer:any;
+  Answer?:any;
 
   isMultipleChoice: boolean = false;
   isHidden:boolean[]=[false];
@@ -61,6 +61,11 @@ export class TrueFalseQuestionComponent implements OnInit {
       answerText: this.Answer.answerText,
       comment: this.Answer.comment});
     }
+    this.form.valueChanges.subscribe(value =>{
+      this.questionData.emit(this.form.value);
+      this.formValid.emit(this.form.valid);
+  });
+
   }
 
   createAnswer(): FormGroup {

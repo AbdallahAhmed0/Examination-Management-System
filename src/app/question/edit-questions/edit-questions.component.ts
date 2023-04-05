@@ -33,6 +33,7 @@ export class EditQuestionsComponent implements OnInit {
   // get Questions of Exam
     this.questionService.getQuestions(this.examId).subscribe(data => {
     this.editquestions=data;
+    this.questions=data;
   // select questions in selected Components
     this.editquestions.forEach(question => {
 
@@ -79,6 +80,7 @@ export class EditQuestionsComponent implements OnInit {
     const index = this.selectedComponents.indexOf(child);
     if (index >= 0) {
       this.selectedComponents.splice(index, 1);
+      this.questions.splice(child.id,1);
     }
 }
 
@@ -86,6 +88,7 @@ upChild(child: any) {
     const index = this.selectedComponents.indexOf(child);
     if (index >= 1) {
       [this.selectedComponents[index],this.selectedComponents[index-1]]=[this.selectedComponents[index-1],this.selectedComponents[index]]
+
     }
   }
 
@@ -102,6 +105,7 @@ upChild(child: any) {
 
   formIsValid(valid:boolean){
   this.formVaild=valid;
+  console.log(this.formVaild)
   }
 
   submit(){
@@ -114,7 +118,7 @@ upChild(child: any) {
         this.consoleError = err.message;
       },
     };
-    this.questionService.saveQuestions(this.questions,2).subscribe(observer);
+    this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
     console.log(this.questions)
   }
 

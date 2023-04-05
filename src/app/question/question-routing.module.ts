@@ -8,7 +8,7 @@ import { TextQuestionsComponent } from './text-questions/text-questions.componen
 
 const routes: Routes = [
   {path:'',component:EditQuestionsComponent},
-  {path:'save',component:EditQuestionsComponent},
+  {path:'',component:EditQuestionsComponent},
   {path:'choice',component:ChoiceQuestionsComponent},
   {path:'text',component:TextQuestionsComponent},
   {path:'editor',component:TextEditorComponent}
