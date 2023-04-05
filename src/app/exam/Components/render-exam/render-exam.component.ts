@@ -14,14 +14,14 @@ export class RenderExamComponent implements OnInit {
   exam?: Exam;
   responseString: string | undefined;
   answerQustion = [];
-  
+
   questions: Question[]=[];
 
   constructor(private examService: ExamService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
 
-    this.examService.renderExam(2).subscribe(data => {
+    this.examService.renderExam(1).subscribe(data => {
       console.log(data);
       this.exam = data;
       this.questions = data.questions;
