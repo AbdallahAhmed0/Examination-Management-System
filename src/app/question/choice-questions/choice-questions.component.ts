@@ -27,7 +27,7 @@ export class ChoiceQuestionsComponent implements OnInit {
   answerTextValue:string='';
   commentValue:string='';
 
-  Answer?:any;
+  Answer:any[]=[];
 
   isMultipleChoice: boolean = false;
   isHidden:boolean[]=[false];
@@ -56,13 +56,21 @@ export class ChoiceQuestionsComponent implements OnInit {
       questionAnswers: this.fb.array([this.createAnswer()])
     });
 
+    this.createAnswer();
+    this.createAnswer();
+    this.createAnswer();
+    this.createAnswer();
+
   //select Question answer
   this.Answer = this.editQuestion?.questionAnswers;
   for(let i = 0;i < this.Answer.length;i++){
-  this.answers.at(i).patchValue({
-    answerText: this.Answer.answerText,
-    comment: this.Answer.comment});
+  this.answers.at(i)?.patchValue({
+    answerText: this.Answer[i].answerText,
+    correctAnswer: this.Answer[i].correctAnswer,
+    comment: this.Answer[i].comment});
   }
+  console.log(this.Answer)
+  console.log(this.answers)
     //select Multible Answers by btn-toggle
     if(this.editQuestion?.questionType === 'Multiple_Answers'){
           this.btnToggle()

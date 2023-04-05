@@ -44,10 +44,9 @@ export class TextEditorComponent implements OnInit {
   @Input() placeholder!:string;
   @Input() index!:number;
 
-  @Input() QuestionText?:string;
-  @Input() answerText?:string;
-  @Input() comment?:string;
-  @Input() options?:string;
+  @Input() QuestionText?:Question;
+  @Input() answerText?:any;
+  @Input() comment?:Question;
 
   constructor(){
 

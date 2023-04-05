@@ -9,7 +9,7 @@
     <span class="index">{{indexComponent}}.</span>
 
     <app-text-editor (editorValue)="getQuestionText($event)"
-    [placeholder]="'Question Text'" [QuestionText]="editQuestion?.questionText"></app-text-editor>
+    [placeholder]="'Question Text'" [QuestionText]="editQuestion"></app-text-editor>
     <input type="hidden" formControlName="questionText" >
 
     <mat-card-content>

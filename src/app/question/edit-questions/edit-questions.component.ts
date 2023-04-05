@@ -78,10 +78,13 @@ export class EditQuestionsComponent implements OnInit {
   }
   removeChild(child: any) {
     const index = this.selectedComponents.indexOf(child);
-    if (index >= 0) {
+    const idQuestion = this.questions.indexOf(child.id);
+
       this.selectedComponents.splice(index, 1);
-      this.questions.splice(child.id,1);
-    }
+      this.questions.splice(idQuestion,1);
+      this.questionService.deleteQuestion(child);
+      console.log(child)
+
 }
 
 upChild(child: any) {

@@ -1,4 +1,4 @@
-<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
 
   <mat-card class="card" >
     <div class="actions">
@@ -9,7 +9,7 @@
     <span class="index">{{indexComponent}}.</span>
 
     <app-text-editor (editorValue)="getQuestionText($event)"
-    [placeholder]="'Question Text'" [QuestionText]="editQuestion?.questionText" ></app-text-editor>
+    [placeholder]="'Question Text'" [QuestionText]="editQuestion" ></app-text-editor>
     <input type="hidden" formControlName="questionText" >
     <mat-error *ngIf="questionText?.touched && questionText?.hasError('required')">
       Question Text is required
@@ -28,7 +28,7 @@
               </ng-template>
 
               <app-text-editor class="option" (editorValue)="getAnswerText($event,i)"
-              [index]="i" [placeholder]="'options'" [answerText]="Answer[i]?.answerText" ></app-text-editor>
+              [index]="i" [placeholder]="'options'" [answerText]="Answer[i]" ></app-text-editor>
               <input type="hidden" formControlName="answerText" >
 
               <a mat-icon-button  title="message" (click)="toggleInput(i)">
@@ -40,7 +40,7 @@
 
               <ng-container *ngIf="isHidden[i]">
                 <app-text-editor class="input-message"  (editorValue)="getComment($event,i)"
-                [comment]="Answer ? Answer?.comment : answers.at(i).value.comment" [placeholder]="'Comment'"></app-text-editor>
+                [comment]="Answer ? Answer[i]?.comment : answers.at(i).value.comment" [placeholder]="'Comment'"></app-text-editor>
                 <input type="hidden" formControlName="comment">
               </ng-container>
 
@@ -60,4 +60,4 @@
       <mat-slide-toggle color="primary" class="btn-toggle"(click)="btnToggle()">Multiple Answers</mat-slide-toggle>
 
   </mat-card>
-</form> -->
+</form>

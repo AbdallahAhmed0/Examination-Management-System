@@ -10,7 +10,7 @@
     <span class="index">{{indexComponent}}.</span>
       <div class="question">
         <app-text-editor (editorValue)="getQuestionText($event)"
-        [QuestionText]="editQuestion?.questionText" [placeholder]="'Question Text'" >
+        [QuestionText]="editQuestion" [placeholder]="'Question Text'" >
       </app-text-editor>
         <input type="hidden" formControlName="questionText" >
     </div>
@@ -21,7 +21,7 @@
           <div [formGroupName]="i">
 
                 <app-text-editor class="input-message" (editorValue)="getAnswerText($event)"
-                [placeholder]="'Answer Text'"  [answerText]="Answer?.answerText"></app-text-editor>
+                [placeholder]="'Answer Text'"  [answerText]="Answer"></app-text-editor>
                 <input type="hidden" formControlName="answerText" >
 
                 <a mat-icon-button  title="message" (click)="toggleInput()">
@@ -30,7 +30,7 @@
 
                 <ng-container *ngIf="isHidden">
                   <app-text-editor class="input-message"  (editorValue)="getComment($event)"
-                  [placeholder]="'Comment'" [comment]="Answer ? Answer?.comment:answers.at(0).value.comment" ></app-text-editor>
+                  [placeholder]="'Comment'" [comment]=" editQuestion? Answer?.comment:answers.at(0).value.comment" ></app-text-editor>
                   <input type="hidden" formControlName="comment">
                 </ng-container>
 

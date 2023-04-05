@@ -49,6 +49,13 @@ export class QuestionService {
     return this.httpClient.get<Question[]>(`${environment.APPURL}/exam/getQuestions/${examId}`).
     pipe(retry(2),catchError(this.handleError))
   }
+  deleteQuestion(question:Question){
+    return this.httpClient
+    .delete(`${environment.APPURL}/exam/deleteQuestion`, { body: question })
+    .pipe(retry(2), catchError(this.handleError))
+    .subscribe((data) => {});
+  }
+
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {
       duration: 3000,
