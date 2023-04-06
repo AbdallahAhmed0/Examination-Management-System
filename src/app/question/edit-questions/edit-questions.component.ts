@@ -83,7 +83,6 @@ export class EditQuestionsComponent implements OnInit {
       this.selectedComponents.splice(index, 1);
       this.questions.splice(idQuestion,1);
       this.questionService.deleteQuestion(child);
-      console.log(child)
 
 }
 

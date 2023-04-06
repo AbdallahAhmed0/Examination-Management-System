@@ -82,26 +82,38 @@
         </ng-container>
       </ng-container>
 
+      <!-- Questions -->
+      <ng-container matColumnDef="#">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+
+        <ng-container *matCellDef="let row">
+          <button mat-raised-button  class="question" [routerLink]="['/save',row.id]">Questions</button>
+        </ng-container>
+      </ng-container>
+
       <!-- actions Column -->
-      <ng-container matColumnDef="actions">
+      <ng-container matColumnDef="Actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
         <td mat-cell *matCellDef="let row">
 
-          <button mat-button class="actions" [matMenuTriggerFor]="actions">Actions</button>
+          <!-- <button mat-button class="actions" [matMenuTriggerFor]="actions">Actions</button>
           <mat-menu #actions="matMenu" class="custom-menu" [overlapTrigger]="false">
           <button mat-menu-item (click)="edit(row.id)">Edit Exam</button>
           <button mat-menu-item (click)="delete(row)">Delete Exam</button>
           <button mat-menu-item [routerLink]="['/save',row.id]">Questions</button>
           <button mat-menu-item [routerLink]="['exams/attempt/',row.id]">Attemp Exam</button>
-        </mat-menu>
-          <!-- <div class="actions">
-            <button mat-button (click)="edit(row.id)">
+        </mat-menu> -->
+          <div class="actions">
+            <a title="View" [routerLink]="['exams/attempt/',row.id]">
+              <mat-icon class="view-icon">remove_red_eye</mat-icon>
+            </a>
+            <a title="Edit" (click)="edit(row.id)">
               <mat-icon class="edit-icon">edit</mat-icon>
-            </button>
-            <button mat-button (click)="delete(row)">
+            </a>
+            <a title="Delete" (click)="delete(row)">
               <mat-icon class="delete-icon">delete</mat-icon>
-            </button>
-          </div> -->
+            </a>
+          </div>
         </td>
       </ng-container>
 

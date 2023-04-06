@@ -56,39 +56,34 @@ export class ChoiceQuestionsComponent implements OnInit {
       questionAnswers: this.fb.array([this.createAnswer()])
     });
 
-    this.createAnswer();
-    this.createAnswer();
-    this.createAnswer();
-    this.createAnswer();
+
 
   //select Question answer
-  this.Answer = this.editQuestion?.questionAnswers;
-  for(let i = 0;i < this.Answer.length;i++){
-  this.answers.at(i)?.patchValue({
-    answerText: this.Answer[i].answerText,
-    correctAnswer: this.Answer[i].correctAnswer,
-    comment: this.Answer[i].comment});
+  this.Answer = this.editQuestion?.questionAnswers || [];
+  for (let i = 0; i < this.Answer.length; i++) {
+    const answer = this.Answer[i];
+    const answerGroup = this.createAnswer(answer.answerText, answer.correctAnswer, answer.comment);
+    this.answers.push(answerGroup);
   }
-  console.log(this.Answer)
-  console.log(this.answers)
     //select Multible Answers by btn-toggle
     if(this.editQuestion?.questionType === 'Multiple_Answers'){
           this.btnToggle()
     }
   }
-    this.form.valueChanges.subscribe(value =>{
-      this.questionData.emit(this.form.value);
-      this.formValid.emit(this.form.valid);
-    });
+  this.form.valueChanges.subscribe(value =>{
+    this.questionData.emit(this.form.value);
+    this.formValid.emit(this.form.valid);
+    console.log(this.form.valid)
+  });
+
   }
 
-  createAnswer(): FormGroup {
+  createAnswer(answerText: string = '', correctAnswer: boolean = false, comment: string = ''): FormGroup {
     return this.fb.group({
-      answerText: ['', Validators.required],
-      correctAnswer: [false],
-      comment:['']
+      answerText: [answerText, Validators.required],
+      correctAnswer: [correctAnswer],
+      comment: [comment]
     });
-
   }
 
   get answers(): FormArray {

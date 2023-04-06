@@ -21,15 +21,16 @@ import { DialogeComponent } from '../../../Shared/material/dialog/dialog.compone
 })
 export class AllExamsComponent implements OnInit {
   displayedColumns: string[] = [
-    'actions',
+    '#',
     'id',
     'examName',
+    'course',
+    'startTime',
+    'endTime',
+    'status',
     'duration',
     'successRate',
-    'course',
-    'status',
-    'startTime',
-    'endTime'
+    'Actions'
   ];
   dataSource!: MatTableDataSource<any>;
 

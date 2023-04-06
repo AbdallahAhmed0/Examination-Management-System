@@ -63,9 +63,9 @@ delete(id:number){
     if (result === 'confirm') {
 
         this.adminService.deleteAdmin(id);
-      }
-      window.location.reload();
+        window.location.reload();
 
+      }
     });
 
   }

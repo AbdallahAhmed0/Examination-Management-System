@@ -9,6 +9,9 @@ p{
 mat-card{
   width: 100%;
 }
+.exam{
+  background: #eeecec;
+}
 .exam-container {
   display: flex;
   flex-direction: column;
@@ -21,6 +24,7 @@ mat-card{
   padding-right: 150px;
   width: 100%;
   margin-bottom: 20px;
+
 }
 
 .exam-name {
