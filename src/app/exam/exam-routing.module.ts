@@ -12,7 +12,7 @@ const routes: Routes = [
   {path:'exams/add',component:AddExamComponent},
   {path:'exams/edit/:id',component:EditExamComponent},
   {path:'exams/attempt/:examId',component:AttemptExamComponent},
-  {path:'exams/render',component:RenderExamComponent}
+  {path:'exams/render/:id',component:RenderExamComponent}
 
 
 ];

@@ -19,7 +19,6 @@ export interface Question {
   questionAnswers: Answer[];
 }
 
-
 export interface Answer {
   id: number;
   answerText: string;

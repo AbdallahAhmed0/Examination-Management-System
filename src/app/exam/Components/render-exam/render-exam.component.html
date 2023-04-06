@@ -60,7 +60,9 @@
               >
                 <ng-container *ngFor="let answer of question.questionAnswers">
                   <div class="mat-checkbox-group">
-                    <mat-checkbox>{{ answer.answerText }}</mat-checkbox>
+                    <mat-checkbox>
+                      <p [innerHTML]="sanitizeHtml(answer.answerText)"></p>
+                    </mat-checkbox>
                   </div>
                 </ng-container>
               </ng-container>
@@ -88,15 +90,16 @@
         <!-- <button mat-raised-button color="primary"> Save</button> -->
       </div>
     </ng-container>
-    
+
     <div>
-      <button mat-raised-button *ngIf="currentPageIndex > 0" (click)="previousPage()">
+      <button mat-raised-button class="save" *ngIf="currentPageIndex > 0" style="margin: 10px;" (click)="previousPage()">
         previous
       </button>
-      <button mat-raised-button color="primary" class="submit-button"> Submit </button>
-      <button mat-raised-button *ngIf="currentPageIndex < questionPages.length - 1" (click)="nextPage()" [innerText]="nextButtonLabel">
+      <button mat-raised-button class="save" *ngIf="currentPageIndex < questionPages.length - 1" (click)="nextPage()" [innerText]="nextButtonLabel">
         Save
       </button>
+      <button mat-raised-button color="primary" *ngIf="currentPageIndex == questionPages.length -1" class="submit-button"> Submit </button>
+
     </div>
     <!-- <button mat-raised-button color="primary">Submit Exam</button> -->
   </div>
