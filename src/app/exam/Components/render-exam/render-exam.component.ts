@@ -2,6 +2,7 @@ import { ExamService } from './../../Services/exam.service';
 import { Question, Exam, Answer } from './../../Models/exam';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -16,20 +17,73 @@ export class RenderExamComponent implements OnInit {
   answerQustion = [];
 
   questions: Question[]=[];
+  questionForms: FormGroup[] = [];
+  questionPages: Question[][] = [];
+  currentPageIndex = 0;
 
-  constructor(private examService: ExamService, private sanitizer: DomSanitizer) { }
+  constructor(private examService: ExamService, private sanitizer: DomSanitizer, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
     this.examService.renderExam(1).subscribe(data => {
-      console.log(data);
       this.exam = data;
       this.questions = data.questions;
+      this.questionPages = this.chunk(this.questions, 3);
 
       console.log(this.exam)
+
+       // Initialize a form group for each question
+    this.questionForms = this.questions.map(question => {
+      const formGroup = this.formBuilder.group({
+        answerIds: []
+      });
+      return formGroup;
+    });
     });
   }
 
+  chunk(questions: Question[], size: number): Question[][] {
+    return Array.from(
+      { length: Math.ceil(questions.length / size) },
+      (_, index) => questions.slice(index * size, index * size + size)
+    );
+  }
+
+  saveAnswer(): void {
+    // Save the answer to the current question.
+  }
+
+  nextQuestion(): void {
+    // Move to the next question on the current page.
+  }
+
+  previousQuestion(): void {
+    // Move to the previous question on the current page.
+  }
+
+  changePage(pageIndex: number) {
+    this.currentPageIndex = pageIndex;
+  }
+
+  previousPage() {
+    this.currentPageIndex--;
+  }
+
+  nextPage() {
+    this.currentPageIndex++;
+  }
+
+  // onNext() {
+  //   if (this.questionForms.valid) {
+  //     const data = this.form.value;
+  //     this.http.post('your-api-url', data).subscribe(response => {
+  //       // handle the response from the server
+  //       // navigate to the next page
+  //     });
+  //   } else {
+  //     // handle the case when the form is not valid
+  //   }
+  // }
   // Sanitize the HTML content with the DomSanitizer service
   sanitizeHtml(html: string): any {
     return this.sanitizer.bypassSecurityTrustHtml(html);
@@ -37,52 +91,7 @@ export class RenderExamComponent implements OnInit {
 
 
 
-  // parseHTML(htmlString: string): string {
-  //   const parser = new DOMParser();
-  //   const doc = parser.parseFromString(htmlString, 'text/html');
-  //   return doc.body? doc.body.textContent?.trim() || '' : '';
-  // }
-
-
-  // this.exam = {
-      //   id: data.id,
-      //   examName: data.examName,
-      //   duration: data.duration,
-      //   startTime: data.startTime,
-      //   endTime: data.endTime,
-      //   successRate: data.successRate,
-      //   questions: data.questions.map((q) => ({
-      //     id: q.id,
-      //     questionText: this.parseHTML(q.questionText),
-      //     points: q.points,
-      //     questionType: q.questionType,
-      //     questionAnswers: q.questionAnswers.map((a) => ({
-      //       id: a.id,
-      //       answerText: this.parseHTML(a.answerText)
-      //     }))
-      //   }))
-      // };
-
-
-
-
-
-
-  // checkAnswer(question: Question) {
-  //   if (question.selectedAnswer === question.correctAnswer) {
-  //     console.log('Correct!');
-  //     this.answers[question.id] = true;
-  //   } else {
-  //     console.log('Wrong answer, try again.');
-  //     this.answers[question.id] = false;
-  //   }
-  // }
-
-  // submitExam() {
-  //   const numCorrect = Object.values(this.answers).filter((val) => val === true).length;
-  //   const numQuestions = this.exam.questions.length;
-  //   const successRate = (numCorrect / numQuestions) * 100;
-  //   console.log(`You got ${numCorrect} out of ${numQuestions} correct (${successRate}% success rate).`);
-  // }
-
 }
+
+
+
