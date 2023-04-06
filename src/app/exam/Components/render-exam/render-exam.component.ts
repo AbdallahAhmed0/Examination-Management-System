@@ -21,11 +21,13 @@ export class RenderExamComponent implements OnInit {
   questionPages: Question[][] = [];
   currentPageIndex = 0;
 
+  nextButtonLabel = 'Save';
+
   constructor(private examService: ExamService, private sanitizer: DomSanitizer, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
-    this.examService.renderExam(1).subscribe(data => {
+    this.examService.renderExam(5).subscribe(data => {
       this.exam = data;
       this.questions = data.questions;
       this.questionPages = this.chunk(this.questions, 3);
@@ -71,6 +73,7 @@ export class RenderExamComponent implements OnInit {
 
   nextPage() {
     this.currentPageIndex++;
+
   }
 
   // onNext() {

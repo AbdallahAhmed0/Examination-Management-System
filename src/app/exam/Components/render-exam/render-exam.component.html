@@ -37,11 +37,11 @@
     <!-- Questions Section -->
     <ng-container *ngFor="let page of questionPages; let pageIndex = index">
       <div *ngIf="pageIndex === currentPageIndex">
-        <mat-card *ngFor="let question of page; let i = index">
+        <mat-card *ngFor="let question of page; let i = index;">
           <!-- multiple choice question  -->
           <mat-card-content>
             <form>
-              <h2>Question {{ question.id }} ({{ question.points }} points)</h2>
+              <h2>Question {{ i+1 }} ({{ question.points }} points)</h2>
               <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
               <ng-container *ngIf="question.questionType === 'Multiple_choice'">
                 <mat-radio-group>
@@ -81,20 +81,21 @@
               </ng-container>
             </form>
           </mat-card-content>
-          <mat-card-actions>
-            <button mat-raised-button color="primary">Submit</button>
-          </mat-card-actions>
+          <!-- <mat-card-actions>
+            <button mat-raised-button color="primary">Save</button>
+          </mat-card-actions> -->
         </mat-card>
         <!-- <button mat-raised-button color="primary"> Save</button> -->
       </div>
-
     </ng-container>
+    
     <div>
       <button mat-raised-button *ngIf="currentPageIndex > 0" (click)="previousPage()">
         previous
       </button>
-      <button mat-raised-button *ngIf="currentPageIndex < questionPages.length - 1" (click)="nextPage()">
-        Next
+      <button mat-raised-button color="primary" class="submit-button"> Submit </button>
+      <button mat-raised-button *ngIf="currentPageIndex < questionPages.length - 1" (click)="nextPage()" [innerText]="nextButtonLabel">
+        Save
       </button>
     </div>
     <!-- <button mat-raised-button color="primary">Submit Exam</button> -->
