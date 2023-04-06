@@ -41,13 +41,12 @@ export class EditCourseComponent implements OnInit {
 
       this.courseService.getCourseById(this.id).subscribe(data =>{
 
-        console.log(data);
         this.course=data
         this.items=data.admins
         this.newCourse=this.fb.group({
           name:[data.courseName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
           code:[data.courseCode,[Validators.required,Validators.minLength(3)]],
-          group:["",[Validators.required]],
+          group:[data.groupName,[Validators.required]],
           adminIds:["",]
 
 

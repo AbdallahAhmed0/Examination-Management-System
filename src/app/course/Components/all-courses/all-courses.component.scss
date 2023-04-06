@@ -28,7 +28,9 @@ img{
     border-radius: 6px;
     background:  #0cd463;
     text-align: center;
-
+}
+.edit:hover{
+  background: darken($color: #0cd463, $amount: 10%);
 }
 mat-card-content,mat-card-actions{
   padding-left: 15px;
