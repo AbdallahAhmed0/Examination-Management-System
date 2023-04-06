@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="form">
+    <mat-card class="exam-card">
+      <div class="exam-header">
+        <div class="exam-name">{{ exam?.examName }}</div>
+      </div>
+      <mat-card-content>
+        <div class="exam-details">
+          <div class="exam-details-left">
+            <div class="mat-grid-tile-header">
+              <span class="mat-subheading-1">Start Time:</span>
+              <span class="mat-body-1">{{ exam?.startTime }}</span>
+            </div>
+          </div>
+          <div class="exam-details-right">
+            <div class="mat-grid-tile-header">
+              <span class="mat-subheading-1">Success Rate: </span>
+              <span class="mat-body-1">{{ exam?.successRate }} %</span>
+            </div>
+          </div>
+          <div class="exam-details-left">
+            <div class="mat-grid-tile-header">
+              <span class="mat-subheading-1">End Time: </span>
+              <span class="mat-body-1">{{ exam?.endTime }}</span>
+            </div>
+          </div>
+          <div class="exam-details-right">
+            <div class="mat-grid-tile-header">
+              <span class="mat-subheading-1">Duration: </span>
+              <span class="mat-body-1">{{ exam?.duration }}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Questions Section -->
+    <ng-container *ngFor="let page of questionPages; let pageIndex = index">
+      <div *ngIf="pageIndex === currentPageIndex">
+        <mat-card *ngFor="let question of page; let i = index;">
+          <!-- multiple choice question  -->
+          <mat-card-content>
+            <form>
+              <h2>Question {{ i+1 }} ({{ question.points }} points)</h2>
+              <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
+              <ng-container *ngIf="question.questionType === 'Multiple_choice'">
+                <mat-radio-group>
+                  <mat-radio-button
+                    *ngFor="let answer of question.questionAnswers"
+                    [value]="answer.answerText"
+                  >
+                    <p [innerHTML]="sanitizeHtml(answer.answerText)"></p
+                  ></mat-radio-button>
+                </mat-radio-group>
+              </ng-container>
+
+              <!-- multiple answers question -->
+              <ng-container
+                *ngIf="question.questionType === 'Multiple_Answers'"
+              >
+                <ng-container *ngFor="let answer of question.questionAnswers">
+                  <div class="mat-checkbox-group">
+                    <mat-checkbox>{{ answer.answerText }}</mat-checkbox>
+                  </div>
+                </ng-container>
+              </ng-container>
+
+              <!-- matching question  -->
+              <ng-container *ngIf="question.questionType === 'Matching'">
+                <mat-form-field>
+                  <input matInput placeholder="Answer" />
+                </mat-form-field>
+              </ng-container>
+
+              <!-- true false question  -->
+              <ng-container *ngIf="question.questionType === 'True_False'">
+                <mat-radio-group>
+                  <mat-radio-button [value]="true">True</mat-radio-button>
+                  <mat-radio-button [value]="false">False</mat-radio-button>
+                </mat-radio-group>
+              </ng-container>
+            </form>
+          </mat-card-content>
+          <!-- <mat-card-actions>
+            <button mat-raised-button color="primary">Save</button>
+          </mat-card-actions> -->
+        </mat-card>
+        <!-- <button mat-raised-button color="primary"> Save</button> -->
+      </div>
+    </ng-container>
+    
+    <div>
+      <button mat-raised-button *ngIf="currentPageIndex > 0" (click)="previousPage()">
+        previous
+      </button>
+      <button mat-raised-button color="primary" class="submit-button"> Submit </button>
+      <button mat-raised-button *ngIf="currentPageIndex < questionPages.length - 1" (click)="nextPage()" [innerText]="nextButtonLabel">
+        Save
+      </button>
+    </div>
+    <!-- <button mat-raised-button color="primary">Submit Exam</button> -->
+  </div>
+</div>
