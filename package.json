@@ -29,7 +29,7 @@
     "express": "^4.18.2",
     "file-saver": "^2.0.5",
     "file-saver-es": "^2.0.5",
-    "froala-editor": "^4.0.17",
+    "froala-editor": "^4.0.18",
     "jquery": "^3.6.4",
     "js-export-excel": "^1.1.4",
     "rxjs": "~7.5.0",
