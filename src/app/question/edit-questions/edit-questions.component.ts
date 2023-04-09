@@ -18,7 +18,6 @@ export class EditQuestionsComponent implements OnInit {
   selectedComponents:any[]=[];
   index:number=1;
 
-  editquestions:Question[]=[];
   exam?:Exam;
   questions:Question[]=[];
   examId!:number;
@@ -32,10 +31,10 @@ export class EditQuestionsComponent implements OnInit {
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
   // get Questions of Exam
     this.questionService.getQuestions(this.examId).subscribe(data => {
-    this.editquestions=data;
     this.questions=data;
+
   // select questions in selected Components
-    this.editquestions.forEach(question => {
+    this.questions.forEach(question => {
 
       this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
       this.index++;
@@ -76,13 +75,14 @@ export class EditQuestionsComponent implements OnInit {
     this.formVaild=false;
 
   }
-  removeChild(child: any) {
-    const index = this.selectedComponents.indexOf(child);
-    const idQuestion = this.questions.indexOf(child.id);
+  removeChild(question:Question,child: any) {
 
-      this.selectedComponents.splice(index, 1);
-      this.questions.splice(idQuestion,1);
-      this.questionService.deleteQuestion(child);
+
+
+      this.selectedComponents.splice(child.id-1,1);
+      // this.questionService.deleteQuestion(question);
+      this.questions.splice(child.id-1,1);
+      console.log(this.questions)
 
 }
 
@@ -121,7 +121,6 @@ upChild(child: any) {
       },
     };
     this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
-    console.log(this.questions)
   }
 
 }

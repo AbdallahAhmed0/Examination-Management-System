@@ -15,7 +15,7 @@ export class TextQuestionsComponent implements OnInit {
 
   form!: FormGroup;
 
-  @Output() onDelete = new EventEmitter<void>();
+  @Output() onDelete = new EventEmitter<Question>();
   @Output() onUP = new EventEmitter<void>();
   @Output() onDown = new EventEmitter<void>();
   @Output() questionData = new EventEmitter<object>();
@@ -99,7 +99,7 @@ export class TextQuestionsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
 
-        this.onDelete.emit();
+        this.onDelete.emit(this.form.value);
       }
       });
     }

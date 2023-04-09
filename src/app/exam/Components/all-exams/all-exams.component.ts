@@ -60,7 +60,6 @@ export class AllExamsComponent implements OnInit {
   getExams() {
     this.examService.getAllExams().subscribe((data) => {
       /** Builds and returns a new User. */
-      console.log(data)
       const createNewExam = (id: number) => {
         return {
           id: id,

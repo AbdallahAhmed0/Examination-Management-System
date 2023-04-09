@@ -1,7 +1,8 @@
 .contianer{
-  background: #3cb5be;
   height: 100%;
   overflow: hidden;
+  background:lighten($color: #3cb5be, $amount: 10%)
+
 }
 p{
   color:#3cb5be ;

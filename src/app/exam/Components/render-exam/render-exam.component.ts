@@ -3,6 +3,7 @@ import { Question, Exam, Answer } from './../../Models/exam';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -23,11 +24,17 @@ export class RenderExamComponent implements OnInit {
 
   nextButtonLabel = 'Save';
 
-  constructor(private examService: ExamService, private sanitizer: DomSanitizer, private formBuilder: FormBuilder) { }
+  examId!: number;
+
+  constructor(private examService: ExamService,private _activatedRoute:ActivatedRoute
+              ,private sanitizer: DomSanitizer, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
-    this.examService.renderExam(5).subscribe(data => {
+    this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+
+
+    this.examService.renderExam(this.examId).subscribe(data => {
       this.exam = data;
       this.questions = this.exam.questions;
       this.questionPages = this.chunk(this.questions, 3);
