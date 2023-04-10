@@ -10,6 +10,8 @@ import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
 import {DialogeComponent} from '../../../Shared/material/dialog/dialog.component'
 
+import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-all-admins',
   templateUrl: './all-admins.component.html',
@@ -97,46 +99,55 @@ exportData(){
     'universityId',
     'email',
     'password',
-    'role',
+    'roles',
     'locked',
     'enable',
     'specialization'
 ]];
+const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.admins);
+const headerStyle = {
+  font: { bold: true, color: { rgb: 'FFFFFF' } },
+  fill: { bgColor: { rgb: '2F75B5' } }
+};
 
-const wb = utils.book_new();
-const ws: any = utils.json_to_sheet([]);
-utils.sheet_add_aoa(ws, headings);
-utils.sheet_add_json(ws, this.admins, { origin: 'A2', skipHeader: true });
-utils.book_append_sheet(wb, ws, 'Report');
-writeFile(wb, 'Data of Admins.xlsx');
+
+// add header row
+XLSX.utils.sheet_add_aoa(ws, [headings], { origin: 'A1' });
+
+
+
+    // Set column width
+    const columns = [{ wpx: 30 }, { wpx: 100 }, { wpx: 100 },{ wpx: 60 }, { wpx: 180 }, { wpx: 150 },{ wpx: 70 }, { wpx: 70 }, { wpx: 70 },{ wpx: 120 }];
+    ws['!cols'] = columns;
+
+    // Set row height
+    const rows = [{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 }];
+    ws['!rows'] = rows;
+
+    // Set cell style
+    const cellStyle = {
+      font: { bold: true, size: 14 },
+      alignment: { horizontal: 'center', vertical: 'center' },
+      border: { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
+    };
+
+
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, ws, 'Sheet1');
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Data of Admins.xlsx';
+    link.click();
+    URL.revokeObjectURL(url);
+
 }
-//   let workbook = new Workbook();
-//   let worksheet = workbook.addWorksheet('adminSheet');
 
-//   worksheet.columns = [
-//     { header: 'Id', key: 'id', width: 10 },
-//     { header: 'First Name', key: 'firstName', width: 22 },
-//     { header: 'Last Name', key: 'lastName', width: 22 },
-//     { header: 'Email', key: 'email', width: 28 },
-//     { header: 'University Id', key: 'universityId', width: 15 },
-//     { header: 'enable', key: 'enable', width: 15 },
-//     { header: 'Specialization', key: 'specialization', width: 25 },
-//   ];
-
-//   this.admins.forEach(e => {
-//     worksheet.addRow({id: e.id, firstName: e.firstName,lastName: e.lastName,
-//         email:e.email, universityId:e.universityId, enable:e.enable,specialization:e.specialization },"n");
-//   });
-
-//   workbook.xlsx.writeBuffer().then((data) => {
-//     let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-//     // saveAs(blob, 'Data of Admins.xlsx');
-//   })
-// }
-
-// importData(){
-//   this.router.navigate(['admins/import']);
-// }
+importData(){
+  this.router.navigate(['admins/import']);
+}
 ngOnDestroy(): void {
 this.subAdmin?.unsubscribe();
 }
