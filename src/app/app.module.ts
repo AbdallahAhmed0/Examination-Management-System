@@ -1,4 +1,3 @@
-import { ExamModule } from './exam/exam.module';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,8 +27,7 @@ import { StudentsModule } from './students/students.module';
     MaterialModule,
     AdminsModule,
     RolesModule,
-    StudentsModule,
-    ExamModule
+    StudentsModule
 
   ],
   providers: [],

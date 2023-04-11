@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
-import {DialogeComponent} from '../../../Shared/material/dialog/dialog.component'
+import {DialogeComponent} from '../../../Shared/material/dialog/dialog.component';
 
 import * as XLSX from 'xlsx';
 
@@ -64,9 +64,9 @@ delete(id:number){
     if (result === 'confirm') {
 
         this.adminService.deleteAdmin(id);
-        window.location.reload();
-
       }
+      window.location.reload();
+
     });
 
   }
@@ -102,7 +102,6 @@ exportData(){
     'locked',
     'enable',
     'specialization'
-
 ];
 const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.admins.map(a => ({
   ...a,
@@ -135,12 +134,11 @@ XLSX.utils.sheet_add_aoa(ws, [headings], { origin: 'A1' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'Data of Admins.xlsx';
+    link.download = 'Data of admins.xlsx';
     link.click();
     URL.revokeObjectURL(url);
 
 }
-
 importData(){
   this.router.navigate(['admins/import']);
 }

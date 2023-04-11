@@ -1,7 +1,7 @@
 import { Role } from "src/app/roles/Models/role";
 
 export interface Admin {
-    id?:number,
+    id:number,
     firstName:string,
     lastName:string,
     universityId:number,

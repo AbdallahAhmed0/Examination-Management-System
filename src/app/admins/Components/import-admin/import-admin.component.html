@@ -6,15 +6,9 @@
 
   <form   (ngSubmit)="importAdmin()" >
 
-      <mat-label>Select Excel File</mat-label>
+    <mat-label>Select Excel File</mat-label>
 
       <input id="uploadBtn" type="file" #inp (change)="handleImport($event)" name="uploadFile" required>
-
-        <!-- validation  -->
-
-          <mat-error  *ngIf="consoleError !== ''">
-            *{{consoleError}}
-        </mat-error>
 
     <button mat-raised-button [disabled]="!inp.value" class="submit" type="submit">Submit</button>
 

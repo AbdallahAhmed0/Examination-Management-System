@@ -10,6 +10,7 @@ table{
   }
 }
 
+
 mat-paginator{
   color: #3174efe9;
   font-size: 12px;
@@ -28,7 +29,7 @@ mat-paginator{
 }
 
 td, th {
-  font-size: 14px;
+  font-size: 17px;
 }
 // th,mat-paginator{
 //     background: rgb(238, 232, 232);
@@ -41,7 +42,7 @@ td, th {
     width: 45px;
     height: 45px;
     padding: 8px;
-    margin: 10px 5px;
+    margin: 10px 0px;
     border-radius: 6px;
     text-align: center;
 }
@@ -49,7 +50,7 @@ td, th {
 
     color: #fff;
     padding: 8px;
-    margin: 10px 5px;
+    margin: 10px 0px;
     border-radius: 6px;
     font-size: 30px;
     background: #0cd463;
@@ -58,72 +59,12 @@ td, th {
     text-align: center;
 
 }
-.view-icon{
-  color: #fff;
-  padding: 8px;
-  margin: 10px 5px;
-  border-radius: 6px;
-  font-size: 30px;
-  background: #1f6effe9;
-  width: 45px;
-  height: 45px;
-  text-align: center;
-}
-.view-icon:hover{
-  background: darken($color: #1f6effe9, $amount: 10%);
-}
-.edit-icon:hover{
-  background: darken($color: #0cd463, $amount: 10%);
-}
-.delete-icon:hover{
-  background:darken($color: #f20202, $amount: 10%);
-}
 .actions{
-  font-size: 16px;
-  margin: 15px 0px;
-  color: #f6f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-.wide-menu {
-  width: 500px; /* set the width to whatever value you need */
-  text-align: center; /* center the menu items horizontally */
-  font-size: 16px;
-}
-
-.mat-menu-content {
-  padding: 16px; /* add some padding to the top and bottom of the menu */
-}
 .center{
   text-align: center;
-}
-.question{
-  margin: 10px;
-  margin-top: 30px;
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 500;
-  background:  #0aac50;
-  color: #fff;
-
-}
-
-::ng-deep .custom-menu {
-  width: 175px; /* replace with your desired width */
-}
-
-.active{
-  background:  #0cd463;
-  color: #fff;
-  padding: 5px;
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 500;
-}
-.Inactive{
-  background:  #f20202;
-  color: #fff;
-  padding: 5px;
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 500;
 }
