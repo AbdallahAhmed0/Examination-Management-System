@@ -27,7 +27,7 @@
                 <span *ngIf="sidenav.close">Exams</span>
                 </button>
 
-            <button mat-button class="menu-button">
+            <button mat-button class="menu-button" [routerLink]="['/save']">
             <mat-icon>assignment</mat-icon>
             <span *ngIf="sidenav.close">Questions</span>
             </button>
@@ -41,16 +41,16 @@
             <mat-icon>account_box</mat-icon>
             <span *ngIf="sidenav.close">Admins</span>
         </button>
-
-        <button mat-button class="menu-button">
-            <mat-icon>book</mat-icon>
-            <span *ngIf="sidenav.close">Subjects</span>
+        <button mat-button class="menu-button" [routerLink]="['/courses']">
+          <mat-icon>book</mat-icon>
+          <span *ngIf="sidenav.close">Courses</span>
         </button>
 
-        <button mat-button class="menu-button" [routerLink]="['/roles']">
+
+        <!-- <button mat-button class="menu-button" [routerLink]="['/roles']">
             <mat-icon>assessment</mat-icon>
             <span *ngIf="sidenav.close">Roles</span>
-        </button>
+        </button> -->
 
 
             <button mat-button class="menu-button">

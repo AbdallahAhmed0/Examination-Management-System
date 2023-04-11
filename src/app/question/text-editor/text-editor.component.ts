@@ -1,6 +1,34 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import 'froala-editor/js/plugins/align.min.js';
+import 'froala-editor/js/plugins/char_counter.min.js';
+import 'froala-editor/js/plugins/code_beautifier.min.js';
+import 'froala-editor/js/plugins/code_view.min.js';
+import 'froala-editor/js/plugins/colors.min.js';
+import 'froala-editor/js/plugins/draggable.min.js';
+import 'froala-editor/js/plugins/emoticons.min.js';
+import 'froala-editor/js/plugins/entities.min.js';
+import 'froala-editor/js/plugins/file.min.js';
+import 'froala-editor/js/plugins/font_family.min.js';
+import 'froala-editor/js/plugins/font_size.min.js';
+import 'froala-editor/js/plugins/fullscreen.min.js';
+import 'froala-editor/js/plugins/help.min.js';
+import 'froala-editor/js/plugins/image.min.js';
+import 'froala-editor/js/plugins/inline_class.min.js';
+import 'froala-editor/js/plugins/line_breaker.min.js';
+import 'froala-editor/js/plugins/link.min.js';
+import 'froala-editor/js/plugins/lists.min.js';
+import 'froala-editor/js/plugins/paragraph_format.min.js';
+import 'froala-editor/js/plugins/paragraph_style.min.js';
+import 'froala-editor/js/plugins/quick_insert.min.js';
+import 'froala-editor/js/plugins/quote.min.js';
+import 'froala-editor/js/plugins/save.min.js';
+import 'froala-editor/js/plugins/special_characters.min.js';
+import 'froala-editor/js/plugins/table.min.js';
+import 'froala-editor/js/plugins/url.min.js';
+import 'froala-editor/js/plugins/video.min.js';
+import 'froala-editor/js/plugins/word_paste.min.js';
 
 @Component({
   selector: 'app-text-editor',
@@ -13,7 +41,7 @@ export class TextEditorComponent implements OnInit {
 
   @Output() editorValue = new EventEmitter<string>();
   @Input() placeholder!:string;
-  @Input() index:number=1;
+  @Input() index!:number;
   @Input()commentValue!:string;
 
   constructor(){
@@ -32,14 +60,9 @@ export class TextEditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  froalaOption1=this.froalaOptions( 'Question Text');
-  froalaOption2=this.froalaOptions( 'Answer Text');
-  froalaOption3=this.froalaOptions('Message for those who choose this');
-  froalaOption4=this.froalaOptions('options');
-
   froalaOptions(placeholder:string){
     if(placeholder == 'options'){
-      placeholder ='option '+this.index;
+      placeholder ='option '+(this.index+1);
     }
     return {
       placeholderText:placeholder,
@@ -47,11 +70,11 @@ export class TextEditorComponent implements OnInit {
       charCounterCount: false,
       toolbarVisibleWithoutSelection: false,
       toolbarButtons: [
-        'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',
+        'bold', 'italic', 'underline', 'subscript', 'superscript',
         'fontFamily', 'fontSize', 'color', 'paragraphFormat',
-        'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', 'insertHR', 'insertLink',
-        'insertImage',  'insertFile', 'insertTable', 'undo', 'redo', 'clearFormatting',
-        'selectAll', 'html', 'help', 'specialCharacters', 'codeView'
+        'align', 'formatOL', 'formatUL',  'insertLink',
+        'insertImage',  'insertFile', 'insertTable', 'undo', 'redo',
+        'help', 'specialCharacters', 'codeView'
       ],
       heightMin: 40,
       imageUpload: true,

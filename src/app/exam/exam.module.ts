@@ -7,6 +7,7 @@ import { ExamRoutingModule } from './exam-routing.module';
 import { AllExamsComponent } from './Components/all-exams/all-exams.component';
 import { AddExamComponent } from './Components/add-exam/add-exam.component';
 import { EditExamComponent } from './Components/edit-exam/edit-exam.component';
+import { AttemptExamComponent } from './Components/attempt-exam/attempt-exam.component';
 import { RenderExamComponent } from './Components/render-exam/render-exam.component';
 
 
@@ -15,6 +16,7 @@ import { RenderExamComponent } from './Components/render-exam/render-exam.compon
     AllExamsComponent,
     AddExamComponent,
     EditExamComponent,
+    AttemptExamComponent
     RenderExamComponent
   ],
   imports: [
