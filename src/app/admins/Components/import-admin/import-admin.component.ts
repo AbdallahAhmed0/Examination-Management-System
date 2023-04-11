@@ -62,19 +62,24 @@ export class ImportAdminComponent implements OnInit {
   }
 
   importAdmin() {
+    this.admins.map((admin) => {
+      if (typeof admin.roles === 'string') { // check if roles is a string
+        const rolesArray: any[] = admin.roles.split(',');
+        const roles = rolesArray.map((role) => ({ role }));
+        admin.roles = roles;
+      }
+    });
     for (let admin of this.admins) {
-      const rolesArray: any[] = admin.roles.split(',');
-      const roles = rolesArray.map(role => ({ role }));
-      admin.roles = roles;
+      this.newAdmin.setValue(admin);
 
-      this.newAdmin.patchValue(admin);
-      this.subAdmin = this.adminService.addAdmin(this.newAdmin.value).subscribe({
-        next: (admin: Admin) => {
-        },
+      const observer = {
+        next: (admin: Admin) => {},
         error: (err: Error) => {
           this.consoleError = err.message;
-        }
-      });
+        },
+      };
+
+      this.subAdmin = this.adminService.addAdmin(admin).subscribe(observer);
     }
   }
 
