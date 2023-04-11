@@ -32,7 +32,7 @@ form{
       margin: 20px  ;
 
       input{
-        font-size: 18px;
+        font-size: 16px;
         display: block;
         margin: 20px;
         border: 1px solid rgb(211, 208, 208);
@@ -46,7 +46,7 @@ form{
 
 mat-label{
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 500;
   display: block;
 }
 }
@@ -54,9 +54,10 @@ mat-label{
   width: 90px;
   height: 40px;
   font-size: 18px;
-  margin:10px 40px ;
+  margin:16px 40px ;
   background: rgb(14, 175, 14);
   color: #ffffff;
+  display: block;
 
 }
 .btn-list{
