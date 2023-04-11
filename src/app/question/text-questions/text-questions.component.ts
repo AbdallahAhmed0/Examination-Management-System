@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
+import { Question } from './../question';
 
 @Component({
   selector: 'app-text-questions',
@@ -11,32 +14,59 @@ export class TextQuestionsComponent implements OnInit {
 
 
   form!: FormGroup;
-  @Output() onDelete = new EventEmitter<void>();
+
+  @Output() onDelete = new EventEmitter<Question>();
   @Output() onUP = new EventEmitter<void>();
   @Output() onDown = new EventEmitter<void>();
+  @Output() questionData = new EventEmitter<object>();
+  @Output() formValid = new EventEmitter<boolean>();
+
   @Input() indexComponent!:number;
+  @Input() editQuestion?:Question;
 
   questionTextValue:string='';
   answerTextValue:string='';
   commentValue:string='';
 
+  Answer?:any;
   isHidden:boolean=false;
 
 
-  questionType:string='Matching';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private dialog:MatDialog) {
 
   }
 
   ngOnInit(): void {
+    // add questions
     this.form = this.fb.group({
       questionText: ['', Validators.required],
       points: [0, Validators.required],
-      questionType: [this.questionType, Validators.required],
+      questionType: ['Matching', Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
-
     });
+
+    // edit Questions
+    if(this.editQuestion){
+      this.form = this.fb.group({
+        questionText: [this.editQuestion.questionText, Validators.required],
+        points: [this.editQuestion.points, Validators.required],
+        questionType: ['Matching', Validators.required],
+        questionAnswers: this.fb.array([this.createAnswer()])
+      });
+
+    //select Question answer
+    this.Answer = this.editQuestion.questionAnswers[0];
+    this.answers.at(0).patchValue({
+      answerText: this.Answer.answerText,
+      comment: this.Answer.comment});
+    }
+  this.form.valueChanges.subscribe(value =>{
+      this.questionData.emit(this.form.value);
+      this.formValid.emit(this.form.valid);
+  });
+
   }
   createAnswer(): FormGroup {
     return this.fb.group({
@@ -53,7 +83,7 @@ export class TextQuestionsComponent implements OnInit {
 
 
   onSubmit() {
-    
+
   }
   autoResize(textarea: any) {
     textarea.style.height = 'auto';
@@ -61,7 +91,17 @@ export class TextQuestionsComponent implements OnInit {
   }
   deleteQuestion(){
 
-    this.onDelete.emit();
+    const dialogRef = this.dialog.open(DialogeComponent, {
+      width: '400px',
+      height:'280px'
+      });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+
+        this.onDelete.emit(this.form.value);
+      }
+      });
     }
     getQuestionText(value:string){
       this.questionTextValue=value;

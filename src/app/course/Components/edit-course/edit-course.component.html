@@ -1,0 +1,80 @@
+<div class="contianer"  >
+
+  <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()" [routerLink]="['/courses']"><mat-icon>menu</mat-icon> All Courses</button>
+  <h1 class="add">Edit Course</h1>
+  <div class="form">
+
+
+  <form #courseform="ngForm" [formGroup]="newCourse" *ngIf="newCourse" (ngSubmit)="updateCourse()">
+
+  <mat-form-field appearance="fill" >
+
+      <mat-label>Coursename</mat-label>
+      <input matInput formControlName="name" minlength="3"  maxlength="20"  required>
+
+      <mat-error *ngIf="courseName?.hasError('required')">
+          Course Name is Required!
+      </mat-error>
+      <mat-error *ngIf="courseName?.hasError('minlength')">
+          Course Name should be at least 3 characters!
+      </mat-error>
+
+        <mat-error *ngIf="courseName?.hasError('maxlength')">
+          Course Name should be at max 20 characters!
+      </mat-error>
+
+
+  </mat-form-field>
+
+<br>
+<mat-form-field appearance="fill" >
+
+  <mat-label>Course Code</mat-label>
+  <input matInput formControlName="code" minlength="3" maxlength="20"  required>
+
+  <mat-error *ngIf="courseCode?.hasError('required')">
+      Course Code is Required!
+  </mat-error>
+  <mat-error *ngIf="courseCode?.hasError('minlength')">
+      Course Code should be at least 3 characters!
+  </mat-error>
+
+
+</mat-form-field>
+
+<br>
+<mat-form-field appearance="fill">
+  <mat-label>{{course.groupName}}</mat-label>
+  <mat-select formControlName="group" matinput >
+    <mat-option *ngFor="let group of theGroups" [value]='group'>{{group.name}}</mat-option>
+  </mat-select>
+  <mat-error *ngIf="groups?.hasError('required')">
+    you must choose group
+</mat-error>
+
+</mat-form-field>
+  <br>
+<mat-form-field appearance="fill">
+  <mat-label>Add Teacher</mat-label>
+  <mat-select [(value)]="selecteditem"formControlName="adminIds"  matinput  (selectionChange)="addItem()">
+    <mat-option *ngFor="let admin of admins" [value]="admin">{{ admin.firstName}} {{admin.lastName}}</mat-option>
+  </mat-select>
+
+  <mat-chip-list>
+    <mat-chip *ngFor="let item of items" [removable]="true" (removed)="removeItem(item)">
+      {{ item.firstName }} {{item.lastName}}
+      <mat-icon matChipRemove>cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+</mat-form-field>
+<br>
+
+
+
+
+
+
+  <button mat-raised-button [disabled]="courseform.invalid" class="submit" type="submit">Submit</button>
+  </form>
+  </div>
+  </div>

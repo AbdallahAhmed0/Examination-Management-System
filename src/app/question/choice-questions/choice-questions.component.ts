@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
+import { Question } from '../question';
 
 @Component({
   selector: 'app-choice-questions',
@@ -9,39 +12,78 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ChoiceQuestionsComponent implements OnInit {
 
+  form!: FormGroup;
+
   @Output() onDelete = new EventEmitter<void>();
   @Output() onUP = new EventEmitter<void>();
   @Output() onDown = new EventEmitter<void>();
+  @Output() questionData = new EventEmitter<object>();
+  @Output() formValid = new EventEmitter<boolean>();
+
   @Input() indexComponent!:number;
+  @Input() editQuestion?:Question;
 
   questionTextValue:string='';
   answerTextValue:string='';
   commentValue:string='';
 
+  Answer:any[]=[];
+
   isMultipleChoice: boolean = false;
   isHidden:boolean[]=[false];
 
-  form!: FormGroup;
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder,
+              private dialog:MatDialog) {
 
   }
 
   ngOnInit(): void {
+   // add questions
+  this.form = this.fb.group({
+    questionText: ['', Validators.required],
+    points: [0, Validators.required],
+    questionType: ['Multiple_choice', Validators.required],
+    questionAnswers: this.fb.array([this.createAnswer()])
+  });
+
+  // edit Questions
+  if(this.editQuestion){
     this.form = this.fb.group({
-      questionText: ['', Validators.required],
-      points: [0, Validators.required],
-      questionType: ['Multiple Choice', Validators.required],
+      questionText: [this.editQuestion?.questionText, Validators.required],
+      points: [this.editQuestion?.points, Validators.required],
+      questionType: [this.editQuestion?.questionType, Validators.required],
       questionAnswers: this.fb.array([this.createAnswer()])
     });
+
+
+
+  //select Question answer
+  this.Answer = this.editQuestion?.questionAnswers || [];
+  for (let i = 0; i < this.Answer.length; i++) {
+    const answer = this.Answer[i];
+    const answerGroup = this.createAnswer(answer.answerText, answer.correctAnswer, answer.comment);
+    this.answers.push(answerGroup);
+  }
+    //select Multible Answers by btn-toggle
+    if(this.editQuestion?.questionType === 'Multiple_Answers'){
+          this.btnToggle()
+    }
+  }
+  this.form.valueChanges.subscribe(value =>{
+    this.questionData.emit(this.form.value);
+    this.formValid.emit(this.form.valid);
+    console.log(this.form.valid)
+  });
+
   }
 
-  createAnswer(): FormGroup {
+  createAnswer(answerText: string = '', correctAnswer: boolean = false, comment: string = ''): FormGroup {
     return this.fb.group({
-      answerText: ['', Validators.required],
-      correctAnswer: [false],
-      comment:['']
+      answerText: [answerText, Validators.required],
+      correctAnswer: [correctAnswer],
+      comment: [comment]
     });
-
   }
 
   get answers(): FormArray {
@@ -92,8 +134,18 @@ export class ChoiceQuestionsComponent implements OnInit {
   }
 
   deleteQuestion(){
+    const dialogRef = this.dialog.open(DialogeComponent, {
+      width: '400px',
+      height:'280px'
+      });
 
-    this.onDelete.emit();
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+
+        this.onDelete.emit();
+      }
+      });
+
     }
 
     Up(){
@@ -106,14 +158,18 @@ export class ChoiceQuestionsComponent implements OnInit {
     btnToggle(){
       this.isMultipleChoice=!this.isMultipleChoice;
       if(this.isMultipleChoice){
-        this.form.get('questionType')?.setValue('Multiple Answers');
+        this.form.get('questionType')?.setValue('Multiple_Answers');
       }else{
-        this.form.get('questionType')?.setValue('Multiple Choice');
+        this.form.get('questionType')?.setValue('Multiple_choice');
       }
     }
     toggleInput(index:number) {
       this.isHidden[index] = !this.isHidden[index];
     }
+    get questionText() {
+      return this.form.get('questionText');
+    }
+
 
   }
 

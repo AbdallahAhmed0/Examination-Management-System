@@ -1,0 +1,103 @@
+.contianer{
+  height: 100%;
+  overflow: hidden;
+  background:lighten($color: #3cb5be, $amount: 10%)
+
+}
+p{
+  color:#3cb5be ;
+}
+mat-card{
+  width: 100%;
+}
+
+.exam-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.exam-header {
+  display: flex;
+  justify-content: center;
+  padding-right: 150px;
+  width: 100%;
+  margin-bottom: 20px;
+
+}
+
+.exam-name {
+  font-size: 24px;
+}
+
+.exam-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.exam-details-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.exam-details-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.mat-subheading-1{
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.form{
+  margin: 5% 10%;
+  border-radius: 10px;
+  width: 75%;
+  background: #FFFFFF;
+  height: 80%;
+  overflow:auto;
+}
+.wide-menu {
+  width: 500px; /* set the width to whatever value you need */
+  text-align: center; /* center the menu items horizontally */
+}
+
+.mat-menu-content {
+  padding: 16px 0; /* add some padding to the top and bottom of the menu */
+}
+.btn-question{
+margin: 20px;
+color: #f6f4f4;
+background: darken(#3cb5be, 8%);
+border-radius: 8px;
+}
+
+.btn-question:hover{
+  background: darken(#3cb5be, 20%);
+}
+::ng-deep .mat-menu-panel {
+  background: darken(#3cb5be, 8%);
+}
+::ng-deep .mat-menu-item {
+  color:#f6f4f4 ;
+}
+
+.submit{
+  display: block;
+    width: 60%;
+    height: 40px;
+    font-size: 18px;
+    margin: auto;
+    margin-bottom: 40px;
+    background: #3cb5be;
+    color: #ffffff;
+}
+.submit:hover{
+  background: darken(#3cb5be, 20%);
+}
+.submit:disabled{
+  background: darken(#ffffff, 5%);
+}
+
