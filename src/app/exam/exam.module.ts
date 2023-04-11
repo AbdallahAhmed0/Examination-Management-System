@@ -8,6 +8,7 @@ import { AllExamsComponent } from './Components/all-exams/all-exams.component';
 import { AddExamComponent } from './Components/add-exam/add-exam.component';
 import { EditExamComponent } from './Components/edit-exam/edit-exam.component';
 import { AttemptExamComponent } from './Components/attempt-exam/attempt-exam.component';
+import { RenderExamComponent } from './Components/render-exam/render-exam.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { AttemptExamComponent } from './Components/attempt-exam/attempt-exam.com
     AllExamsComponent,
     AddExamComponent,
     EditExamComponent,
-    AttemptExamComponent
+    AttemptExamComponent,
+    RenderExamComponent
   ],
   imports: [
     CommonModule,

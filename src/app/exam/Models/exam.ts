@@ -9,4 +9,17 @@ export interface Exam {
   successRate:number,
   status:boolean,
   course: Course
+
+}
+export interface Question {
+  id: number;
+  questionText: string;
+  points: number;
+  questionType: string;
+  questionAnswers: Answer[];
+}
+
+export interface Answer {
+  id: number;
+  answerText: string;
 }

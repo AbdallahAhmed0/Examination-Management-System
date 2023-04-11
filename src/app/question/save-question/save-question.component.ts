@@ -3,7 +3,7 @@ import { ExamService } from '../../exam/Services/exam.service';
 import { Exam } from './../../exam/Models/exam';
 import { Question } from './../question';
 import { QuestionService } from './../question.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-save-question',
@@ -11,18 +11,12 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./save-question.component.scss']
 })
 export class SaveQuestionComponent implements OnInit {
-
-
   consoleError: any;
   formVaild :boolean=false;
   selectedComponents:any[]=[];
-  sentArrayComponenet:any[]=[];
   index:number=1;
-  questionData!:object;
-
-  exam?:Exam;
   examId!: number;
-
+  exam?:Exam;
 
   questions:Question[]=[];
   constructor(private examService:ExamService,
@@ -32,23 +26,26 @@ export class SaveQuestionComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getExamInfo();
-  }
+    }
+
+
   getExamInfo() {
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
     this.examService.getExamById(this.examId).subscribe((data) => {
       this.exam = data;
+      // err => throwError(err || "an error happened while getting exam info")
     });
   }
 
 
   showChoiceQuestions() {
-    this.selectedComponents.push({id:this.index,name:'choice'});
+    this.selectedComponents.push({id:this.index,name:'Multiple_choice'});
     this.index++;
     this.formVaild=false;
   }
 
   showTextQuestions() {
-    this.selectedComponents.push({id:this.index,name:'text'});
+    this.selectedComponents.push({id:this.index,name:'Matching'});
     this.index++;
     this.formVaild=false;
   }
@@ -59,7 +56,7 @@ export class SaveQuestionComponent implements OnInit {
     this.formVaild=false;
   }
   showTrue_falseQuestions(){
-    this.selectedComponents.push({id:this.index,name:'true_false'});
+    this.selectedComponents.push({id:this.index,name:'True_False'});
     this.index++;
     this.formVaild=false;
 
@@ -98,7 +95,7 @@ export class SaveQuestionComponent implements OnInit {
         this.consoleError = err.message;
       },
     };
-    this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
+    this.questionService.saveQuestions(this.questions,2).subscribe(observer);
     console.log(this.questions)
   }
 
