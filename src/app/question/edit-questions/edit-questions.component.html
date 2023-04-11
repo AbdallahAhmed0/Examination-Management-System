@@ -49,7 +49,7 @@
     </app-choice-questions>
 
       <app-text-questions *ngIf="selectedComponent.name === 'Matching'"
-      (onDelete)="removeChild($event,selectedComponent)"
+      (onDelete)="removeChild(selectedComponent)"
       [indexComponent]="(i+1)"  (questionData)="addQuestion($event,selectedComponent.id)"
       [editQuestion]="selectedComponent.data">
 

@@ -53,7 +53,7 @@ export class ChoiceQuestionsComponent implements OnInit {
       questionText: [this.editQuestion?.questionText, Validators.required],
       points: [this.editQuestion?.points, Validators.required],
       questionType: [this.editQuestion?.questionType, Validators.required],
-      questionAnswers: this.fb.array([this.createAnswer()])
+      questionAnswers: this.fb.array([])
     });
 
 

@@ -99,7 +99,7 @@ export class TextQuestionsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
 
-        this.onDelete.emit(this.form.value);
+        this.onDelete.emit();
       }
       });
     }

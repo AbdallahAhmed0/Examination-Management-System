@@ -75,13 +75,13 @@ export class EditQuestionsComponent implements OnInit {
     this.formVaild=false;
 
   }
-  removeChild(question:Question,child: any) {
+  removeChild(child: any) {
+    if(this.questions[child.id-1]){
+      this.questionService.deleteQuestion(this.questions[child.id-1]);
+    }
 
-
-
-      this.selectedComponents.splice(child.id-1,1);
-      // this.questionService.deleteQuestion(question);
       this.questions.splice(child.id-1,1);
+      this.selectedComponents.splice(child.id-1,1);
       console.log(this.questions)
 
 }
@@ -121,6 +121,7 @@ export class EditQuestionsComponent implements OnInit {
       },
     };
     this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
+    console.log(this.questions)
   }
 
 }
