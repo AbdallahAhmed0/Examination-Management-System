@@ -85,18 +85,21 @@ export class ExamService {
     });
   }
 
-  // Attempt Exam
-  attemptExam(examId: number, userId: number) {
+attemptExam(examId: number, userId: number) {
     let body: object = {
       examId: examId,
       userId: userId,
     };
+    return this.httpClient.post(
+      `${environment.APPURL}/exam/attemptExam/${examId}/${userId}`,
+      JSON.stringify(body),
+      this.httpOption
+    );
+  }
+
+  renderExam(id: number): Observable<Exam> {
     return this.httpClient
-      .post(
-        `${environment.APPURL}/exam/attemptExam/${examId}/${userId}`,
-        JSON.stringify(body),
-        this.httpOption
-      )
+      .get<Exam>(`${environment.APPURL}/exam/renderExam/${id}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 }
