@@ -86,20 +86,20 @@ export class EditQuestionsComponent implements OnInit {
 
 }
 
-upChild(child: any) {
-    const index = this.selectedComponents.indexOf(child);
-    if (index >= 1) {
-      [this.selectedComponents[index],this.selectedComponents[index-1]]=[this.selectedComponents[index-1],this.selectedComponents[index]]
+// upChild(child: any) {
+//     const index = this.selectedComponents.indexOf(child);
+//     if (index >= 1) {
+//       [this.selectedComponents[index],this.selectedComponents[index-1]]=[this.selectedComponents[index-1],this.selectedComponents[index]]
 
-    }
-  }
+//     }
+//   }
 
-  downChild(child: any) {
-    const index = this.selectedComponents.indexOf(child);
-    if (index < this.selectedComponents.length-1) {
-      [this.selectedComponents[index],this.selectedComponents[index+1]]=[this.selectedComponents[index+1],this.selectedComponents[index]]
-    }
-  }
+//   downChild(child: any) {
+//     const index = this.selectedComponents.indexOf(child);
+//     if (index < this.selectedComponents.length-1) {
+//       [this.selectedComponents[index],this.selectedComponents[index+1]]=[this.selectedComponents[index+1],this.selectedComponents[index]]
+//     }
+//   }
 
   addQuestion(data:any,index:number){
     this.questions[index]=data;

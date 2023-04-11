@@ -15,8 +15,8 @@ export class ChoiceQuestionsComponent implements OnInit {
   form!: FormGroup;
 
   @Output() onDelete = new EventEmitter<void>();
-  @Output() onUP = new EventEmitter<void>();
-  @Output() onDown = new EventEmitter<void>();
+  // @Output() onUP = new EventEmitter<void>();
+  // @Output() onDown = new EventEmitter<void>();
   @Output() questionData = new EventEmitter<object>();
   @Output() formValid = new EventEmitter<boolean>();
 
@@ -148,13 +148,13 @@ export class ChoiceQuestionsComponent implements OnInit {
 
     }
 
-    Up(){
-      this.onUP.emit();
+    // Up(){
+    //   this.onUP.emit();
 
-    }
-    Down(){
-      this.onDown.emit();
-    }
+    // }
+    // Down(){
+    //   this.onDown.emit();
+    // }
     btnToggle(){
       this.isMultipleChoice=!this.isMultipleChoice;
       if(this.isMultipleChoice){

@@ -14,8 +14,8 @@ export class TrueFalseQuestionComponent implements OnInit {
   form!: FormGroup;
 
   @Output() onDelete = new EventEmitter<void>();
-  @Output() onUP = new EventEmitter<void>();
-  @Output() onDown = new EventEmitter<void>();
+  // @Output() onUP = new EventEmitter<void>();
+  // @Output() onDown = new EventEmitter<void>();
   @Output() questionData = new EventEmitter<object>();
   @Output() formValid = new EventEmitter<boolean>();
 
@@ -122,13 +122,13 @@ export class TrueFalseQuestionComponent implements OnInit {
       });
     }
 
-    Up(){
-      this.onUP.emit();
+    // Up(){
+    //   this.onUP.emit();
 
-    }
-    Down(){
-      this.onDown.emit();
-    }
+    // }
+    // Down(){
+    //   this.onDown.emit();
+    // }
 
     toggleInput(index:number) {
       this.isHidden[index] = !this.isHidden[index];

@@ -16,8 +16,8 @@ export class TextQuestionsComponent implements OnInit {
   form!: FormGroup;
 
   @Output() onDelete = new EventEmitter<Question>();
-  @Output() onUP = new EventEmitter<void>();
-  @Output() onDown = new EventEmitter<void>();
+  // @Output() onUP = new EventEmitter<void>();
+  // @Output() onDown = new EventEmitter<void>();
   @Output() questionData = new EventEmitter<object>();
   @Output() formValid = new EventEmitter<boolean>();
 
@@ -118,13 +118,13 @@ export class TextQuestionsComponent implements OnInit {
       this.answers.at(0).patchValue({ comment: this.commentValue });
 
     }
-    Up(){
-      this.onUP.emit();
+    // Up(){
+    //   this.onUP.emit();
 
-    }
-    Down(){
-      this.onDown.emit();
-    }
+    // }
+    // Down(){
+    //   this.onDown.emit();
+    // }
     toggleInput() {
       this.isHidden = !this.isHidden;
     }
