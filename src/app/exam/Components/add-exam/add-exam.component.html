@@ -9,7 +9,7 @@
 
   <mat-form-field appearance="fill" >
 
-      <mat-label>examName</mat-label>
+      <mat-label>Name</mat-label>
       <input matInput formControlName="examName" minlength="3" maxlength="20"  required>
 
       <mat-error *ngIf="examName?.hasError('required')">
@@ -48,7 +48,7 @@
     successRate is Required!
 </mat-error>
 
-</mat-form-field><br>
+</mat-form-field>
 <br>
 <mat-form-field appearance="fill">
   <mat-label>Select Course</mat-label>
