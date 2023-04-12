@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter,ChangeDetectorRef , Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
@@ -34,7 +34,8 @@ export class ChoiceQuestionsComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder,
-              private dialog:MatDialog) {
+              private dialog:MatDialog,
+              private cdr: ChangeDetectorRef) {
 
   }
 
@@ -59,23 +60,31 @@ export class ChoiceQuestionsComponent implements OnInit {
 
 
   //select Question answer
-  this.Answer = this.editQuestion?.questionAnswers || [];
-  for (let i = 0; i < this.Answer.length; i++) {
-    const answer = this.Answer[i];
-    const answerGroup = this.createAnswer(answer.answerText, answer.correctAnswer, answer.comment);
-    this.answers.push(answerGroup);
-  }
-    //select Multible Answers by btn-toggle
-    if(this.editQuestion?.questionType === 'Multiple_Answers'){
-          this.btnToggle()
+
+  // Change the checked value after a delay
+  setTimeout(() => {
+    this.Answer = this.editQuestion?.questionAnswers || [];
+    this.cdr.detectChanges();
+    for (let i = 0; i < this.Answer.length; i++) {
+      const answer = this.Answer[i];
+      const answerGroup = this.createAnswer(answer.answerText, answer.correctAnswer, answer.comment);
+      this.answers.push(answerGroup);
     }
+      //select Multible Answers by btn-toggle
+      if(this.editQuestion?.questionType === 'Multiple_Answers'){
+            this.btnToggle()
+      }
+
+  }, 200);
   }
+
   this.form.valueChanges.subscribe(value =>{
     this.questionData.emit(this.form.value);
     this.formValid.emit(this.form.valid);
   });
 
   }
+
 
   createAnswer(answerText: string = '', correctAnswer: boolean = false, comment: string = ''): FormGroup {
     return this.fb.group({
