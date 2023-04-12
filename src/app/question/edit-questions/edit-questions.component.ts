@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EditQuestionsComponent implements OnInit {
 
   consoleError: any;
-  formVaild :boolean=false;
+  formValid :boolean=false;
 
   selectedComponents:any[]=[];
   index:number=1;
@@ -55,24 +55,24 @@ export class EditQuestionsComponent implements OnInit {
   showChoiceQuestions() {
     this.selectedComponents.push({id:this.index,name:'Multiple_choice'});
     this.index++;
-    this.formVaild=false;
+    this.formValid=false;
   }
 
   showTextQuestions() {
     this.selectedComponents.push({id:this.index,name:'Matching'});
     this.index++;
-    this.formVaild=false;
+    this.formValid=false;
   }
 
   showTextEditor() {
     this.selectedComponents.push({id:this.index,name:'coding'});
     this.index++;
-    this.formVaild=false;
+    this.formValid=false;
   }
   showTrue_falseQuestions(){
     this.selectedComponents.push({id:this.index,name:'True_False'});
     this.index++;
-    this.formVaild=false;
+    this.formValid=false;
 
   }
   removeChild(child: any) {
@@ -82,7 +82,6 @@ export class EditQuestionsComponent implements OnInit {
 
       this.questions.splice(child.id-1,1);
       this.selectedComponents.splice(child.id-1,1);
-      console.log(this.questions)
 
 }
 
@@ -106,8 +105,7 @@ export class EditQuestionsComponent implements OnInit {
   }
 
   formIsValid(valid:boolean){
-  this.formVaild=valid;
-  console.log(this.formVaild)
+  this.formValid=valid;
   }
 
   submit(){
@@ -121,7 +119,6 @@ export class EditQuestionsComponent implements OnInit {
       },
     };
     this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
-    console.log(this.questions)
   }
 
 }

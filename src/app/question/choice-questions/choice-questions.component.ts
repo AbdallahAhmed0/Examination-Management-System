@@ -73,7 +73,6 @@ export class ChoiceQuestionsComponent implements OnInit {
   this.form.valueChanges.subscribe(value =>{
     this.questionData.emit(this.form.value);
     this.formValid.emit(this.form.valid);
-    console.log(this.form.valid)
   });
 
   }

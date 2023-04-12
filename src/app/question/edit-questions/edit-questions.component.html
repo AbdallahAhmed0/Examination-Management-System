@@ -42,21 +42,29 @@
     <ng-container *ngFor="let selectedComponent of selectedComponents; let i = index" >
 
       <app-choice-questions   *ngIf="selectedComponent.name === 'Multiple_Answers' || selectedComponent.name === 'Multiple_choice'"
-       [indexComponent]="(i+1)"
+      (onDelete)="removeChild(selectedComponent)"
+      [indexComponent]="(i+1)"
       (questionData)="addQuestion($event,i)"
+      (formValid)="formIsValid($event)"
       [editQuestion]="selectedComponent.data">
+
+
 
     </app-choice-questions>
 
       <app-text-questions *ngIf="selectedComponent.name === 'Matching'"
       (onDelete)="removeChild(selectedComponent)"
-      [indexComponent]="(i+1)"  (questionData)="addQuestion($event,selectedComponent.id)"
+      [indexComponent]="(i+1)"
+      (questionData)="addQuestion($event,i)"
+      (formValid)="formIsValid($event)"
       [editQuestion]="selectedComponent.data">
 
       </app-text-questions>
       <app-true-false-question *ngIf="selectedComponent.name === 'True_False'"
 
-      [indexComponent]="(i+1)"  (questionData)="addQuestion($event,i)"
+      (onDelete)="removeChild(selectedComponent)"
+      [indexComponent]="(i+1)"
+      (questionData)="addQuestion($event,i)"
       (formValid)="formIsValid($event)"
       [editQuestion]="selectedComponent.data">
 
@@ -74,7 +82,7 @@
       <button mat-menu-item (click)="showTextEditor()">Coding</button>
     </mat-menu>
 
-    <button *ngIf="questions.length" mat-raised-button  (click)="submit()" class="submit" type="submit">Save</button>
+    <button *ngIf="questions.length" mat-raised-button [disabled]="!formValid" (click)="submit()" class="submit" type="submit">Save</button>
   </div>
 </div>
 
