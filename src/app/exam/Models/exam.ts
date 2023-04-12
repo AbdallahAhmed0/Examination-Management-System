@@ -8,6 +8,8 @@ export interface Exam {
   endTime: Date,
   successRate:number,
   status:boolean,
+  questionsPerPage: string,
+  showResult: boolean,
   course: Course
 
 }
