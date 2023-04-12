@@ -62,7 +62,7 @@ export class ChoiceQuestionsComponent implements OnInit {
   //select Question answer
 
   // Change the checked value after a delay
-  setTimeout(() => {
+  // setTimeout(() => {
     this.Answer = this.editQuestion?.questionAnswers || [];
     this.cdr.detectChanges();
     for (let i = 0; i < this.Answer.length; i++) {
@@ -75,7 +75,7 @@ export class ChoiceQuestionsComponent implements OnInit {
             this.btnToggle()
       }
 
-  }, 200);
+  // }, 1000);
   }
 
   this.form.valueChanges.subscribe(value =>{

@@ -82,6 +82,8 @@ export class EditQuestionsComponent implements OnInit {
 
       this.questions.splice(child.id-1,1);
       this.selectedComponents.splice(child.id-1,1);
+      console.log(this.questions)
+      this.formIsValid;
 
 }
 
