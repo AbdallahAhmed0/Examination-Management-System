@@ -78,7 +78,9 @@ export class AddExamComponent implements OnInit {
       this.theCourses=data
     })
   }
+  btnToggle(){
 
+  }
   transformDate(time:any){
     let transformedDate
     console.log(time);
@@ -122,5 +124,7 @@ export class AddExamComponent implements OnInit {
   get questionsPerPage(){
     return this.newExam.get('questionsPerPage')
   }
-
+get showResult(){
+    return this.newExam.get('showResult')
+  }
 }
