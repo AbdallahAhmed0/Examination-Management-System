@@ -22,7 +22,7 @@ import { StudentsModule } from './students/students.module';
     SidebarComponent
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
