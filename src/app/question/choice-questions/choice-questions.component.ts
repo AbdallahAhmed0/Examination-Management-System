@@ -71,7 +71,7 @@ export class ChoiceQuestionsComponent implements OnInit {
     }
       //select Multible Answers by btn-toggle
       if(this.editQuestion?.questionType === 'Multiple_Answers'){
-            this.btnToggle()
+        this.isMultipleChoice=true;
       }
 
   }
