@@ -49,6 +49,7 @@ export class TrueFalseQuestionComponent implements OnInit {
     // edit Questions
     if(this.editQuestion){
       this.form = this.fb.group({
+        id:[this.editQuestion.id],
         questionText: [this.editQuestion.questionText, Validators.required],
         points: [this.editQuestion.points, Validators.required],
         questionType: ['True_False', Validators.required],
@@ -58,6 +59,7 @@ export class TrueFalseQuestionComponent implements OnInit {
     //select Question answer
     this.Answer = this.editQuestion.questionAnswers[0];
     this.answers.at(0).patchValue({
+      id:this.Answer.id,
       answerText: this.Answer.answerText,
       comment: this.Answer.comment});
     }
@@ -70,6 +72,7 @@ export class TrueFalseQuestionComponent implements OnInit {
 
   createAnswer(): FormGroup {
     return this.fb.group({
+      id:[],
       answerText: ['', Validators.required],
       correctAnswer: [true],
       comment:['']

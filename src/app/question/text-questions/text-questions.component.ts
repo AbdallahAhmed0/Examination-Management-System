@@ -50,6 +50,7 @@ export class TextQuestionsComponent implements OnInit {
     // edit Questions
     if(this.editQuestion){
       this.form = this.fb.group({
+        id:[this.editQuestion.id],
         questionText: [this.editQuestion.questionText, Validators.required],
         points: [this.editQuestion.points, Validators.required],
         questionType: ['Matching', Validators.required],

@@ -1,4 +1,4 @@
-import { Component, EventEmitter,ChangeDetectorRef , Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter , Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
@@ -21,7 +21,7 @@ export class ChoiceQuestionsComponent implements OnInit {
   @Output() formValid = new EventEmitter<boolean>();
 
   @Input() indexComponent!:number;
-  @Input() editQuestion?:Question|any;
+  @Input() editQuestion?:Question;
 
   question?:Question;
 
@@ -36,8 +36,7 @@ export class ChoiceQuestionsComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder,
-              private dialog:MatDialog,
-              private cdr: ChangeDetectorRef) {
+              private dialog:MatDialog) {
 
   }
 
@@ -53,6 +52,7 @@ export class ChoiceQuestionsComponent implements OnInit {
   // edit Questions
   if(this.editQuestion){
     this.form = this.fb.group({
+      id:[this.editQuestion.id],
       questionText: [this.editQuestion?.questionText, Validators.required],
       points: [this.editQuestion?.points, Validators.required],
       questionType: [this.editQuestion?.questionType, Validators.required],
@@ -64,10 +64,9 @@ export class ChoiceQuestionsComponent implements OnInit {
   //select Question answer
 
     this.Answer = this.editQuestion?.questionAnswers || [];
-    this.cdr.detectChanges();
     for (let i = 0; i < this.Answer.length; i++) {
       const answer = this.Answer[i];
-      const answerGroup = this.createAnswer(answer.answerText, answer.correctAnswer, answer.comment);
+      const answerGroup = this.createAnswer(answer.id, answer.answerText, answer.correctAnswer, answer.comment);
       this.answers.push(answerGroup);
     }
       //select Multible Answers by btn-toggle
@@ -78,10 +77,8 @@ export class ChoiceQuestionsComponent implements OnInit {
   }
 
   this.form.valueChanges.subscribe(value =>{
-    const id = this.editQuestion?.id;
-    this.editQuestion=this.form.value;
-    this.editQuestion.id=id;
-    this.questionData.emit(this.editQuestion);
+
+    this.questionData.emit(this.form.value);
     this.formValid.emit(this.form.valid);
   });
 
@@ -89,8 +86,9 @@ export class ChoiceQuestionsComponent implements OnInit {
 
 
 
-  createAnswer(answerText: string = '', correctAnswer: boolean = false, comment: string = ''): FormGroup {
+  createAnswer(id:any = '',answerText: string = '', correctAnswer: boolean = false, comment: string = ''): FormGroup {
     return this.fb.group({
+      id:[id],
       answerText: [answerText, Validators.required],
       correctAnswer: [correctAnswer],
       comment: [comment]

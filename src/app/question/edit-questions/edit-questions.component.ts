@@ -32,7 +32,7 @@ export class EditQuestionsComponent implements OnInit {
   // get Questions of Exam
     this.questionService.getQuestions(this.examId).subscribe(data => {
     this.questions=data;
-
+    this.formValid=true;
   // select questions in selected Components
     this.questions.forEach(question => {
 
@@ -82,11 +82,6 @@ export class EditQuestionsComponent implements OnInit {
 
       this.questions.splice(child.id-1,1);
       this.selectedComponents.splice(child.id-1,1);
-      console.log(this.questions)
-      this.questionService.getQuestions(this.examId).subscribe(data => {
-        console.log(data,'data of server')
-      });
-      this.formIsValid;
 
 }
 
@@ -124,10 +119,7 @@ export class EditQuestionsComponent implements OnInit {
       },
     };
     this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
-    console.log(this.questions)
-      this.questionService.getQuestions(this.examId).subscribe(data => {
-        console.log(data,'data of server')
-      });
+
   }
 
 }
