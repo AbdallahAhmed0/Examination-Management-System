@@ -21,7 +21,9 @@ export class ChoiceQuestionsComponent implements OnInit {
   @Output() formValid = new EventEmitter<boolean>();
 
   @Input() indexComponent!:number;
-  @Input() editQuestion?:Question;
+  @Input() editQuestion?:Question|any;
+
+  question?:Question;
 
   questionTextValue:string='';
   answerTextValue:string='';
@@ -61,8 +63,6 @@ export class ChoiceQuestionsComponent implements OnInit {
 
   //select Question answer
 
-  // Change the checked value after a delay
-  // setTimeout(() => {
     this.Answer = this.editQuestion?.questionAnswers || [];
     this.cdr.detectChanges();
     for (let i = 0; i < this.Answer.length; i++) {
@@ -75,15 +75,18 @@ export class ChoiceQuestionsComponent implements OnInit {
             this.btnToggle()
       }
 
-  // }, 1000);
   }
 
   this.form.valueChanges.subscribe(value =>{
-    this.questionData.emit(this.form.value);
+    const id = this.editQuestion?.id;
+    this.editQuestion=this.form.value;
+    this.editQuestion.id=id;
+    this.questionData.emit(this.editQuestion);
     this.formValid.emit(this.form.valid);
   });
 
   }
+
 
 
   createAnswer(answerText: string = '', correctAnswer: boolean = false, comment: string = ''): FormGroup {
