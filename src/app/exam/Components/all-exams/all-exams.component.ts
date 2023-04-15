@@ -27,7 +27,7 @@ export class AllExamsComponent implements OnInit {
     'course',
     'startTime',
     'endTime',
-    'status',
+    'state',
     'duration',
     'successRate',
     'Actions'
@@ -68,7 +68,7 @@ export class AllExamsComponent implements OnInit {
           duration:
             data[Math.round(Math.random() * (data.length - 1))].duration,
             course: data[Math.round(Math.random() * (data.length - 1))].course,
-            status: data[Math.round(Math.random() * (data.length - 1))].status,
+            state: data[Math.round(Math.random() * (data.length - 1))].state,
           startTime:
             data[Math.round(Math.random() * (data.length - 1))].startTime,
           EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,

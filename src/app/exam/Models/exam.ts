@@ -7,7 +7,7 @@ export interface Exam {
   startTime: Date,
   endTime: Date,
   successRate:number,
-  status:boolean,
+  state:boolean,
   questionsPerPage: string,
   showResult: boolean,
   course: Course

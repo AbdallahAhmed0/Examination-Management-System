@@ -73,12 +73,12 @@
       </ng-container>
 
       <!-- status -->
-      <ng-container matColumnDef="status">
+      <ng-container matColumnDef="state">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
 
         <ng-container *matCellDef="let row">
-           <td mat-cell *ngIf="row.status"><span class="active">Active</span> </td>
-           <td mat-cell *ngIf="!row.status"><span class="Inactive">Inactive</span> </td>
+           <td mat-cell *ngIf="row.state"><span class="active">Active</span> </td>
+           <td mat-cell *ngIf="!row.state"><span class="Inactive">Inactive</span> </td>
         </ng-container>
       </ng-container>
 
