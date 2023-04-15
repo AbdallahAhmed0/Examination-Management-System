@@ -18,9 +18,11 @@ export class EditQuestionsComponent implements OnInit {
   selectedComponents:any[]=[];
   index:number=1;
 
+  options:any[]=[];
   exam?:Exam;
   questions:Question[]=[];
   examId!:number;
+
   constructor(private examService:ExamService,
               private questionService:QuestionService,
               private router:Router,
@@ -84,6 +86,9 @@ export class EditQuestionsComponent implements OnInit {
       this.selectedComponents.splice(child.id-1,1);
 
 }
+removeOptions(option: any){
+this.options.push(option);
+}
 
 // upChild(child: any) {
 //     const index = this.selectedComponents.indexOf(child);
@@ -109,6 +114,9 @@ export class EditQuestionsComponent implements OnInit {
   }
 
   submit(){
+    if(this.options.length){
+        this.questionService.deleteOptions(this.options);
+    }
     const observer = {
       next: (Question: Question[]) => {
         this.router.navigateByUrl('/exams');

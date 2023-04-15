@@ -56,6 +56,13 @@ export class QuestionService {
     .subscribe((data) => {});
   }
 
+  deleteOptions(options:any[]){
+    return this.httpClient
+    .delete(`${environment.APPURL}/exam/deleteQuestionAnswer`, { body: options })
+    .pipe(retry(2), catchError(this.handleError))
+    .subscribe((data) => {});
+  }
+
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {
       duration: 3000,

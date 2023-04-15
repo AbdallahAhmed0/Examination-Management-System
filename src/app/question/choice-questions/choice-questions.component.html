@@ -34,7 +34,7 @@
               <a mat-icon-button  title="message" (click)="toggleInput(i)">
                 <mat-icon class="message">message</mat-icon>
               </a>
-            <button mat-icon-button (click)="removeAnswer(i)" *ngIf="answers.length > 1">
+            <button mat-icon-button (click)="removeAnswer(i,5)" *ngIf="answers.length > 1">
               <mat-icon class="delete-icon">delete</mat-icon>
             </button>
 

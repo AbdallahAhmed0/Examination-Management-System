@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
 import { Question } from '../question';
+import { Answer } from 'src/app/exam/Models/exam';
 
 @Component({
   selector: 'app-choice-questions',
@@ -103,8 +104,9 @@ export class ChoiceQuestionsComponent implements OnInit {
     this.answers.push(this.createAnswer());
   }
 
-  removeAnswer(i: number) {
+  removeAnswer(i: number,Answer:any='') {
     this.answers.removeAt(i);
+
   }
   onRadioChange(event:any){
 
