@@ -61,6 +61,7 @@ export class QuestionService {
     .delete(`${environment.APPURL}/exam/deleteQuestionAnswer`, { body: options })
     .pipe(retry(2), catchError(this.handleError))
     .subscribe((data) => {});
+    
   }
 
   openSnackBar(message: string) {
