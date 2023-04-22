@@ -33,8 +33,8 @@ export class EditQuestionsComponent implements OnInit {
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
   // get Questions of Exam
     this.questionService.getQuestions(this.examId).subscribe(data => {
-    this.questions=data;
-    this.formValid=true;
+    this.questions=data,
+    this.formValid=true
   // select questions in selected Components
     this.questions.forEach(question => {
 
