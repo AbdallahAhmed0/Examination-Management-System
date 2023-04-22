@@ -1,0 +1,38 @@
+// Variables
+$answers-color: rgba(0, 0, 0, 0.6);
+
+.container {
+  width: 80%;
+}
+.question {
+  background-color: #fff;
+  padding: 1.3rem 1rem;
+  margin-top: 2rem;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.question {
+  &__body {
+    font-size: 1.3rem;
+    margin-bottom: 1.3rem;
+  }
+
+  &__answers {
+    &--answer {
+      display: block;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      border-radius: 0.2rem;
+      &.correct--answer {
+        background-color: rgba(0, 128, 0, 0.2);
+      }
+      &.wrong--answer {
+        background-color: rgba(255, 0, 0, 0.2);
+      }
+    }
+  }
+}
+::ng-deep .mat-radio-button.mat-accent[disabled] .mat-radio-label-content {
+  color: $answers-color;
+  font-weight: 500;
+}
