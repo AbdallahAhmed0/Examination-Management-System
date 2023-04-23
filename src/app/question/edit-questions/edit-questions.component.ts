@@ -41,7 +41,6 @@ export class EditQuestionsComponent implements OnInit {
       this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
       this.index++;
       });
-
     });
 
   // get Data of Exam

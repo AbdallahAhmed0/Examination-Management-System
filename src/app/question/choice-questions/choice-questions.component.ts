@@ -3,7 +3,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
 import { Question } from '../question';
-import { Answer } from 'src/app/exam/Models/exam';
 
 @Component({
   selector: 'app-choice-questions',
@@ -16,6 +15,7 @@ export class ChoiceQuestionsComponent implements OnInit {
   form!: FormGroup;
 
   @Output() onDelete = new EventEmitter<void>();
+  @Output() deleteOptions = new EventEmitter<any>();
   // @Output() onUP = new EventEmitter<void>();
   // @Output() onDown = new EventEmitter<void>();
   @Output() questionData = new EventEmitter<object>();
@@ -53,7 +53,7 @@ export class ChoiceQuestionsComponent implements OnInit {
   // edit Questions
   if(this.editQuestion){
     this.form = this.fb.group({
-      id:[this.editQuestion.id],
+      id:[this.editQuestion?.id],
       questionText: [this.editQuestion?.questionText, Validators.required],
       points: [this.editQuestion?.points, Validators.required],
       questionType: [this.editQuestion?.questionType, Validators.required],
@@ -104,9 +104,9 @@ export class ChoiceQuestionsComponent implements OnInit {
     this.answers.push(this.createAnswer());
   }
 
-  removeAnswer(i: number,Answer:any='') {
+  removeAnswer(i: number) {
+    this.deleteOptions.emit(this.answers.at(i).value);
     this.answers.removeAt(i);
-
   }
   onRadioChange(event:any){
 

@@ -24,7 +24,7 @@
                 <mat-checkbox class="check" formControlName="correctAnswer"></mat-checkbox>
               </ng-container>
               <ng-template #singleAnswer >
-                <mat-radio-button class="radio"  [checked]="(Answer[i]?.correctAnswer)"  (change)="onRadioChange($event)"[value]="i"></mat-radio-button>
+                <mat-radio-button class="radio" [checked]="(Answer[i]?.correctAnswer)"  (change)="onRadioChange($event)"[value]="i"></mat-radio-button>
               </ng-template>
 
               <app-text-editor class="option" (editorValue)="getAnswerText($event,i)"
@@ -34,7 +34,7 @@
               <a mat-icon-button  title="message" (click)="toggleInput(i)">
                 <mat-icon class="message">message</mat-icon>
               </a>
-            <button mat-icon-button (click)="removeAnswer(i,5)" *ngIf="answers.length > 1">
+            <button mat-icon-button (click)="removeAnswer(i)" *ngIf="answers.length > 1">
               <mat-icon class="delete-icon">delete</mat-icon>
             </button>
 
