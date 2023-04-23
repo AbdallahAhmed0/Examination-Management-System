@@ -2,64 +2,30 @@
   <div class="answers__container">
 
     <!-- Question Block -->
-    <div class="question question__container">
+    <div *ngFor="let question of questions" class="question question__container">
       <p class="question__body">
-        What is DOM and how can we use it ?
+        {{question.questionText}}
       </p>
       <div class="question__answers--container">
-        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
-          <mat-radio-button class="example-radio-button question__answers--answer" value="ans1" disabled="true">answer
-            1</mat-radio-button>
-          <mat-radio-button class="example-radio-button question__answers--answer wrong--answer" value="ans2"
-            disabled="true" checked="true">answer
-            2</mat-radio-button>
-          <mat-radio-button class="example-radio-button question__answers--answer " value="ans3" disabled="true">answer
-            3</mat-radio-button>
-          <mat-radio-button class="example-radio-button question__answers--answer correct--answer " value="ans4"
-            disabled="true">answer
-            4</mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-    <div class="question question__container">
-      <p class="question__body">
-        What is DOM and how can we use it ?
-      </p>
-      <div class="question__answers--container">
-        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
-          <mat-radio-button class="example-radio-button question__answers--answer" value="ans1" disabled="true">answer
-            1</mat-radio-button>
-          <mat-radio-button class="example-radio-button question__answers--answer wrong--answer" value="ans2"
-            disabled="true" checked="true">answer
-            2</mat-radio-button>
-          <mat-radio-button class="example-radio-button question__answers--answer " value="ans3" disabled="true">answer
-            3</mat-radio-button>
-          <mat-radio-button class="example-radio-button question__answers--answer correct--answer " value="ans4"
-            disabled="true">answer
-            4</mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-    <div class="question question__container">
-      <p class="question__body">
-        What is DOM and how can we use it ?
-      </p>
-      <div class="question__answers--container">
-        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
-          <mat-radio-button class="example-radio-button question__answers--answer" value="ans1" disabled="true">answer
-            1</mat-radio-button>
-          <mat-radio-button class="example-radio-button question__answers--answer wrong--answer" value="ans2"
-            disabled="true" checked="true">answer
-            2</mat-radio-button>
-          <mat-radio-button class="example-radio-button question__answers--answer " value="ans3" disabled="true">answer
-            3</mat-radio-button>
-          <mat-radio-button class="example-radio-button question__answers--answer correct--answer " value="ans4"
-            disabled="true">answer
-            4</mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
 
+        <!-- =========== IF Multiple Choice =========== -->
+        <ng-container *ngIf="question.questionType=='Multiple_choice'">
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+            <mat-radio-button *ngFor="let ans of question.questionAnswers" [class.correct--answer]="ans.correctAnswer"
+              class="example-radio-button question__answers--answer" value="ans1" disabled="true">
+              {{ans.answerText}}</mat-radio-button>
+          </mat-radio-group>
+        </ng-container>
+
+        <!-- =========== IF Multiple Answers =========== -->
+        <ng-container *ngIf="question.questionType=='Multiple_Answers'">
+          <mat-checkbox *ngFor="let ans of question.questionAnswers" [class.correct--answer]="ans.correctAnswer"
+            class="example-radio-button question__answers--answer" value="ans1" disabled="true">
+            {{ans.answerText}}</mat-checkbox>
+        </ng-container>
+
+      </div>
+    </div>
 
   </div>
 </section>

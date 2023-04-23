@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { tstarr } from './tst-data';
 @Component({
   selector: 'app-exam-answers',
   templateUrl: './exam-answers.component.html',
@@ -9,4 +9,5 @@ export class ExamAnswersComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+  questions = tstarr;
 }
