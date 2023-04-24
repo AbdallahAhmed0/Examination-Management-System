@@ -1,1 +1,19 @@
-<p>import-questions works!</p>
+<div class="contianer" >
+
+  <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()"><mat-icon>menu</mat-icon> All Exams</button>
+<div class="form">
+  <p class="import">Import Questions</p>
+
+  <form   (ngSubmit)="importAdmin()" >
+
+    <mat-label>Select Excel File</mat-label>
+
+      <input id="uploadBtn" type="file" #inp (change)="handleImport($event)" name="uploadFile" required>
+
+    <button mat-raised-button [disabled]="!inp.value" class="submit" type="submit">Submit</button>
+
+  </form>
+
+</div>
+</div>
+
