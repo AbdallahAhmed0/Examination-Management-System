@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Question } from 'src/app/exam/Models/exam';
 import { read, utils } from 'xlsx';
 import * as XLSX from 'xlsx';
 
@@ -11,7 +12,8 @@ import * as XLSX from 'xlsx';
 })
 export class ImportQuestionsComponent implements OnInit {
 
-  questions!: any[];
+  questions: any[]=[];
+  data:any[]=[];
 
   constructor(private router: Router) { }
 
@@ -33,7 +35,7 @@ export class ImportQuestionsComponent implements OnInit {
 
         if (sheets.length) {
           const rows: any = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-          this.questions = rows;
+          this.data = rows;
         }
       };
       reader.readAsArrayBuffer(file);
@@ -41,18 +43,58 @@ export class ImportQuestionsComponent implements OnInit {
   }
 
   importQuestions() {
-    // this.admins.map((admin) => {
-    //   if (typeof admin.roles === 'string') { // check if roles is a string
-    //     const rolesArray: any[] = admin.roles.split(',');
-    //     const roles = rolesArray.map((role) => ({ role }));
-    //     admin.roles = roles;
-    //   }
-    // });
+    console.log(this.data)
+    for (let i = 0; i < this.data.length; i++) {
+      const question = this.data[i];
+      let questionAnswer=[];
 
+      // select options in question Answer
+      for (let j = 1; j <= 10; j++) {
+        const optionName = `option${j}`;
+        if (question[optionName] && question[optionName] !== '') {
+          questionAnswer.push({
+            answerText:question[optionName],
+            correctAnswer:false,
+            comment:''
+        });
+        }
+      }
 
+      //select correct Answer
 
-}
-exportData(){
+      // check if correctAnswer is a Multiple_Answers or Multiple_choice
+      if ( question.questionType == 'Multiple_choice'||question.questionType == 'Multiple_Answers' ) {
+        const correctAnswer: any[] =question.correctAnswer.split(',');
+
+        for(let answer of correctAnswer){
+          answer=Number(answer);
+          questionAnswer[answer].correctAnswer= question.correctAnswer;
+          questionAnswer[answer].comment= question.comment;
+
+        }
+
+      }
+
+      // check if correctAnswer is a Matching
+      else if ( question.questionType == 'Matching' ) {
+
+          questionAnswer[0].correctAnswer= question.correctAnswer;
+          questionAnswer[0].comment= question.comment;
+
+        }
+        
+    const newQuestion = {
+        questionText: question.questionText,
+        points: question.points,
+        questionType: question.questionType,
+        questionAnswers: [...questionAnswer],
+      };
+      this.questions.push(newQuestion);
+    }
+    console.log(this.questions)
+
+  }
+    exportData(){
   const headings = [
     'questionType',
     'questionText',
