@@ -1,14 +1,12 @@
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChoiceQuestionsComponent } from './choice-questions/choice-questions.component';
 import { SaveQuestionComponent } from './save-question/save-question.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
-import { TextQuestionsComponent } from './text-questions/text-questions.component';
+import { ImportQuestionsComponent } from './import-questions/import-questions.component';
 
 const routes: Routes = [
   {path:'',component:SaveQuestionComponent},
-  {path:'choice',component:ChoiceQuestionsComponent},
-  {path:'text',component:TextQuestionsComponent},
+  {path:'import',component:ImportQuestionsComponent},
   {path:'editor',component:TextEditorComponent}
 ];
 

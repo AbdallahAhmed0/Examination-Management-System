@@ -128,5 +128,8 @@ this.options.push(option);
     this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
 
   }
+  importData(id:any){
+    this.router.navigate([`save/${id}/import`]);
+  }
 
 }
