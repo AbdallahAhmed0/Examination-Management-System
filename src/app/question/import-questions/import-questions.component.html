@@ -1,10 +1,10 @@
 <div class="contianer" >
-
   <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()"><mat-icon>menu</mat-icon> All Exams</button>
+  <button mat-button class="btn-add" (click)="exportData()" style="color:#007bff;" ><mat-icon>exit_to_app</mat-icon>Download Sample</button>
 <div class="form">
   <p class="import">Import Questions</p>
 
-  <form   (ngSubmit)="importAdmin()" >
+  <form   (ngSubmit)="importQuestions()" >
 
     <mat-label>Select Excel File</mat-label>
 
