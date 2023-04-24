@@ -62,26 +62,27 @@ export class ImportQuestionsComponent implements OnInit {
 
       //select correct Answer
 
-      // check if correctAnswer is a Multiple_Answers or Multiple_choice
-      if ( question.questionType == 'Multiple_choice'||question.questionType == 'Multiple_Answers' ) {
+      // check if correctAnswer is a Matching
+      if ( question.questionType == 'Matching' ) {
+
+        questionAnswer[0].correctAnswer= question.correctAnswer;
+        questionAnswer[0].comment= question.comment;
+
+      }
+
+      // check if correctAnswer is a Multiple_Answers or Multiple_choice or True_false
+    else {
         const correctAnswer: any[] =question.correctAnswer.split(',');
 
         for(let answer of correctAnswer){
           answer=Number(answer);
-          questionAnswer[answer].correctAnswer= question.correctAnswer;
-          questionAnswer[answer].comment= question.comment;
+          questionAnswer[answer-1].correctAnswer=true;
+          questionAnswer[answer-1].comment= question.comment;
 
         }
 
       }
 
-      // check if correctAnswer is a Matching
-      else if ( question.questionType == 'Matching' ) {
-
-          questionAnswer[0].correctAnswer= question.correctAnswer;
-          questionAnswer[0].comment= question.comment;
-
-        }
 
     const newQuestion = {
         questionText: question.questionText,
