@@ -1,7 +1,8 @@
 .contianer{
-  background: #3cb5be;
   height: 100%;
   overflow: hidden;
+  background:lighten($color: #3cb5be, $amount: 10%)
+
 }
 p{
   color:#3cb5be ;
@@ -9,6 +10,7 @@ p{
 mat-card{
   width: 100%;
 }
+
 .exam-container {
   display: flex;
   flex-direction: column;
@@ -21,6 +23,7 @@ mat-card{
   padding-right: 150px;
   width: 100%;
   margin-bottom: 20px;
+
 }
 
 .exam-name {

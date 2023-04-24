@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TextQuestionsComponent } from './text-questions/text-questions.component'
 
-import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
 import { CodeQuestionComponent } from './code-question/code-question.component';
 import { TrueFalseQuestionComponent } from './true-false-question/true-false-question.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
@@ -23,7 +22,6 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     ChoiceQuestionsComponent,
     TextEditorComponent,
     TextQuestionsComponent,
-    EditQuestionsComponent,
     CodeQuestionComponent,
     TrueFalseQuestionComponent
   ],
