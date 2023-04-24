@@ -14,6 +14,7 @@ import { TextQuestionsComponent } from './text-questions/text-questions.componen
 import { CodeQuestionComponent } from './code-question/code-question.component';
 import { TrueFalseQuestionComponent } from './true-false-question/true-false-question.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { ImportQuestionsComponent } from './import-questions/import-questions.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     TextEditorComponent,
     TextQuestionsComponent,
     CodeQuestionComponent,
-    TrueFalseQuestionComponent
+    TrueFalseQuestionComponent,
+    ImportQuestionsComponent,
   ],
   imports: [
     CommonModule,
