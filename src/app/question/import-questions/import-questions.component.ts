@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Question } from 'src/app/exam/Models/exam';
 import { read, utils } from 'xlsx';
@@ -15,9 +15,14 @@ export class ImportQuestionsComponent implements OnInit {
   questions: any[]=[];
   data:any[]=[];
 
-  constructor(private router: Router) { }
+  examId!:number;
+
+  constructor(private router: Router,
+              private _activateRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.examId = Number(this._activateRoute.snapshot.paramMap.get('id')); // Get the ID from the route parameter
+
   }
 
   goback() {
@@ -43,7 +48,7 @@ export class ImportQuestionsComponent implements OnInit {
   }
 
   importQuestions() {
-    console.log(this.data)
+
     for (let i = 0; i < this.data.length; i++) {
       const question = this.data[i];
       let questionAnswer=[];
@@ -92,7 +97,7 @@ export class ImportQuestionsComponent implements OnInit {
       };
       this.questions.push(newQuestion);
     }
-    console.log(this.questions)
+    this.router.navigate(['save',this.examId], { state: { data: this.questions } });
 
   }
     exportData(){

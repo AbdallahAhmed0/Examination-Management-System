@@ -23,6 +23,8 @@ export class SaveQuestionComponent implements OnInit {
   questions:Question[]=[];
   examId!:number;
 
+  importQuestions!:Question[];
+
   constructor(private examService:ExamService,
               private questionService:QuestionService,
               private router:Router,
@@ -31,6 +33,9 @@ export class SaveQuestionComponent implements OnInit {
   ngOnInit(): void {
 
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+
+
+
   // get Questions of Exam
     this.questionService.getQuestions(this.examId).subscribe(data => {
     this.questions=data,
@@ -42,6 +47,19 @@ export class SaveQuestionComponent implements OnInit {
       this.index++;
       });
     });
+
+    // Get the array parameter from the state object
+    this.importQuestions = history.state.data;
+    if(this.importQuestions){
+      this.importQuestions.forEach(question => {
+
+        this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
+        this.index++;
+        this.questions.push(question);
+        });
+console.log(this.questions)
+
+    }
 
   // get Data of Exam
   this.examService.getExamById(this.examId).subscribe((data) => {
