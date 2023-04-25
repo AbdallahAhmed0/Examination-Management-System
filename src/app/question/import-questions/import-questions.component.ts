@@ -116,7 +116,7 @@ const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([
 ['Matching','What is your name?',2,'My name is Ahmed','','','','My name is Ahmed','If need comment for this Answer'],
 ['Multiple_choice','Which programming language is used for developing Android apps?',5,'Objective-C','Java',' C++','Swift','2','If need comment for this Answer'],
 ['Multiple_Answers','Which programming language is used for developing Android apps?',5,'Objective-C','Java','flutter','Swift','2,3','If need comment for this Answer'],
-['True_False','HTML is a programming language.',4,'True','False','','','2','If need comment for this Answer']
+['True_False','HTML is a programming language.',4,'true','false','','','2','If need comment for this Answer']
 ]);
 // add header row
 XLSX.utils.sheet_add_aoa(ws, [headings], { origin: 'A1' });
