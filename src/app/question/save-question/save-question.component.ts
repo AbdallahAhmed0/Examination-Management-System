@@ -146,6 +146,7 @@ this.options.push(option);
       },
     };
     this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
+    console.log(this.questions)
 
   }
   importData(id:any){
