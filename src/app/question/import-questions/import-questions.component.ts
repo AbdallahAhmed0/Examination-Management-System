@@ -53,30 +53,37 @@ export class ImportQuestionsComponent implements OnInit {
       const question = this.data[i];
       let questionAnswer=[];
 
-      // select options in question Answer
-      for (let j = 1; j <= 10; j++) {
-        const optionName = `option${j}`;
-        if (question[optionName] && question[optionName] !== '') {
-          questionAnswer.push({
-            answerText:question[optionName],
-            correctAnswer:false,
-            comment:''
-        });
-        }
+      // select options in question Answer of Multiple_Answers or Multiple_choice
+
+      if(question.questionType == 'Multiple_Answers' || question.questionType == 'Multiple_choice'){
+            for (let j = 1; j <= 10; j++) {
+              const optionName = `option${j}`;
+              if (question[optionName] && question[optionName] !== '') {
+                questionAnswer.push({
+                  answerText:question[optionName],
+                  correctAnswer:false,
+                  comment:''
+              });
+            }
+          }
       }
 
       //select correct Answer
 
-      // check if correctAnswer is a Matching
-      if ( question.questionType == 'Matching' ) {
+      // check if correctAnswer is a Matching or True_False
+      if ( question.questionType == 'Matching' || question.questionType == 'True_False' ) {
 
-        questionAnswer[0].correctAnswer= question.correctAnswer;
-        questionAnswer[0].comment= question.comment;
+        questionAnswer.push({
+          answerText:question.correctAnswer,
+          correctAnswer:true,
+          comment:question.comment
+      });
 
       }
 
-      // check if correctAnswer is a Multiple_Answers or Multiple_choice or True_false
-    else {
+      // check if correctAnswer is a Multiple_Answers or Multiple_choice
+    else{
+
         const correctAnswer: any[] =question.correctAnswer.split(',');
 
         for(let answer of correctAnswer){
@@ -116,7 +123,7 @@ const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([
 ['Matching','What is your name?',2,'My name is Ahmed','','','','My name is Ahmed','If need comment for this Answer'],
 ['Multiple_choice','Which programming language is used for developing Android apps?',5,'Objective-C','Java',' C++','Swift','2','If need comment for this Answer'],
 ['Multiple_Answers','Which programming language is used for developing Android apps?',5,'Objective-C','Java','flutter','Swift','2,3','If need comment for this Answer'],
-['True_False','HTML is a programming language.',4,'true','false','','','2','If need comment for this Answer']
+['True_False','HTML is a programming language.',4,'true','false','','','false','If need comment for this Answer']
 ]);
 // add header row
 XLSX.utils.sheet_add_aoa(ws, [headings], { origin: 'A1' });

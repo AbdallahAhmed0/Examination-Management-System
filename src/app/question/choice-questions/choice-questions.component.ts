@@ -23,6 +23,8 @@ export class ChoiceQuestionsComponent implements OnInit {
 
   @Input() indexComponent!:number;
   @Input() editQuestion?:Question;
+  @Input() importQuestion?:Question;
+
 
   question?:Question;
 
@@ -76,7 +78,31 @@ export class ChoiceQuestionsComponent implements OnInit {
       }
 
   }
+// import Questions
+if(this.importQuestion){
+  this.form = this.fb.group({
+    questionText: [this.importQuestion?.questionText, Validators.required],
+    points: [this.importQuestion?.points, Validators.required],
+    questionType: [this.importQuestion?.questionType, Validators.required],
+    questionAnswers: this.fb.array([])
+  });
 
+
+
+//select Question answer
+
+  this.Answer = this.importQuestion?.questionAnswers || [];
+  for (let i = 0; i < this.Answer.length; i++) {
+    const answer = this.Answer[i];
+    const answerGroup = this.createAnswer( answer.answerText, answer.correctAnswer, answer.comment);
+    this.answers.push(answerGroup);
+  }
+    //select Multible Answers by btn-toggle
+    if(this.editQuestion?.questionType === 'Multiple_Answers'){
+      this.isMultipleChoice=true;
+    }
+
+}
   this.form.valueChanges.subscribe(value =>{
 
     this.questionData.emit(this.form.value);

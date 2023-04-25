@@ -46,6 +46,8 @@ export class SaveQuestionComponent implements OnInit {
       this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
       this.index++;
       });
+      console.log(this.questions)
+
     });
 
     // Get the array parameter from the state object

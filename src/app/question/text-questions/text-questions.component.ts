@@ -23,6 +23,8 @@ export class TextQuestionsComponent implements OnInit {
 
   @Input() indexComponent!:number;
   @Input() editQuestion?:Question;
+  @Input() importQuestion?:Question;
+
 
   questionTextValue:string='';
   answerTextValue:string='';
@@ -63,6 +65,23 @@ export class TextQuestionsComponent implements OnInit {
       answerText: this.Answer.answerText,
       comment: this.Answer.comment});
     }
+
+    //import Question
+    if(this.importQuestion){
+      this.form = this.fb.group({
+        questionText: [this.importQuestion.questionText, Validators.required],
+        points: [this.importQuestion.points, Validators.required],
+        questionType: ['Matching', Validators.required],
+        questionAnswers: this.fb.array([this.createAnswer()])
+      });
+
+    //select Question answer
+    this.Answer = this.importQuestion.questionAnswers[0];
+    this.answers.at(0).patchValue({
+      answerText: this.Answer.answerText,
+      comment: this.Answer.comment});
+    }
+
   this.form.valueChanges.subscribe(value =>{
       this.questionData.emit(this.form.value);
       this.formValid.emit(this.form.valid);
