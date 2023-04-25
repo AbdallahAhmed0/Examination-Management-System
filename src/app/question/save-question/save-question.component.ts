@@ -46,22 +46,21 @@ export class SaveQuestionComponent implements OnInit {
       this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
       this.index++;
       });
-      console.log(this.questions)
+      // Get the array parameter from the state object
+      this.importQuestions = history.state.data;
 
-    });
+      if(this.importQuestions){
 
-    // Get the array parameter from the state object
-    this.importQuestions = history.state.data;
-    if(this.importQuestions){
-      this.importQuestions.forEach(question => {
+        this.importQuestions.forEach(question => {
 
-        this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
-        this.index++;
-        this.questions.push(question);
-        });
-console.log(this.questions)
+          this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
+          this.index++;
+          });
+          this.questions.push(...this.importQuestions)
+      }
 
-    }
+});
+
 
   // get Data of Exam
   this.examService.getExamById(this.examId).subscribe((data) => {
@@ -146,7 +145,6 @@ this.options.push(option);
       },
     };
     this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
-    console.log(this.questions)
 
   }
   importData(id:any){

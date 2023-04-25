@@ -50,8 +50,7 @@
       [indexComponent]="(i+1)"
       (questionData)="addQuestion($event,i)"
       (formValid)="formIsValid($event)"
-      [editQuestion]="selectedComponent.data"
-      [importQuestion]="selectedComponent.data">
+      [editQuestion]="selectedComponent.data">
 
     </app-choice-questions>
 
@@ -60,8 +59,7 @@
       [indexComponent]="(i+1)"
       (questionData)="addQuestion($event,i)"
       (formValid)="formIsValid($event)"
-      [editQuestion]="selectedComponent.data"
-      [importQuestion]="selectedComponent.data">
+      [editQuestion]="selectedComponent.data">
 
       </app-text-questions>
       <app-true-false-question *ngIf="selectedComponent.name === 'True_False'"
@@ -70,8 +68,7 @@
       [indexComponent]="(i+1)"
       (questionData)="addQuestion($event,i)"
       (formValid)="formIsValid($event)"
-      [editQuestion]="selectedComponent.data"
-      [importQuestion]="selectedComponent.data">
+      [editQuestion]="selectedComponent.data">
 
       </app-true-false-question>
 

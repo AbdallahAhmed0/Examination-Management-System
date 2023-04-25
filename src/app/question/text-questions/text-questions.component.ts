@@ -23,8 +23,6 @@ export class TextQuestionsComponent implements OnInit {
 
   @Input() indexComponent!:number;
   @Input() editQuestion?:Question;
-  @Input() importQuestion?:Question;
-
 
   questionTextValue:string='';
   answerTextValue:string='';
@@ -51,37 +49,29 @@ export class TextQuestionsComponent implements OnInit {
 
     // edit Questions
     if(this.editQuestion){
-      this.form = this.fb.group({
-        id:[this.editQuestion.id],
-        questionText: [this.editQuestion.questionText, Validators.required],
-        points: [this.editQuestion.points, Validators.required],
-        questionType: ['Matching', Validators.required],
-        questionAnswers: this.fb.array([this.createAnswer()])
-      });
-
+      if(this.editQuestion.id){
+          this.form = this.fb.group({
+            id:[this.editQuestion.id],
+            questionText: [this.editQuestion.questionText, Validators.required],
+            points: [this.editQuestion.points, Validators.required],
+            questionType: ['Matching', Validators.required],
+            questionAnswers: this.fb.array([this.createAnswer()])
+          });
+        }
+        else{
+          this.form = this.fb.group({
+            questionText: [this.editQuestion.questionText, Validators.required],
+            points: [this.editQuestion.points, Validators.required],
+            questionType: ['Matching', Validators.required],
+            questionAnswers: this.fb.array([this.createAnswer()])
+          });
+        }
     //select Question answer
     this.Answer = this.editQuestion.questionAnswers[0];
     this.answers.at(0).patchValue({
       answerText: this.Answer.answerText,
       comment: this.Answer.comment});
     }
-
-    //import Question
-    if(this.importQuestion){
-      this.form = this.fb.group({
-        questionText: [this.importQuestion.questionText, Validators.required],
-        points: [this.importQuestion.points, Validators.required],
-        questionType: ['Matching', Validators.required],
-        questionAnswers: this.fb.array([this.createAnswer()])
-      });
-
-    //select Question answer
-    this.Answer = this.importQuestion.questionAnswers[0];
-    this.answers.at(0).patchValue({
-      answerText: this.Answer.answerText,
-      comment: this.Answer.comment});
-    }
-
   this.form.valueChanges.subscribe(value =>{
       this.questionData.emit(this.form.value);
       this.formValid.emit(this.form.valid);
