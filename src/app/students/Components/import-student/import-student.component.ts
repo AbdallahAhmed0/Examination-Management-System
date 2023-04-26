@@ -19,6 +19,8 @@ export class ImportStudentComponent implements OnInit {
   subAdmin!: Subscription;
   consoleError: any;
 
+  theGroups:any;
+
   constructor(
     private fb: FormBuilder,
     private studentService:StudentsService,
@@ -26,6 +28,9 @@ export class ImportStudentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.getGroups();
+
     this.newStudent = this.fb.group({
       id: [],
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -43,6 +48,11 @@ export class ImportStudentComponent implements OnInit {
   goback() {
     this.router.navigate(['students']);
   }
+  getGroups(){
+    this.studentService.getGroups().subscribe(data=>{
+      this.theGroups=data;
+      })
+    }
 
   handleImport($event: any) {
     const files = $event.target.files;
@@ -108,27 +118,32 @@ export class ImportStudentComponent implements OnInit {
 
   }
   importStudent() {
+
     this.students.map((student) => {
       if (typeof student.roles === 'string') { // check if roles is a string
         const rolesArray: any[] = student.roles.split(',');
-        const roles = rolesArray.map((role) => ({ role }));
+        const roles = rolesArray.map((role) => ({ "role" : role }));
         student.roles = roles;
       }
+
+        for( let Group of this.theGroups){
+          if(student.group == Group.name){
+            student.group = Group ;
+          }
+      }
       if (typeof student.group === 'string') { // check if roles is a string
-        const groupsArray: any[] = student.group.split(',');
-        const groups = groupsArray.map((group) => ({ group }));
-        student.group = groups;
+        student.group = this.theGroups[0] ;
       }
     });
 
     for (let student of this.students) {
       let i = 1;
       this.newStudent.patchValue(student);
-
+      console.log(this.newStudent.value)
       const observer = {
         next: (student: Student) => {},
         error: (err: Error) => {
-          this.consoleError =`This admin of of record number ${--i}, ${err.message}`;
+          this.consoleError =`This Student of of record number ${--i}, ${err.message}`;
 
         },
       };
@@ -139,43 +154,43 @@ export class ImportStudentComponent implements OnInit {
       }
       else{
         if(this.firstName?.hasError('required')){
-          this.consoleError=`This admin of record number ${i}, First Name is Reqiured`;
+          this.consoleError=`This Student of record number ${i}, First Name is Reqiured`;
         }
         else if(this.firstName?.hasError('minlength')){
-          this.consoleError=`This admin of of record number ${i}, First Name should be at least 3 characters!`;
+          this.consoleError=`This Student of of record number ${i}, First Name should be at least 3 characters!`;
         }
         else if(this.firstName?.hasError('maxlength')){
-          this.consoleError=`This admin of record number ${i}, First Name should be at max 20 characters!`;
+          this.consoleError=`This Student of record number ${i}, First Name should be at max 20 characters!`;
         }
         else if(this.lastName?.hasError('required')){
-          this.consoleError=`This admin of record number ${i}, Last Name is Reqiured`;
+          this.consoleError=`This Student of record number ${i}, Last Name is Reqiured`;
         }
         else if(this.lastName?.hasError('minlength')){
-          this.consoleError=`This admin of record number ${i}, Last Name should be at least 3 characters!`;
+          this.consoleError=`This Student of record number ${i}, Last Name should be at least 3 characters!`;
         }
         else if(this.lastName?.hasError('maxlength')){
-          this.consoleError=`This admin of record number ${i}, Last Name should be at max 20 characters!`;
+          this.consoleError=`This Student of record number ${i}, Last Name should be at max 20 characters!`;
         }
         else if(this.email?.hasError('required')){
-          this.consoleError=`This admin of record number ${i}, Email is Required!`;
+          this.consoleError=`This Student of record number ${i}, Email is Required!`;
         }
         else if(this.email?.hasError('email')){
-          this.consoleError=`This admin of record number ${i}, Email is not Vaild!`;
+          this.consoleError=`This Student of record number ${i}, Email is not Vaild!`;
         }
         else if(this.password?.hasError('required')){
-          this.consoleError=`This admin of record number ${i}, password is not Vaild!`;
+          this.consoleError=`This Student of record number ${i}, password is not Vaild!`;
         }
         else if(this.universityId?.hasError('required')){
-          this.consoleError=`This admin of of record number ${i}, UniversityId is Required!`;
+          this.consoleError=`This Student of of record number ${i}, UniversityId is Required!`;
         }
         else if(this.group?.hasError('required')){
-          this.consoleError=`This admin of of record number ${i}, group is Required!`;
+          this.consoleError=`This Student of of record number ${i}, group is Required!`;
         }
 
       }
     }
     if(!this.consoleError){
-      this.router.navigate(['/admins']);
+      this.router.navigate(['/students']);
       this.studentService.openSnackBar('Added');
     }
   }
