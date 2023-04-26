@@ -6,6 +6,8 @@ import { read, utils } from 'xlsx';
 import { Admin } from '../../Models/admin';
 import { AdminsService } from '../../Services/admins.service';
 
+import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-import-admin',
   templateUrl: './import-admin.component.html',
@@ -60,7 +62,51 @@ export class ImportAdminComponent implements OnInit {
       reader.readAsArrayBuffer(file);
     }
   }
+  exportData(){
+    const headings = [
+      'id',
+      'firstName',
+      'lastName',
+      'universityId',
+      'email',
+      'password',
+      'roles',
+      'locked',
+      'enable',
+      'specialization'
+  ];
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([
+    [1,'Ahmed','Hossam',12,'Ahmed@email.com','Ahmed123865','ADMIN (Role Must match of roles system)',false,true,'Software Engineer'],
+    ['','Adel','Hany',16,'Adel@email.com','#@$5^#$7+#$%','ADMIN',false,true,'Machine learning']
+]);
 
+
+  // add header row
+  XLSX.utils.sheet_add_aoa(ws, [headings], { origin: 'A1' });
+
+
+      // Set column width
+      const columns = [{ wpx: 30 }, { wpx: 100 }, { wpx: 100 },{ wpx: 80 }, { wpx: 180 }, { wpx: 150 },{ wpx: 150 }, { wpx: 70 }, { wpx: 70 },{ wpx: 120 }];
+      ws['!cols'] = columns;
+
+      // Set row height
+      const rows = [{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 }];
+      ws['!rows'] = rows;
+
+
+
+      const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, ws, 'Sheet1');
+      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+      const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Sample Data of admins.xlsx';
+      link.click();
+      URL.revokeObjectURL(url);
+
+  }
   importAdmin() {
     this.admins.map((admin) => {
       if (typeof admin.roles === 'string') { // check if roles is a string

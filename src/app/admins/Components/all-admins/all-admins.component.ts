@@ -118,7 +118,7 @@ XLSX.utils.sheet_add_aoa(ws, [headings], { origin: 'A1' });
 
 
     // Set column width
-    const columns = [{ wpx: 30 }, { wpx: 100 }, { wpx: 100 },{ wpx: 60 }, { wpx: 180 }, { wpx: 150 },{ wpx: 70 }, { wpx: 70 }, { wpx: 70 },{ wpx: 120 }];
+    const columns = [{ wpx: 30 }, { wpx: 100 }, { wpx: 100 },{ wpx: 80 }, { wpx: 180 }, { wpx: 150 },{ wpx: 70 }, { wpx: 70 }, { wpx: 70 },{ wpx: 120 }];
     ws['!cols'] = columns;
 
     // Set row height
