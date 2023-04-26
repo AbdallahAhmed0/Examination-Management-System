@@ -7,6 +7,8 @@ import { read, utils } from 'xlsx';
 import * as XLSX from 'xlsx';
 import { StudentsService } from '../../Services/students.service';
 import { Student } from '../../Models/student';
+import { RolesService } from 'src/app/roles/Services/roles.service';
+import { Role } from 'src/app/roles/Models/role';
 @Component({
   selector: 'app-import-student',
   templateUrl: './import-student.component.html',
@@ -20,16 +22,19 @@ export class ImportStudentComponent implements OnInit {
   consoleError: any[]=[];
 
   theGroups:any;
+  Roles!:Role[];
 
   constructor(
     private fb: FormBuilder,
     private studentService:StudentsService,
+    private rolesService:RolesService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
 
     this.getGroups();
+    this.getRoles();
 
     this.newStudent = this.fb.group({
       id: [],
@@ -53,7 +58,11 @@ export class ImportStudentComponent implements OnInit {
       this.theGroups=data;
       })
     }
-
+  getRoles(){
+    this.rolesService.getRoles().subscribe(data =>{
+        this.Roles=data;
+      })
+    }
   handleImport($event: any) {
     const files = $event.target.files;
     if (files.length) {
@@ -84,10 +93,10 @@ export class ImportStudentComponent implements OnInit {
       'locked',
       'enable',
       'group'
-  ];
+  ];// (role Must be Match roles of system)
   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([
-    ['','Hassan','Ahmed',152,'Hassan@email.com','Hassan4512','STUDENT (role Must be Match roles of system)',false,true,'Group_1'],
-    ['','Wael','Hany',106,'Wael@email.com','#@$5^#$7+#$%','STUDENT',false,true,'Group_2']
+    ['','Hassan','Ahmed',152,'Hassan@email.com','Hassan4512','STUDENT,ADMIN',false,true,'Group_1'],
+    ['','Wael','Hany',106,'Wael@email.com','#@$5^#$7+#$%','STUDENT,ASSISTANT',false,true,'Group_2']
 ]);
 
 
@@ -121,11 +130,18 @@ export class ImportStudentComponent implements OnInit {
 
     this.consoleError=[];
     this.students.map((student) => {
-      if (typeof student.roles === 'string') { // check if roles is a string
-        const rolesArray: any[] = student.roles.split(',');
-        const roles = rolesArray.map((role) => ({ "role" : role }));
-        student.roles = roles;
-      }
+        if (typeof student.roles === 'string') { // check if roles is a string
+          const rolesArray: string[] = student.roles.split(',');
+          let rolesObj=[];
+            for(let myRole of rolesArray){
+              for( let role of this.Roles){
+                if(myRole == role.role){
+                  rolesObj.push(role)
+                }
+            }
+          }
+          student.roles = rolesObj ;
+          }
 
         for( let Group of this.theGroups){
           if(student.group == Group.name){
@@ -188,10 +204,15 @@ export class ImportStudentComponent implements OnInit {
       }
     }
 
+  // use setTimeout because when deplicated email server take some time
+  setTimeout(() => {
     if(!this.consoleError.length){
-      this.router.navigate(['/students']);
-      this.studentService.openSnackBar('Added');
+        this.router.navigate(['/students']);
+        this.studentService.openSnackBar('Added');
     }
+  }, 1000);
+
+
   }
 
   get firstName() {

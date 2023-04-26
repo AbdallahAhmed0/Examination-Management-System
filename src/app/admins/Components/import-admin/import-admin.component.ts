@@ -136,16 +136,17 @@ export class ImportAdminComponent implements OnInit {
               }
           }
         }
-            admin.role = rolesObj ;
+          admin.role = rolesObj ;
         }
-
     });
+
+    console.log(this.admins)
 
     const length =this.admins.length;
     for (let i = 0;i < length;i++) {
       let admin = this.admins[i];
       this.newAdmin.patchValue(admin);
-
+     console.log(23)
       const observer = {
         next: (admin: Admin) => {},
         error: (err: Error) => {
@@ -194,6 +195,7 @@ export class ImportAdminComponent implements OnInit {
           }
 
       }
+      // use setTimeout because when deplicated email server take some time
       setTimeout(() => {
       if(!this.consoleError.length){
           this.router.navigate(['/admins']);

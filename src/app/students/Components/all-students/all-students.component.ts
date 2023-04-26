@@ -71,8 +71,9 @@ export class AllStudentsComponent implements OnInit, OnChanges {
       if (result === 'confirm') {
 
           this.studentService.deleteStudent(id);
+          window.location.reload();
+
         }
-        window.location.reload();
 
       });
 
