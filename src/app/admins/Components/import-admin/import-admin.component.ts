@@ -7,6 +7,8 @@ import { Admin } from '../../Models/admin';
 import { AdminsService } from '../../Services/admins.service';
 
 import * as XLSX from 'xlsx';
+import { RolesService } from 'src/app/roles/Services/roles.service';
+import { Role } from '../../../roles/Models/role';
 
 @Component({
   selector: 'app-import-admin',
@@ -18,15 +20,22 @@ export class ImportAdminComponent implements OnInit {
   newAdmin!: FormGroup;
   admins!: any[];
   subAdmin!: Subscription;
-  consoleError: any;
+  consoleError: any[]=[];
+
+  Roles!:Role[];
 
   constructor(
     private fb: FormBuilder,
     private adminService: AdminsService,
+    private rolesService:RolesService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+
+    //get Roles
+    this.getRoles();
+
     this.newAdmin = this.fb.group({
       id: [],
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -62,6 +71,11 @@ export class ImportAdminComponent implements OnInit {
       reader.readAsArrayBuffer(file);
     }
 
+  }
+  getRoles(){
+    this.rolesService.getRoles().subscribe(data =>{
+      this.Roles=data;
+    })
   }
   exportData(){
     const headings = [
@@ -109,70 +123,82 @@ export class ImportAdminComponent implements OnInit {
 
   }
   importAdmin() {
+    this.consoleError=[];
+
     this.admins.map((admin) => {
       if (typeof admin.roles === 'string') { // check if roles is a string
         const rolesArray: any[] = admin.roles.split(',');
-        const roles = rolesArray.map((role) => ({ role }));
-        admin.roles = roles;
-      }
+        let rolesObj=[];
+          for(let myRole of rolesArray){
+            for( let role of this.Roles){
+              if(myRole == role.role){
+                rolesObj.push(role)
+              }
+          }
+        }
+            admin.role = rolesObj ;
+        }
+
     });
 
-    for (let admin of this.admins) {
-      let i = 1;
+    const length =this.admins.length;
+    for (let i = 0;i < length;i++) {
+      let admin = this.admins[i];
       this.newAdmin.patchValue(admin);
 
       const observer = {
         next: (admin: Admin) => {},
         error: (err: Error) => {
-          this.consoleError =`This admin of of record number ${--i}, ${err.message}`;
+          this.consoleError.push(`This admin with record number ${i+1}, ${err.message}`);
 
         },
       };
 
       if(this.newAdmin.valid){
         this.subAdmin = this.adminService.addAdmin(this.newAdmin.value).subscribe(observer);
-        ++i;
       }
       else{
-        if(this.firstName?.hasError('required')){
-          this.consoleError=`This admin of record number ${i}, First Name is Reqiured`;
-        }
-        else if(this.firstName?.hasError('minlength')){
-          this.consoleError=`This admin of of record number ${i}, First Name should be at least 3 characters!`;
-        }
-        else if(this.firstName?.hasError('maxlength')){
-          this.consoleError=`This admin of record number ${i}, First Name should be at max 20 characters!`;
-        }
-        else if(this.lastName?.hasError('required')){
-          this.consoleError=`This admin of record number ${i}, Last Name is Reqiured`;
-        }
-        else if(this.lastName?.hasError('minlength')){
-          this.consoleError=`This admin of record number ${i}, Last Name should be at least 3 characters!`;
-        }
-        else if(this.lastName?.hasError('maxlength')){
-          this.consoleError=`This admin of record number ${i}, Last Name should be at max 20 characters!`;
-        }
-        else if(this.email?.hasError('required')){
-          this.consoleError=`This admin of record number ${i}, Email is Required!`;
-        }
-        else if(this.email?.hasError('email')){
-          this.consoleError=`This admin of record number ${i}, Email is not Vaild!`;
-        }
-        else if(this.password?.hasError('required')){
-          this.consoleError=`This admin of record number ${i}, password is not Vaild!`;
-        }
-        else if(this.universityId?.hasError('required')){
-          this.consoleError=`This admin of of record number ${i}, UniversityId is Required!`;
-        }
-        else if(this.specialization?.hasError('required')){
-          this.consoleError=`This admin of of record number ${i}, specialization is Required!`;
-        }
+
+          if(this.firstName?.hasError('required')){
+            this.consoleError.push(`This admin with record number ${i+1}, First Name is Reqiured`);
+          }
+          else if(this.firstName?.hasError('minlength')){
+            this.consoleError.push(`This admin with record number ${i+1}, First Name should be at least 3 characters!`);
+          }
+          else if(this.firstName?.hasError('maxlength')){
+            this.consoleError.push(`This admin with record number ${i+1}, First Name should be at max 20 characters!`);
+          }
+          else if(this.lastName?.hasError('required')){
+            this.consoleError.push(`This admin with record number ${i+1}, Last Name is Reqiured`);
+          }
+          else if(this.lastName?.hasError('minlength')){
+            this.consoleError.push(`This admin with record number ${i+1}, Last Name should be at least 3 characters!`);
+          }
+          else if(this.lastName?.hasError('maxlength')){
+            this.consoleError.push(`This admin with record number ${i+1}, Last Name should be at max 20 characters!`);
+          }
+          else if(this.email?.hasError('required')){
+            this.consoleError.push(`This admin with record number ${i+1}, Email is Required!`);
+          }
+          else if(this.email?.hasError('email')){
+            this.consoleError.push(`This admin with record number ${i+1}, Email is not Vaild!`);
+          }
+          else if(this.password?.hasError('required')){
+            this.consoleError.push(`This admin with record number ${i+1}, password is not Vaild!`);
+          }
+          else if(this.universityId?.hasError('required')){
+            this.consoleError.push(`This admin with record number ${i+1}, UniversityId is Required!`);
+          }
+          else if(this.specialization?.hasError('required')){
+            this.consoleError.push(`This admin with record number ${i+1}, specialization is Required!`);
+          }
 
       }
-    }
-    if(!this.consoleError){
-      this.router.navigate(['/admins']);
-      this.adminService.openSnackBar('Added');
+
+      if(!this.consoleError.length){
+        this.router.navigate(['/admins']);
+        this.adminService.openSnackBar('Added');
+      }
     }
   }
 
