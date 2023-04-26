@@ -63,6 +63,7 @@ export class ChoiceQuestionsComponent implements OnInit {
       }
       else{
         this.form = this.fb.group({
+          id:[''],
           questionText: [this.editQuestion.questionText, Validators.required],
           points: [this.editQuestion.points, Validators.required],
           questionType: [this.editQuestion.questionType, Validators.required],
