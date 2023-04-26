@@ -18,7 +18,7 @@ export class ImportAdminComponent implements OnInit {
   newAdmin!: FormGroup;
   admins!: any[];
   subAdmin!: Subscription;
-  consoleError!: string;
+  consoleError: any;
 
   constructor(
     private fb: FormBuilder,
@@ -61,6 +61,7 @@ export class ImportAdminComponent implements OnInit {
       };
       reader.readAsArrayBuffer(file);
     }
+
   }
   exportData(){
     const headings = [
@@ -76,7 +77,7 @@ export class ImportAdminComponent implements OnInit {
       'specialization'
   ];
   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([
-    [1,'Ahmed','Hossam',12,'Ahmed@email.com','Ahmed123865','ADMIN (Role Must match of roles system)',false,true,'Software Engineer'],
+    ['','Ahmed','Hossam',12,'Ahmed@email.com','Ahmed123865','ADMIN',false,true,'Software Engineer'],
     ['','Adel','Hany',16,'Adel@email.com','#@$5^#$7+#$%','ADMIN',false,true,'Machine learning']
 ]);
 
@@ -115,17 +116,63 @@ export class ImportAdminComponent implements OnInit {
         admin.roles = roles;
       }
     });
+
     for (let admin of this.admins) {
-      this.newAdmin.setValue(admin);
+      let i = 1;
+      this.newAdmin.patchValue(admin);
 
       const observer = {
         next: (admin: Admin) => {},
         error: (err: Error) => {
-          this.consoleError = err.message;
+          this.consoleError =`This admin of of record number ${--i}, ${err.message}`;
+
         },
       };
 
-      this.subAdmin = this.adminService.addAdmin(admin).subscribe(observer);
+      if(this.newAdmin.valid){
+        this.subAdmin = this.adminService.addAdmin(this.newAdmin.value).subscribe(observer);
+        ++i;
+      }
+      else{
+        if(this.firstName?.hasError('required')){
+          this.consoleError=`This admin of record number ${i}, First Name is Reqiured`;
+        }
+        else if(this.firstName?.hasError('minlength')){
+          this.consoleError=`This admin of of record number ${i}, First Name should be at least 3 characters!`;
+        }
+        else if(this.firstName?.hasError('maxlength')){
+          this.consoleError=`This admin of record number ${i}, First Name should be at max 20 characters!`;
+        }
+        else if(this.lastName?.hasError('required')){
+          this.consoleError=`This admin of record number ${i}, Last Name is Reqiured`;
+        }
+        else if(this.lastName?.hasError('minlength')){
+          this.consoleError=`This admin of record number ${i}, Last Name should be at least 3 characters!`;
+        }
+        else if(this.lastName?.hasError('maxlength')){
+          this.consoleError=`This admin of record number ${i}, Last Name should be at max 20 characters!`;
+        }
+        else if(this.email?.hasError('required')){
+          this.consoleError=`This admin of record number ${i}, Email is Required!`;
+        }
+        else if(this.email?.hasError('email')){
+          this.consoleError=`This admin of record number ${i}, Email is not Vaild!`;
+        }
+        else if(this.password?.hasError('required')){
+          this.consoleError=`This admin of record number ${i}, password is not Vaild!`;
+        }
+        else if(this.universityId?.hasError('required')){
+          this.consoleError=`This admin of of record number ${i}, UniversityId is Required!`;
+        }
+        else if(this.specialization?.hasError('required')){
+          this.consoleError=`This admin of of record number ${i}, specialization is Required!`;
+        }
+
+      }
+    }
+    if(!this.consoleError){
+      this.router.navigate(['/admins']);
+      this.adminService.openSnackBar('Added');
     }
   }
 

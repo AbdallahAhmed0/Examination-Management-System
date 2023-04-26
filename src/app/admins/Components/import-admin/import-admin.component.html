@@ -10,8 +10,11 @@
 
       <input id="uploadBtn" type="file" #inp (change)="handleImport($event)" name="uploadFile" required>
 
-    <button mat-raised-button [disabled]="!inp.value" class="submit" type="submit">Submit</button>
+      <mat-error *ngIf="consoleError">
+        *{{consoleError}}
+      </mat-error>
 
+    <button mat-raised-button [disabled]="!inp.value" class="submit" type="submit">Submit</button>
   </form>
 
 </div>
