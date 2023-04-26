@@ -17,7 +17,7 @@ export class ImportStudentComponent implements OnInit {
   newStudent!: FormGroup;
   students!: any[];
   subAdmin!: Subscription;
-  consoleError: any;
+  consoleError: any[]=[];
 
   theGroups:any;
 
@@ -119,6 +119,7 @@ export class ImportStudentComponent implements OnInit {
   }
   importStudent() {
 
+    this.consoleError=[];
     this.students.map((student) => {
       if (typeof student.roles === 'string') { // check if roles is a string
         const rolesArray: any[] = student.roles.split(',');
@@ -136,60 +137,58 @@ export class ImportStudentComponent implements OnInit {
       }
     });
 
-    for (let student of this.students) {
-      let i = 1;
+    const length =this.students.length;
+    for (let i = 0;i < length;i++) {
+      let student = this.students[i];
       this.newStudent.patchValue(student);
-      console.log(this.newStudent.value)
       const observer = {
         next: (student: Student) => {},
         error: (err: Error) => {
-          this.consoleError =`This Student of of record number ${--i}, ${err.message}`;
-
+          this.consoleError.push(`This student with record number ${i+1}, ${err.message}`);
         },
       };
 
       if(this.newStudent.valid){
         this.subAdmin = this.studentService.addStudent(this.newStudent.value).subscribe(observer);
-        ++i;
       }
       else{
         if(this.firstName?.hasError('required')){
-          this.consoleError=`This Student of record number ${i}, First Name is Reqiured`;
+          this.consoleError.push(`This student with record number ${i+1}, First Name is Reqiured`);
         }
         else if(this.firstName?.hasError('minlength')){
-          this.consoleError=`This Student of of record number ${i}, First Name should be at least 3 characters!`;
+          this.consoleError.push(`This student with record number ${i+1}, First Name should be at least 3 characters!`);
         }
         else if(this.firstName?.hasError('maxlength')){
-          this.consoleError=`This Student of record number ${i}, First Name should be at max 20 characters!`;
+          this.consoleError.push(`This student with record number ${i+1}, First Name should be at max 20 characters!`);
         }
         else if(this.lastName?.hasError('required')){
-          this.consoleError=`This Student of record number ${i}, Last Name is Reqiured`;
+          this.consoleError.push(`This student with record number ${i+1}, Last Name is Reqiured`);
         }
         else if(this.lastName?.hasError('minlength')){
-          this.consoleError=`This Student of record number ${i}, Last Name should be at least 3 characters!`;
+          this.consoleError.push(`This student with record number ${i+1}, Last Name should be at least 3 characters!`);
         }
         else if(this.lastName?.hasError('maxlength')){
-          this.consoleError=`This Student of record number ${i}, Last Name should be at max 20 characters!`;
+          this.consoleError.push(`This student with record number ${i+1}, Last Name should be at max 20 characters!`);
         }
         else if(this.email?.hasError('required')){
-          this.consoleError=`This Student of record number ${i}, Email is Required!`;
+          this.consoleError.push(`This student with record number ${i+1}, Email is Required!`);
         }
         else if(this.email?.hasError('email')){
-          this.consoleError=`This Student of record number ${i}, Email is not Vaild!`;
+          this.consoleError.push(`This student with record number ${i+1}, Email is not Vaild!`);
         }
         else if(this.password?.hasError('required')){
-          this.consoleError=`This Student of record number ${i}, password is not Vaild!`;
+          this.consoleError.push(`This student with record number ${i+1}, password is not Vaild!`);
         }
         else if(this.universityId?.hasError('required')){
-          this.consoleError=`This Student of of record number ${i}, UniversityId is Required!`;
+          this.consoleError.push(`This student with record number ${i+1}, UniversityId is Required!`);
         }
         else if(this.group?.hasError('required')){
-          this.consoleError=`This Student of of record number ${i}, group is Required!`;
+          this.consoleError.push(`This student with record number ${i+1}, group is Required!`);
         }
-
       }
     }
-    if(!this.consoleError){
+
+    if(!this.consoleError.length){
       this.router.navigate(['/students']);
       this.studentService.openSnackBar('Added');
     }
