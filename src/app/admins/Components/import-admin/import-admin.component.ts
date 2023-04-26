@@ -194,11 +194,13 @@ export class ImportAdminComponent implements OnInit {
           }
 
       }
-
+      setTimeout(() => {
       if(!this.consoleError.length){
-        this.router.navigate(['/admins']);
-        this.adminService.openSnackBar('Added');
+          this.router.navigate(['/admins']);
+          this.adminService.openSnackBar('Added');
       }
+    }, 1000);
+
     }
   }
 
