@@ -9,13 +9,15 @@ import { EditStudentsComponent } from './Components/edit-students/edit-students.
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../Shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImportStudentComponent } from './Components/import-student/import-student.component';
 
 
 @NgModule({
     declarations: [
         AllStudentsComponent,
         AddStudentsComponent,
-        EditStudentsComponent
+        EditStudentsComponent,
+        ImportStudentComponent
     ],
     imports: [
         CommonModule,
