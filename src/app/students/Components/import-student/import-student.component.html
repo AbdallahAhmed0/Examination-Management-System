@@ -1,1 +1,22 @@
-<p>import-student works!</p>
+<div class="contianer" >
+  <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()"><mat-icon>menu</mat-icon> All Students</button>
+  <button mat-button class="btn-list" (click)="exportData()" style="color:#007bff;" ><mat-icon>exit_to_app</mat-icon>Download Sample</button>
+<div class="form">
+  <p class="import">Import Students</p>
+
+  <form   (ngSubmit)="importStudent()" >
+
+    <mat-label>Select Excel File</mat-label>
+
+      <input id="uploadBtn" type="file" #inp (change)="handleImport($event)" name="uploadFile" required>
+
+      <mat-error *ngIf="consoleError">
+        *{{consoleError}}
+      </mat-error>
+
+    <button mat-raised-button [disabled]="!inp.value" class="submit" type="submit">Submit</button>
+  </form>
+
+</div>
+</div>
+
