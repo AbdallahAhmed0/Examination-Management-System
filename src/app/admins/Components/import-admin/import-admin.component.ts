@@ -136,17 +136,15 @@ export class ImportAdminComponent implements OnInit {
               }
           }
         }
-          admin.role = rolesObj ;
+          admin.roles = rolesObj ;
         }
     });
 
-    console.log(this.admins)
 
     const length =this.admins.length;
     for (let i = 0;i < length;i++) {
       let admin = this.admins[i];
       this.newAdmin.patchValue(admin);
-     console.log(23)
       const observer = {
         next: (admin: Admin) => {},
         error: (err: Error) => {
