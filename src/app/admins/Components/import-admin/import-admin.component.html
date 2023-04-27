@@ -1,6 +1,6 @@
 <div class="contianer" >
-  <p color="primary">Import Admins</p>
   <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()"><mat-icon>menu</mat-icon> All Admins</button>
+  <button mat-button class="btn-list" (click)="exportData()" style="color:#007bff;" ><mat-icon>exit_to_app</mat-icon>Download Sample</button>
 <div class="form">
   <p class="import">Import Admins</p>
 
@@ -10,8 +10,12 @@
 
       <input id="uploadBtn" type="file" #inp (change)="handleImport($event)" name="uploadFile" required>
 
+      <mat-error *ngIf="consoleError.length">
+        <ng-container *ngFor="let error of consoleError" >
+          <div>{{error}}</div>
+        </ng-container>
+      </mat-error>
     <button mat-raised-button [disabled]="!inp.value" class="submit" type="submit">Submit</button>
-
   </form>
 
 </div>

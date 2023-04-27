@@ -92,7 +92,6 @@ export class AdminsService {
         retry(2),
         catchError(this.handleError)
       ).subscribe(data => {
-        this.openSnackBar("Deleted")
       })
     }
 
