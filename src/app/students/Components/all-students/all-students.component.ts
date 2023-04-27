@@ -71,7 +71,11 @@ export class AllStudentsComponent implements OnInit, OnChanges {
       if (result === 'confirm') {
 
           this.studentService.deleteStudent(id);
-          window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+            this.studentService.openSnackBar("Deleted");
+          }, 800);
+
 
         }
 
