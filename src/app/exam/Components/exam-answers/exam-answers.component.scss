@@ -1,6 +1,10 @@
 // Variables
 $answers-color: rgba(0, 0, 0, 0.6);
-
+// Utilities
+.flex {
+  display: flex;
+}
+// ===========
 .container {
   width: 80%;
 }
@@ -23,10 +27,12 @@ $answers-color: rgba(0, 0, 0, 0.6);
       margin: 0.5rem 0;
       padding: 0.5rem;
       border-radius: 0.2rem;
-      &.correct--answer {
+      &.correct--answer,
+      .correct--answer {
         background-color: rgba(0, 128, 0, 0.2);
       }
-      &.wrong--answer {
+      &.wrong--answer,
+      .wrong--answer {
         background-color: rgba(255, 0, 0, 0.2);
       }
     }
