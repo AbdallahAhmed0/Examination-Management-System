@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Exam } from '../../Models/exam';
@@ -11,7 +11,8 @@ import { ExamService } from '../../Services/exam.service';
 export class AttemptExamComponent implements OnInit {
   constructor(
     private _examService: ExamService,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -20,6 +21,7 @@ export class AttemptExamComponent implements OnInit {
 
   examInfo!: Exam;
   examId!: number;
+  attemptData!: Object;
 
   getExamInfo() {
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('examId'));
@@ -33,11 +35,11 @@ export class AttemptExamComponent implements OnInit {
   getAttemptExamData(userId: number) {
     this._examService
       .attemptExam(this.examId, userId)
-      .subscribe((data) => console.log(data));
+      .subscribe((data) => this.attemptData = data);
   }
 
   attemptExam() {
-    // this.router.navigate();   //This should take the user to the exam
+    this.router.navigate(['exams/render/',this.examId], { state: { data: this.attemptData } });
     this.getAttemptExamData(12); //FIXed userID
   }
 }

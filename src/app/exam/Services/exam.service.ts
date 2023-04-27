@@ -1,4 +1,4 @@
-import { Exam } from './../Models/exam';
+import { Answer, Exam } from './../Models/exam';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -101,5 +101,20 @@ attemptExam(examId: number, userId: number) {
     return this.httpClient
       .get<Exam>(`${environment.APPURL}/exam/renderExam/${id}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
+  }
+
+  saveSelectedStudentAnswer(attemptId: number, questionId: number, answer: number | Answer): Observable<any> {
+    const url = `${environment.APPURL}/saveSelectedStudentAnswer/${attemptId}/${questionId}`;
+    return this.httpClient.post<any>(url, { answer });
+  }
+
+  saveCompleteStudentAnswer(attemptId: number, answer: string): Observable<any> {
+    const url = `${environment.APPURL}/saveCompleteStudentAnswer/${attemptId}`;
+    return this.httpClient.post<any>(url, { answer });
+  }
+
+  endExam(examAttemptId: number): Observable<any> {
+    const url = `${environment.APPURL}/exam/endExam/${examAttemptId}`;
+    return this.httpClient.post<any>(url, {});
   }
 }

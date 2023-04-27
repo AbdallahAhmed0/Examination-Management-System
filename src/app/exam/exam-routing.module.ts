@@ -1,4 +1,4 @@
- 
+
 import { AttemptExamComponent } from './Components/attempt-exam/attempt-exam.component';
 import { RenderExamComponent } from './Components/render-exam/render-exam.component';
 import { EditExamComponent } from './Components/edit-exam/edit-exam.component';
@@ -13,7 +13,7 @@ const routes: Routes = [
   {path:'exams/add',component:AddExamComponent},
   {path:'exams/edit/:id',component:EditExamComponent},
   {path:'exams/attempt/:examId',component:AttemptExamComponent},
-  {path:'exams/render',component:RenderExamComponent}
+  {path:'exams/render/:id',component:RenderExamComponent}
   ];
 
 @NgModule({

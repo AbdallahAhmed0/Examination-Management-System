@@ -26,8 +26,8 @@
           </div>
           <div class="exam-details-right">
             <div class="mat-grid-tile-header">
-              <span class="mat-subheading-1">Duration: </span>
-              <span class="mat-body-1">{{ exam?.duration }}</span>
+              <span class="mat-subheading-1">Time Remaining: </span>
+              <span class="mat-body-1">{{ formatTimeRemaining() }}</span>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
           <!-- multiple choice question  -->
           <mat-card-content>
             <form>
-              <h2>Question {{ i+1 }} ({{ question.points }} points)</h2>
+              <h2>Question {{ i + (pageIndex * 3) + 1 }} ({{ question.points }} points)</h2>
               <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
               <ng-container *ngIf="question.questionType === 'Multiple_choice'">
                 <mat-radio-group>
@@ -81,23 +81,20 @@
               </ng-container>
             </form>
           </mat-card-content>
-          <!-- <mat-card-actions>
-            <button mat-raised-button color="primary">Save</button>
-          </mat-card-actions> -->
         </mat-card>
-        <!-- <button mat-raised-button color="primary"> Save</button> -->
       </div>
     </ng-container>
-    
+
     <div>
-      <button mat-raised-button *ngIf="currentPageIndex > 0" (click)="previousPage()">
-        previous
+      <button mat-raised-button *ngIf="currentPageIndex > 0 && currentPageIndex <= questionPages.length - 1" (click)="previousPage()">
+        Previous
       </button>
-      <button mat-raised-button color="primary" class="submit-button"> Submit </button>
-      <button mat-raised-button *ngIf="currentPageIndex < questionPages.length - 1" (click)="nextPage()" [innerText]="nextButtonLabel">
+      <button mat-raised-button color="primary" *ngIf="currentPageIndex < questionPages.length - 1" (click)="nextPage()" (click)="savePage()">
         Save
       </button>
+      <button mat-raised-button *ngIf="currentPageIndex === questionPages.length - 1" color="primary" class="submit-button" (click)="submitExam()">
+        Submit
+      </button>
     </div>
-    <!-- <button mat-raised-button color="primary">Submit Exam</button> -->
   </div>
 </div>

@@ -92,6 +92,7 @@
           <button mat-menu-item (click)="delete(row)">Delete Exam</button>
           <button mat-menu-item [routerLink]="['/save',row.id]">Questions</button>
           <button mat-menu-item [routerLink]="['exams/attempt/',row.id]">Attemp Exam</button>
+          <button mat-menu-item [routerLink]="['exams/render/',row.id]">Render Exam</button>
         </mat-menu>
           <!-- <div class="actions">
             <button mat-button (click)="edit(row.id)">
