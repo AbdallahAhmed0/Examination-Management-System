@@ -64,7 +64,11 @@ delete(id:number){
     if (result === 'confirm') {
 
         this.adminService.deleteAdmin(id);
-        window.location.reload();
+
+        setTimeout(() => {
+          window.location.reload();
+          this.adminService.openSnackBar("Deleted");
+        }, 800);
 
       }
     });
@@ -86,6 +90,7 @@ getAdmins(){
 
 
         this.admins=data;
+        console.log(data);
 
   })
 

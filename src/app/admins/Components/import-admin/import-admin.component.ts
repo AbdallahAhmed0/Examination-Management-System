@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { read, utils } from 'xlsx';
@@ -92,7 +92,7 @@ export class ImportAdminComponent implements OnInit {
   ];
   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet([
     ['','Ahmed','Hossam',12,'Ahmed@email.com','Ahmed123865','ADMIN',false,true,'Software Engineer'],
-    ['','Adel','Hany',16,'Adel@email.com','#@$5^#$7+#$%','ADMIN',false,true,'Machine learning']
+    ['','Adel','Hany',16,'Adel@email.com','#@$5^#$7+#$%','Professor',false,true,'Machine learning']
 ]);
 
 
@@ -143,8 +143,19 @@ export class ImportAdminComponent implements OnInit {
 
     const length =this.admins.length;
     for (let i = 0;i < length;i++) {
-      let admin = this.admins[i];
+      //reset form
+      this.newAdmin.reset();
+
+      // add admin in form
+      let admin:Admin = this.admins[i];
       this.newAdmin.patchValue(admin);
+
+      // select role in form
+      let testformArray = this.newAdmin.get('roles') as FormArray;
+      for (let role of admin.roles) {
+          testformArray.push(new FormControl(role));
+      }
+
       const observer = {
         next: (admin: Admin) => {},
         error: (err: Error) => {
@@ -155,6 +166,7 @@ export class ImportAdminComponent implements OnInit {
 
       if(this.newAdmin.valid){
         this.subAdmin = this.adminService.addAdmin(this.newAdmin.value).subscribe(observer);
+        console.log(this.newAdmin.value)
       }
       else{
 
