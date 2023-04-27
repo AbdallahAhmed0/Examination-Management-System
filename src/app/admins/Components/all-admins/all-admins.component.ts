@@ -5,10 +5,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { utils, writeFile } from 'xlsx';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
-import {DialogeComponent} from '../../../Shared/material/dialog/dialog.component'
+import {DialogeComponent} from '../../../Shared/material/dialog/dialog.component';
 
 import * as XLSX from 'xlsx';
 
@@ -65,7 +64,11 @@ delete(id:number){
     if (result === 'confirm') {
 
         this.adminService.deleteAdmin(id);
-        window.location.reload();
+
+        setTimeout(() => {
+          window.location.reload();
+          this.adminService.openSnackBar("Deleted");
+        }, 800);
 
       }
     });
@@ -92,7 +95,7 @@ getAdmins(){
 
 }
 exportData(){
-  const headings = [[
+  const headings = [
     'id',
     'firstName',
     'lastName',
@@ -103,8 +106,11 @@ exportData(){
     'locked',
     'enable',
     'specialization'
-]];
-const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.admins);
+];
+const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.admins.map(a => ({
+  ...a,
+  roles: a.roles.map(r => r.role).join(', ')
+})));
 const headerStyle = {
   font: { bold: true, color: { rgb: 'FFFFFF' } },
   fill: { bgColor: { rgb: '2F75B5' } }
@@ -115,21 +121,14 @@ const headerStyle = {
 XLSX.utils.sheet_add_aoa(ws, [headings], { origin: 'A1' });
 
 
-
     // Set column width
-    const columns = [{ wpx: 30 }, { wpx: 100 }, { wpx: 100 },{ wpx: 60 }, { wpx: 180 }, { wpx: 150 },{ wpx: 70 }, { wpx: 70 }, { wpx: 70 },{ wpx: 120 }];
+    const columns = [{ wpx: 30 }, { wpx: 100 }, { wpx: 100 },{ wpx: 80 }, { wpx: 180 }, { wpx: 150 },{ wpx: 70 }, { wpx: 70 }, { wpx: 70 },{ wpx: 120 }];
     ws['!cols'] = columns;
 
     // Set row height
     const rows = [{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 }];
     ws['!rows'] = rows;
 
-    // Set cell style
-    const cellStyle = {
-      font: { bold: true, size: 14 },
-      alignment: { horizontal: 'center', vertical: 'center' },
-      border: { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
-    };
 
 
     const workbook: XLSX.WorkBook = XLSX.utils.book_new();
@@ -139,12 +138,11 @@ XLSX.utils.sheet_add_aoa(ws, [headings], { origin: 'A1' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'Data of Admins.xlsx';
+    link.download = 'Data of admins.xlsx';
     link.click();
     URL.revokeObjectURL(url);
 
 }
-
 importData(){
   this.router.navigate(['admins/import']);
 }
