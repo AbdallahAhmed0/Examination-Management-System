@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { read, utils } from 'xlsx';
@@ -155,8 +155,17 @@ export class ImportStudentComponent implements OnInit {
 
     const length =this.students.length;
     for (let i = 0;i < length;i++) {
+
+      // add student in form
       let student = this.students[i];
       this.newStudent.patchValue(student);
+
+      // select role in form
+      let testformArray = this.newStudent.get('roles') as FormArray;
+      testformArray.clear();
+      for (let role of student.roles) {
+          testformArray.push(new FormControl(role));
+      }
       const observer = {
         next: (student: Student) => {},
         error: (err: Error) => {
