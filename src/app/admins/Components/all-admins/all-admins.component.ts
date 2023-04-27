@@ -90,7 +90,6 @@ getAdmins(){
 
 
         this.admins=data;
-        console.log(data);
 
   })
 

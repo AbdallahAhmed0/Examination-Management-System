@@ -143,8 +143,6 @@ export class ImportAdminComponent implements OnInit {
 
     const length =this.admins.length;
     for (let i = 0;i < length;i++) {
-      //reset form
-      this.newAdmin.reset();
 
       // add admin in form
       let admin:Admin = this.admins[i];
@@ -152,6 +150,7 @@ export class ImportAdminComponent implements OnInit {
 
       // select role in form
       let testformArray = this.newAdmin.get('roles') as FormArray;
+      testformArray.clear();
       for (let role of admin.roles) {
           testformArray.push(new FormControl(role));
       }
@@ -166,7 +165,6 @@ export class ImportAdminComponent implements OnInit {
 
       if(this.newAdmin.valid){
         this.subAdmin = this.adminService.addAdmin(this.newAdmin.value).subscribe(observer);
-        console.log(this.newAdmin.value)
       }
       else{
 
