@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Exam } from '../../Models/exam';
@@ -11,7 +11,8 @@ import { ExamService } from '../../Services/exam.service';
 export class AttemptExamComponent implements OnInit {
   constructor(
     private _examService: ExamService,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -36,8 +37,8 @@ export class AttemptExamComponent implements OnInit {
       .subscribe((data) => console.log(data));
   }
 
-  attemptExam() {
-    // this.router.navigate();   //This should take the user to the exam
+  attemptExam(examId:any) {
+     this.router.navigate(['exams/render/',examId]);   //This should take the user to the exam
     this.getAttemptExamData(12); //FIXed userID
   }
 }

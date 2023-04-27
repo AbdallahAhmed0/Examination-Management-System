@@ -21,15 +21,16 @@ import { DialogeComponent } from '../../../Shared/material/dialog/dialog.compone
 })
 export class AllExamsComponent implements OnInit {
   displayedColumns: string[] = [
-    'actions',
+    '#',
     'id',
     'examName',
+    'course',
+    'startTime',
+    'endTime',
+    'state',
     'duration',
     'successRate',
-    'course',
-    'status',
-    'startTime',
-    'endTime'
+    'Actions'
   ];
   dataSource!: MatTableDataSource<any>;
 
@@ -59,7 +60,6 @@ export class AllExamsComponent implements OnInit {
   getExams() {
     this.examService.getAllExams().subscribe((data) => {
       /** Builds and returns a new User. */
-      console.log(data)
       const createNewExam = (id: number) => {
         return {
           id: id,
@@ -68,13 +68,13 @@ export class AllExamsComponent implements OnInit {
           duration:
             data[Math.round(Math.random() * (data.length - 1))].duration,
             course: data[Math.round(Math.random() * (data.length - 1))].course,
-            status: data[Math.round(Math.random() * (data.length - 1))].status,
+            state: data[Math.round(Math.random() * (data.length - 1))].state,
           startTime:
             data[Math.round(Math.random() * (data.length - 1))].startTime,
           EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
         };
       };
-      
+
 
       // Create users
 

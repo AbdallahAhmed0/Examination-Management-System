@@ -10,7 +10,6 @@ table{
   }
 }
 
-
 mat-paginator{
   color: #3174efe9;
   font-size: 12px;
@@ -29,7 +28,7 @@ mat-paginator{
 }
 
 td, th {
-  font-size: 17px;
+  font-size: 14px;
 }
 // th,mat-paginator{
 //     background: rgb(238, 232, 232);
@@ -42,7 +41,7 @@ td, th {
     width: 45px;
     height: 45px;
     padding: 8px;
-    margin: 10px 0px;
+    margin: 10px 5px;
     border-radius: 6px;
     text-align: center;
 }
@@ -50,7 +49,7 @@ td, th {
 
     color: #fff;
     padding: 8px;
-    margin: 10px 0px;
+    margin: 10px 5px;
     border-radius: 6px;
     font-size: 30px;
     background: #0cd463;
@@ -59,12 +58,30 @@ td, th {
     text-align: center;
 
 }
+.view-icon{
+  color: #fff;
+  padding: 8px;
+  margin: 10px 5px;
+  border-radius: 6px;
+  font-size: 30px;
+  background: #1f6effe9;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+}
+.view-icon:hover{
+  background: darken($color: #1f6effe9, $amount: 10%);
+}
+.edit-icon:hover{
+  background: darken($color: #0cd463, $amount: 10%);
+}
+.delete-icon:hover{
+  background:darken($color: #f20202, $amount: 10%);
+}
 .actions{
   font-size: 16px;
   margin: 15px 0px;
   color: #f6f4f4;
-  background: darken($color: #0cd463, $amount: 5%);
-
 }
 
 .wide-menu {
@@ -79,7 +96,16 @@ td, th {
 .center{
   text-align: center;
 }
+.question{
+  margin: 10px;
+  margin-top: 30px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  background:  #0aac50;
+  color: #fff;
 
+}
 
 ::ng-deep .custom-menu {
   width: 175px; /* replace with your desired width */

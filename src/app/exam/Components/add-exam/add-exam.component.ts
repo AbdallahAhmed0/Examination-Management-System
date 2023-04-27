@@ -37,6 +37,8 @@ export class AddExamComponent implements OnInit {
       successRate:[0,Validators.required],
       course:["",[Validators.required]],
       state:[false,[]],
+      questionsPerPage:["",[Validators.required]],
+      showResult: [true],
       startTime:["",[Validators.required]],
       endTime:["",[Validators.required]]
 
@@ -44,17 +46,16 @@ export class AddExamComponent implements OnInit {
 
   }
   goback(){
-     this.router.navigateByUrl('/exams');
+    this.router.navigateByUrl('/exams');
 
   }
   addExam(){
-   let  start = this.startTime?.value
-   let  end = this.endTime?.value
-   console.log(start);
+    let  start = this.startTime?.value
+    let  end = this.endTime?.value
 
 
-   this.startTime?.setValue(this.transformDate(start))
-   this.endTime?.setValue(this.transformDate(end))
+    this.startTime?.setValue(this.transformDate(start))
+    this.endTime?.setValue(this.transformDate(end))
 
 
     console.log(this.newExam.value)
@@ -68,7 +69,7 @@ export class AddExamComponent implements OnInit {
         }
     }
 
-   this.subExam= this.examService.addExam(this.newExam.value).subscribe(observer);
+    this.subExam= this.examService.addExam(this.newExam.value).subscribe(observer);
 
 }
 
@@ -77,26 +78,29 @@ export class AddExamComponent implements OnInit {
       this.theCourses=data
     })
   }
+  btnToggle(){
 
+  }
   transformDate(time:any){
     let transformedDate
     console.log(time);
 
 
-   let myDate = new Date(time);
-   let year = myDate.getFullYear().toString();
-   let month = (myDate.getMonth() + 1).toString().padStart(2, '0');
-   let day = myDate.getDate().toString().padStart(2, '0');
-   let hours:any = myDate.getHours()
-   let minutes = myDate.getMinutes().toString().padStart(2, '0');
-   let ampm = hours >= 12 ? 'PM' : 'AM';
-   hours = hours % 12;
-   if(hours<10){
-    hours="0"+hours
-   }
-   hours = hours ? hours : 12;
-   transformedDate = `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
-   return transformedDate
+    let myDate = new Date(time);
+    let year = myDate.getFullYear().toString();
+    let month = (myDate.getMonth() + 1).toString().padStart(2, '0');
+    let day = myDate.getDate().toString().padStart(2, '0');
+    let hours:any = myDate.getHours()
+    let minutes = myDate.getMinutes().toString().padStart(2, '0');
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+
+    if(hours<10){
+      hours="0"+hours
+    }
+    hours = hours ? hours : 12;
+    transformedDate = `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
+    return transformedDate
   }
   get examName(){
     return this.newExam.get('examName')
@@ -117,5 +121,10 @@ export class AddExamComponent implements OnInit {
   get successRate(){
     return this.newExam.get('succesRate')
   }
-
+  get questionsPerPage(){
+    return this.newExam.get('questionsPerPage')
+  }
+get showResult(){
+    return this.newExam.get('showResult')
+  }
 }

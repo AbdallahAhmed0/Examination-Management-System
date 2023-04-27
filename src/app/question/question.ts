@@ -1,5 +1,5 @@
 export interface Question {
-  id?: string,
+  id?: number,
   questionText: string,
   points: number,
   questionType: string,
@@ -8,7 +8,7 @@ export interface Question {
 }
 interface answers{
 
-    id?: string,
+    id?: number,
     answerText: string,
     correctAnswer: boolean,
     comment: string
