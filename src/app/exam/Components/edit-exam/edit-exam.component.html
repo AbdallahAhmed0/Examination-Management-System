@@ -1,3 +1,4 @@
+
 <div class="contianer"  >
 
   <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()"><mat-icon>menu</mat-icon> All Exams</button>
@@ -59,9 +60,9 @@
 </mat-form-field><br>
 <br>
 <mat-form-field appearance="fill">
-  <mat-label>Select Course</mat-label>
+  <mat-label>{{editCourse.name}}</mat-label>
   <mat-select formControlName="course" matinput >
-    <mat-option *ngFor="let course of theCourses" [value]=course>{{course.courseName}}</mat-option>
+    <mat-option *ngFor="let course of theCourses" [value]='course'>{{course.courseName}}</mat-option>
   </mat-select>
   <mat-error *ngIf="course?.hasError('required')">
     you must choose course

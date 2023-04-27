@@ -23,6 +23,7 @@ export class EditExamComponent implements OnInit {
   theCourses?:Course[];
   sliderValue?:number;
 
+  editCourse!:any;
 
   constructor(private router:Router,
      private examService:ExamService,
@@ -36,6 +37,7 @@ export class EditExamComponent implements OnInit {
 
         this.examService.getExamById(this.id).subscribe(data =>{
             this.exam=data;
+            this.editCourse=this.exam.course;
             console.log(data);
             this.sliderValue=data.successRate
 
@@ -45,7 +47,7 @@ export class EditExamComponent implements OnInit {
               examName:[data.examName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
               duration:[data.duration,[Validators.required]],
               successRate:[data.successRate,Validators.required],
-              course:["",Validators.required],
+              course:[data.course,Validators.required],
               state:[false,[]],
               startTime:[ "",[Validators.required]],
               endTime:["",[Validators.required]]
