@@ -10,25 +10,30 @@ export class AuthService {
   constructor(private http:HttpClient) {
 
   }
-  ProceedLogin(UserCred:any){
-    return this.http.post(`${environment.APPURL}/login`,UserCred);
+  apiurl='http://localhost:3000/user';
+
+  GetUserbyCode(id:any){
+    return this.http.get(this.apiurl+'/'+id);
   }
-  IsLoggedIn(){
-    return localStorage.getItem('token') != null;
+  Getall(){
+    return this.http.get(this.apiurl);
   }
-  GetToken(){
-    return localStorage.getItem('token') || '';
+  updateuser(id:any,inputdata:any){
+    return this.http.put(this.apiurl+'/'+id,inputdata);
   }
-  HaveAccess(){
-    var loggintoken=localStorage.getItem('token')||'';
-    var _extractedtoken=loggintoken.split('.')[1];
-    var _atobdata=atob(_extractedtoken);
-    var _finaldata=JSON.parse(_atobdata);
-    if(_finaldata.role=='admin'){
-      return true
-    }else{
-      alert('you not having access');
-      return false
-    }
+  getuserrole(){
+    return this.http.get('http://localhost:3000/role');
+  }
+  isloggedin(){
+    return sessionStorage.getItem('username')!=null;
+  }
+  getrole(){
+    return sessionStorage.getItem('role')!=null?sessionStorage.getItem('role')?.toString():'';
+  }
+  GetAllCustomer(){
+    return this.http.get('http://localhost:3000/customer');
+  }
+  Getaccessbyrole(role:any,menu:any){
+    return this.http.get('http://localhost:3000/roleaccess?role='+role+'&menu='+menu)
   }
 }
