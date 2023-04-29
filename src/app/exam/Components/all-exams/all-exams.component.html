@@ -104,7 +104,7 @@
           <button mat-menu-item [routerLink]="['exams/attempt/',row.id]">Attemp Exam</button>
         </mat-menu> -->
           <div class="actions">
-            <a title="View" [routerLink]="['exams/render/',row.id]">
+            <a title="View" [routerLink]="['exams/attempt/',row.id]">
               <mat-icon class="view-icon">remove_red_eye</mat-icon>
             </a>
             <a title="Edit" (click)="edit(row.id)">
