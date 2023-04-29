@@ -1,39 +1,58 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from './../../../environments/environment.prod';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../Model/user';
+import { Role } from '../../roles/Models/role';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http:HttpClient) {
+  private apiUrl = 'http://localhost:3000/auth';
+  private user!:User;
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser$: Observable<User>;
 
+  constructor(private http: HttpClient) {
+    const currentUser = localStorage.getItem('currentUser');
+    this.currentUserSubject = new BehaviorSubject<User>(currentUser ? JSON.parse(currentUser) : null);
+        this.currentUser$ = this.currentUserSubject.asObservable();
   }
-  apiurl='http://localhost:3000/user';
 
-  GetUserbyCode(id:any){
-    return this.http.get(this.apiurl+'/'+id);
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
   }
-  Getall(){
-    return this.http.get(this.apiurl);
+
+  login(email: string, password: string): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/login`, { email, password })
+      .pipe(
+        tap(user => {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        })
+      );
   }
-  updateuser(id:any,inputdata:any){
-    return this.http.put(this.apiurl+'/'+id,inputdata);
+
+  logout(): void {
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(this.user);
   }
-  getuserrole(){
-    return this.http.get('http://localhost:3000/role');
+
+  hasRole(role: string): boolean {
+    return this.currentUserValue?.roles?.find(r => r.role === role) !== undefined;
   }
-  isloggedin(){
-    return sessionStorage.getItem('username')!=null;
+
+  isAdmin(): boolean {
+    return this.hasRole('admin');
   }
-  getrole(){
-    return sessionStorage.getItem('role')!=null?sessionStorage.getItem('role')?.toString():'';
+
+  isUser(): boolean {
+    return this.hasRole('user');
   }
-  GetAllCustomer(){
-    return this.http.get('http://localhost:3000/customer');
-  }
-  Getaccessbyrole(role:any,menu:any){
-    return this.http.get('http://localhost:3000/roleaccess?role='+role+'&menu='+menu)
+
+  getRoles(): Role[] {
+    return this.currentUserValue?.roles;
   }
 }
