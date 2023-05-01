@@ -1,4 +1,6 @@
-<mat-sidenav-container>
+<!-- if user not login -->
+
+<mat-sidenav-container *ngIf="!isLogin()">
 
   <app-header [sidenav]="sidenav"></app-header>
   <router-outlet></router-outlet>
@@ -10,3 +12,9 @@
 
 </mat-sidenav>
 </mat-sidenav-container>
+
+<!-- if user login -->
+<div *ngIf="isLogin()">
+  <router-outlet></router-outlet>
+</div>
+

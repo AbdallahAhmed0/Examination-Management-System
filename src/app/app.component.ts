@@ -1,6 +1,8 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,29 +15,42 @@ export class AppComponent implements OnInit {
 
 
   @ViewChild(MatSidenav)
-  sidenav!: MatSidenav
+  sidenav!: MatSidenav;
 
 
 
 
   constructor(private observer:BreakpointObserver,
-              private cd:ChangeDetectorRef){
+              private cd:ChangeDetectorRef,
+              private route: ActivatedRoute){}
 
-  }
   ngOnInit(): void {
   }
 
-  ngAfterViewInit() {
-    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
-      if (res.matches) {
-        this.sidenav.mode='over';
-        this.sidenav.close();
-      } else {
-        this.sidenav.mode = 'side';
-        this.sidenav.open();
-      }
+  // check router contain login or not
+  public isLogin(): boolean {
+    let hasLoginSegment = false;
+    this.route.url.pipe(take(1)).subscribe(urlSegments => {
+      hasLoginSegment = urlSegments.some(segment => segment.path === 'login');
     });
-    this.cd.detectChanges();
+    return !hasLoginSegment;
+    }
+
+  ngAfterViewInit() {
+
+  // check if user login or not to show dashboard
+  if(!this.isLogin()){
+      this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+        if (res.matches) {
+          this.sidenav.mode='over';
+          this.sidenav.close();
+        } else {
+          this.sidenav.mode = 'side';
+          this.sidenav.open();
+        }
+      });
+      this.cd.detectChanges();
+  }
 
   }
 
