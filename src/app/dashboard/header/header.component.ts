@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 
 
 @Component({
@@ -10,6 +11,7 @@ export class HeaderComponent implements OnInit {
 
   constructor( ) { }
 
+  @Input()sidenav!:MatSidenav;
 
 ngOnInit(): void {
 

@@ -1,6 +1,5 @@
-import {  Component, OnInit, ViewChild} from '@angular/core';
+import {  Component,OnInit, ViewChild} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -8,12 +7,18 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class SidebarComponent implements OnInit {
 
+
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav
 
-  constructor(){}
+
+  constructor(){
+
+  }
   ngOnInit(): void {
   }
+  
+
 
 }
 
