@@ -14,10 +14,10 @@ span{
   margin-right: 18px;
   font-size: 40px;
   text-align: center;
-  color: $red-navbar;
+  color: #007bff;
 }
 .icon-profile:hover{
-  color:darken( $red-navbar, 10%);
+  color:darken( #007bff, 10%);
 }
 
 input:focus {
