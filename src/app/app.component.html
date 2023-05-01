@@ -1,6 +1,6 @@
 <mat-sidenav-container>
 
-  <app-header (toggleSidebar)="sidenav.toggle()"></app-header>
+  <app-header [sidenav]="sidenav"></app-header>
   <router-outlet></router-outlet>
 
   <mat-sidenav #sidenav="matSidenav" [style.width.px]="!sidenav.close ? 80 : 250"
