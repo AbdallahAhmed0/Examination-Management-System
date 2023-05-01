@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DataSharingService } from '../../Shared/Services/data-sharing.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 
 @Component({
@@ -9,7 +8,7 @@ import { DataSharingService } from '../../Shared/Services/data-sharing.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor( private dataSharingService: DataSharingService) { }
+  constructor( ) { }
 
 
 ngOnInit(): void {
