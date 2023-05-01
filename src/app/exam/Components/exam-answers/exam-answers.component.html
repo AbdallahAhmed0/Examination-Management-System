@@ -41,12 +41,18 @@
           </mat-radio-group>
         </ng-container>
         <!-- =========== IF Matching Question =========== -->
-        <!-- <ng-container *ngIf="question.questionType === 'Matching'">
+        <ng-container *ngIf="question.questionType === 'Matching'">
           <div class=" example-radio-button question__answers--answer ">
-            <p class="flex">Input: <span class="correct--answer"
-                [innerHtml]="sanitizeHtml(question.questionAnswers[0].answerText)"></span></p>
+            <p class="">
+              <b>Input:</b> <span class="question__answers--answer correct--answer"
+                [innerHtml]="sanitizeHtml(question.questionAnswers[0].answerText)"></span>
+            </p>
+            <p class="">
+              <b>System Answer:</b> <span class="question__answers--answer"
+                [innerHtml]="sanitizeHtml(question.questionAnswers[0].answerText)"></span>
+            </p>
           </div>
-        </ng-container> -->
+        </ng-container>
         <!-- =====================================  -->
 
       </div>
