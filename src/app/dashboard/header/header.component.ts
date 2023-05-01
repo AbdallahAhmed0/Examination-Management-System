@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+
 
 @Component({
   selector: 'app-header',
@@ -8,11 +9,17 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor( ) { }
 
-@Input()sidenav!:MatSidenav;
+  @Input()sidenav!:MatSidenav;
 
 ngOnInit(): void {
+
+}
+@Output() toggleSidebar = new EventEmitter<void>();
+
+  onToggleSidenav() {
+    this.toggleSidebar.emit();
   }
 
 }

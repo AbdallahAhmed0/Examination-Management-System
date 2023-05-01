@@ -37,7 +37,7 @@ export class RenderExamComponent implements OnInit {
     this.examService.renderExam(this.examId).subscribe(data => {
       this.exam = data;
       this.questions = this.exam.questions;
-      this.questionPages = this.chunk(this.questions, 3);
+      this.questionPages = this.chunk(this.questions,3);
 
       console.log(this.exam)
 

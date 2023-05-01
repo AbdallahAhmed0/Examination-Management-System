@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {path:"login",loadChildren:()=>import('./login/login.module').then(l => l.LoginModule)},
   {path:"admins",loadChildren:()=>import('./admins/admins.module').then(a=>a.AdminsModule)},
   {path:"roles",loadChildren:()=>import('./roles/roles.module').then(m=>m.RolesModule)},
   {path:"students",loadChildren:()=>import('./students/students.module').then(m=>m.StudentsModule)},
