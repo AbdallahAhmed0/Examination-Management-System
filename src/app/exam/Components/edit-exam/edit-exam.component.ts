@@ -21,6 +21,7 @@ export class EditExamComponent implements OnInit {
   subExam?:Subscription;
   subRoute?:Subscription;
   theCourses?:Course[];
+  choosenCourse!:any;
   sliderValue?:number;
 
 
@@ -30,6 +31,7 @@ export class EditExamComponent implements OnInit {
     private activatedRoute:ActivatedRoute,
     private courseService:CourseService) { }
     ngOnInit(): void {
+      this.getCourses()
 
       this.subRoute= this.activatedRoute.paramMap.subscribe((paramMap)=>{
         this.id=Number(paramMap.get('id'));
@@ -37,6 +39,7 @@ export class EditExamComponent implements OnInit {
         this.examService.getExamById(this.id).subscribe(data =>{
             this.exam=data;
             console.log(data);
+            this.choosenCourse=data.course
             this.sliderValue=data.successRate
 
 
@@ -45,8 +48,10 @@ export class EditExamComponent implements OnInit {
               examName:[data.examName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
               duration:[data.duration,[Validators.required]],
               successRate:[data.successRate,Validators.required],
-              course:["",Validators.required],
+              course:[data.course,Validators.required],
               state:[false,[]],
+              questionsPerPage:[data.questionsPerPage,[Validators.required]],
+              showResult: [data.showResult],
               startTime:[ "",[Validators.required]],
               endTime:["",[Validators.required]]
 
@@ -128,6 +133,12 @@ export class EditExamComponent implements OnInit {
     }
     get course(){
       return this.newExam.get('course')
+    }
+    get questionsPerPage(){
+      return this.newExam.get('questionsPerPage')
+    }
+  get showResult(){
+      return this.newExam.get('showResult')
     }
 
   }

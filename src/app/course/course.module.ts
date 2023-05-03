@@ -7,6 +7,7 @@ import { EditCourseComponent } from './Components/edit-course/edit-course.compon
 import { AllCoursesComponent } from './Components/all-courses/all-courses.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../Shared/material/material.module';
+import { CourseDetailComponent } from './Components/course-detail/course-detail.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { MaterialModule } from '../Shared/material/material.module';
     AddCourseComponent,
     EditCourseComponent,
     AllCoursesComponent,
+    CourseDetailComponent,
 
   ],
   imports: [

@@ -20,7 +20,7 @@ export class EditCourseComponent implements OnInit {
   subRoute?:Subscription;
   newCourse!: FormGroup;
   subCourse?:Subscription;
-  theGroups ?:any[]=[];
+  theGroups :any[]=[];
   admins :Admin[]=[];
   theteachers:any =[] ;
 
@@ -43,10 +43,19 @@ export class EditCourseComponent implements OnInit {
 
         this.course=data
         this.items=data.admins
+        let chosenGroup
+        for(let group of this.theGroups){
+          if(data.groupName==group.name){
+             chosenGroup=group
+          }
+
+        }
+
+
         this.newCourse=this.fb.group({
           name:[data.courseName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
           code:[data.courseCode,[Validators.required,Validators.minLength(3)]],
-          group:[data.groupName,[Validators.required]],
+          group:[chosenGroup,[Validators.required]],
           adminIds:["",]
 
 

@@ -20,17 +20,26 @@ img{
 }
 .btn-list
 {
+  background-color: #0ec82d;
   margin: 25px;
+  padding: 10px;
 }
 .edit{
   color: #fff;
     margin: 10px 0px;
     border-radius: 6px;
-    background:  #0cd463;
+    background:  #0470dc;
     text-align: center;
 }
 .edit:hover{
-  background: darken($color: #0cd463, $amount: 10%);
+  background: darken($color: #0470dc, $amount: 10%);
+}
+button{
+  margin: 20px;
+}
+.delete{
+float: right;
+
 }
 mat-card-content,mat-card-actions{
   padding-left: 15px;
