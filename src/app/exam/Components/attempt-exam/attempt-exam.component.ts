@@ -21,7 +21,6 @@ export class AttemptExamComponent implements OnInit {
 
   examInfo!: Exam;
   examId!: number;
-  attemptData!: Object;
 
   getExamInfo() {
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('examId'));
@@ -35,11 +34,12 @@ export class AttemptExamComponent implements OnInit {
   getAttemptExamData(userId: number) {
     this._examService
       .attemptExam(this.examId, userId)
-      .subscribe((data) => this.attemptData = data);
+      .subscribe((data) => console.log(data));
   }
 
-  attemptExam() {
-    this.router.navigate(['exams/render/',this.examId], { state: { data: this.attemptData } });
-    this.getAttemptExamData(12); //FIXed userID
+  startExam(examId: any) {
+    this.router.navigate(['exams/render/', examId]); //This should take the user to the exam
+    this.getAttemptExamData(1); //FIXed userID
+    this._examService.renderExam(examId);
   }
 }

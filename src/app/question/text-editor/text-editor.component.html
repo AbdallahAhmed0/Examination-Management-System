@@ -4,6 +4,7 @@
         <textarea  [froalaEditor]="froalaOptions( 'Question Text')"
         (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
         (ngModelChange)="onEditorValueChange($event)"
+        [value]="QuestionText?.questionText"
         required
         #questionText="ngModel">
       </textarea>
@@ -12,11 +13,13 @@
   </div>
 
    <div class="answer" *ngIf="placeholder == 'Answer Text'">
-    <textarea  [froalaEditor]="froalaOptions( 'Answer Text')"
+    <textarea id={{answerText?.id}}  [froalaEditor]="froalaOptions( 'Answer Text')"
     (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
     (ngModelChange)="onEditorValueChange($event)"
     required
-    #questionText="ngModel">
+    #questionText="ngModel"
+    [value]="answerText?.answerText"
+    >
   </textarea>
   <mat-error *ngIf="questionText.touched && questionText.invalid">Answer Text is required</mat-error>
 
@@ -26,16 +29,19 @@
   <textarea  [froalaEditor]="froalaOptions('Message for those who choose this')"
   (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
   (ngModelChange)="onEditorValueChange($event)"
-  [value]="commentValue">
+  [value]="comment"
+  >
 </textarea>
 </div>
 
 <div class="option" *ngIf="placeholder == 'options'" >
-  <textarea  [froalaEditor]="froalaOptions('options')"
+  <textarea id={{answerText?.id}}
+  [froalaEditor]="froalaOptions('options')"
   (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
   (ngModelChange)="onEditorValueChange($event)"
   required
-  #questionText="ngModel">
+  #questionText="ngModel"
+  [value]="answerText?.answerText">
 </textarea>
 <mat-error *ngIf="questionText.touched && questionText.invalid">option is required</mat-error>
 

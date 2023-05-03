@@ -3,7 +3,7 @@ import { ExamService } from '../../exam/Services/exam.service';
 import { Exam } from './../../exam/Models/exam';
 import { Question } from './../question';
 import { QuestionService } from './../question.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-save-question',
@@ -12,83 +12,129 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SaveQuestionComponent implements OnInit {
 
-
   consoleError: any;
-  formVaild :boolean=false;
+  formValid :boolean=false;
+
   selectedComponents:any[]=[];
-  sentArrayComponenet:any[]=[];
   index:number=1;
-  questionData!:object;
 
+  options:any[]=[];
   exam?:Exam;
-  examId!: number;
-
-
   questions:Question[]=[];
+  examId!:number;
+
+  importQuestions!:Question[];
+
   constructor(private examService:ExamService,
               private questionService:QuestionService,
               private router:Router,
               private _activatedRoute:ActivatedRoute) {
   }
   ngOnInit(): void {
-    this.getExamInfo();
-  }
-  getExamInfo() {
+
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
-    this.examService.getExamById(this.examId).subscribe((data) => {
-      this.exam = data;
-    });
+
+
+
+  // get Questions of Exam
+    this.questionService.getQuestions(this.examId).subscribe(data => {
+    this.questions=data,
+    this.formValid=true
+  // select questions in selected Components
+    this.questions.forEach(question => {
+
+      this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
+      this.index++;
+      });
+      // Get the array parameter from the state object
+      this.importQuestions = history.state.data;
+
+      if(this.importQuestions){
+
+        this.importQuestions.forEach(question => {
+
+          this.selectedComponents.push({id: this.index, name: question.questionType, data: question});
+          this.index++;
+          });
+          this.questions.push(...this.importQuestions)
+      }
+
+});
+
+
+  // get Data of Exam
+  this.examService.getExamById(this.examId).subscribe((data) => {
+    this.exam = data;
+    // err => throwError(err || "an error happened while getting exam info")
+  });
+
   }
+
 
 
   showChoiceQuestions() {
-    this.selectedComponents.push({id:this.index,name:'choice'});
+    this.selectedComponents.push({id:this.index,name:'Multiple_choice'});
     this.index++;
-    this.formVaild=false;
+    this.formValid=false;
   }
 
   showTextQuestions() {
-    this.selectedComponents.push({id:this.index,name:'text'});
+    this.selectedComponents.push({id:this.index,name:'Matching'});
     this.index++;
-    this.formVaild=false;
+    this.formValid=false;
   }
 
   showTextEditor() {
     this.selectedComponents.push({id:this.index,name:'coding'});
     this.index++;
-    this.formVaild=false;
+    this.formValid=false;
   }
   showTrue_falseQuestions(){
-    this.selectedComponents.push({id:this.index,name:'true_false'});
+    this.selectedComponents.push({id:this.index,name:'True_False'});
     this.index++;
-    this.formVaild=false;
+    this.formValid=false;
 
   }
   removeChild(child: any) {
-    const index = this.selectedComponents.indexOf(child);
-    if (index >= 0) {
-      this.selectedComponents.splice(index, 1);
+    if(this.questions[child.id-1]){
+      this.questionService.deleteQuestion(this.questions[child.id-1]);
     }
+
+      this.questions.splice(child.id-1,1);
+      this.selectedComponents.splice(child.id-1,1);
+
 }
-  upChild(child: any) {
-    const index = this.selectedComponents.indexOf(child);
-    if (index >= 1) {
-      [this.selectedComponents[index],this.selectedComponents[index-1]]=[this.selectedComponents[index-1],this.selectedComponents[index]]
-    }
-  }
-  downChild(child: any) {
-    const index = this.selectedComponents.indexOf(child);
-    if (index < this.selectedComponents.length-1) {
-      [this.selectedComponents[index],this.selectedComponents[index+1]]=[this.selectedComponents[index+1],this.selectedComponents[index]]
-    }
-  }
+removeOptions(option: any){
+this.options.push(option);
+}
+
+// upChild(child: any) {
+//     const index = this.selectedComponents.indexOf(child);
+//     if (index >= 1) {
+//       [this.selectedComponents[index],this.selectedComponents[index-1]]=[this.selectedComponents[index-1],this.selectedComponents[index]]
+
+//     }
+//   }
+
+//   downChild(child: any) {
+//     const index = this.selectedComponents.indexOf(child);
+//     if (index < this.selectedComponents.length-1) {
+//       [this.selectedComponents[index],this.selectedComponents[index+1]]=[this.selectedComponents[index+1],this.selectedComponents[index]]
+//     }
+//   }
+
   addQuestion(data:any,index:number){
     this.questions[index]=data;
   }
+
   formIsValid(valid:boolean){
-  this.formVaild=valid;
+  this.formValid=valid;
   }
+
   submit(){
+    if(this.options.length){
+        this.questionService.deleteOptions(this.options);
+    }
     const observer = {
       next: (Question: Question[]) => {
         this.router.navigateByUrl('/exams');
@@ -99,7 +145,10 @@ export class SaveQuestionComponent implements OnInit {
       },
     };
     this.questionService.saveQuestions(this.questions,this.examId).subscribe(observer);
-    console.log(this.questions)
+
+  }
+  importData(id:any){
+    this.router.navigate([`save/${id}/import`]);
   }
 
 }

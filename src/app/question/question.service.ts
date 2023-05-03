@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Question } from './question';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +45,25 @@ export class QuestionService {
       )
       .pipe(retry(2), catchError(this.handleError));
   }
+  getQuestions(examId:number):Observable<Question[]>{
+    return this.httpClient.get<Question[]>(`${environment.APPURL}/exam/getQuestions/${examId}`).
+    pipe(retry(2),catchError(this.handleError))
+  }
+  deleteQuestion(question:Question){
+    return this.httpClient
+    .delete(`${environment.APPURL}/exam/deleteQuestion`, { body: question })
+    .pipe(retry(2), catchError(this.handleError))
+    .subscribe((data) => {});
+  }
+
+  deleteOptions(options:any[]){
+    return this.httpClient
+    .delete(`${environment.APPURL}/exam/deleteQuestionAnswer`, { body: options })
+    .pipe(retry(2), catchError(this.handleError))
+    .subscribe((data) => {});
+    
+  }
+
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {
       duration: 3000,

@@ -85,36 +85,47 @@ export class ExamService {
     });
   }
 
-attemptExam(examId: number, userId: number) {
+  // Attempt Exam
+  attemptExam(examId: number, userId: number) {
     let body: object = {
       examId: examId,
       userId: userId,
     };
-    return this.httpClient.post(
-      `${environment.APPURL}/exam/attemptExam/${examId}/${userId}`,
-      JSON.stringify(body),
-      this.httpOption
-    );
+    return this.httpClient
+      .post(
+        `${environment.APPURL}/exam/attemptExam/${examId}/${userId}`,
+        JSON.stringify(body),
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
   }
 
-  renderExam(id: number): Observable<Exam> {
+  renderExam(id: number): Observable<any> {
     return this.httpClient
       .get<Exam>(`${environment.APPURL}/exam/renderExam/${id}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  saveSelectedStudentAnswer(attemptId: number, questionId: number, answer: number | Answer): Observable<any> {
-    const url = `${environment.APPURL}/saveSelectedStudentAnswer/${attemptId}/${questionId}`;
-    return this.httpClient.post<any>(url, { answer });
+  saveSelectedStudentAnswer(
+    attemptId: number,
+    answers: { questionId: number; answersIds: number[] }[]
+  ): Observable<any> {
+    const url = `${environment.APPURL}/saveSelectedStudentAnswer/${attemptId}`;
+    return this.httpClient.post<any>(url, { answers });
   }
 
-  saveCompleteStudentAnswer(attemptId: number, answer: string): Observable<any> {
+  saveCompleteStudentAnswer(
+    attemptId: number,
+    answers: { questionId: number; textAnswer: string }[]
+  ): Observable<any> {
     const url = `${environment.APPURL}/saveCompleteStudentAnswer/${attemptId}`;
-    return this.httpClient.post<any>(url, { answer });
+    return this.httpClient.post<any>(url, { answers });
   }
 
-  endExam(examAttemptId: number): Observable<any> {
-    const url = `${environment.APPURL}/exam/endExam/${examAttemptId}`;
-    return this.httpClient.post<any>(url, {});
+  endExam(examAttemptId: string): Observable<any> {
+    const url = `/exam/endExam/${examAttemptId}`;
+    return this.httpClient
+      .post(url, {})
+      .pipe(retry(2), catchError(this.handleError));
   }
 }

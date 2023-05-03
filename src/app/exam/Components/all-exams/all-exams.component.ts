@@ -1,12 +1,7 @@
 import { Router } from '@angular/router';
 import { ExamService } from './../../Services/exam.service';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  OnChanges,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Exam } from '../../Models/exam';
@@ -21,15 +16,16 @@ import { DialogeComponent } from '../../../Shared/material/dialog/dialog.compone
 })
 export class AllExamsComponent implements OnInit {
   displayedColumns: string[] = [
-    'actions',
+    '#',
     'id',
     'examName',
+    'course',
+    'startTime',
+    'endTime',
+    'state',
     'duration',
     'successRate',
-    'course',
-    'status',
-    'startTime',
-    'endTime'
+    'Actions',
   ];
   dataSource!: MatTableDataSource<any>;
 
@@ -38,14 +34,15 @@ export class AllExamsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private examService: ExamService, private router: Router,
-    public dialog: MatDialog) {}
+  constructor(
+    private examService: ExamService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.getExams();
   }
-
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -59,7 +56,6 @@ export class AllExamsComponent implements OnInit {
   getExams() {
     this.examService.getAllExams().subscribe((data) => {
       /** Builds and returns a new User. */
-      console.log(data)
       const createNewExam = (id: number) => {
         return {
           id: id,
@@ -67,14 +63,13 @@ export class AllExamsComponent implements OnInit {
             data[Math.round(Math.random() * (data.length - 1))].examName,
           duration:
             data[Math.round(Math.random() * (data.length - 1))].duration,
-            course: data[Math.round(Math.random() * (data.length - 1))].course,
-            status: data[Math.round(Math.random() * (data.length - 1))].status,
+          course: data[Math.round(Math.random() * (data.length - 1))].course,
+          state: data[Math.round(Math.random() * (data.length - 1))].state,
           startTime:
             data[Math.round(Math.random() * (data.length - 1))].startTime,
           EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
         };
       };
-      
 
       // Create users
 
@@ -98,35 +93,35 @@ export class AllExamsComponent implements OnInit {
   delete(row: Exam) {
     const dialogRef = this.dialog.open(DialogeComponent, {
       width: '400px',
-      height:'280px'
-      });
+      height: '280px',
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
-
         this.examService.deleteExam(row);
         window.location.reload();
-
       }
-
-      });
-
+    });
   }
 
   add() {
     this.router.navigate(['exams/add']);
   }
 
+
+  // // Send userId and examId then get response with user data
+  // getAttemptExamData(rowId: number, userId: number) {
+  //   this._examService
+  //     .attemptExam(rowId, userId)
+  //     .subscribe((data) => console.log(data));
+  // }
+  attemptExam(id: number){
+    this.router.navigate(['exams/attempt/', id]);
+  }
+
+
   exportData() {
-    const headings = [
-      [
-        'id',
-        'examName',
-        'duration',
-        'startTime',
-        'endTime',
-      ],
-    ];
+    const headings = [['id', 'examName', 'duration', 'startTime', 'endTime']];
 
     const wb = utils.book_new();
     const ws: any = utils.json_to_sheet([]);
@@ -135,6 +130,4 @@ export class AllExamsComponent implements OnInit {
     utils.book_append_sheet(wb, ws, 'Report');
     writeFile(wb, 'Data of Exams.xlsx');
   }
-
 }
-

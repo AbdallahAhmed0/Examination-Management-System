@@ -4,12 +4,14 @@
 
     <div class="actions">
       <a title="delete" (click)="deleteQuestion()"><mat-icon class="delete">delete</mat-icon></a>
-      <a title="up" (click)="Up()"><mat-icon class="up">arrow_upward</mat-icon></a>
-      <a title="down" (click)="Down()"><mat-icon class="down">arrow_downward</mat-icon></a>
+      <!-- <a title="up" (click)="Up()"><mat-icon class="up">arrow_upward</mat-icon></a>
+      <a title="down" (click)="Down()"><mat-icon class="down">arrow_downward</mat-icon></a> -->
     </div>
     <span class="index">{{indexComponent}}.</span>
       <div class="question">
-        <app-text-editor (editorValue)="getQuestionText($event)" [placeholder]="'Question Text'" ></app-text-editor>
+        <app-text-editor (editorValue)="getQuestionText($event)"
+        [QuestionText]="editQuestion" [placeholder]="'Question Text'" >
+      </app-text-editor>
         <input type="hidden" formControlName="questionText" >
     </div>
     <mat-card-content>
@@ -18,7 +20,8 @@
         <ng-container *ngFor="let answerItem of answers.controls; let i = index">
           <div [formGroupName]="i">
 
-                <app-text-editor class="input-message" (editorValue)="getAnswerText($event)" [placeholder]="'Answer Text'"></app-text-editor>
+                <app-text-editor class="input-message" (editorValue)="getAnswerText($event)"
+                [placeholder]="'Answer Text'"  [answerText]="Answer"></app-text-editor>
                 <input type="hidden" formControlName="answerText" >
 
                 <a mat-icon-button  title="message" (click)="toggleInput()">
@@ -26,7 +29,8 @@
                 </a>
 
                 <ng-container *ngIf="isHidden">
-                  <app-text-editor class="input-message"  (editorValue)="getComment($event)" [commentValue]="commentValue" [placeholder]="'Comment'"></app-text-editor>
+                  <app-text-editor class="input-message"  (editorValue)="getComment($event)"
+                  [placeholder]="'Comment'" [comment]=" editQuestion? Answer?.comment:answers.at(0).value.comment" ></app-text-editor>
                   <input type="hidden" formControlName="comment">
                 </ng-container>
 
@@ -37,7 +41,7 @@
     </mat-card-content>
     <mat-divider></mat-divider>
     <label class="label-point">Points: </label>
-    <input matInput class="point"  min="0" max="200" maxlength="3" type="number" formControlName="points" required>
+    <input matInput class="point"  min="0" max="200" maxlength="3" [value]="editQuestion?.points" type="number" formControlName="points" required>
 
   </mat-card>
 </form>

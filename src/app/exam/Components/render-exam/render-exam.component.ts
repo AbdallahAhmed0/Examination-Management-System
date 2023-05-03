@@ -11,17 +11,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./render-exam.component.scss'],
 })
 export class RenderExamComponent implements OnInit {
-  exam?: Exam;
+  exam: Exam = {} as Exam;
   responseString: string | undefined;
   answerQustion = [];
 
   questions: Question[] = [];
-  questionForms: FormGroup[] = [];
+  questionForms!: any[];
+  formGroup!: FormGroup;
   questionPages: Question[][] = [];
   currentPageIndex = 0;
 
   nextButtonLabel = 'Save';
-  timeRemaining: number = 0;
+  remainingTime: number = 0;
   attemptData: any;
 
   constructor(
@@ -36,42 +37,48 @@ export class RenderExamComponent implements OnInit {
     this.renderExam(examId);
     // Get the array parameter from the state object
     this.attemptData = history.state.data;
+    // console.log(this.attemptData);
   }
 
   renderExam(examId: number): void {
     this.examService.renderExam(examId).subscribe((data) => {
       this.exam = data;
-      this.questions = data.questions;
-      this.questionPages = this.chunk(this.questions, 3);
+      console.log(data.duration);
+      this.startTimer(this.exam.duration);
 
-      console.log(this.exam);
+      if (data.questions) {
+        // Check if data.question is defined
+        this.questions = data.questions;
+        // this.questionPages = this.chunk(this.questions, +data.questionsPerPage);
+        this.questionPages = this.chunk(this.questions, 3);
+        // console.log(this.questions);
+      }
+      // console.log(this.exam);
 
       // Initialize a form group for each question
       this.questionForms = this.questions.map((question) => {
-        const formGroup = this.formBuilder.group({
+        this.formGroup = this.formBuilder.group({
           answerIds: [],
+          questionIds: [],
         });
-        return formGroup;
+        return this.formGroup.value;
       });
-
-      // Calculate the time remaining in seconds
-      const now = new Date();
-      const endTime = new Date(this.exam.endTime);
-      this.timeRemaining = Math.max(
-        0,
-        Math.floor((endTime.getTime() - now.getTime()) / 1000)
-      );
-
-      // Start the countdown timer
-      setInterval(() => {
-        if (this.timeRemaining > 0) {
-          this.timeRemaining--;
-        } else {
-          // Time's up, submit the exam
-          this.submitExam();
-        }
-      }, 1000);
     });
+  }
+
+  startTimer(duration: number) {
+    this.remainingTime = duration;
+
+    // Create a setInterval function that will update the remaining time every second
+    const intervalId = setInterval(() => {
+      // Calculate the remaining time by subtracting the current time from the end time
+      this.remainingTime--;
+      console.log(this.remainingTime);
+      if (this.remainingTime <= 0) {
+        this.submitExam();
+        clearInterval(intervalId);
+      }
+    }, 1000 * 60);
   }
 
   chunk(questions: Question[], size: number): Question[][] {
@@ -89,69 +96,214 @@ export class RenderExamComponent implements OnInit {
     this.currentPageIndex++;
   }
 
-  savePage() {
-    // if (this.exam) {
-    //   const questionIds = this.questionPages[this.currentPageIndex].map(
-    //     (question) => question.id
-    //   );
-    //   const answerIds = this.questionForms.map(
-    //     (form) => form.controls['answerIds'].value
-    //   );
-
-    //   // Save answers for each question
-    //   for (let i = 0; i < questionIds.length; i++) {
-    //     const questionId = questionIds[i];
-    //     const answerId = answerIds[i];
-
-    //     const questionType = this.questions.find(
-    //       (q) => q.id === questionId
-    //     )?.questionType;
-    //     if (
-    //       questionType === 'multiple_choice' ||
-    //       questionType === 'true_false'
-    //     ) {
-    //       this.examService
-    //         .saveSelectedStudentAnswer(
-    //           this.attemptData.id,
-    //           questionId,
-    //           answerId
-    //         )
-    //         .subscribe((response) => {
-    //           console.log(response);
-    //         });
-    //     } else if (questionType === 'multiple_answers') {
-    //       const answer = new Answer();
-    //       answer.id = answerId;
-    //       this.examService
-    //         .saveSelectedStudentAnswer(this.attemptData.id, questionId, answer)
-    //         .subscribe((response) => {
-    //           console.log(response);
-    //         });
-    //     }
-    //   }
-
-    //   console.log('Page saved.');
-    // }
-  }
-
-  // show answer nav
-
-  submitExam() {
-
-  }
-
   // Sanitize the HTML content with the DomSanitizer service
   sanitizeHtml(html: string): any {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  // edit it to duration not date 
-  formatTimeRemaining(): string {
-    const hours = Math.floor(this.timeRemaining / 3600);
-    const minutes = Math.floor((this.timeRemaining % 3600) / 60);
-    const seconds = this.timeRemaining % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes
-      .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  getAnswers(): any[] {
+    const answers = this.questionForms
+      .map((form) => {
+        const answerIdsControl = form.controls['answerIds'];
+        const answerIds = answerIdsControl ? answerIdsControl.value : undefined;
+        const questionIdControl = form.controls['questionId'];
+        const questionId = questionIdControl
+          ? questionIdControl.value
+          : undefined;
+        const questionType = this.questions.find(
+          (q) => q.id === questionId
+        )?.questionType;
+        if (
+          questionType === 'multiple_choice' ||
+          questionType === 'true_false'
+        ) {
+          return {
+            questionId,
+            answerIds: [answerIds],
+          };
+        } else if (questionType === 'multiple_answers') {
+          return {
+            questionId,
+            answerIds,
+          };
+        } else if (questionType === 'text') {
+          return {
+            questionId,
+            textAnswer: answerIds,
+          };
+        } else {
+          return undefined;
+        }
+      })
+      .filter((answer) => !!answer);
+    console.log(answers);
+    return answers;
+  }
+
+  saveMultipleChoiceAnswers(answers: any[]): void {
+    answers.forEach((answer) => {
+      const questionId = answer.questionId;
+      const selectedAnswer = answer.answerIds[0];
+      if (selectedAnswer) {
+        this.examService
+          .saveSelectedStudentAnswer(this.attemptData.id, questionId)
+          .subscribe((response) => {
+            console.log(response);
+          });
+      }
+    });
+  }
+
+  saveMultipleAnswersAnswers(answers: any[]): void {
+    answers.forEach((answer) => {
+      const questionId = answer.questionId;
+      const selectedAnswers = answer.answerIds;
+      if (selectedAnswers && selectedAnswers.length > 0) {
+        selectedAnswers.forEach((selectedAnswer: number | Answer) => {
+          if (selectedAnswer) {
+            this.examService
+              .saveSelectedStudentAnswer(this.attemptData.id, questionId)
+              .subscribe((response) => {
+                console.log(response);
+              });
+          }
+        });
+      }
+    });
+  }
+
+  saveMatchingAnswers(answers: any[]): void {
+    answers.forEach((answer) => {
+      const questionId = answer.questionId;
+      const textAnswer = answer.textAnswer;
+      if (textAnswer) {
+        this.examService
+          .saveCompleteStudentAnswer(this.attemptData.id, textAnswer)
+          .subscribe((response) => {
+            console.log(response);
+          });
+      }
+    });
+  }
+
+  savePage(): void {
+    // if (this.exam) {
+    //   const answers = this.getAnswers();
+    //   this.saveMultipleChoiceAnswers(
+    //     answers.filter((a) => a.answerIds && a.answerIds.length === 1)
+    //   );
+    //   this.saveMultipleAnswersAnswers(
+    //     answers.filter((a) => a.answerIds && a.answerIds.length > 1)
+    //   );
+    //   this.saveMatchingAnswers(answers.filter((a) => a.textAnswer));
+    //   console.log('Page saved.');
+    //   console.log('Answers:', answers); // Log the current answers to the console
+    // console.log(this.questionForms);
+    // }
+  }
+
+  submitExam(): void {
+    if (this.exam) {
+      const answers = this.getAnswers();
+      this.saveMultipleChoiceAnswers(
+        answers.filter((a) => a.answerIds && a.answerIds.length === 1)
+      );
+      this.saveMultipleAnswersAnswers(
+        answers.filter((a) => a.answerIds && a.answerIds.length > 1)
+      );
+      this.saveMatchingAnswers(answers.filter((a) => a.textAnswer));
+
+      this.examService.endExam(this.attemptData.id).subscribe((response) => {
+        console.log(response);
+        // TODO: handle the response and navigate to the appropriate page
+      });
+    }
   }
 }
+
+// savePage() {
+//   if (this.exam) {
+//     const questionIds = this.questionPages[this.currentPageIndex].map(
+//       (question) => question.id
+//     );
+//     const answers = this.questionForms
+//       .map((form) => {
+//         const answerIdsControl = form.controls['answerIds'];
+//         const answerIds = answerIdsControl
+//           ? answerIdsControl.value
+//           : undefined; // <-- add check for undefined object
+//         const questionIdControl = form.controls['questionId'];
+//         const questionId = questionIdControl
+//           ? questionIdControl.value
+//           : undefined; // <-- add check for undefined object
+//         const questionType = this.questions.find(
+//           (q) => q.id === questionId
+//         )?.questionType;
+//         if (
+//           questionType === 'multiple_choice' ||
+//           questionType === 'true_false'
+//         ) {
+//           return {
+//             questionId,
+//             answersIds: [answerIds],
+//           };
+//         } else if (questionType === 'multiple_answers') {
+//           return {
+//             questionId,
+//             answersIds: answerIds,
+//           };
+//         } else if (questionType === 'text') {
+//           return {
+//             questionId,
+//             textAnswer: answerIds,
+//           };
+//         } else {
+//           return undefined;
+//         }
+//       })
+//       .filter((answer) => !!answer) as {
+//       questionId: any;
+//       answersIds?: any;
+//       textAnswer?: any;
+//     }[];
+
+//     // Save answers for each question
+//     for (let i = 0; i < answers.length; i++) {
+//       const questionId = answers[i].questionId;
+//       const questionType = this.questions.find(
+//         (q) => q.id === questionId
+//       )?.questionType;
+//       if (
+//         questionType === 'multiple_choice' ||
+//         questionType === 'true_false' ||
+//         questionType === 'multiple_answers'
+//       ) {
+//         const answerIds = answers[i].answersIds;
+//         const selectedAnswer = Array.isArray(answerIds)
+//           ? answerIds[0]
+//           : answerIds;
+//         if (selectedAnswer) {
+//           this.examService
+//             .saveSelectedStudentAnswer(
+//               this.attemptData.id,
+//               questionId,
+//               selectedAnswer
+//             )
+//             .subscribe((response) => {
+//               console.log(response);
+//             });
+//         }
+//       } else if (questionType === 'Matching') {
+//         this.examService
+//           .saveCompleteStudentAnswer(
+//             this.attemptData.id,
+//             answers[i].textAnswer
+//           )
+//           .subscribe((response) => {
+//             console.log(response);
+//           });
+//       }
+//     }
+//     console.log('Page saved.');
+//   }
+// }

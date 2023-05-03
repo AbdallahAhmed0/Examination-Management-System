@@ -11,7 +11,7 @@
             <h3>End Time: <span>{{examInfo.endTime}}</span></h3>
             <h3>Success Rate: <span>{{examInfo.successRate}}</span></h3>
           </div>
-          <button mat-raised-button class="attempt-btn mat-h3" (click)="attemptExam()">Attempt</button>
+          <button mat-raised-button class="attempt-btn mat-h3" (click)="startExam(examInfo.id)">Start Exam</button>
         </div>
       </ng-container>
     </div>
