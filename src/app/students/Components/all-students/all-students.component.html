@@ -22,7 +22,7 @@
     >
       <mat-icon>exit_to_app</mat-icon> Export Students
     </button>
-    <!-- <button mat-button class="btn-add" (click)="importData()" style="color:#007bff;" ><mat-icon>assignment_returned</mat-icon> Import Admins</button> -->
+    <button mat-button class="btn-add" (click)="importData()" style="color:#007bff;" ><mat-icon>assignment_returned</mat-icon> Import Students</button>
 
     <table mat-table id="adminTable" [dataSource]="dataSource" matSort>
       <!-- ID Column -->
@@ -54,7 +54,7 @@
       <!-- group Column -->
       <ng-container matColumnDef="group">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>group</th>
-        <td mat-cell *matCellDef="let row">{{ row.group?.name }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.group.name }}</td>
       </ng-container>
 
       <!-- enable Column -->
