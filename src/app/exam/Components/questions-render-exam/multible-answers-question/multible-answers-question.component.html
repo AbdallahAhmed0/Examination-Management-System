@@ -1,1 +1,11 @@
-<p>multible-answers-question works!</p>
+
+<ng-container *ngFor="let answer of question.questionAnswers">
+  <div class="mat-checkbox-group">
+      <mat-checkbox
+        *ngFor="let answer of question.questionAnswers"
+        [value]="answer.id.toString()"
+      >
+        <p [innerHTML]="sanitizeHtml(answer.answerText)"></p>
+      </mat-checkbox>
+  </div>
+</ng-container>
