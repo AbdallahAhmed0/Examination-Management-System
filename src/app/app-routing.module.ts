@@ -12,19 +12,19 @@ const routes: Routes = [
     path: "admins",
     loadChildren: () =>
       import("./admins/admins.module").then((a) => a.AdminsModule),
-    canActivate: [AuthGuard],
+      canActivate: [AuthGuard],
   },
   {
     path: "roles",
     loadChildren: () =>
       import("./roles/roles.module").then((m) => m.RolesModule),
-    canActivate: [AuthGuard],
+      canActivate: [AuthGuard],
   },
   {
     path: "students",
     loadChildren: () =>
       import("./students/students.module").then((m) => m.StudentsModule),
-    canActivate: [AuthGuard],
+      canActivate: [AuthGuard],
   },
   {
     path: "exams",
@@ -36,13 +36,13 @@ const routes: Routes = [
     path: "save/:id",
     loadChildren: () =>
       import("./question/question.module").then((m) => m.QuestionModule),
-    canActivate: [AuthGuard],
+      canActivate: [AuthGuard],
   },
   {
     path: "courses",
     loadChildren: () =>
       import("./course/course.module").then((m) => m.CourseModule),
-    canActivate: [AuthGuard],
+      canActivate: [AuthGuard],
   }
 
 
