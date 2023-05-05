@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class MultibleAnswersQuestionComponent implements OnInit {
 
   @Input() question!:any;
+  @Input() index!:number;
 
   constructor(private sanitizer: DomSanitizer,) { }
 

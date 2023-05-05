@@ -38,7 +38,7 @@
     <ng-container *ngFor="let page of questionPages; let pageIndex = index">
       <div *ngIf="pageIndex === currentPageIndex">
         <mat-card *ngFor="let question of page; let i = index">
-          
+
           <mat-card-content>
             <ng-container *ngIf="question.questionType === 'Multiple_choice'">
               <app-choice-question [index]="i + pageIndex * 3 + 1" [question]="question"></app-choice-question>
@@ -46,7 +46,7 @@
 
             <!-- multiple answers question -->
             <ng-container *ngIf="question.questionType === 'Multiple_Answers'">
-            <app-multible-answers-question [question]="question"></app-multible-answers-question>
+            <app-multible-answers-question [index]="i + pageIndex * 3 + 1"[question]="question"></app-multible-answers-question>
             </ng-container>
 
                 <!-- matching question  -->
