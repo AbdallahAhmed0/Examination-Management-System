@@ -39,19 +39,8 @@
       <div *ngIf="pageIndex === currentPageIndex">
         <mat-card *ngFor="let question of page; let i = index">
           <mat-card-content>
-            <h2>
-              Question {{ i + pageIndex * 3 + 1 }} ({{ question.points }} points)
-            </h2>
-            <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
             <ng-container *ngIf="question.questionType === 'Multiple_choice'">
-              <mat-radio-group [(ngModel)]="question.id">
-                <mat-radio-button
-                  *ngFor="let answer of question.questionAnswers"
-                  [value]="answer.id"
-                >
-                  <p [innerHTML]="sanitizeHtml(answer.answerText)"></p>
-                </mat-radio-button>
-              </mat-radio-group>
+              <app-choice-question [index]="i + pageIndex * 3 + 1" [question]="question"></app-choice-question>
             </ng-container>
 
             <!-- multiple answers question -->
