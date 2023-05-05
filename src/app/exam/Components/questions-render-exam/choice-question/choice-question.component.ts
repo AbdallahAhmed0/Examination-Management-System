@@ -21,15 +21,14 @@ constructor(private sanitizer: DomSanitizer,
       questionId: [this.question.id],
       answersIds: this.fb.array([])
     });
-    this.addAnswer();
-  }
+this.addAnswer();
 
+  }
   get answers(): FormArray {
     return this.answerForm.get('answersIds') as FormArray;
   }
-
-  addAnswer() {
-    this.answers.push(new FormControl(''));
+addAnswer() {
+  this.answers.push(new FormControl(''));
   }
     // Sanitize the HTML content with the DomSanitizer service
     sanitizeHtml(html: string): any {
