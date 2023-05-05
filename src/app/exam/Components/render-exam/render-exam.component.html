@@ -38,6 +38,7 @@
     <ng-container *ngFor="let page of questionPages; let pageIndex = index">
       <div *ngIf="pageIndex === currentPageIndex">
         <mat-card *ngFor="let question of page; let i = index">
+
           <!-- multiple choice question  -->
           <mat-card-content>
             <h2>
@@ -47,7 +48,7 @@
             <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
             <ng-container *ngIf="question.questionType === 'Multiple_choice'">
               <mat-radio-group>
-                <mat-radio-button *ngFor="let answer of question.questionAnswers" [value]="answer.answerText">
+                <mat-radio-button *ngFor="let answer of question.questionAnswers" [value]="answer.id">
                   <p [innerHTML]="sanitizeHtml(answer.answerText)"></p>
                 </mat-radio-button>
               </mat-radio-group>
@@ -57,7 +58,7 @@
             <ng-container *ngIf="question.questionType === 'Multiple_Answers'">
               <ng-container *ngFor="let answer of question.questionAnswers">
                 <div class="mat-checkbox-group">
-                  <mat-checkbox>{{ answer.answerText }}</mat-checkbox>
+                  <mat-checkbox [value]="answer.id.toString()">{{ answer.answerText }}</mat-checkbox>
                 </div>
               </ng-container>
             </ng-container>
@@ -71,7 +72,7 @@
 
             <!-- true false question  -->
             <ng-container *ngIf="question.questionType === 'True_False'">
-              <mat-radio-group>
+              <mat-radio-group >
                 <mat-radio-button [value]="true">True</mat-radio-button>
                 <mat-radio-button [value]="false">False</mat-radio-button>
               </mat-radio-group>
