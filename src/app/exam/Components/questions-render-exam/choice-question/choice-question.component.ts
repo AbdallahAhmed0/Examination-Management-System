@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Question } from './../../../../question/question';
 
 @Component({
   selector: 'app-choice-question',
@@ -9,7 +8,7 @@ import { Question } from './../../../../question/question';
 })
 export class ChoiceQuestionComponent implements OnInit {
 @Input() question!:any;
-@Input() index!:number;
+
   constructor(private sanitizer: DomSanitizer,) { }
 
   ngOnInit(): void {
