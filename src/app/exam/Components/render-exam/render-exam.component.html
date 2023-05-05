@@ -1,5 +1,4 @@
 <div class="container">
-  <p>{{ formGroup.value | json }}</p>
   <div class="form">
     <mat-card class="exam-card">
       <div class="exam-header">
@@ -41,82 +40,59 @@
         <mat-card *ngFor="let question of page; let i = index">
           <!-- multiple choice question  -->
           <mat-card-content>
-            <form [formGroup]="formGroup">
-              <h2>
-                Question {{ i + pageIndex * 3 + 1 }} ({{ question.points }}
-                points)
-              </h2>
-              <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
-              <ng-container *ngIf="question.questionType === 'Multiple_choice'">
-                <mat-radio-group formControlName="answerIds">
-                  <mat-radio-button
-                    *ngFor="let answer of question.questionAnswers"
-                    [value]="answer.answerText"
-                  >
-                    <p [innerHTML]="sanitizeHtml(answer.answerText)"></p
-                  ></mat-radio-button>
-                </mat-radio-group>
-              </ng-container>
+            <h2>
+              Question {{ i + pageIndex * 3 + 1 }} ({{ question.points }}
+              points)
+            </h2>
+            <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
+            <ng-container *ngIf="question.questionType === 'Multiple_choice'">
+              <mat-radio-group>
+                <mat-radio-button *ngFor="let answer of question.questionAnswers" [value]="answer.answerText">
+                  <p [innerHTML]="sanitizeHtml(answer.answerText)"></p>
+                </mat-radio-button>
+              </mat-radio-group>
+            </ng-container>
 
-              <!-- multiple answers question -->
-              <ng-container
-                *ngIf="question.questionType === 'Multiple_Answers'"
-              >
-                <ng-container *ngFor="let answer of question.questionAnswers">
-                  <div class="mat-checkbox-group">
-                    <mat-checkbox formControlName="answerIds">{{
-                      answer.answerText
-                    }}</mat-checkbox>
-                  </div>
-                </ng-container>
+            <!-- multiple answers question -->
+            <ng-container *ngIf="question.questionType === 'Multiple_Answers'">
+              <ng-container *ngFor="let answer of question.questionAnswers">
+                <div class="mat-checkbox-group">
+                  <mat-checkbox>{{ answer.answerText }}</mat-checkbox>
+                </div>
               </ng-container>
+            </ng-container>
 
-              <!-- matching question  -->
-              <ng-container *ngIf="question.questionType === 'Matching'">
-                <mat-form-field>
-                  <input matInput placeholder="Answer" />
-                </mat-form-field>
-              </ng-container>
+            <!-- matching question  -->
+            <ng-container *ngIf="question.questionType === 'Matching'">
+              <mat-form-field>
+                <input matInput placeholder="Answer" />
+              </mat-form-field>
+            </ng-container>
 
-              <!-- true false question  -->
-              <ng-container *ngIf="question.questionType === 'True_False'">
-                <mat-radio-group formControlName="answerIds">
-                  <mat-radio-button [value]="true">True</mat-radio-button>
-                  <mat-radio-button [value]="false">False</mat-radio-button>
-                </mat-radio-group>
-              </ng-container>
-            </form>
+            <!-- true false question  -->
+            <ng-container *ngIf="question.questionType === 'True_False'">
+              <mat-radio-group>
+                <mat-radio-button [value]="true">True</mat-radio-button>
+                <mat-radio-button [value]="false">False</mat-radio-button>
+              </mat-radio-group>
+            </ng-container>
           </mat-card-content>
         </mat-card>
       </div>
     </ng-container>
 
     <div>
-      <button
-        mat-raised-button
-        *ngIf="
+      <button mat-raised-button *ngIf="
           currentPageIndex > 0 && currentPageIndex <= questionPages.length - 1
-        "
-        (click)="previousPage()"
-      >
+        " (click)="previousPage()">
         Previous
       </button>
-      <button
-        mat-raised-button
-        color="primary"
-        *ngIf="currentPageIndex < questionPages.length - 1"
-        (click)="nextPage()"
-        (click)="savePage()"
-      >
+      <button mat-raised-button color="primary" *ngIf="currentPageIndex < questionPages.length - 1" (click)="nextPage()"
+        (click)="savePage()">
         Save
       </button>
-      <button
-        mat-raised-button
-        *ngIf="currentPageIndex === questionPages.length - 1"
-        color="primary"
-        class="submit-button"
-        (click)="submitExam()"
-      >
+      <button mat-raised-button *ngIf="currentPageIndex === questionPages.length - 1" color="primary"
+        class="submit-button" (click)="submitExam()">
         Submit
       </button>
     </div>

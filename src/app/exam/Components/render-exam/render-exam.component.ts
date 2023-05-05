@@ -16,8 +16,6 @@ export class RenderExamComponent implements OnInit {
   answerQustion = [];
 
   questions: Question[] = [];
-  questionForms!: any[];
-  formGroup!: FormGroup;
   questionPages: Question[][] = [];
   currentPageIndex = 0;
 
@@ -37,7 +35,6 @@ export class RenderExamComponent implements OnInit {
     this.renderExam(examId);
     // Get the array parameter from the state object
     this.attemptData = history.state.data;
-    // console.log(this.attemptData);
   }
 
   renderExam(examId: number): void {
@@ -53,16 +50,6 @@ export class RenderExamComponent implements OnInit {
         this.questionPages = this.chunk(this.questions, 3);
         // console.log(this.questions);
       }
-      // console.log(this.exam);
-
-      // Initialize a form group for each question
-      this.questionForms = this.questions.map((question) => {
-        this.formGroup = this.formBuilder.group({
-          answerIds: [],
-          questionIds: [],
-        });
-        return this.formGroup.value;
-      });
     });
   }
 
@@ -99,45 +86,6 @@ export class RenderExamComponent implements OnInit {
   // Sanitize the HTML content with the DomSanitizer service
   sanitizeHtml(html: string): any {
     return this.sanitizer.bypassSecurityTrustHtml(html);
-  }
-
-  getAnswers(): any[] {
-    const answers = this.questionForms
-      .map((form) => {
-        const answerIdsControl = form.controls['answerIds'];
-        const answerIds = answerIdsControl ? answerIdsControl.value : undefined;
-        const questionIdControl = form.controls['questionId'];
-        const questionId = questionIdControl
-          ? questionIdControl.value
-          : undefined;
-        const questionType = this.questions.find(
-          (q) => q.id === questionId
-        )?.questionType;
-        if (
-          questionType === 'multiple_choice' ||
-          questionType === 'true_false'
-        ) {
-          return {
-            questionId,
-            answerIds: [answerIds],
-          };
-        } else if (questionType === 'multiple_answers') {
-          return {
-            questionId,
-            answerIds,
-          };
-        } else if (questionType === 'text') {
-          return {
-            questionId,
-            textAnswer: answerIds,
-          };
-        } else {
-          return undefined;
-        }
-      })
-      .filter((answer) => !!answer);
-    console.log(answers);
-    return answers;
   }
 
   saveMultipleChoiceAnswers(answers: any[]): void {
@@ -203,107 +151,8 @@ export class RenderExamComponent implements OnInit {
   }
 
   submitExam(): void {
-    if (this.exam) {
-      const answers = this.getAnswers();
-      this.saveMultipleChoiceAnswers(
-        answers.filter((a) => a.answerIds && a.answerIds.length === 1)
-      );
-      this.saveMultipleAnswersAnswers(
-        answers.filter((a) => a.answerIds && a.answerIds.length > 1)
-      );
-      this.saveMatchingAnswers(answers.filter((a) => a.textAnswer));
 
-      this.examService.endExam(this.attemptData.id).subscribe((response) => {
-        console.log(response);
-        // TODO: handle the response and navigate to the appropriate page
-      });
-    }
-  }
+
 }
 
-// savePage() {
-//   if (this.exam) {
-//     const questionIds = this.questionPages[this.currentPageIndex].map(
-//       (question) => question.id
-//     );
-//     const answers = this.questionForms
-//       .map((form) => {
-//         const answerIdsControl = form.controls['answerIds'];
-//         const answerIds = answerIdsControl
-//           ? answerIdsControl.value
-//           : undefined; // <-- add check for undefined object
-//         const questionIdControl = form.controls['questionId'];
-//         const questionId = questionIdControl
-//           ? questionIdControl.value
-//           : undefined; // <-- add check for undefined object
-//         const questionType = this.questions.find(
-//           (q) => q.id === questionId
-//         )?.questionType;
-//         if (
-//           questionType === 'multiple_choice' ||
-//           questionType === 'true_false'
-//         ) {
-//           return {
-//             questionId,
-//             answersIds: [answerIds],
-//           };
-//         } else if (questionType === 'multiple_answers') {
-//           return {
-//             questionId,
-//             answersIds: answerIds,
-//           };
-//         } else if (questionType === 'text') {
-//           return {
-//             questionId,
-//             textAnswer: answerIds,
-//           };
-//         } else {
-//           return undefined;
-//         }
-//       })
-//       .filter((answer) => !!answer) as {
-//       questionId: any;
-//       answersIds?: any;
-//       textAnswer?: any;
-//     }[];
-
-//     // Save answers for each question
-//     for (let i = 0; i < answers.length; i++) {
-//       const questionId = answers[i].questionId;
-//       const questionType = this.questions.find(
-//         (q) => q.id === questionId
-//       )?.questionType;
-//       if (
-//         questionType === 'multiple_choice' ||
-//         questionType === 'true_false' ||
-//         questionType === 'multiple_answers'
-//       ) {
-//         const answerIds = answers[i].answersIds;
-//         const selectedAnswer = Array.isArray(answerIds)
-//           ? answerIds[0]
-//           : answerIds;
-//         if (selectedAnswer) {
-//           this.examService
-//             .saveSelectedStudentAnswer(
-//               this.attemptData.id,
-//               questionId,
-//               selectedAnswer
-//             )
-//             .subscribe((response) => {
-//               console.log(response);
-//             });
-//         }
-//       } else if (questionType === 'Matching') {
-//         this.examService
-//           .saveCompleteStudentAnswer(
-//             this.attemptData.id,
-//             answers[i].textAnswer
-//           )
-//           .subscribe((response) => {
-//             console.log(response);
-//           });
-//       }
-//     }
-//     console.log('Page saved.');
-//   }
-// }
+}
