@@ -51,9 +51,7 @@
 
                 <!-- matching question  -->
             <ng-container *ngIf="question.questionType === 'Matching'">
-              <mat-form-field>
-                <input matInput placeholder="Answer" />
-              </mat-form-field>
+             <app-matching-question [index]="i + pageIndex * 3 + 1"[question]="question"></app-matching-question>
             </ng-container>
 
             <!-- true false question  -->

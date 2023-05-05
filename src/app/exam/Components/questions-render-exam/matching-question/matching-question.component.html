@@ -1,1 +1,8 @@
-<p>matching-question works!</p>
+<h2>
+  Question {{ index }} ({{ question.points }} points)
+</h2>
+<h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
+
+<mat-form-field>
+  <input matInput placeholder="Answer" />
+</mat-form-field>
