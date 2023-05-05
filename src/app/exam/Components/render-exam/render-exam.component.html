@@ -38,17 +38,17 @@
     <ng-container *ngFor="let page of questionPages; let pageIndex = index">
       <div *ngIf="pageIndex === currentPageIndex">
         <mat-card *ngFor="let question of page; let i = index">
-
-          <!-- multiple choice question  -->
           <mat-card-content>
             <h2>
-              Question {{ i + pageIndex * 3 + 1 }} ({{ question.points }}
-              points)
+              Question {{ i + pageIndex * 3 + 1 }} ({{ question.points }} points)
             </h2>
             <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
             <ng-container *ngIf="question.questionType === 'Multiple_choice'">
-              <mat-radio-group>
-                <mat-radio-button *ngFor="let answer of question.questionAnswers" [value]="answer.id">
+              <mat-radio-group [(ngModel)]="question.id">
+                <mat-radio-button
+                  *ngFor="let answer of question.questionAnswers"
+                  [value]="answer.id"
+                >
                   <p [innerHTML]="sanitizeHtml(answer.answerText)"></p>
                 </mat-radio-button>
               </mat-radio-group>
@@ -58,12 +58,17 @@
             <ng-container *ngIf="question.questionType === 'Multiple_Answers'">
               <ng-container *ngFor="let answer of question.questionAnswers">
                 <div class="mat-checkbox-group">
-                  <mat-checkbox [value]="answer.id.toString()">{{ answer.answerText }}</mat-checkbox>
+                    <mat-checkbox
+                      *ngFor="let answer of question.questionAnswers"
+                      [value]="answer.id.toString()"
+                    >
+                      <p [innerHTML]="sanitizeHtml(answer.answerText)"></p>
+                    </mat-checkbox>
                 </div>
               </ng-container>
             </ng-container>
 
-            <!-- matching question  -->
+                <!-- matching question  -->
             <ng-container *ngIf="question.questionType === 'Matching'">
               <mat-form-field>
                 <input matInput placeholder="Answer" />

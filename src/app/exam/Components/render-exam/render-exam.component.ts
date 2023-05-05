@@ -154,5 +154,17 @@ export class RenderExamComponent implements OnInit {
 
 
 }
+onCheckboxChange(question:any, answer:any) {
+  if (answer.checked) {
+    if (!question.selectedAnswers.includes(answer.id)) {
+      question.selectedAnswers.push(answer.id);
+    }
+  } else {
+    const index = question.selectedAnswers.indexOf(answer.id);
+    if (index >= 0) {
+      question.selectedAnswers.splice(index, 1);
+    }
+  }
+}
 
 }
