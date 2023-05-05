@@ -1,1 +1,9 @@
-<p>true-false-question works!</p>
+<h2>
+  Question {{ index }} ({{ question.points }} points)
+</h2>
+<h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
+
+<mat-radio-group >
+  <mat-radio-button [value]="true">True</mat-radio-button>
+  <mat-radio-button [value]="false">False</mat-radio-button>
+</mat-radio-group>
