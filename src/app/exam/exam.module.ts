@@ -9,6 +9,10 @@ import { AddExamComponent } from './Components/add-exam/add-exam.component';
 import { EditExamComponent } from './Components/edit-exam/edit-exam.component';
 import { AttemptExamComponent } from './Components/attempt-exam/attempt-exam.component';
 import { RenderExamComponent } from './Components/render-exam/render-exam.component';
+import { ChoiceQuestionComponent } from './Components/questions-render-exam/choice-question/choice-question.component';
+import { MatchingQuestionComponent } from './Components/questions-render-exam/matching-question/matching-question.component';
+import { MultibleAnswersQuestionComponent } from './Components/questions-render-exam/multible-answers-question/multible-answers-question.component';
+import { TrueFalseQuestionComponent } from './Components/questions-render-exam/true-false-question/true-false-question.component';
 
 
 @NgModule({
@@ -17,7 +21,11 @@ import { RenderExamComponent } from './Components/render-exam/render-exam.compon
     AddExamComponent,
     EditExamComponent,
     AttemptExamComponent,
-    RenderExamComponent
+    RenderExamComponent,
+    ChoiceQuestionComponent,
+    MatchingQuestionComponent,
+    MultibleAnswersQuestionComponent,
+    TrueFalseQuestionComponent
   ],
   imports: [
     CommonModule,
