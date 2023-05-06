@@ -13,7 +13,8 @@ import { ActivatedRoute } from '@angular/router';
 export class RenderExamComponent implements OnInit {
   exam: Exam = {} as Exam;
   responseString: string | undefined;
-  answerQustion = [];
+  answerID:any[] = [];
+  answerMatching:any[] = [];
 
   questions: Question[] = [];
   questionPages: Question[][] = [];
@@ -26,7 +27,6 @@ export class RenderExamComponent implements OnInit {
   constructor(
     private examService: ExamService,
     private sanitizer: DomSanitizer,
-    private formBuilder: FormBuilder,
     private route: ActivatedRoute
   ) {}
 
@@ -40,7 +40,6 @@ export class RenderExamComponent implements OnInit {
   renderExam(examId: number): void {
     this.examService.renderExam(examId).subscribe((data) => {
       this.exam = data;
-      console.log(data.duration);
       this.startTimer(this.exam.duration);
 
       if (data.questions) {
@@ -134,6 +133,13 @@ export class RenderExamComponent implements OnInit {
     });
   }
 
+  addAnswerByIDs(answer:any){
+    this.answerID.push(answer);
+  }
+  addAnswerByString(answer:any){
+    this.answerMatching.push(answer);
+  }
+
   savePage(): void {
     // if (this.exam) {
     //   const answers = this.getAnswers();
@@ -153,18 +159,6 @@ export class RenderExamComponent implements OnInit {
   submitExam(): void {
 
 
-}
-onCheckboxChange(question:any, answer:any) {
-  if (answer.checked) {
-    if (!question.selectedAnswers.includes(answer.id)) {
-      question.selectedAnswers.push(answer.id);
-    }
-  } else {
-    const index = question.selectedAnswers.indexOf(answer.id);
-    if (index >= 0) {
-      question.selectedAnswers.splice(index, 1);
-    }
-  }
 }
 
 }

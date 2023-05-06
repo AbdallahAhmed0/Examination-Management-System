@@ -41,22 +41,26 @@
 
           <mat-card-content>
             <ng-container *ngIf="question.questionType === 'Multiple_choice'">
-              <app-choice-question [index]="i + pageIndex * 3 + 1" [question]="question"></app-choice-question>
+              <app-choice-question [index]="i + pageIndex * 3 + 1" [question]="question"
+              (answer)="addAnswerByIDs($event)"></app-choice-question>
             </ng-container>
 
             <!-- multiple answers question -->
             <ng-container *ngIf="question.questionType === 'Multiple_Answers'">
-            <app-multible-answers-question [index]="i + pageIndex * 3 + 1"[question]="question"></app-multible-answers-question>
+            <app-multible-answers-question [index]="i + pageIndex * 3 + 1"[question]="question"
+            (answer)="addAnswerByIDs($event)"></app-multible-answers-question>
             </ng-container>
 
                 <!-- matching question  -->
             <ng-container *ngIf="question.questionType === 'Matching'">
-             <app-matching-question [index]="i + pageIndex * 3 + 1"[question]="question"></app-matching-question>
+             <app-matching-question [index]="i + pageIndex * 3 + 1"[question]="question"
+            (answer)="addAnswerByString($event)"></app-matching-question>
             </ng-container>
 
             <!-- true false question  -->
             <ng-container *ngIf="question.questionType === 'True_False'">
-              <app-true-false-question [index]="i + pageIndex * 3 + 1"[question]="question"></app-true-false-question>
+              <app-true-false-question [index]="i + pageIndex * 3 + 1"[question]="question"
+              (answer)="addAnswerByIDs($event)"></app-true-false-question>
             </ng-container>
           </mat-card-content>
         </mat-card>
