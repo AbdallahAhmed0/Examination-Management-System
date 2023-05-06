@@ -9,7 +9,7 @@
   <ng-container formArrayName="answersIds">
     <div *ngFor="let answerItem of answers.controls; let i = index">
       <div class="mat-checkbox-group" *ngFor="let answer of question.questionAnswers">
-        <mat-checkbox [formControlName]="i" [value]="answer.id">{{ answer.answerText }}</mat-checkbox>
+        <mat-checkbox [formControlName]="i"  [value]="answer.id">{{ answer.answerText }}</mat-checkbox>
       </div>
     </div>
   </ng-container>
