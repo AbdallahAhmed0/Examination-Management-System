@@ -27,7 +27,12 @@ export class MultibleAnswersQuestionComponent implements OnInit {
     this.addAnswer();
 
     this.answerForm.valueChanges.subscribe(()=>{
-      this.answer.emit(this.answerForm.value);
+
+      const selectedAnswers = this.question.questionAnswers
+      .filter((_: any, i: number) => this.answers.value[i])
+      .map((answer: any) => answer.id);
+
+      this.answer.emit(selectedAnswers);
     });
 
   }
@@ -37,7 +42,9 @@ export class MultibleAnswersQuestionComponent implements OnInit {
   }
 
   addAnswer() {
-    this.answers.push(new FormControl(''));
+    this.question.questionAnswers.forEach(() => {
+      this.answers.push(this.fb.control(false));
+    });
   }
 
 // Sanitize the HTML content with the DomSanitizer service
