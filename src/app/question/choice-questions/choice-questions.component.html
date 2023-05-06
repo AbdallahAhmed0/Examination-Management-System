@@ -18,6 +18,7 @@
 
     <mat-card-content>
       <div formArrayName="questionAnswers">
+      <mat-radio-group>
         <ng-container *ngFor="let answerItem of answers.controls; let i = index">
           <div [formGroupName]="i">
               <ng-container *ngIf="isMultipleChoice; else singleAnswer">
@@ -47,7 +48,7 @@
 
           </div>
         </ng-container>
-
+      </mat-radio-group>
     </div>
       <button mat-raised-button class="add-option" type="button" (click)="addAnswer()">
         <mat-icon>add</mat-icon>Add option
