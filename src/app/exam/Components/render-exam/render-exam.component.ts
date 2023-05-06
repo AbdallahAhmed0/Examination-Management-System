@@ -86,14 +86,26 @@ export class RenderExamComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  saveAnswersById(answers: any[]): void {
-    this.examService.saveSelectedStudentAnswer(this.attemptData.id,this.answerID).subscribe(()=>{
-    
-    });
+  saveAnswersById(attemptId:any ,answers: any[]): void {
+    const observer={
+      next: (answer:any) => {
+      },
+      error: (err:Error)=>{
+        //Take dicition when occur Error
+        }
+    }
+    this.examService.saveSelectedStudentAnswer(attemptId,answers).subscribe(observer);
   }
 
-  saveAnswersByText(answers: any[]): void {
-
+  saveAnswersByText(attemptId:any, answers: any[]): void {
+    const observer={
+      next: (answer:any) => {
+      },
+      error: (err:Error)=>{
+        //Take dicition when occur Error
+        }
+    }
+    this.examService.saveCompleteStudentAnswer(attemptId,answers).subscribe(observer);
   }
 
   addAnswerByIDs(answer:any){
@@ -104,6 +116,10 @@ export class RenderExamComponent implements OnInit {
   }
 
   savePage(): void {
+    this.saveAnswersById(this.attemptData.id,this.answerID);
+    this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+    this.answerID = [];
+    this.answerMatching = [];
   }
 
   submitExam(): void {
