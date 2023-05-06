@@ -45,8 +45,8 @@ export class RenderExamComponent implements OnInit {
       if (data.questions) {
         // Check if data.question is defined
         this.questions = data.questions;
-        // this.questionPages = this.chunk(this.questions, +data.questionsPerPage);
-        this.questionPages = this.chunk(this.questions, 3);
+        this.questionPages = this.chunk(this.questions, +data.questionsPerPage);
+        // this.questionPages = this.chunk(this.questions, 3);
         // console.log(this.questions);
       }
     });
