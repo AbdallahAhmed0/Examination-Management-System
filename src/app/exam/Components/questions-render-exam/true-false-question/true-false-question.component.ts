@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -11,19 +11,25 @@ export class TrueFalseQuestionComponent implements OnInit {
   @Input() question!:any;
   @Input() index!:number;
 
+  @Output() answer = new EventEmitter<object>();
+
   answerForm!: FormGroup;
-  answer:any;
+  Answer:any;
   constructor(private sanitizer: DomSanitizer,
               private fb:FormBuilder) { }
 
 ngOnInit(): void {
 
-  this.answer = this.question.questionAnswers[0];
-this.answerForm = this.fb.group({
-questionId: [this.question.id],
-answersIds: this.fb.array([])
-});
-this.addAnswer();
+  this.Answer = this.question.questionAnswers[0];
+  this.answerForm = this.fb.group({
+      questionId: [this.question.id],
+      answersIds: this.fb.array([])
+    });
+    this.addAnswer();
+    this.answerForm.valueChanges.subscribe(()=>{
+      this.answer.emit(this.answerForm.value);
+    })
+
 }
 get answers(): FormArray {
 return this.answerForm.get('answersIds') as FormArray;
