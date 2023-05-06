@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -11,8 +11,10 @@ export class MatchingQuestionComponent implements OnInit {
   @Input() question!:any;
   @Input() index!:number;
 
+  @Output() answer = new EventEmitter<object>();
+
   answerForm!: FormGroup;
-constructor(private sanitizer: DomSanitizer,
+  constructor(private sanitizer: DomSanitizer,
               private fb:FormBuilder) { }
 
   ngOnInit(): void {
@@ -20,6 +22,9 @@ constructor(private sanitizer: DomSanitizer,
     this.answerForm = this.fb.group({
       questionId: [this.question.id],
       textAnswer: ['']
+    });
+    this.answerForm.valueChanges.subscribe(()=>{
+      this.answer.emit(this.answerForm.value);
     });
 
   }
