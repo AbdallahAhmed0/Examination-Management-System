@@ -1,9 +1,8 @@
 import { ExamService } from './../../Services/exam.service';
-import { Question, Exam, Answer } from './../../Models/exam';
+import { Question, Exam } from './../../Models/exam';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-render-exam',
@@ -26,7 +25,8 @@ export class RenderExamComponent implements OnInit {
   constructor(
     private examService: ExamService,
     private sanitizer: DomSanitizer,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -126,7 +126,13 @@ export class RenderExamComponent implements OnInit {
 
   submitExam(): void {
 
-
+    this.examService.endExam(this.attemptData.id).subscribe(()=>{
+      if(this.exam.showResult){
+        //go to Show Answer Page
+      }else{
+        this.router.navigate(['/courses']);
+      }
+    })
 }
 
 }
