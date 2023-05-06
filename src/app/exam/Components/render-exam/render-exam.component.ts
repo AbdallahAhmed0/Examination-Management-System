@@ -66,14 +66,18 @@ export class RenderExamComponent implements OnInit {
         minutes--;
         if (minutes < 0) {
           // Submit the exam if time is up
-          this.submitExam();
-          clearInterval(intervalId);
         } else {
           seconds = 59;
         }
       }
       // Update the remaining time
       this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      // Check if both minutes and seconds are equal to 0
+      if (minutes === 0 && seconds === 0) {
+        // Submit the exam if time is up
+        this.submitExam();
+        clearInterval(intervalId);
+      }
     }, 1000);
   }
 
