@@ -87,14 +87,10 @@ export class ExamService {
 
   // Attempt Exam
   attemptExam(examId: number, userId: number) {
-    let body: object = {
-      examId: examId,
-      userId: userId,
-    };
+    
     return this.httpClient
       .post(
         `${environment.APPURL}/exam/attemptExam/${examId}/${userId}`,
-        JSON.stringify(body),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));

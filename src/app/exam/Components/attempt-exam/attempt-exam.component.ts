@@ -32,16 +32,17 @@ export class AttemptExamComponent implements OnInit {
     });
   }
 
-  // Send userId and examId then get response with user data
-  getAttemptExamData(userId: number) {
-    this._examService
-      .attemptExam(this.examId, userId)
-      .subscribe((data) => this.attemptData = data);
-  }
 
   startExam(examId: any) {
-    this.getAttemptExamData(1); //FIXed userID
-    this._examService.renderExam(examId);
-    this.router.navigate(['exams/render/', examId],{state:{data:this.attemptData}}); //This should take the user to the exam
+    this._examService
+    .attemptExam(this.examId, 1) //FIXed userID
+    .subscribe((data) => {
+      this.attemptData = data;
+      this._examService.renderExam(examId);
+      this.router.navigate(['exams/render/', examId],{state:{data:this.attemptData}}); //This should take the user to the exam
+
+  });
+
+
   }
 }

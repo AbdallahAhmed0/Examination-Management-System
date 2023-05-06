@@ -34,6 +34,7 @@ export class RenderExamComponent implements OnInit {
     this.renderExam(examId);
     // Get the array parameter from the state object
     this.attemptData = history.state.data;
+    console.log(this.attemptData)
   }
 
   renderExam(examId: number): void {
@@ -116,6 +117,7 @@ export class RenderExamComponent implements OnInit {
   }
 
   savePage(): void {
+    console.log('answerID: ', this.answerID,'answerMatching: ',this.answerMatching)
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
     this.answerID = [];
