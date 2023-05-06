@@ -117,7 +117,6 @@ export class RenderExamComponent implements OnInit {
   }
 
   savePage(): void {
-    console.log('answerID: ', this.answerID,'answerMatching: ',this.answerMatching)
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
     this.answerID = [];
@@ -125,6 +124,11 @@ export class RenderExamComponent implements OnInit {
   }
 
   submitExam(): void {
+
+    this.saveAnswersById(this.attemptData.id,this.answerID);
+    this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+    this.answerID = [];
+    this.answerMatching = [];
 
     this.examService.endExam(this.attemptData.id).subscribe(()=>{
       if(this.exam.showResult){
