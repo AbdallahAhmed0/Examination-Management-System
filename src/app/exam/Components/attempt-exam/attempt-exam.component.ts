@@ -9,6 +9,8 @@ import { ExamService } from '../../Services/exam.service';
   styleUrls: ['./attempt-exam.component.scss'],
 })
 export class AttemptExamComponent implements OnInit {
+
+  attemptData:any;
   constructor(
     private _examService: ExamService,
     private _activatedRoute: ActivatedRoute,
@@ -34,12 +36,12 @@ export class AttemptExamComponent implements OnInit {
   getAttemptExamData(userId: number) {
     this._examService
       .attemptExam(this.examId, userId)
-      .subscribe((data) => console.log(data));
+      .subscribe((data) => this.attemptData = data);
   }
 
   startExam(examId: any) {
-    this.router.navigate(['exams/render/', examId]); //This should take the user to the exam
     this.getAttemptExamData(1); //FIXed userID
     this._examService.renderExam(examId);
+    this.router.navigate(['exams/render/', examId],{state:{data:this.attemptData}}); //This should take the user to the exam
   }
 }
