@@ -69,13 +69,13 @@
 
     <div>
       <button mat-raised-button *ngIf="
-          currentPageIndex > 0 && currentPageIndex <= questionPages.length - 1
-        " (click)="previousPage()">
+          currentPageIndex > 0 && currentPageIndex <= questionPages.length - 1"
+          (click)="previousPage()" (click)="savePage()">
         Previous
       </button>
-      <button mat-raised-button color="primary" *ngIf="currentPageIndex < questionPages.length - 1" (click)="nextPage()"
-        (click)="savePage()">
-        Save
+      <button mat-raised-button color="primary" *ngIf="currentPageIndex < questionPages.length - 1"
+      (click)="nextPage()"(click)="savePage()">
+        Next
       </button>
       <button mat-raised-button *ngIf="currentPageIndex === questionPages.length - 1" color="primary"
         class="submit-button" (click)="submitExam()">

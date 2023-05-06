@@ -20,7 +20,6 @@ export class RenderExamComponent implements OnInit {
   questionPages: Question[][] = [];
   currentPageIndex = 0;
 
-  nextButtonLabel = 'Save';
   remainingTime: number = 0;
   attemptData: any;
 
@@ -87,50 +86,14 @@ export class RenderExamComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  saveMultipleChoiceAnswers(answers: any[]): void {
-    answers.forEach((answer) => {
-      const questionId = answer.questionId;
-      const selectedAnswer = answer.answerIds[0];
-      if (selectedAnswer) {
-        this.examService
-          .saveSelectedStudentAnswer(this.attemptData.id, questionId)
-          .subscribe((response) => {
-            console.log(response);
-          });
-      }
+  saveAnswersById(answers: any[]): void {
+    this.examService.saveSelectedStudentAnswer(this.attemptData.id,this.answerID).subscribe(()=>{
+    
     });
   }
 
-  saveMultipleAnswersAnswers(answers: any[]): void {
-    answers.forEach((answer) => {
-      const questionId = answer.questionId;
-      const selectedAnswers = answer.answerIds;
-      if (selectedAnswers && selectedAnswers.length > 0) {
-        selectedAnswers.forEach((selectedAnswer: number | Answer) => {
-          if (selectedAnswer) {
-            this.examService
-              .saveSelectedStudentAnswer(this.attemptData.id, questionId)
-              .subscribe((response) => {
-                console.log(response);
-              });
-          }
-        });
-      }
-    });
-  }
+  saveAnswersByText(answers: any[]): void {
 
-  saveMatchingAnswers(answers: any[]): void {
-    answers.forEach((answer) => {
-      const questionId = answer.questionId;
-      const textAnswer = answer.textAnswer;
-      if (textAnswer) {
-        this.examService
-          .saveCompleteStudentAnswer(this.attemptData.id, textAnswer)
-          .subscribe((response) => {
-            console.log(response);
-          });
-      }
-    });
   }
 
   addAnswerByIDs(answer:any){
@@ -141,19 +104,6 @@ export class RenderExamComponent implements OnInit {
   }
 
   savePage(): void {
-    // if (this.exam) {
-    //   const answers = this.getAnswers();
-    //   this.saveMultipleChoiceAnswers(
-    //     answers.filter((a) => a.answerIds && a.answerIds.length === 1)
-    //   );
-    //   this.saveMultipleAnswersAnswers(
-    //     answers.filter((a) => a.answerIds && a.answerIds.length > 1)
-    //   );
-    //   this.saveMatchingAnswers(answers.filter((a) => a.textAnswer));
-    //   console.log('Page saved.');
-    //   console.log('Answers:', answers); // Log the current answers to the console
-    // console.log(this.questionForms);
-    // }
   }
 
   submitExam(): void {
