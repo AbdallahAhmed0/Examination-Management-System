@@ -11,8 +11,8 @@
   <ng-container formArrayName="answersIds">
     <div *ngFor="let answerItem of answers.controls; let i = index">
       <mat-radio-group [formControlName]="i" >
-        <mat-radio-button [value]="Answer.id">True</mat-radio-button>
-        <mat-radio-button [value]="0">False</mat-radio-button>
+        <mat-radio-button [value]="Answer.answerText == 'true' ? Answer.id : 0">True</mat-radio-button>
+        <mat-radio-button [value]="Answer.answerText == 'true' ? 0 : Answer.id">False</mat-radio-button>
       </mat-radio-group>
     </div>
   </ng-container>
