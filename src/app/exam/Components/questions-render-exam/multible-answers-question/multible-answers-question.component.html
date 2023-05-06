@@ -1,4 +1,4 @@
-<p>{{answerForm.value |json}}</p>
+<p>{{Answers |json}}</p>
 
 <h2>
   Question {{ index }} ({{ question.points }} points)
@@ -6,9 +6,9 @@
 <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
 
 <form [formGroup]="answerForm">
-
+  <ng-container formArrayName="answersIds">
       <div class="mat-checkbox-group" *ngFor="let answer of question.questionAnswers let i = index">
         <mat-checkbox [formControlName]="i"  >{{ answer.answerText }}</mat-checkbox>
-    </div>
-
+      </div>
+  </ng-container>
 </form>

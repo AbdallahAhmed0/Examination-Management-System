@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Answer } from './../../../Models/exam';
 
 @Component({
   selector: 'app-multible-answers-question',
@@ -15,7 +16,7 @@ export class MultibleAnswersQuestionComponent implements OnInit {
   @Output() answer = new EventEmitter<object>();
 
   answerForm!: FormGroup;
-
+  Answers!:object;
   constructor(private sanitizer: DomSanitizer,
               private fb:FormBuilder) { }
 
@@ -31,8 +32,8 @@ export class MultibleAnswersQuestionComponent implements OnInit {
       const selectedAnswers = this.question.questionAnswers
       .filter((_: any, i: number) => this.answers.value[i])
       .map((answer: any) => answer.id);
-
-      this.answer.emit(selectedAnswers);
+      this.Answers= {"questionId": this.question.id, "answersIds":selectedAnswers}
+      this.answer.emit(this.Answers);
     });
 
   }
