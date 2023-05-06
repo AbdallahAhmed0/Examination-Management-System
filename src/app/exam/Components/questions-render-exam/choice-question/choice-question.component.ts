@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -11,6 +11,9 @@ export class ChoiceQuestionComponent implements OnInit {
 @Input() question!:any;
 @Input() index!:number;
 
+@Output() answer = new EventEmitter<object>();
+
+
 answerForm!: FormGroup;
 constructor(private sanitizer: DomSanitizer,
               private fb:FormBuilder) { }
@@ -21,7 +24,11 @@ constructor(private sanitizer: DomSanitizer,
       questionId: [this.question.id],
       answersIds: this.fb.array([])
     });
-this.addAnswer();
+    this.addAnswer();
+
+    this.answerForm.valueChanges.subscribe(()=>{
+      this.answer.emit(this.answerForm.value);
+    });
 
   }
   get answers(): FormArray {
