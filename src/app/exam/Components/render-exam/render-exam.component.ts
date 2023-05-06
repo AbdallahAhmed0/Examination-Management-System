@@ -19,7 +19,7 @@ export class RenderExamComponent implements OnInit {
   questionPages: Question[][] = [];
   currentPageIndex = 0;
 
-  remainingTime: number = 0;
+  remainingTime!: string;
   attemptData: any;
 
   constructor(
@@ -53,18 +53,28 @@ export class RenderExamComponent implements OnInit {
   }
 
   startTimer(duration: number) {
-    this.remainingTime = duration;
+    let minutes = duration;
+    let seconds = 0;
+    this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
     // Create a setInterval function that will update the remaining time every second
     const intervalId = setInterval(() => {
-      // Calculate the remaining time by subtracting the current time from the end time
-      this.remainingTime--;
-      console.log(this.remainingTime);
-      if (this.remainingTime <= 0) {
-        this.submitExam();
-        clearInterval(intervalId);
+      // Decrement the seconds
+      seconds--;
+      if (seconds < 0) {
+        // Decrement the minutes if seconds reach 0
+        minutes--;
+        if (minutes < 0) {
+          // Submit the exam if time is up
+          this.submitExam();
+          clearInterval(intervalId);
+        } else {
+          seconds = 59;
+        }
       }
-    }, 1000 * 60);
+      // Update the remaining time
+      this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }, 1000);
   }
 
   chunk(questions: Question[], size: number): Question[][] {
