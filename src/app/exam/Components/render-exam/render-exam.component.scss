@@ -2,8 +2,8 @@
 // Exam details section
 
 .container .form {
-  margin: auto;
-  max-width: 900px;
+  margin: 35px auto;
+  max-width: 1000px;
   padding: 20px;
   background-color: #fff;
   border-radius: 15px;
@@ -19,15 +19,15 @@ mat-card {
 .exam-header {
   display: flex;
   justify-content: center;
-  background-color: #ebebec;
+  background-color: #f6f6fa;
   padding: 20px;
   border-radius: 20px;
   margin: 15px;
 }
 
 .exam-name {
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 30px;
+  font-weight: 500;
 }
 
 .exam-details {
@@ -43,11 +43,12 @@ mat-card {
 
 .exam-details-right {
   display: flex;
-  flex-direction: column;
+  margin-left: 30%;
 }
 .mat-subheading-1{
   font-weight: 500;
   margin-right: 10px;
+
 }
 
 
@@ -68,25 +69,26 @@ mat-card-content{
 }
 
 
-button.next, button.pervious {
-  text-decoration: none;
-  display: inline-block;
-  padding: 8px 16px;
+.previous,.next {
+  margin:20px 10px;
+  font-size: 16px;
+  width: 50px;
+  height: 35px;
+  color: #FFF;
+  background: #007bff;
 }
+.previous{
+  width: 90px;
 
-button:hover {
-  background-color: #ddd;
-  color: black;
 }
-
-.previous {
-  background-color: #f1f1f1;
-  color: black;
+.next{
+  float: right;
 }
-
-.next {
-  background-color: #04AA6D;
-  color: white;
+.previous:hover,.next:hover{
+  background: darken($color: #007bff, $amount: 10%);
+}
+.previous:disabled,.next:disabled{
+  background: #f6f6fa;
 }
 
 .round {

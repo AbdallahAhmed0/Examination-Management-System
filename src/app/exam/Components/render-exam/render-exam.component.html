@@ -68,12 +68,11 @@
     </ng-container>
 
     <div>
-      <button mat-raised-button *ngIf="
-          currentPageIndex > 0 && currentPageIndex <= questionPages.length - 1"
+      <button class="previous" mat-raised-button [disabled]="currentPageIndex < questionPages.length - 1"
           (click)="previousPage()" (click)="savePage()">
         Previous
       </button>
-      <button mat-raised-button color="primary" *ngIf="currentPageIndex < questionPages.length - 1"
+      <button class="next" mat-raised-button   [disabled]="currentPageIndex > 0 && currentPageIndex <= questionPages.length - 1"
       (click)="nextPage()"(click)="savePage()">
         Next
       </button>
