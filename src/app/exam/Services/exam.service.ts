@@ -76,7 +76,7 @@ export class ExamService {
     return this.httpClient
       .delete(`${environment.APPURL}/exam/delete`, { body: exam })
       .pipe(retry(2), catchError(this.handleError))
-      .subscribe((data) => {});
+      .subscribe((data) => { });
   }
 
   openSnackBar(message: string) {
@@ -102,22 +102,23 @@ export class ExamService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  saveSelectedStudentAnswer(attemptId: number,answers: { questionId: number; answersIds: number[] }[]): Observable<any> {
+  saveSelectedStudentAnswer(attemptId: number, answers: { questionId: number; answersIds: number[] }[]): Observable<any> {
 
-    return this.httpClient.post<any>(`${environment.APPURL}/saveSelectedStudentAnswer/${attemptId}`,
-      JSON.stringify(answers),this.httpOption);
+    return this.httpClient.post<any>(`${environment.APPURL}/exam/saveSelectedStudentAnswer/${attemptId}`,
+      JSON.stringify(answers), this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
   }
 
-  saveCompleteStudentAnswer(attemptId: number,answers: { questionId: number; textAnswer: string }[]): Observable<any> {
-    const url = `${environment.APPURL}/saveCompleteStudentAnswer/${attemptId}`;
-    return this.httpClient.post<any>(`${environment.APPURL}/saveCompleteStudentAnswer/${attemptId}`,
-    JSON.stringify(answers),this.httpOption);
+  saveCompleteStudentAnswer(attemptId: number, answers: { questionId: number; textAnswer: string }[]): Observable<any> {
+
+    return this.httpClient.post<any>(`${environment.APPURL}/exam/saveCompleteStudentAnswer/${attemptId}`,
+      JSON.stringify(answers), this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
   }
 
-  endExam(examAttemptId: string): Observable<any> {
-    const url = `/exam/endExam/${examAttemptId}`;
-    return this.httpClient
-      .post(url, {})
+  endExam(examAttemptId: number): Observable<any> {
+
+    return this.httpClient.post(`/exam/endExam/${examAttemptId}`, {})
       .pipe(retry(2), catchError(this.handleError));
   }
 }
