@@ -1,7 +1,6 @@
 import { ExamService } from './../../Services/exam.service';
 import { Question, Exam } from './../../Models/exam';
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -24,7 +23,6 @@ export class RenderExamComponent implements OnInit {
 
   constructor(
     private examService: ExamService,
-    private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private router:Router
   ) {}
@@ -96,10 +94,7 @@ export class RenderExamComponent implements OnInit {
     this.currentPageIndex++;
   }
 
-  // Sanitize the HTML content with the DomSanitizer service
-  sanitizeHtml(html: string): any {
-    return this.sanitizer.bypassSecurityTrustHtml(html);
-  }
+
 
   saveAnswersById(attemptId:any ,answers: any[]): void {
     const observer={

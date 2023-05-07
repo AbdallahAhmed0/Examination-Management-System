@@ -72,24 +72,24 @@ mat-card-content{
 .previous,.next {
   margin:20px 10px;
   font-size: 16px;
-  width: 50px;
+  width: 80px;
   height: 35px;
   color: #FFF;
   background: #007bff;
 }
 .previous{
   width: 90px;
-
 }
 .next{
   float: right;
 }
 .previous:hover,.next:hover{
-  background: darken($color: #007bff, $amount: 10%);
+  background: darken($color: #007bff, $amount: 14%);
 }
 .previous:disabled,.next:disabled{
   background: #f6f6fa;
 }
+
 
 .round {
   border-radius: 50%;

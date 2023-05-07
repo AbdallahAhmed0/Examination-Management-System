@@ -72,12 +72,12 @@
           (click)="previousPage()" (click)="savePage()">
         Previous
       </button>
-      <button class="next" mat-raised-button   [disabled]="currentPageIndex > 0 && currentPageIndex <= questionPages.length - 1"
+      <button class="next" mat-raised-button [hidden]="currentPageIndex > 0 && currentPageIndex <= questionPages.length - 1"
       (click)="nextPage()"(click)="savePage()">
         Next
       </button>
-      <button mat-raised-button *ngIf="currentPageIndex === questionPages.length - 1" color="primary"
-        class="submit-button" (click)="submitExam()">
+      <button  mat-raised-button *ngIf="currentPageIndex === questionPages.length - 1"
+        class="next" (click)="submitExam()">
         Submit
       </button>
     </div>
