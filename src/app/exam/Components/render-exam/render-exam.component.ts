@@ -139,13 +139,22 @@ export class RenderExamComponent implements OnInit {
     this.answerID = [];
     this.answerMatching = [];
 
-    this.examService.endExam(this.attemptData.id).subscribe(()=>{
-      if(this.exam.showResult){
+    const observer={
+      next: (answer:any) => {
+
+        if(this.exam.showResult){
         //go to Show Answer Page
+        this.router.navigate(['/courses']);
+
       }else{
         this.router.navigate(['/courses']);
       }
-    })
+      },
+      error: (err:Error)=>{
+        //Take dicition when occur Error
+        }
+    }
+    this.examService.endExam(this.attemptData.id).subscribe(observer);
 }
 
 }

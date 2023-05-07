@@ -118,7 +118,7 @@ export class ExamService {
 
   endExam(examAttemptId: number): Observable<any> {
 
-    return this.httpClient.post(`/exam/endExam/${examAttemptId}`, {})
+    return this.httpClient.post(`${environment.APPURL}/exam/endExam/${examAttemptId}`, {})
       .pipe(retry(2), catchError(this.handleError));
   }
 }
