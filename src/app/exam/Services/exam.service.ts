@@ -87,7 +87,7 @@ export class ExamService {
 
   // Attempt Exam
   attemptExam(examId: number, userId: number) {
-    
+
     return this.httpClient
       .post(
         `${environment.APPURL}/exam/attemptExam/${examId}/${userId}`,
@@ -102,20 +102,16 @@ export class ExamService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  saveSelectedStudentAnswer(
-    attemptId: number,
-    answers: { questionId: number; answersIds: number[] }[]
-  ): Observable<any> {
-    const url = `${environment.APPURL}/saveSelectedStudentAnswer/${attemptId}`;
-    return this.httpClient.post<any>(url, { answers });
+  saveSelectedStudentAnswer(attemptId: number,answers: { questionId: number; answersIds: number[] }[]): Observable<any> {
+
+    return this.httpClient.post<any>(`${environment.APPURL}/saveSelectedStudentAnswer/${attemptId}`,
+      JSON.stringify(answers),this.httpOption);
   }
 
-  saveCompleteStudentAnswer(
-    attemptId: number,
-    answers: { questionId: number; textAnswer: string }[]
-  ): Observable<any> {
+  saveCompleteStudentAnswer(attemptId: number,answers: { questionId: number; textAnswer: string }[]): Observable<any> {
     const url = `${environment.APPURL}/saveCompleteStudentAnswer/${attemptId}`;
-    return this.httpClient.post<any>(url, { answers });
+    return this.httpClient.post<any>(`${environment.APPURL}/saveCompleteStudentAnswer/${attemptId}`,
+    JSON.stringify(answers),this.httpOption);
   }
 
   endExam(examAttemptId: string): Observable<any> {
