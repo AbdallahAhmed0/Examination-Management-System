@@ -3,3 +3,18 @@ mat-radio-group {
   justify-content: space-around;
   flex-direction: column;
 }
+.radio{
+  margin: 5px 20px;
+  position: relative;
+  top: 8px; /* Adjust this value to center the radio button */
+  width: 20px;
+
+}
+.mat-radio-button {
+  transform: scale(1.18); /* increase size */
+  background: #FFFFFF;
+  border-radius: 100%;
+}
+p{
+  font-size: 17px;
+}

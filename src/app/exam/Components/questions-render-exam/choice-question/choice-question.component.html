@@ -8,7 +8,7 @@
   <ng-container formArrayName="answersIds">
     <div *ngFor="let answerItem of answers.controls; let i = index">
       <mat-radio-group [formControlName]="i">
-        <mat-radio-button *ngFor="let answer of question.questionAnswers" [value]="answer.id">
+        <mat-radio-button class="radio" *ngFor="let answer of question.questionAnswers" [value]="answer.id">
           <p [innerHTML]="sanitizeHtml(answer.answerText)"></p>
         </mat-radio-button>
       </mat-radio-group>
