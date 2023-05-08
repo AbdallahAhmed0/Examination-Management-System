@@ -38,10 +38,11 @@ export class EditExamComponent implements OnInit {
 
         this.examService.getExamById(this.id).subscribe(data =>{
             this.exam=data;
-            console.log(data);
+            console.log(data.startTime);
+            console.log(typeof(data.startTime));
+
             this.choosenCourse=data.course
             this.sliderValue=data.successRate
-
 
 
             this.newExam = this.fb.group({
@@ -52,8 +53,8 @@ export class EditExamComponent implements OnInit {
               state:[false,[]],
               questionsPerPage:[data.questionsPerPage,[Validators.required]],
               showResult: [data.showResult],
-              startTime:[ "",[Validators.required]],
-              endTime:["",[Validators.required]]
+              startTime:[this.formatDateToform(data.startTime.toString()),[Validators.required]],
+              endTime:[this.formatDateToform(data.endTime.toString()),[Validators.required]]
 
             })
 
@@ -113,6 +114,16 @@ export class EditExamComponent implements OnInit {
      transformedDate = `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
      return transformedDate
     }
+     formatDateToform(dateString: string): string {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+
 
 
     get examName(){

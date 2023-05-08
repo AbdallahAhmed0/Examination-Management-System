@@ -12,6 +12,12 @@ import { MaterialModule } from './Shared/material/material.module';
 import { AdminsModule } from './admins/admins.module';
 import { RolesModule } from './roles/roles.module';
 import { StudentsModule } from './students/students.module';
+import { RecoveryPasswordComponent } from './dashboard/recovery-password/recovery-password.component';
+
+
+//imports for recovery
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +25,8 @@ import { StudentsModule } from './students/students.module';
   declarations: [
     AppComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    RecoveryPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +36,10 @@ import { StudentsModule } from './students/students.module';
     AdminsModule,
     RolesModule,
     StudentsModule,
-    ExamModule
+    ExamModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
 
   ],
   providers: [],
