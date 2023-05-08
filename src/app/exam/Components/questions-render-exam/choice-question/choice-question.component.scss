@@ -4,22 +4,17 @@ mat-radio-group {
   flex-direction: column;
 }
 .radio{
-  margin: 5px 20px;
+  margin: 4px 20px;
   position: relative;
-  top: 8px; /* Adjust this value to center the radio button */
   width: 20px;
 
 }
 .mat-radio-button {
-  transform: scale(1.18); /* increase size */
+  transform: scale(1.1); /* increase size */
   background: #FFFFFF;
   border-radius: 100%;
 }
-p{
-  font-size: 17px;
+::ng-deep .mat-radio-label-content {
+  padding-top: 10px;
 }
-.points{
-  font-size: 15px;
-  color: #aaaaaa;
-  margin-left: 10px;
-}
+
