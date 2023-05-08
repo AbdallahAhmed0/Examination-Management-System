@@ -1,7 +1,7 @@
 <p>{{answerForm.value |json}}</p>
-<h2>
-  Question {{ index }} ({{ question.points }} points)
-</h2>
+<h3>
+  Question {{ index }} <span class="points">({{ question.points }} points)</span>
+</h3>
 <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
 
 <form [formGroup]="answerForm">
