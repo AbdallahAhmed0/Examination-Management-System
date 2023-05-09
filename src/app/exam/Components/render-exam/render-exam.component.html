@@ -60,7 +60,7 @@
             <!-- true false question  -->
             <ng-container *ngIf="question.questionType === 'True_False'">
               <app-true-false-question [index]="(currentPageIndex - 1) * page.length + i + 1"[question]="question"
-              (answer)="addAnswerByIDs($event,question.questionType)"></app-true-false-question>
+              (answer)="addAnswerByIDs($event,question.questionType)"[savedAnswer]="sentAnswerToTrue_False"></app-true-false-question>
             </ng-container>
           </mat-card-content>
         </mat-card>
