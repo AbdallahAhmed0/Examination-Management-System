@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class TrueFalseQuestionComponent implements OnInit {
   @Input() question!:any;
   @Input() index!:number;
+  @Input() savedAnswer:any[]=[];
 
   @Output() answer = new EventEmitter<object>();
 
@@ -25,7 +26,9 @@ ngOnInit(): void {
       questionId: [this.question.id],
       answersIds: this.fb.array([])
     });
-    this.addAnswer();
+
+    this.addAnswer(this.savedAnswer[0]);
+
     this.answerForm.valueChanges.subscribe(()=>{
       this.answer.emit(this.answerForm.value);
     })
@@ -34,8 +37,8 @@ ngOnInit(): void {
 get answers(): FormArray {
 return this.answerForm.get('answersIds') as FormArray;
 }
-addAnswer() {
-this.answers.push(new FormControl(''));
+addAnswer(answer = '') {
+this.answers.push(new FormControl(answer));
 }
 
     // Sanitize the HTML content with the DomSanitizer service

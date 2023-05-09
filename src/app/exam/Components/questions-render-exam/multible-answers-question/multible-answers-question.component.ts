@@ -12,6 +12,7 @@ export class MultibleAnswersQuestionComponent implements OnInit {
 
   @Input() question!:any;
   @Input() index!:number;
+  @Input() savedAnswer:any[]=[];
 
   @Output() answer = new EventEmitter<object>();
 
