@@ -124,8 +124,17 @@ export class RenderExamComponent implements OnInit {
     this.examService.saveCompleteStudentAnswer(attemptId,answers).subscribe(observer);
   }
 
-  addAnswerByIDs(answer:any){
+  addAnswerByIDs(answer:any,questionType:any){
     this.answerID.push(answer);
+    if(questionType == 'Multiple_choice'){
+      this.sentAnswerToChoice = answer.answersIds;
+    }
+    else if(questionType == 'Multiple_Answers'){
+      this.sentAnswerToMultibleAnswers = answer.answersIds;
+    }
+    else{
+      this.sentAnswerToTrue_False = answer.answersIds;
+    }
   }
   addAnswerByString(answer:any){
     this.answerMatching.push(answer);
