@@ -21,6 +21,13 @@ export class RenderExamComponent implements OnInit {
   remainingTime!: string;
   attemptData: any;
   intervalId:any;
+
+  // when click previous and next send value to questions components untile save in form
+  sentAnswerToChoice:any[]=[];
+  sentAnswerToMultibleAnswers:any[]=[];
+  sentAnswerToTrue_False:any[]=[];
+  sentAnswerToMatching:string='';
+
   constructor(
     private examService: ExamService,
     private route: ActivatedRoute,
@@ -55,7 +62,7 @@ export class RenderExamComponent implements OnInit {
     this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
     // Create a setInterval function that will update the remaining time every second
-     this.intervalId = setInterval(() => {
+    this.intervalId = setInterval(() => {
       // Decrement the seconds
       seconds--;
       if (seconds < 0) {
@@ -122,6 +129,7 @@ export class RenderExamComponent implements OnInit {
   }
   addAnswerByString(answer:any){
     this.answerMatching.push(answer);
+    this.sentAnswerToMatching = answer.textAnswer;
   }
 
   savePage(): void {

@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class MatchingQuestionComponent implements OnInit {
   @Input() question!:any;
   @Input() index!:number;
+  @Input() savedAnswer:string='';
 
   @Output() answer = new EventEmitter<object>();
 
@@ -21,7 +22,7 @@ export class MatchingQuestionComponent implements OnInit {
 
     this.answerForm = this.fb.group({
       questionId: [this.question.id],
-      textAnswer: ['']
+      textAnswer: [this.savedAnswer]
     });
     this.answerForm.valueChanges.subscribe(()=>{
       this.answer.emit(this.answerForm.value);

@@ -54,7 +54,7 @@
                 <!-- matching question  -->
             <ng-container *ngIf="question.questionType === 'Matching'">
              <app-matching-question [index]="(currentPageIndex - 1) * page.length + i + 1"[question]="question"
-            (answer)="addAnswerByString($event)"></app-matching-question>
+            (answer)="addAnswerByString($event)" [savedAnswer]="sentAnswerToMatching"></app-matching-question>
             </ng-container>
 
             <!-- true false question  -->
