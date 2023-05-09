@@ -28,6 +28,7 @@ constructor(private sanitizer: DomSanitizer,
 
     this.answerForm.valueChanges.subscribe(()=>{
       this.answer.emit(this.answerForm.value);
+      this.answerForm.patchValue(this.answerForm.value)
     });
 
   }

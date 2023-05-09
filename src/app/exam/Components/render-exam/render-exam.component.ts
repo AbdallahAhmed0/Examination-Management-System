@@ -20,7 +20,7 @@ export class RenderExamComponent implements OnInit {
 
   remainingTime!: string;
   attemptData: any;
-
+  intervalId:any;
   constructor(
     private examService: ExamService,
     private route: ActivatedRoute,
@@ -55,7 +55,7 @@ export class RenderExamComponent implements OnInit {
     this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
     // Create a setInterval function that will update the remaining time every second
-    const intervalId = setInterval(() => {
+     this.intervalId = setInterval(() => {
       // Decrement the seconds
       seconds--;
       if (seconds < 0) {
@@ -73,7 +73,7 @@ export class RenderExamComponent implements OnInit {
       if (minutes === 0 && seconds === 0) {
         // Submit the exam if time is up
         this.submitExam();
-        clearInterval(intervalId);
+        clearInterval(this.intervalId);
       }
     }, 1000);
   }
@@ -135,6 +135,7 @@ export class RenderExamComponent implements OnInit {
 
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+    clearInterval(this.intervalId);
     this.answerID = [];
     this.answerMatching = [];
 
