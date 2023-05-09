@@ -126,6 +126,7 @@ export class RenderExamComponent implements OnInit {
 
   addAnswerByIDs(answer:any,questionType:any){
     this.answerID.push(answer);
+
     if(questionType == 'Multiple_choice'){
       this.sentAnswerToChoice = answer.answersIds;
     }
@@ -144,6 +145,7 @@ export class RenderExamComponent implements OnInit {
   savePage(): void {
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+    console.log(this.answerID)
     this.answerID = [];
     this.answerMatching = [];
   }

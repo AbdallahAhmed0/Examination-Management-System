@@ -27,14 +27,9 @@ export class MultibleAnswersQuestionComponent implements OnInit {
       answersIds: this.fb.array([])
     });
     this.addAnswer();
-
+    this.setAnswerIds(this.savedAnswer)
     this.answerForm.valueChanges.subscribe(()=>{
-
-      const selectedAnswers = this.question.questionAnswers
-      .filter((_: any, i: number) => this.answers.value[i])
-      .map((answer: any) => answer.id);
-      this.Answers= {"questionId": this.question.id, "answersIds":selectedAnswers}
-      this.answer.emit(this.Answers);
+      this.convertFormatFormToSentArrayOfIDs()
     });
 
   }
@@ -48,6 +43,21 @@ export class MultibleAnswersQuestionComponent implements OnInit {
       this.answers.push(this.fb.control(false));
     });
   }
+  setAnswerIds(answerIds: string[]) {
+    this.question.questionAnswers.forEach((answer:any, index:any) => {
+      const isSelected = answerIds.includes(answer.id);
+      this.answers.controls[index].setValue(isSelected);
+    });
+    this.convertFormatFormToSentArrayOfIDs()
+  }
+  convertFormatFormToSentArrayOfIDs(){
+    const selectedAnswers = this.question.questionAnswers
+      .filter((_: any, i: number) => this.answers.value[i])
+      .map((answer: any) => answer.id);
+      this.Answers= {"questionId": this.question.id, "answersIds":selectedAnswers}
+      this.answer.emit(this.Answers);
+  }
+
 
 // Sanitize the HTML content with the DomSanitizer service
   sanitizeHtml(html: string): any {

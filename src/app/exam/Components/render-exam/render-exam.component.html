@@ -48,7 +48,7 @@
             <!-- multiple answers question -->
             <ng-container *ngIf="question.questionType === 'Multiple_Answers'">
             <app-multible-answers-question [index]="(currentPageIndex - 1) * page.length + i + 1"[question]="question"
-            (answer)="addAnswerByIDs($event,question.questionType)"></app-multible-answers-question>
+            (answer)="addAnswerByIDs($event,question.questionType)"[savedAnswer]="sentAnswerToMultibleAnswers"></app-multible-answers-question>
             </ng-container>
 
                 <!-- matching question  -->
