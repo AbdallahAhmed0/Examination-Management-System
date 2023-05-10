@@ -108,4 +108,10 @@ export class ExamService {
       )
       .pipe(retry(2), catchError(this.handleError));
   }
+
+  getResult(attemptId: number): Observable<any> {
+    return this.httpClient
+      .get(`${environment.APPURL}/exam/getResult/${attemptId}`, this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
+  }
 }

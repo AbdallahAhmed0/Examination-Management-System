@@ -15,8 +15,10 @@ export class ExamAnswersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getExamAnswers(42);
+    this.getResult(91);
   }
   examAnswers: QuestionAnswer[] = [];
+  examResult: any;
 
   // Security Step
   // Sanitize the HTML content with the DomSanitizer service
@@ -30,7 +32,13 @@ export class ExamAnswersComponent implements OnInit {
     });
   }
 
-  getResult() {} // check if selected using ID
+  getResult(attemptId: number) {
+    this._examService
+      .getResult(attemptId)
+      .subscribe((response) => (this.examResult = response));
+  }
+
+  // check if selected using ID
   isSelected(questionAnswerId: number, userAnswers: Answer[]): boolean {
     let isSelectedAns: boolean = userAnswers.some(
       (elm: Answer) => elm.id === questionAnswerId
