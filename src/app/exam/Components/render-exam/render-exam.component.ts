@@ -158,6 +158,14 @@ export class RenderExamComponent implements OnInit {
     this.answerID = [];
     this.answerMatching = [];
 
+    this.examService.createResult(this.attemptData.id).subscribe(
+      data =>{
+        console.log(data)
+      },
+      error =>{
+        // Handle Error
+      }
+    );
     const observer={
       next: (answer:any) => {
 

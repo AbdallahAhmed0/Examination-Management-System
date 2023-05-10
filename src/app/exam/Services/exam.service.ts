@@ -115,7 +115,11 @@ export class ExamService {
       JSON.stringify(answers), this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
+  createResult(examAttemptId: number): Observable<any> {
 
+    return this.httpClient.post(`${environment.APPURL}/exam/createResult/${examAttemptId}`, {})
+      .pipe(retry(2), catchError(this.handleError));
+  }
   endExam(examAttemptId: number): Observable<any> {
 
     return this.httpClient.post(`${environment.APPURL}/exam/endExam/${examAttemptId}`, {})
