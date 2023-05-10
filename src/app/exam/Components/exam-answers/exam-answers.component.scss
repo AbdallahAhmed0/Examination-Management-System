@@ -1,12 +1,15 @@
 // Variables
 $answers-color: rgba(0, 0, 0, 0.6);
 // Utilities
-
+.color-info {
+  color: rgb(51, 81, 113);
+}
 // ===========
 .container {
   width: 80%;
 }
-.question {
+.question,
+.result {
   background-color: #fff;
   padding: 1.3rem 1rem;
   margin-top: 2rem;
@@ -34,6 +37,13 @@ $answers-color: rgba(0, 0, 0, 0.6);
         background-color: rgba(255, 0, 0, 0.2);
       }
     }
+  }
+}
+.result {
+  display: flex;
+  justify-content: space-around;
+  h3 {
+    font-weight: 500;
   }
 }
 ::ng-deep .mat-radio-button.mat-accent[disabled] .mat-radio-label-content {
