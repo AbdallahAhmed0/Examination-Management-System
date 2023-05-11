@@ -52,6 +52,9 @@ export class AddExamComponent implements OnInit {
   addExam(){
     let  start = this.startTime?.value
     let  end = this.endTime?.value
+    console.log(start);
+    console.log(typeof(start));
+
 
 
     this.startTime?.setValue(this.transformDate(start))
@@ -83,7 +86,6 @@ export class AddExamComponent implements OnInit {
   }
   transformDate(time:any){
     let transformedDate
-    console.log(time);
 
 
     let myDate = new Date(time);
