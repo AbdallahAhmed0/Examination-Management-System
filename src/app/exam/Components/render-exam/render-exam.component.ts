@@ -129,7 +129,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     this.answerID.push(answer);
 
     if(questionType == 'Multiple_choice'){
-      this.sentAnswerToChoice = answer.answersIds;
+      this.sentAnswerToChoice[answer.questionId] = answer;
     }
     else if(questionType == 'Multiple_Answers'){
       this.sentAnswerToMultibleAnswers = answer.answersIds;
@@ -140,7 +140,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   }
   addAnswerByString(answer:any){
     this.answerMatching.push(answer);
-    this.sentAnswerToMatching[answer.questionId] = answer;
+    this.sentAnswerToMatching[answer.questionId] = answer.textAnswer;
   }
 
   savePage(): void {
