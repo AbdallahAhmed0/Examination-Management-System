@@ -23,9 +23,9 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   intervalId:any;
 
   // when click previous and next send value to questions components untile save in form
-  sentAnswerToChoice:{[key: string]: any} = {};;
-  sentAnswerToMultibleAnswers:{[key: string]: any} = {};;
-  sentAnswerToTrue_False:any[]=[];
+  sentAnswerToChoice:{[key: string]: any} = {};
+  sentAnswerToMultibleAnswers:{[key: string]: any} = {};
+  sentAnswerToTrue_False:{[key: string]: any} = {};
   sentAnswerToMatching:{[key: string]: any} = {};
 
   constructor(
