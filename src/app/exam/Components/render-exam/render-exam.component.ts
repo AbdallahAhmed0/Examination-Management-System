@@ -26,7 +26,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   sentAnswerToChoice:any[]=[];
   sentAnswerToMultibleAnswers:any[]=[];
   sentAnswerToTrue_False:any[]=[];
-  sentAnswerToMatching:string='';
+  sentAnswerToMatching:any[]=[];
 
   constructor(
     private examService: ExamService,
@@ -140,7 +140,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   }
   addAnswerByString(answer:any){
     this.answerMatching.push(answer);
-    this.sentAnswerToMatching = answer;
+    this.sentAnswerToMatching[answer.questionId] = answer;
   }
 
   savePage(): void {

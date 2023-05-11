@@ -22,7 +22,7 @@ export class MatchingQuestionComponent implements OnInit {
 
     this.answerForm = this.fb.group({
       questionId: [this.question.id],
-      textAnswer: [this.savedAnswer?.textAnswer]
+      textAnswer: [this.savedAnswer[this.question.id]?.textAnswer]
     });
     this.answerForm.valueChanges.subscribe(()=>{
       this.answer.emit(this.answerForm.value);
