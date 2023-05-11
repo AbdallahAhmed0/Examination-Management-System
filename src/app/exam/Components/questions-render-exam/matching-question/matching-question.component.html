@@ -1,10 +1,11 @@
-
+<p>{{savedAnswer|json}}</p>
+<P>{{question.id}}{{answerForm.value|json}}</P>
 <h2>
   Question {{ index }} ({{ question.points }} points)
 </h2>
 <h3 [innerHTML]="sanitizeHtml(question.questionText)"></h3>
 <form [formGroup]="answerForm">
 <mat-form-field>
-  <input matInput placeholder="Answer" [id]="question.id" formControlName="textAnswer" />
+  <input matInput placeholder="Answer" [id]="question.id"  formControlName="textAnswer" />
 </mat-form-field>
 </form>

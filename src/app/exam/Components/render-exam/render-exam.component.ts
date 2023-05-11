@@ -1,6 +1,6 @@
 import { ExamService } from './../../Services/exam.service';
 import { Question, Exam } from './../../Models/exam';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './render-exam.component.html',
   styleUrls: ['./render-exam.component.scss'],
 })
-export class RenderExamComponent implements OnInit {
+export class RenderExamComponent implements OnInit,OnDestroy {
   exam: Exam = {} as Exam;
   responseString: string | undefined;
   answerID:any[] = [];
@@ -33,6 +33,7 @@ export class RenderExamComponent implements OnInit {
     private route: ActivatedRoute,
     private router:Router
   ) {}
+
 
   ngOnInit(): void {
     const examId = parseInt(this.route.snapshot.paramMap.get('id') as string);
@@ -139,7 +140,7 @@ export class RenderExamComponent implements OnInit {
   }
   addAnswerByString(answer:any){
     this.answerMatching.push(answer);
-    this.sentAnswerToMatching = answer.textAnswer;
+    this.sentAnswerToMatching = answer;
   }
 
   savePage(): void {
@@ -183,5 +184,7 @@ export class RenderExamComponent implements OnInit {
     }
     this.examService.endExam(this.attemptData.id).subscribe(observer);
 }
-
+ngOnDestroy(): void {
+  clearInterval(this.intervalId);
+}
 }
