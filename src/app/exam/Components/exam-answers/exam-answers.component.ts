@@ -14,7 +14,7 @@ export class ExamAnswersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getExamAnswers(42);
+    this.getExamAnswers(102);
     this.getResult(91);
   }
   examAnswers: QuestionAnswer[] = [];

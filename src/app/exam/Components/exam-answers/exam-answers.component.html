@@ -1,8 +1,8 @@
 <section class="container">
   <div class="answers__container">
     <div class="result ">
-      <h3>Total Score : {{examResult.score}}</h3>
-      <h3> Status : {{(examResult.passed == true) ? "Passed":" "}}</h3>
+      <h3>Total Score : {{examResult?.score}}</h3>
+      <h3> Status : {{(examResult?.passed == true) ? "Passed":" "}}</h3>
     </div>
 
     <!-- Question Block -->
@@ -16,25 +16,30 @@
         <!-- =========== IF Multiple Choice =========== -->
         <ng-container *ngIf="questionObject.question.questionType ==='Multiple_choice'">
           <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
-            <mat-radio-button *ngFor="let ans of questionObject.question.questionAnswers"
-              [ngClass]="{'correct--answer':ans.correctAnswer,
-                          'wrong--answer': isSelected(ans.id , [questionObject.questionAnswers[0]])&& !ans.correctAnswer}" class="example-radio-button question__answers--answer"
-              [value]="ans.answerText" disabled="true"
-              [checked]="isSelected( ans.id , [questionObject.questionAnswers[0]])">
-              {{ans.answerText}}
-            </mat-radio-button>
+            <ng-container *ngFor="let ans of questionObject.question.questionAnswers">
+              <mat-radio-button
+                [ngClass]="{'correct--answer':ans.correctAnswer,
+                          'wrong--answer': isSelected(ans.id , [questionObject.questionAnswers[0]])&& !ans.correctAnswer}"
+                class="example-radio-button question__answers--answer" [value]="ans.answerText" disabled="true"
+                [checked]="isSelected( ans.id , [questionObject.questionAnswers[0]])">
+                {{ans.answerText}}
+              </mat-radio-button>
+              <small class="color-info d-block ms-2">{{ans.comment}}</small>
+            </ng-container>
           </mat-radio-group>
         </ng-container>
 
         <!-- =========== IF Multiple Answers =========== -->
         <ng-container *ngIf="questionObject.question.questionType ==='Multiple_Answers'">
-          <mat-checkbox *ngFor="let ans of questionObject.question.questionAnswers"
-            [class.correct--answer]="ans.correctAnswer" [ngClass]="{'correct--answer':ans.correctAnswer,
+          <ng-container *ngFor="let ans of questionObject.question.questionAnswers">
+            <mat-checkbox [class.correct--answer]="ans.correctAnswer" [ngClass]="{'correct--answer':ans.correctAnswer,
           'wrong--answer': isSelected(ans.id , questionObject.questionAnswers)&& !ans.correctAnswer}"
-            [checked]="ans.correctAnswer" class="example-radio-button question__answers--answer"
-            [value]="ans.answerText" disabled="true" [checked]="isSelected( ans.id , questionObject.questionAnswers)">
-            {{ans.answerText}}
-          </mat-checkbox>
+              [checked]="ans.correctAnswer" class="example-radio-button question__answers--answer"
+              [value]="ans.answerText" disabled="true" [checked]="isSelected( ans.id , questionObject.questionAnswers)">
+              {{ans.answerText}}
+            </mat-checkbox>
+            <small class="color-info d-block ms-2">{{ans.comment}}</small>
+          </ng-container>
         </ng-container>
 
         <!-- =========== IF True False Question =========== -->
@@ -46,6 +51,9 @@
                 'wrong--answer':questionObject.question.questionAnswers[0].answerText === 'true' && questionObject.question.questionAnswers[0].correctAnswer === false}"
               [checked]="questionObject.question.questionAnswers[0].answerText === 'true'" value="true">
               True</mat-radio-button>
+            <ng-container *ngIf="questionObject.question.questionAnswers[0].answerText === 'true'">
+              <small class="color-info d-block ms-2">{{questionObject.question.questionAnswers[0].comment}}</small>
+            </ng-container>
             <mat-radio-button class=" example-radio-button question__answers--answer" value="ans1" disabled="true"
               [ngClass]="{
               'correct--answer':questionObject.question.questionAnswers[0].answerText === 'false',
@@ -53,6 +61,10 @@
               value="false" [checked]="questionObject.question.questionAnswers[0].answerText === 'false'">
               false</mat-radio-button>
           </mat-radio-group>
+          <ng-container *ngIf="questionObject.question.questionAnswers[0].answerText === 'false'">
+            <small class="color-info d-block ms-2">{{questionObject.question.questionAnswers[0].comment}}</small>
+          </ng-container>
+
         </ng-container>
 
 
