@@ -27,8 +27,8 @@ export class MultibleAnswersQuestionComponent implements OnInit {
       answersIds: this.fb.array([])
     });
     this.addAnswer();
-    this.setAnswerIds(this.savedAnswer)
-    this.answerForm.valueChanges.subscribe(()=>{
+    this.setAnswerIds(this.savedAnswer);
+    this.answerForm.valueChanges.subscribe(() => {
       this.convertFormatFormToSentArrayOfIDs()
     });
 
@@ -43,13 +43,14 @@ export class MultibleAnswersQuestionComponent implements OnInit {
       this.answers.push(this.fb.control(false));
     });
   }
-  setAnswerIds(answerIds: string[]) {
+  setAnswerIds(savedAnswer: {[key: string]: number[]}) {
     this.question.questionAnswers.forEach((answer:any, index:any) => {
-      const isSelected = answerIds.includes(answer.id);
+      const isSelected = savedAnswer[this.question.id]?.includes(answer.id);
       this.answers.controls[index].setValue(isSelected);
     });
     this.convertFormatFormToSentArrayOfIDs()
   }
+
   convertFormatFormToSentArrayOfIDs(){
     const selectedAnswers = this.question.questionAnswers
       .filter((_: any, i: number) => this.answers.value[i])
