@@ -26,7 +26,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   sentAnswerToChoice:any[]=[];
   sentAnswerToMultibleAnswers:any[]=[];
   sentAnswerToTrue_False:any[]=[];
-  sentAnswerToMatching:any[]=[];
+  sentAnswerToMatching:{[key: string]: any} = {};
 
   constructor(
     private examService: ExamService,
@@ -129,13 +129,13 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     this.answerID.push(answer);
 
     if(questionType == 'Multiple_choice'){
-      this.sentAnswerToChoice[answer.questionId] = answer;
+      this.sentAnswerToChoice[answer.questionId] = answer.answersIds;
     }
     else if(questionType == 'Multiple_Answers'){
-      this.sentAnswerToMultibleAnswers = answer.answersIds;
+      this.sentAnswerToMultibleAnswers[answer.questionId] = answer.answersIds;
     }
     else{
-      this.sentAnswerToTrue_False = answer.answersIds;
+      this.sentAnswerToTrue_False[answer.questionId] = answer.answersIds;
     }
   }
   addAnswerByString(answer:any){

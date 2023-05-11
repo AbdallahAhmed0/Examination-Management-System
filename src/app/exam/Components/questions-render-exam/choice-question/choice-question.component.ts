@@ -25,7 +25,7 @@ constructor(private sanitizer: DomSanitizer,
       questionId: [this.question.id],
       answersIds: this.fb.array([])
     });
-    this.addAnswer(this.savedAnswer[0]);
+    this.addAnswer(this.savedAnswer[this.question.id]);
 
     this.answerForm.valueChanges.subscribe(()=>{
       this.answer.emit(this.answerForm.value);
