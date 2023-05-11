@@ -126,7 +126,9 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   }
 
   addAnswerByIDs(answer:any,questionType:any){
-    this.answerID.push(answer);
+
+    const existingAnswerIndex = this.answerID.findIndex(a => a.questionId === answer.questionId);
+    existingAnswerIndex !== -1 ? this.answerID[existingAnswerIndex] = answer :this.answerID.push(answer);
 
     if(questionType == 'Multiple_choice'){
       this.sentAnswerToChoice[answer.questionId] = answer.answersIds;
@@ -139,14 +141,16 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     }
   }
   addAnswerByString(answer:any){
-    this.answerMatching.push(answer);
+    const existingAnswerIndex = this.answerMatching.findIndex(a => a.questionId === answer.questionId);
+    existingAnswerIndex !== -1 ? this.answerMatching[existingAnswerIndex] = answer :this.answerMatching.push(answer);
+
     this.sentAnswerToMatching[answer.questionId] = answer.textAnswer;
   }
 
   savePage(): void {
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
-    console.log(this.answerID)
+    // console.log("ID",this.answerID,"matching",this.answerMatching)
     this.answerID = [];
     this.answerMatching = [];
   }
