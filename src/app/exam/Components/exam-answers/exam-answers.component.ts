@@ -14,7 +14,8 @@ export class ExamAnswersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getExamAnswers(102);
+    // FIX STATIC VALUES
+    this.getExamAnswers(120);
     this.getResult(91);
   }
   examAnswers: QuestionAnswer[] = [];
@@ -23,6 +24,8 @@ export class ExamAnswersComponent implements OnInit {
   // Security Step
   // Sanitize the HTML content with the DomSanitizer service
   sanitizeHtml(html: string): any {
+    // remove the tag
+    html = html.replace(/<p[^>]*>([^<]+)<\/p>/g, '$1');
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
