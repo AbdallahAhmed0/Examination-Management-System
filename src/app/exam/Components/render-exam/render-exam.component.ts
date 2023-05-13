@@ -150,7 +150,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   savePage(): void {
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
-    // console.log("ID",this.answerID,"matching",this.answerMatching)
+    console.log("ID",this.answerID,"matching",this.answerMatching)
     this.answerID = [];
     this.answerMatching = [];
   }

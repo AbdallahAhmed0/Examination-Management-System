@@ -17,7 +17,7 @@ export class MultibleAnswersQuestionComponent implements OnInit {
   @Output() answer = new EventEmitter<object>();
 
   answerForm!: FormGroup;
-  Answers:object= {"questionId":"", "answersIds":[]};
+  Answers?:{questionId:'',answersIds:[]};
   constructor(private sanitizer: DomSanitizer,
               private fb:FormBuilder) { }
 
