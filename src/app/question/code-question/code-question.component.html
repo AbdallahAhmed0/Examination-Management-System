@@ -1,4 +1,9 @@
 <div class="card">
+  <span class="index">{{indexComponent}}.</span>
+  <div class="actions">
+    <a title="delete" (click)="deleteQuestion()"><mat-icon class="delete">delete</mat-icon></a>
+  </div>
+
   <div class="editor">
     <textarea  [froalaEditor]="froalaOptions( 'Question Text')"
     (input)="autoResize($event.target)" [(ngModel)]="EditorValue"

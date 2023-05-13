@@ -69,7 +69,13 @@
       </app-true-false-question>
 
 
-      <app-code-question  *ngIf="selectedComponent.name === 'coding'"></app-code-question>
+      <app-code-question  *ngIf="selectedComponent.name === 'coding'"
+      (onDelete)="removeChild(selectedComponent)"
+      [indexComponent]="(i+1)"
+      (questionData)="addQuestion($event,i)"
+      (formValid)="formIsValid($event)"
+
+      ></app-code-question>
     </ng-container>
 
     <button mat-button class="btn-question" [matMenuTriggerFor]="question"><mat-icon>add</mat-icon>Add questions</button>
