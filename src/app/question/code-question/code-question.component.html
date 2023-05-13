@@ -1,5 +1,8 @@
+<P>{{EditorValue|json}}</P>
 <div class="editor">
-
 <textarea  [froalaEditor]="froalaOptions( 'Question Text')"
-required></textarea>
+(input)="autoResize($event.target)" [(ngModel)]="EditorValue"
+required
+#questionText="ngModel">
+</textarea>
 </div>

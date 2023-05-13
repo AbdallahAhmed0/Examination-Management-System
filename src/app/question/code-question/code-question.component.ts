@@ -32,10 +32,16 @@ import 'froala-editor/js/plugins/word_paste.min.js';
   styleUrls: ['./code-question.component.scss']
 })
 export class CodeQuestionComponent implements OnInit {
-
+  EditorValue:string="<p style=\"text-align: center;\"><br></p><p style=\"text-align: center;\"><span style=\"font-size: 24px;\">Name</span></p><p style=\"text-align: center;\"><span style=\"font-size: 14px;\">time limit per Test:</span></p><p style=\"text-align: center;\"><span style=\"font-size: 14px;\">memory limit per Test:</span></p><p style=\"text-align: center;\"><span style=\"font-size: 14px;\">input:</span></p><p style=\"text-align: center;\"><span style=\"font-size: 14px;\">output:</span></p><p style=\"text-align: center;\"><br></p><p style=\"text-align: left;\"><span style=\"font-size: 24px;\">// Description Of Questions:</span></p><p style=\"text-align: left;\"><br></p><p style=\"text-align: left;\"><span style=\"font-size: 24px;\">Input</span></p><p style=\"text-align: left;\"><span style=\"font-size: 18px;\">// Write How to Take Input</span></p><p style=\"text-align: left;\"><span style=\"font-size: 18px;\">//ex:&nbsp;</span>Only one line containing a number <span style='font-size: 17.5px; font-family: \"times new roman\", sans-serif; white-space: nowrap;'><i style=\"font-style: italic;\">N</i></span> <span style='font-size: 17.5px; font-family: \"times new roman\", sans-serif; white-space: nowrap;'>(1&thinsp;&le;&thinsp;<i style=\"font-style: italic;\">N</i>&thinsp;&le;&thinsp;10<sup style=\"font-size: 13.125px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em;\">3</sup>)</span>.</p><p style=\"text-align: left;\"><span style=\"font-size: 24px;\">Output</span></p><p id=\"isPasted\" style=\"text-align: left;\"><span style=\"font-size: 18px;\">// Write How to print Output</span></p><p style=\"text-align: left;\"><span style=\"font-size: 18px;\">//ex: <span id=\"isPasted\" style='color: rgb(34, 34, 34); font-family: \"helvetica neue\", Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>Print numbers from&nbsp;</span><span style='font-weight: 700; color: rgb(34, 34, 34); font-family: \"helvetica neue\", Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'>1</span><span style='color: rgb(34, 34, 34); font-family: \"helvetica neue\", Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>&nbsp;to&nbsp;</span><span style='font-size: 17.5px; font-family: \"times new roman\", sans-serif; white-space: nowrap; color: rgb(34, 34, 34); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;'><i style=\"font-style: italic;\">N</i></span><span style='color: rgb(34, 34, 34); font-family: \"helvetica neue\", Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;'>&nbsp;in separate lines</span></span></p><p style=\"text-align: left;\"><span style=\"font-size: 24px;\"><span style='color: rgb(34, 34, 34); font-family: \"helvetica neue\", Helvetica, Arial, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;'>Example:</span></span></p><p style=\"text-align: left;\"><br></p>";
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+
+  autoResize(textarea: any) {
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
   }
 
 
@@ -43,7 +49,7 @@ export class CodeQuestionComponent implements OnInit {
   froalaOptions(placeholder:string){
       return {
         placeholderText:placeholder,
-        toolbarInline: false,
+        toolbarInline: true,
         charCounterCount: false,
         toolbarVisibleWithoutSelection: false,
         toolbarButtons: [
@@ -53,7 +59,7 @@ export class CodeQuestionComponent implements OnInit {
           'insertImage',  'insertFile', 'insertTable', 'undo', 'redo',
           'help', 'specialCharacters', 'codeView'
         ],
-        heightMin: 40,
+        heightMin: 50,
         imageUpload: true,
         imagePaste: true,
         fileUpload: true,
