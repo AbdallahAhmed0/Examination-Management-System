@@ -176,7 +176,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
         if(this.exam.showResult){
         //go to Show Answer Page
-        this.router.navigate(['/courses']);
+        this.router.navigate([`/exams/showAnswers/${this.attemptData.id}`]);
 
       }else{
         this.router.navigate(['/courses']);

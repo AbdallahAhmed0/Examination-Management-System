@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { QuestionAnswer } from '../Models/question-answer-interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -123,6 +124,20 @@ export class ExamService {
   endExam(examAttemptId: number): Observable<any> {
 
     return this.httpClient.post(`${environment.APPURL}/exam/endExam/${examAttemptId}`, {})
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  getAllExamAnswers(examAttemptId: number): Observable<QuestionAnswer[]> {
+    return this.httpClient
+      .get<QuestionAnswer[]>(
+        `${environment.APPURL}/exam/getAllStudentAnswers/${examAttemptId}`,
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getResult(attemptId: number): Observable<any> {
+    return this.httpClient
+      .get(`${environment.APPURL}/exam/getResult/${attemptId}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 }

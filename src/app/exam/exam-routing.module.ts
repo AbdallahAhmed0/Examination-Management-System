@@ -5,6 +5,7 @@ import { AllExamsComponent } from './Components/all-exams/all-exams.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RenderExamComponent } from './Components/render-exam/render-exam.component';
+import { ExamAnswersComponent } from './Components/exam-answers/exam-answers.component';
 
 const routes: Routes = [
   {path: '', component:AllExamsComponent},
@@ -12,8 +13,8 @@ const routes: Routes = [
   {path:'exams/add',component:AddExamComponent},
   {path:'exams/edit/:id',component:EditExamComponent},
   {path:'exams/attempt/:examId',component:AttemptExamComponent},
-  {path:'exams/render/:id',component:RenderExamComponent}
-
+  {path:'exams/render/:id',component:RenderExamComponent},
+  {path:'exams/showAnswers/:attemptId',component:ExamAnswersComponent}
 
 ];
 
