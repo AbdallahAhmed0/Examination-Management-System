@@ -1,14 +1,30 @@
 <div class="card">
-  <span class="index">{{indexComponent}}.</span>
+  <p class="index">{{ indexComponent }}.</p>
   <div class="actions">
     <a title="delete" (click)="deleteQuestion()"><mat-icon class="delete">delete</mat-icon></a>
   </div>
-
+  <div class="header">
+    <input type="text" class="inp-header" placeholder="Name" />
+    <div class="time">
+      time limit per Test:
+      <input type="text" class="inp-header" />
+    </div>
+    <div class="memory">
+      memory limit per Test:
+      <input type="text" class="inp-header" />
+    </div>
+    <div class="input">
+      input:
+      <input type="text" class="inp-header" />
+    </div>
+    <div class="output">
+      output:
+      <input type="text" class="inp-header" />
+    </div>
+  </div>
   <div class="editor">
-    <textarea  [froalaEditor]="froalaOptions( 'Question Text')"
-    (input)="autoResize($event.target)" [(ngModel)]="EditorValue"
-    required
-    #questionText="ngModel">{{EditorValue}}
+    <textarea [froalaEditor]="froalaOptions('Question Text')" (input)="autoResize($event.target)"
+      [(ngModel)]="EditorValue" required #questionText="ngModel">{{ EditorValue }}
     </textarea>
   </div>
 </div>

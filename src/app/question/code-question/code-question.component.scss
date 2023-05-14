@@ -24,5 +24,33 @@
   justify-content: flex-start;
   margin: 5px 0px 0px 20px;
   font-size: 18px;
+}
+.header{
+  text-align: center;
+  justify-content: center;
+  background: #FFF;
+  padding: 15px;
+  margin: 20px auto; /* add margin to center horizontally */
+  width: 80%; /* update width to 70% */
+}
+input{
+  margin: 5px;
+  border: none;
+  height: 32px;
+}
+.inp-header {
+  border: none;
+  background-color: #f2f2f2;
+  padding: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s, box-shadow 0.2s; /* Add transition effect */
+}
 
+.inp-header:hover {
+  background-color: #e1f1ff;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+.inp-header:focus {
+  border: 1px solid rgb(99, 99, 255);
+  outline: none;
 }
