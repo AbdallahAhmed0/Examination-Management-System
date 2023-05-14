@@ -3,7 +3,7 @@
   <div class="actions">
     <a title="delete" (click)="deleteQuestion()"><mat-icon class="delete">delete</mat-icon></a>
   </div>
-  <div class="header">
+  <!-- <div class="header">
     <input type="text" class="inp-header" placeholder="Name" />
     <div class="time">
       time limit per Test:
@@ -21,10 +21,44 @@
       output:
       <input type="text" class="inp-header" />
     </div>
+  </div> -->
+  <div class="header">
+    <div class="name">
+      <input type="text" class="inp-header" placeholder="Name" />
+    </div>
+    <div class="time">
+      <input type="text" class="inp-header" placeholder="time limit per Test" />
+    </div>
+    <div class="memory">
+      <input type="text" class="inp-header" placeholder="memory limit per Test" />
+    </div>
+    <div class="input">
+      <input type="text" class="inp-header" placeholder="input" />
+    </div>
+    <div class="output">
+      <input type="text" class="inp-header" placeholder="output" />
+    </div>
   </div>
+
+  <!-- Descritopn Question -->
   <div class="editor">
-    <textarea [froalaEditor]="froalaOptions('Question Text')" (input)="autoResize($event.target)"
-      [(ngModel)]="EditorValue" required #questionText="ngModel">{{ EditorValue }}
+    <textarea [froalaEditor]="froalaOptions('Descritopn Question')" (input)="autoResize($event.target)"
+      [(ngModel)]="descriptionQuestion" required #questionText="ngModel">{{ descriptionQuestion }}
     </textarea>
   </div>
+
+  <!-- Input Question -->
+  <div class="editor">
+    <textarea [froalaEditor]="froalaOptions('Input Question')" (input)="autoResize($event.target)"
+      [(ngModel)]="inputQuestion" required #questionText="ngModel">{{ inputQuestion }}
+    </textarea>
+  </div>
+
+  <!-- Output Question -->
+  <div class="editor">
+    <textarea [froalaEditor]="froalaOptions('Output Question')" (input)="autoResize($event.target)"
+      [(ngModel)]="outputQuestion" required #questionText="ngModel">{{ outputQuestion }}
+    </textarea>
+  </div>
+
 </div>

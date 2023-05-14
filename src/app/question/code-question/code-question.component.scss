@@ -1,7 +1,10 @@
 .editor{
   border-radius: 5px;
   background: #FFFFFF;
-  margin: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 15px auto; /* add margin to center horizontally */
+  padding: 8px;
+  width: 80%;
   display: inline-block;
 
 }
@@ -29,12 +32,21 @@
   text-align: center;
   justify-content: center;
   background: #FFF;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   padding: 15px;
   margin: 20px auto; /* add margin to center horizontally */
-  width: 80%; /* update width to 70% */
+  width: 80%;
+}
+.name{
+  display: block;
+}
+.time,.memory,.input,.output{
+  display: inline;
 }
 input{
-  margin: 5px;
+  width: 40%;
+  margin: 8px;
   border: none;
   height: 32px;
 }
