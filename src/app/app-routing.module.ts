@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardAdminComponent } from './dashboard/dashboard-admin/dashboard-admin.component';
 
 const routes: Routes = [
   {path:"admins",loadChildren:()=>import('./admins/admins.module').then(a=>a.AdminsModule)},
@@ -8,6 +9,7 @@ const routes: Routes = [
   {path:"exams",loadChildren:()=>import('./exam/exam.module').then(m=>m.ExamModule)},
   {path:"save/:id",loadChildren:()=>import('./question/question.module').then(m=>m.QuestionModule)},
   {path:"courses",loadChildren:()=>import('./course/course.module').then(m=>m.CourseModule)},
+  {path: "dashboard-admin", component:DashboardAdminComponent}
 
 
 ];

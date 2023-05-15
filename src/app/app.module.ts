@@ -12,14 +12,16 @@ import { MaterialModule } from './Shared/material/material.module';
 import { AdminsModule } from './admins/admins.module';
 import { RolesModule } from './roles/roles.module';
 import { StudentsModule } from './students/students.module';
-
-
+import { DashboardAdminComponent } from './dashboard/dashboard-admin/dashboard-admin.component';
+import { DashbordExamComponent } from './dashboard/dashboard-admin/dashbord-exam/dashbord-exam.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    DashboardAdminComponent,
+    DashbordExamComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,10 +31,9 @@ import { StudentsModule } from './students/students.module';
     AdminsModule,
     RolesModule,
     StudentsModule,
-    ExamModule
-
+    ExamModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
