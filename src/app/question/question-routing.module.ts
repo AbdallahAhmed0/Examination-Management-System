@@ -1,13 +1,13 @@
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SaveQuestionComponent } from './save-question/save-question.component';
-import { ImportQuestionsComponent } from './import-questions/import-questions.component';
-import { CodeQuestionComponent } from './code-question/code-question.component';
+import { SaveQuestionComponent } from './Components/save-question/save-question.component';
+import { ImportQuestionsComponent } from './Components/import-questions/import-questions.component';
+import { CodeQuestionComponent } from './Components/code-question/code-question.component';
 
 const routes: Routes = [
-  {path:'',component:SaveQuestionComponent},
-  {path:'import',component:ImportQuestionsComponent},
-  {path:'coding',component:CodeQuestionComponent},
+  { path: '', component: SaveQuestionComponent },
+  { path: 'import', component: ImportQuestionsComponent },
+  { path: 'coding', component: CodeQuestionComponent },
 
 ];
 

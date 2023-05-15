@@ -1,9 +1,9 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Question } from './question';
+import { Question } from '../Models/question';
 
 @Injectable({
   providedIn: 'root',
@@ -37,31 +37,31 @@ export class QuestionService {
     }
   }
 
-  saveQuestions(questions: any[],id:number): Observable<any[]> {
+  saveQuestions(questions: any[], id: number): Observable<any[]> {
     return this.httpClient
-      .post<any[]>( `${environment.APPURL}/exam/saveQuestions/${id}`,
+      .post<any[]>(`${environment.APPURL}/exam/saveQuestions/${id}`,
         JSON.stringify(questions),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
-  getQuestions(examId:number):Observable<Question[]>{
+  getQuestions(examId: number): Observable<Question[]> {
     return this.httpClient.get<Question[]>(`${environment.APPURL}/exam/getQuestions/${examId}`).
-    pipe(retry(2),catchError(this.handleError))
+      pipe(retry(2), catchError(this.handleError))
   }
-  deleteQuestion(question:Question){
+  deleteQuestion(question: Question) {
     return this.httpClient
-    .delete(`${environment.APPURL}/exam/deleteQuestion`, { body: question })
-    .pipe(retry(2), catchError(this.handleError))
-    .subscribe((data) => {});
+      .delete(`${environment.APPURL}/exam/deleteQuestion`, { body: question })
+      .pipe(retry(2), catchError(this.handleError))
+      .subscribe((data) => { });
   }
 
-  deleteOptions(options:any[]){
+  deleteOptions(options: any[]) {
     return this.httpClient
-    .delete(`${environment.APPURL}/exam/deleteQuestionAnswer`, { body: options })
-    .pipe(retry(2), catchError(this.handleError))
-    .subscribe((data) => {});
-    
+      .delete(`${environment.APPURL}/exam/deleteQuestionAnswer`, { body: options })
+      .pipe(retry(2), catchError(this.handleError))
+      .subscribe((data) => { });
+
   }
 
   openSnackBar(message: string) {
