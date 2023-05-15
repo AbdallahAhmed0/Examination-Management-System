@@ -1,68 +1,85 @@
-<div class="card">
-  <p class="index">{{ indexComponent }}.</p>
-  <div class="actions">
-    <a title="delete" (click)="deleteQuestion()"><mat-icon class="delete">delete</mat-icon></a>
-  </div>
-  <!-- <div class="header">
-    <input type="text" class="inp-header" placeholder="Name" />
-    <div class="time">
-      time limit per Test:
-      <input type="text" class="inp-header" />
+<form [formGroup]="codingForm" (ngSubmit)="onSubmit()">
+  <div class="card">
+    <p class="index">{{ indexComponent }}.</p>
+    <div class="actions">
+      <a title="delete" (click)="deleteQuestion()"><mat-icon class="delete">delete</mat-icon></a>
     </div>
-    <div class="memory">
-      memory limit per Test:
-      <input type="text" class="inp-header" />
-    </div>
-    <div class="input">
-      input:
-      <input type="text" class="inp-header" />
-    </div>
-    <div class="output">
-      output:
-      <input type="text" class="inp-header" />
-    </div>
-  </div> -->
-  <div class="header">
-    <div class="name">
+    <!-- <div class="header">
       <input type="text" class="inp-header" placeholder="Name" />
+      <div class="time">
+        time limit per Test:
+        <input type="text" class="inp-header" />
+      </div>
+      <div class="memory">
+        memory limit per Test:
+        <input type="text" class="inp-header" />
+      </div>
+      <div class="input">
+        input:
+        <input type="text" class="inp-header" />
+      </div>
+      <div class="output">
+        output:
+        <input type="text" class="inp-header" />
+      </div>
+    </div> -->
+    <div class="header">
+      <div class="name">
+        <input type="text" class="inp-header"  formControlName="name" placeholder="Name" />
+      </div>
+      <div class="time">
+        <input type="text" class="inp-header"  formControlName="time" placeholder="time limit per Test" />
+      </div>
+      <div class="memory">
+        <input type="text" class="inp-header"  formControlName="memory" placeholder="memory limit per Test" />
+      </div>
+      <!-- <div class="input">
+        <input type="text" class="inp-header" placeholder="input" />
+      </div>
+      <div class="output">
+        <input type="text" class="inp-header" placeholder="output" />
+      </div> -->
     </div>
-    <div class="time">
-      <input type="text" class="inp-header" placeholder="time limit per Test" />
-    </div>
-    <div class="memory">
-      <input type="text" class="inp-header" placeholder="memory limit per Test" />
-    </div>
-    <div class="input">
-      <input type="text" class="inp-header" placeholder="input" />
-    </div>
-    <div class="output">
-      <input type="text" class="inp-header" placeholder="output" />
-    </div>
-  </div>
 
-  <!-- Descritopn Question -->
-  <div class="editor">
-    <textarea [froalaEditor]="froalaOptions('Descritopn Question')" (input)="autoResize($event.target)"
-      [(ngModel)]="descriptionQuestion" required #questionText="ngModel">{{ descriptionQuestion }}
-    </textarea>
-  </div>
+    <!-- Descritopn Question -->
+    <div class="editor">
+      <textarea [froalaEditor]="froalaOptions('Descritopn Question')" (input)="autoResize($event.target)"
+        [(ngModel)]="descriptionQuestion" required #questionText="ngModel">{{ descriptionQuestion }}
+      </textarea>
+    </div>
 
-  <!-- Input Question -->
-  <div class="editor">
-    <textarea [froalaEditor]="froalaOptions('Input Question')" (input)="autoResize($event.target)"
-      [(ngModel)]="inputQuestion" required #questionText="ngModel">{{ inputQuestion }}
-    </textarea>
-  </div>
+    <!-- Input Question -->
+    <div class="editor">
+      <textarea [froalaEditor]="froalaOptions('Input Question')" (input)="autoResize($event.target)"
+        [(ngModel)]="inputQuestion" required #questionText="ngModel">{{ inputQuestion }}
+      </textarea>
+    </div>
 
-  <!-- Output Question -->
-  <div class="editor">
-    <textarea [froalaEditor]="froalaOptions('Output Question')" (input)="autoResize($event.target)"
-      [(ngModel)]="outputQuestion" required #questionText="ngModel">{{ outputQuestion }}
-    </textarea>
-  </div>
-  <!-- Add Test Cases -->
-  <div class="test-case">
-    
-  </div>
+    <!-- Output Question -->
+    <div class="editor">
+      <textarea [froalaEditor]="froalaOptions('Output Question')" (input)="autoResize($event.target)"
+        [(ngModel)]="outputQuestion" required #questionText="ngModel">{{ outputQuestion }}
+      </textarea>
+    </div>
 
-</div>
+    <!-- Test Cases -->
+    <div formArrayName="testCases">
+      <p class="example">Example:</p>
+      <div *ngFor="let testCase of testCases.controls; let i=index" class="cases">
+        <div [formGroupName]="i">
+
+        <textarea class="test-Case" formControlName="input" placeholder="Input" (input)="autoResize($event.target)" required></textarea>
+        <textarea class="test-Case" formControlName="output" placeholder="Output" (input)="autoResize($event.target)" required></textarea>
+
+        <button mat-icon-button type="button" (click)="removeTestCase(i)" *ngIf="testCases.length > 1" >
+          <mat-icon class="delete-icon">delete</mat-icon>
+        </button>
+      </div>
+      </div>
+    </div>
+
+    <button mat-button type="button" class="add-test-case" (click)="addTestCase()">
+      <mat-icon>add</mat-icon>Add TestCase
+    </button>
+  </div>
+</form>

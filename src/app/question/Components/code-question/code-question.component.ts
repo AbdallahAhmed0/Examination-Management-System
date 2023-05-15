@@ -1,6 +1,3 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-
 import 'froala-editor/js/plugins/align.min.js';
 import 'froala-editor/js/plugins/char_counter.min.js';
 import 'froala-editor/js/plugins/code_beautifier.min.js';
@@ -26,6 +23,10 @@ import 'froala-editor/js/plugins/special_characters.min.js';
 import 'froala-editor/js/plugins/table.min.js';
 import 'froala-editor/js/plugins/url.min.js';
 import 'froala-editor/js/plugins/word_paste.min.js';
+
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { DialogeComponent } from 'src/app/Shared/material/dialog/dialog.component';
 
 @Component({
@@ -45,11 +46,43 @@ export class CodeQuestionComponent implements OnInit {
   @Input() indexComponent!:number;
   @Input() editQuestion?:any;
 
-  constructor(private dialog:MatDialog) { }
+  codingForm!: FormGroup;
+
+  constructor(private dialog:MatDialog,
+              private fb: FormBuilder){}
 
   ngOnInit(): void {
+
+    this.createForm();
+  }
+  createForm() {
+    this.codingForm = this.fb.group({
+      id: [''],
+      name: ['', Validators.required],
+      time: ['', Validators.required],
+      memory: ['', Validators.required],
+      descInput: ['', Validators.required],
+      descOutput: ['', Validators.required],
+      testCases: this.fb.array([])
+    });
+    this.addTestCase();
+  }
+  get testCases(){
+    return this.codingForm.get('testCases') as FormArray;
+  }
+  addTestCase() {
+    this.testCases.push(this.fb.group({
+      input: ['', Validators.required],
+      output: ['', Validators.required]
+    }));
   }
 
+  removeTestCase(index: number) {
+    this.testCases.removeAt(index);
+  }
+
+  onSubmit() {
+  }
   deleteQuestion(){
 
     const dialogRef = this.dialog.open(DialogeComponent, {
@@ -67,10 +100,13 @@ export class CodeQuestionComponent implements OnInit {
 
 
 
-  autoResize(textarea: any) {
-    textarea.style.height = 'auto';
-    textarea.style.height = `${textarea.scrollHeight}px`;
+autoResize(textarea: any) {
+  textarea.style.height = 'auto';
+  textarea.style.height = `${textarea.scrollHeight}px`;
+  if (textarea.value.trim() === '') {
+    textarea.style.height = '40px'; // Set a minimum height when all words are deleted
   }
+}
 
   froalaOptions(placeholder:string){
       return {
