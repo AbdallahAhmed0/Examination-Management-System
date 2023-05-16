@@ -22,21 +22,15 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthService) {
 
-          // redirect to home if already logged in
-        if (this.authenticationService.userValue) {
-          this.router.navigate(['/']);
-      }
     }
 
     ngOnInit() {
       this.loginForm = this.formBuilder.group({
-          username: ['', Validators.required],
-          password: ['', Validators.required]
+          email: ['', [Validators.required,Validators.email]],
+          password: ['', [Validators.required]]
       });
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
 
   onSubmit() {
       this.submitted = true;
@@ -47,7 +41,7 @@ export class LoginComponent implements OnInit {
       }
 
       this.loading = true;
-      this.authenticationService.login(this.f['username'].value, this.f['password'].value)
+      this.authenticationService.login(this.email?.value, this.password?.value)
           .pipe(first())
           .subscribe({
               next: () => {
@@ -61,5 +55,10 @@ export class LoginComponent implements OnInit {
               }
           });
   }
-
+get email(){
+  return this.loginForm.get('email');
+}
+get password(){
+  return this.loginForm.get('password');
+}
 }
