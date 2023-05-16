@@ -37,7 +37,7 @@
           <a href="#">Forgot Password?</a>
         </div>
         <mat-error *ngIf="error">
-          {{ error }}
+          {{ error|json }}
         </mat-error>
       </form>
     </div>
