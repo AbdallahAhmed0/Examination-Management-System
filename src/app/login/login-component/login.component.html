@@ -1,47 +1,49 @@
 <div class="center-container">
-  <!-- <div class="alert alert-info">
-    <strong>Normal User</strong> - U: user P: user<br />
-    <strong>Administrator</strong> - U: admin P: admin
-  </div> -->
   <mat-card class="card">
-    <div class="card-image">
+
+    <div class="mat-card-content">
+      <div class="card-image">
       <img src="../../../assets/Online-Examination-System.jpg" alt="Image" />
     </div>
-    <h4 class="mat-card-header">Examination Management System</h4>
-    <div class="mat-card-content">
+    <div class="form">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input matInput type="text" formControlName="username"
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="username"
               [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" />
             <mat-error *ngIf="submitted && f['username'].errors">
-              <div *ngIf="f['username'].errors['required']">
-                Username is required
-              </div>
+              <mat-error *ngIf="f['username'].errors['required']">
+                Email is required
+              </mat-error>
             </mat-error>
           </mat-form-field>
-        </div>
-        <div class="mb-3">
+
           <mat-form-field>
             <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password"
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
               [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" />
-            <mat-error *ngIf="submitted && f['password'].errors">
-              <div *ngIf="f['password'].errors['required']">
+              <mat-icon matSuffix (click)="hidePassword = !hidePassword">
+                {{hidePassword ? 'visibility_off' : 'visibility'}}
+              </mat-icon>
+              <mat-error *ngIf="submitted && f['password'].errors">
+              <mat-error *ngIf="f['password'].errors['required']">
                 Password is required
-              </div>
+              </mat-error>
             </mat-error>
           </mat-form-field>
-        </div>
-        <button mat-raised-button color="primary" [disabled]="loading">
-          <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+
+          <button mat-raised-button class="login" [disabled]="loading">
           Login
         </button>
+        <div class="forgot-password">
+          <a href="#">Forgot Password?</a>
+        </div>
         <mat-error *ngIf="error">
           {{ error }}
         </mat-error>
       </form>
+    </div>
     </div>
   </mat-card>
 </div>
