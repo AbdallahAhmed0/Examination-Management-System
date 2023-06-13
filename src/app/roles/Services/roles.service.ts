@@ -78,12 +78,10 @@ export class RolesService {
   }
 
   deleteRole(id :number){
-    this.http.delete(`${environment.APPURL}/roles/delete/${id}`)
+    return this.http.delete(`${environment.APPURL}/roles/delete/${id}`)
     .pipe(
       retry(2),
-      catchError(this.handleError)
-    ).subscribe()
-    this.openSnackBar("Deleted")
+      catchError(this.handleError));
 
   }
 }
