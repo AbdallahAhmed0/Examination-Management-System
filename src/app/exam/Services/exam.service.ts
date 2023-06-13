@@ -76,8 +76,7 @@ export class ExamService {
   deleteExam(exam: Exam) {
     return this.httpClient
       .delete(`${environment.APPURL}/exam/delete`, { body: exam })
-      .pipe(retry(2), catchError(this.handleError))
-      .subscribe((data) => { });
+      .pipe(retry(2), catchError(this.handleError));
   }
 
   openSnackBar(message: string) {

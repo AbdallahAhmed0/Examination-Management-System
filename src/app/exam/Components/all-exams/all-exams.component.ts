@@ -98,8 +98,10 @@ export class AllExamsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
-        this.examService.deleteExam(row);
-        window.location.reload();
+        this.examService.deleteExam(row).subscribe((data)=>{
+          window.location.reload();
+          this.examService.openSnackBar('Deleted');
+        })
       }
     });
   }
