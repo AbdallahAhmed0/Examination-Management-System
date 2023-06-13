@@ -1,86 +1,9 @@
 <div class="container">
   <div class="form">
-    <mat-card class="exam-card">
-      <div class="exam-header">
-        <div class="exam-name">{{ exam.examName }}</div>
-      </div>
+    <mat-card>
       <mat-card-content>
-        <div class="exam-details">
-          <div class="exam-details-left">
-            <div class="mat-grid-tile-header">
-              <span class="mat-subheading-1">Start Time:</span>
-              <span class="mat-body-1">{{ exam.startTime }}</span>
-            </div>
-          </div>
-          <div class="exam-details-right">
-            <div class="mat-grid-tile-header">
-              <span class="mat-subheading-1">Success Rate: </span>
-              <span class="mat-body-1">{{ exam.successRate }} %</span>
-            </div>
-          </div>
-          <div class="exam-details-left">
-            <div class="mat-grid-tile-header">
-              <span class="mat-subheading-1">End Time: </span>
-              <span class="mat-body-1">{{ exam.endTime }}</span>
-            </div>
-          </div>
-          <div class="exam-details-right">
-            <div class="mat-grid-tile-header">
-              <span class="mat-subheading-1">Time Remaining:</span>
-              <span class="mat-body-1">{{ remainingTime }} minutes</span>
-            </div>
-          </div>
-        </div>
+        <app-code-question></app-code-question>
       </mat-card-content>
     </mat-card>
-
-    <!-- Questions Section -->
-    <ng-container *ngFor="let page of questionPages; let pageIndex = index">
-      <div *ngIf="(pageIndex+1) === currentPageIndex">
-        <mat-card *ngFor="let question of page; let i = index">
-
-          <mat-card-content>
-            <ng-container *ngIf="question.questionType === 'Multiple_choice'">
-              <app-choice-question [index]="(currentPageIndex - 1) * page.length + i + 1" [question]="question"
-              (answer)="addAnswerByIDs($event,question.questionType)" [savedAnswer]="sentAnswerToChoice"></app-choice-question>
-            </ng-container>
-
-            <!-- multiple answers question -->
-            <ng-container *ngIf="question.questionType === 'Multiple_Answers'">
-            <app-multible-answers-question [index]="(currentPageIndex - 1) * page.length + i + 1"[question]="question"
-            (answer)="addAnswerByIDs($event,question.questionType)"[savedAnswer]="sentAnswerToMultibleAnswers"></app-multible-answers-question>
-            </ng-container>
-
-                <!-- matching question  -->
-            <ng-container *ngIf="question.questionType === 'Matching'">
-             <app-matching-question [index]="(currentPageIndex - 1) * page.length + i + 1"[question]="question"
-            (answer)="addAnswerByString($event)" [savedAnswer]="sentAnswerToMatching"></app-matching-question>
-            </ng-container>
-
-            <!-- true false question  -->
-            <ng-container *ngIf="question.questionType === 'True_False'">
-              <app-true-false-question [index]="(currentPageIndex - 1) * page.length + i + 1"[question]="question"
-              (answer)="addAnswerByIDs($event,question.questionType)"[savedAnswer]="sentAnswerToTrue_False"></app-true-false-question>
-            </ng-container>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </ng-container>
-
-    <div>
-      <button class="previous" mat-raised-button [disabled]="currentPageIndex === 1"
-      (click)="previousPage(); savePage()">
-      Previous
-      </button>
-
-      <button class="next" mat-raised-button [hidden]="currentPageIndex === questionPages.length"
-      (click)="nextPage(); savePage()">
-      Next
-    </button>
-    <button class="next" mat-raised-button *ngIf="currentPageIndex === questionPages.length" (click)="submitExam()">
-      Submit
-    </button>
-
-    </div>
   </div>
 </div>
