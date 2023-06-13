@@ -6,15 +6,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RenderExamComponent } from './Components/render-exam/render-exam.component';
 import { ExamAnswersComponent } from './Components/exam-answers/exam-answers.component';
+import { CodeQuestionComponent } from './Components/questions-render-exam/code-question/code-question.component';
 
 const routes: Routes = [
   {path: '', component:AllExamsComponent},
-  {path:'exams',component:AllExamsComponent},
   {path:'exams/add',component:AddExamComponent},
   {path:'exams/edit/:id',component:EditExamComponent},
   {path:'exams/attempt/:examId',component:AttemptExamComponent},
   {path:'exams/render/:id',component:RenderExamComponent},
-  {path:'exams/showAnswers/:attemptId',component:ExamAnswersComponent}
+  {path:'exams/showAnswers/:attemptId',component:ExamAnswersComponent},
+  {path:'exams/code',component:CodeQuestionComponent}
 
 ];
 
