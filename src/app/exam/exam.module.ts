@@ -14,6 +14,7 @@ import { MatchingQuestionComponent } from './Components/questions-render-exam/ma
 import { MultibleAnswersQuestionComponent } from './Components/questions-render-exam/multible-answers-question/multible-answers-question.component';
 import { TrueFalseQuestionComponent } from './Components/questions-render-exam/true-false-question/true-false-question.component';
 import { ExamAnswersComponent } from './Components/exam-answers/exam-answers.component';
+import { CodeQuestionComponent } from './Components/questions-render-exam/code-question/code-question.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ExamAnswersComponent } from './Components/exam-answers/exam-answers.com
     MatchingQuestionComponent,
     MultibleAnswersQuestionComponent,
     TrueFalseQuestionComponent,
-    ExamAnswersComponent
+    ExamAnswersComponent,
+    CodeQuestionComponent
   ],
   imports: [
     CommonModule,
