@@ -1,10 +1,8 @@
-<div class="contianer"  >
+<div class="container"  >
 
   <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()" [routerLink]="['/courses']"><mat-icon>menu</mat-icon> All Courses</button>
   <h1 class="add">Add Course</h1>
   <div class="form">
-
-
   <form #courseform="ngForm" [formGroup]="newCourse" (ngSubmit)="addCourse()">
 
   <mat-form-field appearance="fill" >
