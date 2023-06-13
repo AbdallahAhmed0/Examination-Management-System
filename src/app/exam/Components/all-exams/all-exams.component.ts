@@ -5,9 +5,10 @@ import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Exam } from '../../Models/exam';
-import { utils, writeFile } from 'xlsx';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
+
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-all-exams',
@@ -121,15 +122,51 @@ export class AllExamsComponent implements OnInit {
     this.router.navigate(['exams/attempt/', id]);
   }
 
+  exportData(){
+    const headings = [
+      'id',
+      'examName',
+      'duration',
+      'startTime',
+      'endTime',
+      'successRate',
+      'state',
+      'questionsPerPage',
+      'showResult',
+      'course'
+  ];
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.exams);
+  const headerStyle = {
+    font: { bold: true, color: { rgb: 'FFFFFF' } },
+    fill: { bgColor: { rgb: '2F75B5' } }
+  };
 
-  exportData() {
-    const headings = [['id', 'examName', 'duration', 'startTime', 'endTime']];
 
-    const wb = utils.book_new();
-    const ws: any = utils.json_to_sheet([]);
-    utils.sheet_add_aoa(ws, headings);
-    utils.sheet_add_json(ws, this.exams, { origin: 'A2', skipHeader: true });
-    utils.book_append_sheet(wb, ws, 'Report');
-    writeFile(wb, 'Data of Exams.xlsx');
+  // add header row
+  XLSX.utils.sheet_add_aoa(ws, [headings], { origin: 'A1' });
+
+
+      // Set column width
+      const columns = [{ wpx: 30 }, { wpx: 100 }, { wpx: 80 },{ wpx: 180 }, { wpx: 180 }, { wpx: 80 },{ wpx: 80 }, { wpx: 80 }, { wpx: 80 },{ wpx: 300 }];
+      ws['!cols'] = columns;
+
+      // Set row height
+      const rows = [{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 },{ hpx: 20 }];
+      ws['!rows'] = rows;
+
+
+
+      const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, ws, 'Sheet1');
+      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+      const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Data of Exams.xlsx';
+      link.click();
+      URL.revokeObjectURL(url);
+
   }
+
 }
