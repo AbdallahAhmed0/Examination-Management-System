@@ -4,7 +4,7 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import {Course} from "./course.model"
+import { Course } from "./course.model"
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -52,37 +52,36 @@ export class CourseService {
     return this.httpClient
       .get<any[]>(`${environment.APPURL}/groups`)
       .pipe(retry(2), catchError(this.handleError));
-    }
- addCourse(course:Course): Observable<Course> {
-      return this.httpClient
+  }
+  addCourse(course: Course): Observable<Course> {
+    return this.httpClient
       .post<Course>(
         `${environment.APPURL}/courses`,
         JSON.stringify(course),
         this.httpOption
-        )
-        .pipe(retry(2), catchError(this.handleError));
-      }
-  updateCourse(course:Course): Observable<Course> {
-        return this.httpClient
-        .post<Course>(
-          `${environment.APPURL}/courses`,
-          JSON.stringify(course),
-          this.httpOption
-          )
-          .pipe(retry(2), catchError(this.handleError));
-        }
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  updateCourse(course: Course): Observable<Course> {
+    return this.httpClient
+      .post<Course>(
+        `${environment.APPURL}/courses`,
+        JSON.stringify(course),
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
   deleteCourse(id: number) {
-          this.httpClient
-          .delete(`${environment.APPURL}/courses/${id}`)
+    return this.httpClient
+      .delete(`${environment.APPURL}/courses/${id}`)
 
-          .pipe(retry(2), catchError(this.handleError))
-          .subscribe((data) => {});
-        }
-  getExamsofCourse(id:number): Observable<Exam[]> {
-          return this.httpClient
-            .get<Exam[]>(`${environment.APPURL}/exam/getAll/${id}`)
-            .pipe(retry(2), catchError(this.handleError));
-        }
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  getExamsofCourse(id: number): Observable<Exam[]> {
+    return this.httpClient
+      .get<Exam[]>(`${environment.APPURL}/exam/getAll/${id}`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
   getCourseById(id: number): Observable<Course> {
     return this.httpClient
       .get<Course>(`${environment.APPURL}/courses/${id}`, this.httpOption)

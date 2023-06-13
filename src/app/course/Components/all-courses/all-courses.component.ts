@@ -44,11 +44,11 @@ deleteCourse(id:any){
   dialogRef.afterClosed().subscribe((result) => {
     if (result === 'confirm') {
 
-      this.courseService.deleteCourse(id)
-      window.location.reload();
-
+      this.courseService.deleteCourse(id).subscribe(data =>{
+        window.location.reload();
+        this.courseService.openSnackBar("Deleted");
+      })
     }
-
     });
 
 }
