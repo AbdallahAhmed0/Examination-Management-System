@@ -22,7 +22,11 @@ img{
 {
   background-color: #0ec82d;
   margin: 25px;
-  padding: 10px;
+  padding: 5px 12px;
+  font-size: 16px;
+}
+.btn-list:hover{
+background: darken($color: #0ec82d, $amount: 10%);
 }
 .edit{
   color: #fff;
