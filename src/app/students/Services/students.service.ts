@@ -78,10 +78,9 @@ export class StudentsService {
   }
 
   deleteStudent(id: number) {
-    this.httpClient
+   return this.httpClient
       .delete(`${environment.APPURL}/students/delete/${id}`)
-      .pipe(retry(2), catchError(this.handleError))
-      .subscribe((data) => {});
+      .pipe(retry(2), catchError(this.handleError));
   }
   getGroups(): Observable<any[]> {
     return this.httpClient
