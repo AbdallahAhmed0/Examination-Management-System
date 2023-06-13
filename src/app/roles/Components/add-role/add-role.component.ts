@@ -24,7 +24,9 @@ export class AddRoleComponent implements OnInit {
   }
   addRole(){
     this.role.role=this.roleName;
-    this.rolesService.addRole(this.role);
+    this.rolesService.addRole(this.role).subscribe(data =>{
+      this.rolesService.openSnackBar("Added");
+    });
     this.goback()
   }
   goback(){

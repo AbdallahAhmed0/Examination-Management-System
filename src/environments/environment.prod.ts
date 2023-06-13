@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  APPURL:'https://examination-management-server.herokuapp.com/api'
+  APPURL:'http://142.93.192.45:8087/api'
 };

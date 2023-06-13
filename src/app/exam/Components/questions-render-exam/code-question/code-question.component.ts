@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -7,6 +7,9 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./code-question.component.scss']
 })
 export class CodeQuestionComponent implements OnInit {
+  @Input() question!:any;
+  @Input() index!:number;
+  @Input() savedAnswer?:any;
 
   constructor(private sanitizer: DomSanitizer,) { }
 
