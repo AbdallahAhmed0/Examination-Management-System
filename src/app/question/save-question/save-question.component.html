@@ -74,12 +74,13 @@
     </ng-container>
 
     <button mat-button class="btn-question" [matMenuTriggerFor]="question"><mat-icon>add</mat-icon>Add questions</button>
-    <mat-menu #question="matMenu" xPosition="after">
+    <mat-menu #question="matMenu" xPosition="after" [overlapTrigger]="false" class="question-menu">
       <button mat-menu-item (click)="showChoiceQuestions()">Multible Choice</button>
       <button mat-menu-item (click)="showTextQuestions()">Matching</button>
       <button mat-menu-item (click)="showTrue_falseQuestions()">True False</button>
       <button mat-menu-item (click)="showTextEditor()">Coding</button>
     </mat-menu>
+
 
     <button *ngIf="questions.length" mat-raised-button [disabled]="!formValid" (click)="submit()" class="submit" type="submit">Save</button>
   </div>

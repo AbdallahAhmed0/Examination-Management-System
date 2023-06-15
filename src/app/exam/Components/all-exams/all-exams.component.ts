@@ -17,16 +17,16 @@ import * as XLSX from 'xlsx';
 })
 export class AllExamsComponent implements OnInit {
   displayedColumns: string[] = [
-    '#',
+    'Actions',
     'id',
     'examName',
     'course',
+    'showResult',
     'startTime',
     'endTime',
     'state',
     'duration',
-    'successRate',
-    'Actions',
+    'successRate'
   ];
   dataSource!: MatTableDataSource<any>;
 

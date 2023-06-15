@@ -77,11 +77,12 @@ border-radius: 8px;
 .btn-question:hover{
   background: darken(#3cb5be, 12%);
 }
-::ng-deep .mat-menu-panel {
+::ng-deep .mat-menu-panel.question-menu {
   background: darken(#3cb5be, 8%);
 }
-::ng-deep .mat-menu-item {
-  color:#f6f4f4 ;
+
+::ng-deep .mat-menu-panel.question-menu .mat-menu-item {
+  color: #f6f4f4;
 }
 
 .submit{
