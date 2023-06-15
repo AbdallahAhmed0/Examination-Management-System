@@ -140,13 +140,6 @@ autoResize(textarea: any) {
         },
         emoticonsUseImage: true,
         emoticonsStep: 4,
-        emoticonsSet: {
-          "people": [
-            {"code": "1F600", "icon": "😀", "title": "Grinning face"},
-            {"code": "1F601", "icon": "😁", "title": "Grinning face with smiling eyes"},
-            {"code": "1F602", "icon": "😂", "title": "Face with tears of joy"}
-          ]
-        },
         pluginsEnabled: [
           'align', 'charCounter', 'codeBeautifier', 'codeView', 'colors', 'draggable', 'emoticons',
           'entities', 'file', 'fontFamily', 'fontSize', 'fullscreen', 'help', 'image', 'inlineStyle',
