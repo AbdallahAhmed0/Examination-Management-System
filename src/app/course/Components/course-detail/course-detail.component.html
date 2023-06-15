@@ -15,16 +15,13 @@
 <h2 style="text-align: center;">Course Exams</h2>
 <div class="exams-container">
   <div class="exam-card" *ngFor="let exam of Exams">
-    <h3>  <strong>name</strong> :{{ exam.examName }}</h3>
+    <h2 class="exam-name">{{ exam.examName }}</h2>
     <p>Duration: {{ exam.duration }} minutes</p>
     <p>Start time: {{ exam.startTime }}</p>
     <p>End time: {{ exam.endTime }}</p>
     <p>Success rate: {{ exam.successRate }}%</p>
     <p>State: {{ exam.state ? 'Active' : 'Inactive' }}</p>
     <p>Show result: {{ exam.showResult ? 'Yes' : 'No' }}</p>
-    <button mat-raised-button color="primary" [routerLink]="['/exams/edit', exam.id]" class="edit">Edit Exam</button>
-    <button mat-raised-button color="warn" style="margin: 10px;" (click)="deleteExam(exam)" class="delete">Delete Exam</button>
-
   </div>
 </div>
 </div>
