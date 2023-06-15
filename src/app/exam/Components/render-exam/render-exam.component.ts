@@ -17,6 +17,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   questions: Question[] = [];
   questionPages: Question[][] = [];
   currentPageIndex:number = 1;
+  questionsPerPage!:number;
 
   remainingTime!: string;
   attemptData: any;
@@ -52,6 +53,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
         // Check if data.question is defined
         this.questions = data.questions;
         this.questionPages = this.chunk(this.questions, +data.questionsPerPage);
+        this.questionsPerPage = +data.questionsPerPage;
 
       }
     });
