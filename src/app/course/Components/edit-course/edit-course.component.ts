@@ -46,7 +46,7 @@ export class EditCourseComponent implements OnInit {
         let chosenGroup
         for(let group of this.theGroups){
           if(data.groupName==group.name){
-             chosenGroup=group
+              chosenGroup=group
           }
 
         }
