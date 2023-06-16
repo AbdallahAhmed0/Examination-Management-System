@@ -23,13 +23,13 @@ sanitizeHtml(html: string): any {
 
 languages = [
   { name: 'Java', value: 'java',checked: true },
-  { name: 'C++', value: 'c++',checked: false },
+  { name: 'C++', value: 'C++',checked: false },
   { name: 'Python', value: 'python',checked: false },
   { name: 'JavaScript', value: 'javascript',checked: false },
   { name: 'C#', value: 'c#',checked: false },
 ];
 editorOptions = {theme: 'vs-dark', language: 'java'};
-code: string= '';
+code: string= this.savedAnswer;
 
 changeLanguage(language: string): void {
   this.languages.forEach(lang => {
@@ -42,5 +42,7 @@ changeLanguage(language: string): void {
     };
   });
 }
-
+onCodeChange(code: string): void {
+  this.savedAnswer = code;
+}
 }

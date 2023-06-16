@@ -41,4 +41,4 @@
   <div>
     <button *ngFor="let lang of languages" (click)="changeLanguage(lang.value)" [ngClass]="{'checked': lang.checked}">{{ lang.name }}</button>
   </div>
-    <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+    <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"(ngModelChange)="onCodeChange($event)"></ngx-monaco-editor>
