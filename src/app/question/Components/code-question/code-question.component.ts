@@ -36,8 +36,6 @@ import { DialogeComponent } from 'src/app/Shared/material/dialog/dialog.componen
 })
 export class CodeQuestionComponent implements OnInit {
   descriptionQuestion:string='<p><span style="font-size: 24px; font-family: Arial, Helvetica, sans-serif;">// Description of Question</span></p>';
-  inputQuestion:string='<p><span style="font-size: 24px; font-family: Arial, Helvetica, sans-serif;">// Input Question</span></p>';
-  outputQuestion:string='<p><span id="isPasted" style="font-size: 24px; font-family: Arial, Helvetica, sans-serif;">// Output Question</span></p>';
 
   @Output() onDelete = new EventEmitter<any>();
   @Output() questionData = new EventEmitter<object>();
@@ -57,12 +55,11 @@ export class CodeQuestionComponent implements OnInit {
   }
   createForm() {
     this.codingForm = this.fb.group({
-      id: [''],
-      name: ['', Validators.required],
-      time: ['', Validators.required],
-      memory: ['', Validators.required],
-      descInput: ['', Validators.required],
-      descOutput: ['', Validators.required],
+      questionText: ['', Validators.required],
+      points: [0, Validators.required],
+      questionType: ['CODING', Validators.required],
+      header: ['', Validators.required],
+      timelimit: ['', Validators.required],
       testCases: this.fb.array([])
     });
     this.addTestCase();
@@ -73,7 +70,7 @@ export class CodeQuestionComponent implements OnInit {
   addTestCase() {
     this.testCases.push(this.fb.group({
       input: ['', Validators.required],
-      output: ['', Validators.required]
+      expectedOutput: ['', Validators.required]
     }));
   }
 
@@ -121,7 +118,7 @@ autoResize(textarea: any) {
           'insertImage',  'insertFile', 'insertTable', 'undo', 'redo',
           'help', 'specialCharacters', 'codeView'
         ],
-        heightMin: 50,
+        heightMin: 80,
         imageUpload: true,
         imagePaste: true,
         fileUpload: true,

@@ -36,11 +36,13 @@
   width: 80%;
 }
 
-.time,.memory,.name{
+.time,.name{
   display: inline;
+  margin-left: 50px;
 }
+
 input{
-  width: 30%;
+  width: 35%;
   margin: 8px;
   border: none;
   height: 32px;
