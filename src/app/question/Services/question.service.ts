@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Question } from '../Models/question';
+import { Question } from './question';
 
 @Injectable({
   providedIn: 'root',
@@ -39,26 +39,26 @@ export class QuestionService {
 
   saveQuestions(questions: any[], id: number): Observable<any[]> {
     return this.httpClient
-      .post<any[]>(`${environment.APPURL}/exam/saveQuestions/${id}`,
+      .post<any[]>(`${environment.APPURL}/exam/saveStandardQuestions/${id}`,
         JSON.stringify(questions),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
   getQuestions(examId: number): Observable<Question[]> {
-    return this.httpClient.get<Question[]>(`${environment.APPURL}/exam/getQuestions/${examId}`).
+    return this.httpClient.get<Question[]>(`${environment.APPURL}/exam/getStandardQuestions/${examId}`).
       pipe(retry(2), catchError(this.handleError))
   }
   deleteQuestion(question: Question) {
     return this.httpClient
-      .delete(`${environment.APPURL}/exam/deleteQuestion`, { body: question })
+      .delete(`${environment.APPURL}/exam/deleteStandardQuestion`, { body: question })
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => { });
   }
 
   deleteOptions(options: any[]) {
     return this.httpClient
-      .delete(`${environment.APPURL}/exam/deleteQuestionAnswer`, { body: options })
+      .delete(`${environment.APPURL}/exam/deleteStandardQuestionAnswer`, { body: options })
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => { });
 
