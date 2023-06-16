@@ -44,6 +44,7 @@ export class CodeQuestionComponent implements OnInit {
   @Input() indexComponent!:number;
   @Input() editQuestion?:any;
 
+  TestCase:any[]=[];
   codingForm!: FormGroup;
 
   constructor(private dialog:MatDialog,
@@ -51,26 +52,61 @@ export class CodeQuestionComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.createForm();
-  }
-  createForm() {
+   //add question
     this.codingForm = this.fb.group({
-      questionText: ['', Validators.required],
+      questionText: [this.descriptionQuestion, Validators.required],
       points: [0, Validators.required],
       questionType: ['CODING', Validators.required],
       header: ['', Validators.required],
       timelimit: ['', Validators.required],
       testCases: this.fb.array([])
     });
-    this.addTestCase();
-  }
+    // edit Questions
+    if (this.editQuestion) {
+      if (this.editQuestion.id) {
+        this.codingForm = this.fb.group({
+          id: [this.editQuestion.id],
+          questionText: [this.editQuestion.questionText, Validators.required],
+          points: [this.editQuestion.points, Validators.required],
+          questionType: ['CODING', Validators.required],
+          header: [this.editQuestion.header, Validators.required],
+          timelimit: [this.editQuestion.timelimit, Validators.required],
+          testCases: this.fb.array([])
+        });
+      }
+      else {
+        this.codingForm = this.fb.group({
+          questionText: [this.editQuestion.questionText, Validators.required],
+          points: [this.editQuestion.points, Validators.required],
+          questionType: ['CODING', Validators.required],
+          header: [this.editQuestion.header, Validators.required],
+          timelimit: [this.editQuestion.timelimit, Validators.required],
+          testCases: this.fb.array([])
+        });
+      }
+//select TEST CASES
+    this.TestCase = this.editQuestion?.testCases || [];
+    for (let i = 0; i < this.TestCase.length; i++) {
+      const answer = this.TestCase[i];
+      let answerGroup;
+      if (answer.id) {
+        answerGroup = this.addTestCase(answer.id, answer.Input, answer.expectedOutput);
+      } else {
+        answerGroup = this.addTestCase('', answer.Input, answer.expectedOutput);
+      }
+
+      this.testCases.push(answerGroup);
+    }    }
+        this.addTestCase();
+      }
   get testCases(){
     return this.codingForm.get('testCases') as FormArray;
   }
-  addTestCase() {
+  addTestCase(id: any = '', input: string = '',output:string='') {
     this.testCases.push(this.fb.group({
-      input: ['', Validators.required],
-      expectedOutput: ['', Validators.required]
+      id: [id],
+      input: [input, Validators.required],
+      expectedOutput: [output, Validators.required]
     }));
   }
 
