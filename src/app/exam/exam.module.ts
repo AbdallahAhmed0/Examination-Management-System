@@ -16,6 +16,7 @@ import { TrueFalseQuestionComponent } from './Components/questions-render-exam/t
 import { ExamAnswersComponent } from './Components/exam-answers/exam-answers.component';
 import { CodeQuestionComponent } from './Components/questions-render-exam/code-question/code-question.component';
 
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CodeQuestionComponent } from './Components/questions-render-exam/code-q
     ExamRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MonacoEditorModule.forRoot(),
   ]
 })
 export class ExamModule { }

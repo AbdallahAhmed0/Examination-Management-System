@@ -31,6 +31,8 @@
     "froala-editor": "^4.0.17",
     "jquery": "^3.6.4",
     "js-export-excel": "^1.1.4",
+    "monaco-editor": "^0.33.0",
+    "ngx-monaco-editor-v2": "^14.0.4",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
