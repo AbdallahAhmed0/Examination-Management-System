@@ -4,6 +4,7 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Question } from '../Models/question';
+import { coding } from './../Models/codingQuestion';
 
 @Injectable({
   providedIn: 'root',
@@ -61,8 +62,22 @@ export class QuestionService {
       .delete(`${environment.APPURL}/exam/deleteStandardQuestionAnswer`, { body: options })
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => { });
-
   }
+  // question Coding
+  addCodeQuestion(questions:coding[]):Observable<coding[]>{
+    return this.httpClient.post<coding[]>(`${environment.APPURL}/codeProblems`,this.httpOption).
+    pipe(retry(2), catchError(this.handleError));
+  }
+  getCodeQuestionByExamId(ExamId:number):Observable<coding[]>{
+    return this.httpClient.get<coding[]>(`${environment.APPURL}/codeProblems/${ExamId}`).
+    pipe(retry(2), catchError(this.handleError));
+  }
+  deleteCodeQuestionById(id:number):Observable<coding[]>{
+    return this.httpClient.delete<coding[]>(`${environment.APPURL}/codeProblems/${id}`).
+    pipe(retry(2), catchError(this.handleError));
+  }
+
+
 
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {

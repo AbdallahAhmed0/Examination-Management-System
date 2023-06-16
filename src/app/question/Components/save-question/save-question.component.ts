@@ -84,7 +84,7 @@ export class SaveQuestionComponent implements OnInit {
     this.formValid = false;
   }
 
-  showTextEditor() {
+  showCodingQuestion() {
     this.selectedComponents.push({ id: this.index, name: 'CODING' });
     this.index++;
     this.formValid = false;

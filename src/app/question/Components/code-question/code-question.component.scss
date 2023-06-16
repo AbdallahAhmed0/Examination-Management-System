@@ -27,43 +27,41 @@
   margin: 5px 0px 0px 20px;
   font-size: 18px;
 }
-.header{
+.header {
   background: #FFF;
   border-radius: 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   padding: 15px;
-  margin: 20px auto; /* add margin to center horizontally */
+  margin: 20px auto;
   width: 80%;
 }
 
-.time,.name{
-  display: inline;
-  margin-left: 50px;
+.input-container {
+  display: flex;
+  justify-content: space-between;
 }
 
-input{
-  width: 35%;
-  margin: 8px;
+input {
+  flex: 1;
+  margin: 0 5px;
   border: none;
   height: 32px;
-}
-.inp-header {
-  border: none;
-  background-color: #f2f2f2;
+  width: 100%;
   padding: 5px;
+  background-color: #f2f2f2;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.2s, box-shadow 0.2s; /* Add transition effect */
+  transition: background-color 0.2s, box-shadow 0.2s;
 }
 
-.inp-header:hover{
+input:hover {
   background-color: #e1f1ff;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
-.inp-header:focus{
-  border: none;
-  background-color: #e1f1ff;
+
+input:focus {
   outline: none;
 }
+
 .test-Case:focus{
   border: none;
   outline: none;

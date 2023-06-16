@@ -55,7 +55,7 @@ export class CodeQuestionComponent implements OnInit {
    //add question
     this.codingForm = this.fb.group({
       questionText: [this.descriptionQuestion, Validators.required],
-      points: [0, Validators.required],
+      points: ['', Validators.required],
       questionType: ['CODING', Validators.required],
       header: ['', Validators.required],
       timelimit: ['', Validators.required],
@@ -131,7 +131,9 @@ export class CodeQuestionComponent implements OnInit {
       });
     }
 
-
+    get header() {
+      return this.codingForm.get('header');
+    }
 
 autoResize(textarea: any) {
   textarea.style.height = 'auto';

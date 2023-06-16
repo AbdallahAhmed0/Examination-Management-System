@@ -83,7 +83,7 @@
       <button mat-menu-item (click)="showChoiceQuestions()">Multible Choice</button>
       <button mat-menu-item (click)="showTextQuestions()">Matching</button>
       <button mat-menu-item (click)="showTrue_falseQuestions()">True False</button>
-      <button mat-menu-item (click)="showTextEditor()">Coding</button>
+      <button mat-menu-item (click)="showCodingQuestion()">Coding</button>
     </mat-menu>
 
     <button *ngIf="questions.length" mat-raised-button [disabled]="!formValid" (click)="submit()" class="submit" type="submit">Save</button>
