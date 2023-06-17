@@ -12,5 +12,6 @@ export interface testCase{
 
   id?:number,
   input:string,
-  expectedOutput:string
+  expectedOutput:string,
+  points:number
 }

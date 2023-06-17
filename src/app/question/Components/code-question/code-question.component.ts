@@ -90,9 +90,9 @@ export class CodeQuestionComponent implements OnInit {
       const answer = this.TestCase[i];
       let answerGroup;
       if (answer.id) {
-        answerGroup = this.addTestCase(answer.id, answer.Input, answer.expectedOutput);
+        answerGroup = this.addTestCase(answer.id, answer.Input, answer.expectedOutput,answer.points);
       } else {
-        answerGroup = this.addTestCase('', answer.Input, answer.expectedOutput);
+        answerGroup = this.addTestCase('', answer.Input, answer.expectedOutput,answer.points);
       }
 
       this.testCases.push(answerGroup);
@@ -102,11 +102,12 @@ export class CodeQuestionComponent implements OnInit {
   get testCases(){
     return this.codingForm.get('testCases') as FormArray;
   }
-  addTestCase(id: any = '', input: string = '',output:string='') {
+  addTestCase(id: any = '', input: string = '',output:string='',points:number = 0) {
     this.testCases.push(this.fb.group({
       id: [id],
       input: [input, Validators.required],
-      expectedOutput: [output, Validators.required]
+      expectedOutput: [output, Validators.required],
+      points: [points, Validators.required]
     }));
   }
 

@@ -41,7 +41,7 @@
   justify-content: space-between;
 }
 
-input {
+.text,.number {
   flex: 1;
   margin: 0 5px;
   border: none;
@@ -53,12 +53,12 @@ input {
   transition: background-color 0.2s, box-shadow 0.2s;
 }
 
-input:hover {
+.text:hover,.number:hover {
   background-color: #e1f1ff;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-input:focus {
+.text:focus,.number:focus {
   outline: none;
 }
 
@@ -86,10 +86,15 @@ input:focus {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     margin-right: 20px;
     padding: 8px;
-    width: 40%;
+    width: 35%;
     display: inline-block;
     height: 40px;
     border: none;
+  }
+  .test-Case-point{
+    width: 10%;
+    display: inline-block;
+    height: 40px;
   }
   .cases{
     width:80%;
