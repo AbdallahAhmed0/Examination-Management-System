@@ -71,8 +71,9 @@
 
       <app-code-question  *ngIf="selectedComponent.name === 'CODING'"
       (onDelete)="removeChild(selectedComponent)"
+      (deleteTestCases)="removeTestCases($event)"
       [indexComponent]="(i+1)"
-      (questionData)="addQuestion($event,i)"
+      (codeQuestionData)="addCodeQuestion($event,i)"
       (formValid)="formIsValid($event)"
       [editQuestion]="selectedComponent.data">
     </app-code-question>

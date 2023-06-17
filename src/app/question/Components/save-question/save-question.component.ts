@@ -4,6 +4,7 @@ import { Exam } from '../../../exam/Models/exam';
 import { Question } from '../../Models/question';
 import { QuestionService } from '../../Services/question.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { coding } from '../../Models/codingQuestion';
 
 @Component({
   selector: 'app-save-question',
@@ -19,8 +20,12 @@ export class SaveQuestionComponent implements OnInit {
   index: number = 1;
 
   options: any[] = [];
+  testCases:any[]=[]
   exam?: Exam;
+
   questions: Question[] = [];
+  codeQuestions:coding[]=[];
+
   examId!: number;
 
   importQuestions!: Question[];
@@ -107,6 +112,9 @@ export class SaveQuestionComponent implements OnInit {
   removeOptions(option: any) {
     this.options.push(option);
   }
+  removeTestCases(testCase: any) {
+    this.testCases.push(testCase);
+  }
 
   // upChild(child: any) {
   //     const index = this.selectedComponents.indexOf(child);
@@ -126,7 +134,9 @@ export class SaveQuestionComponent implements OnInit {
   addQuestion(data: any, index: number) {
     this.questions[index] = data;
   }
-
+  addCodeQuestion(data: any, index: number) {
+    this.codeQuestions[index] = data;
+  }
   formIsValid(valid: boolean) {
     this.formValid = valid;
   }
@@ -135,8 +145,11 @@ export class SaveQuestionComponent implements OnInit {
     if (this.options.length) {
       this.questionService.deleteOptions(this.options);
     }
+    if (this.testCases.length) {
+      this.questionService.deleteTestCases(this.testCases);
+    }
     const observer = {
-      next: (Question: Question[]) => {
+      next: (Question: any[]) => {
         this.router.navigateByUrl('/exams');
         this.questionService.openSnackBar('Added');
       },
@@ -144,8 +157,10 @@ export class SaveQuestionComponent implements OnInit {
         this.consoleError = err.message;
       },
     };
+    //add standard questions
     this.questionService.saveQuestions(this.questions, this.examId).subscribe(observer);
-
+    //add coding questions
+    this.questionService.saveCodeQuestions(this.codeQuestions, this.examId).subscribe(observer);
   }
   importData(id: any) {
     this.router.navigate([`save/${id}/import`]);

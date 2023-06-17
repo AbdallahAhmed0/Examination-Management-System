@@ -26,7 +26,7 @@ import 'froala-editor/js/plugins/word_paste.min.js';
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogeComponent } from 'src/app/Shared/material/dialog/dialog.component';
 
 @Component({
@@ -38,8 +38,9 @@ export class CodeQuestionComponent implements OnInit {
   descriptionQuestion:string='<p><span style="font-size: 24px; font-family: Arial, Helvetica, sans-serif;">// Description of Question</span></p>';
 
   @Output() onDelete = new EventEmitter<any>();
-  @Output() questionData = new EventEmitter<object>();
+  @Output() codeQuestionData = new EventEmitter<object>();
   @Output() formValid = new EventEmitter<boolean>();
+  @Output() deleteTestCases = new EventEmitter<any>();
 
   @Input() indexComponent!:number;
   @Input() editQuestion?:any;
@@ -55,7 +56,7 @@ export class CodeQuestionComponent implements OnInit {
    //add question
     this.codingForm = this.fb.group({
       questionText: [this.descriptionQuestion, Validators.required],
-      points: ['', Validators.required],
+      points: [10, Validators.required],
       questionType: ['CODING', Validators.required],
       header: ['', Validators.required],
       timelimit: ['', Validators.required],
@@ -98,6 +99,14 @@ export class CodeQuestionComponent implements OnInit {
       this.testCases.push(answerGroup);
     }    }
         this.addTestCase();
+
+        this.codingForm.valueChanges.subscribe(value => {
+
+          this.codeQuestionData.emit(this.codingForm.value);
+          this.formValid.emit(true);
+        });
+
+
       }
   get testCases(){
     return this.codingForm.get('testCases') as FormArray;
@@ -112,6 +121,7 @@ export class CodeQuestionComponent implements OnInit {
   }
 
   removeTestCase(index: number) {
+    this.deleteTestCases.emit(this.testCases.at(index).value);
     this.testCases.removeAt(index);
   }
 
