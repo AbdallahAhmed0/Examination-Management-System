@@ -1,0 +1,20 @@
+mat-radio-group {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.radio{
+  margin: 5px 20px;
+  position: relative;
+  display: inline;
+}
+.mat-radio-button {
+  transform: scale(1.1); /* increase size */
+  border-radius: 100%;
+}
+::ng-deep .mat-radio-label-content {
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+

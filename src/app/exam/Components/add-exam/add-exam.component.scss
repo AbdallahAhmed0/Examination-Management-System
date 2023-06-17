@@ -12,12 +12,12 @@
   background-color: #f7f7f7;
   padding: 20px;
   border-radius: 5px;
-  margin: 0px 10%;
+  margin: 0px 17%;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 65%;
 
 }
 
@@ -43,8 +43,13 @@ mat-slider {
 
 .submit:disabled {
   background-color: #ccc;
-  color: #000;
   cursor: not-allowed;
 }
 
 
+.btn-toggle
+{
+  float: right;
+  margin-top: 10px;
+  font-size: 16px;
+}

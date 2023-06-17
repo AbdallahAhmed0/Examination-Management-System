@@ -14,8 +14,8 @@ export class TrueFalseQuestionComponent implements OnInit {
   form!: FormGroup;
 
   @Output() onDelete = new EventEmitter<void>();
-  @Output() onUP = new EventEmitter<void>();
-  @Output() onDown = new EventEmitter<void>();
+  // @Output() onUP = new EventEmitter<void>();
+  // @Output() onDown = new EventEmitter<void>();
   @Output() questionData = new EventEmitter<object>();
   @Output() formValid = new EventEmitter<boolean>();
 
@@ -48,16 +48,27 @@ export class TrueFalseQuestionComponent implements OnInit {
 
     // edit Questions
     if(this.editQuestion){
-      this.form = this.fb.group({
-        questionText: [this.editQuestion.questionText, Validators.required],
-        points: [this.editQuestion.points, Validators.required],
-        questionType: ['True_False', Validators.required],
-        questionAnswers: this.fb.array([this.createAnswer()])
-      });
-
+      if(this.editQuestion.id){
+          this.form = this.fb.group({
+            id:[this.editQuestion.id],
+            questionText: [this.editQuestion.questionText, Validators.required],
+            points: [this.editQuestion.points, Validators.required],
+            questionType: ['True_False', Validators.required],
+            questionAnswers: this.fb.array([this.createAnswer()])
+          });
+        }
+        else{
+          this.form = this.fb.group({
+            questionText: [this.editQuestion.questionText, Validators.required],
+            points: [this.editQuestion.points, Validators.required],
+            questionType: ['True_False', Validators.required],
+            questionAnswers: this.fb.array([this.createAnswer()])
+          });
+        }
     //select Question answer
     this.Answer = this.editQuestion.questionAnswers[0];
     this.answers.at(0).patchValue({
+      id:this.Answer.id,
       answerText: this.Answer.answerText,
       comment: this.Answer.comment});
     }
@@ -70,6 +81,7 @@ export class TrueFalseQuestionComponent implements OnInit {
 
   createAnswer(): FormGroup {
     return this.fb.group({
+      id:[],
       answerText: ['', Validators.required],
       correctAnswer: [true],
       comment:['']
@@ -122,13 +134,13 @@ export class TrueFalseQuestionComponent implements OnInit {
       });
     }
 
-    Up(){
-      this.onUP.emit();
+    // Up(){
+    //   this.onUP.emit();
 
-    }
-    Down(){
-      this.onDown.emit();
-    }
+    // }
+    // Down(){
+    //   this.onDown.emit();
+    // }
 
     toggleInput(index:number) {
       this.isHidden[index] = !this.isHidden[index];

@@ -1,54 +1,91 @@
 import { ExamService } from './../../Services/exam.service';
-import { Question, Exam, Answer } from './../../Models/exam';
-import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-
+import { Question, Exam } from './../../Models/exam';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-render-exam',
   templateUrl: './render-exam.component.html',
-  styleUrls: ['./render-exam.component.scss']
+  styleUrls: ['./render-exam.component.scss'],
 })
-export class RenderExamComponent implements OnInit {
-
-  exam?: any;
+export class RenderExamComponent implements OnInit,OnDestroy {
+  exam: Exam = {} as Exam;
   responseString: string | undefined;
-  answerQustion = [];
+  answerID:any[] = [];
+  answerMatching:any[] = [];
 
-  questions: Question[]=[];
-  questionForms: FormGroup[] = [];
+  questions: Question[] = [];
   questionPages: Question[][] = [];
-  currentPageIndex = 0;
+  currentPageIndex:number = 1;
+  questionsPerPage!:number;
 
-  nextButtonLabel = 'Save';
+  remainingTime!: string;
+  attemptData: any;
+  intervalId:any;
 
-  examId!: number;
+  // when click previous and next send value to questions components untile save in form
+  sentAnswerToChoice:{[key: string]: any} = {};
+  sentAnswerToMultibleAnswers:{[key: string]: any} = {};
+  sentAnswerToTrue_False:{[key: string]: any} = {};
+  sentAnswerToMatching:{[key: string]: any} = {};
 
-  constructor(private examService: ExamService,private _activatedRoute:ActivatedRoute
-              ,private sanitizer: DomSanitizer, private formBuilder: FormBuilder) { }
+  constructor(
+    private examService: ExamService,
+    private route: ActivatedRoute,
+    private router:Router
+  ) {}
+
 
   ngOnInit(): void {
+    const examId = parseInt(this.route.snapshot.paramMap.get('id') as string);
+    this.renderExam(examId);
+    // Get the array parameter from the state object
+    this.attemptData = history.state.data;
+    console.log(this.attemptData)
+  }
 
-    this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
-
-
-    this.examService.renderExam(this.examId).subscribe(data => {
+  renderExam(examId: number): void {
+    this.examService.renderExam(examId).subscribe((data) => {
       this.exam = data;
-      this.questions = this.exam.questions;
-      this.questionPages = this.chunk(this.questions, 3);
+      this.startTimer(this.exam.duration);
 
-      console.log(this.exam)
+      if (data.questions) {
+        // Check if data.question is defined
+        this.questions = data.questions;
+        this.questionPages = this.chunk(this.questions, +data.questionsPerPage);
+        this.questionsPerPage = +data.questionsPerPage;
 
-       // Initialize a form group for each question
-    this.questionForms = this.questions.map(question => {
-      const formGroup = this.formBuilder.group({
-        answerIds: []
-      });
-      return formGroup;
+      }
     });
-    });
+  }
+
+  startTimer(duration: number) {
+    let minutes = duration;
+    let seconds = 0;
+    this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    // Create a setInterval function that will update the remaining time every second
+    this.intervalId = setInterval(() => {
+      // Decrement the seconds
+      seconds--;
+      if (seconds < 0) {
+        // Decrement the minutes if seconds reach 0
+        minutes--;
+        if (minutes < 0) {
+          // Submit the exam if time is up
+        } else {
+          seconds = 59;
+        }
+      }
+      // Update the remaining time
+      this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      // Check if both minutes and seconds are equal to 0
+      if (minutes === 0 && seconds === 0) {
+        // Submit the exam if time is up
+        this.submitExam();
+        clearInterval(this.intervalId);
+      }
+    }, 1000);
   }
 
   chunk(questions: Question[], size: number): Question[][] {
@@ -58,50 +95,102 @@ export class RenderExamComponent implements OnInit {
     );
   }
 
-  saveAnswer(): void {
-    // Save the answer to the current question.
-  }
-
-  nextQuestion(): void {
-    // Move to the next question on the current page.
-  }
-
-  previousQuestion(): void {
-    // Move to the previous question on the current page.
-  }
-
-  changePage(pageIndex: number) {
-    this.currentPageIndex = pageIndex;
-  }
-
   previousPage() {
     this.currentPageIndex--;
   }
 
   nextPage() {
     this.currentPageIndex++;
-
-  }
-
-  // onNext() {
-  //   if (this.questionForms.valid) {
-  //     const data = this.form.value;
-  //     this.http.post('your-api-url', data).subscribe(response => {
-  //       // handle the response from the server
-  //       // navigate to the next page
-  //     });
-  //   } else {
-  //     // handle the case when the form is not valid
-  //   }
-  // }
-  // Sanitize the HTML content with the DomSanitizer service
-  sanitizeHtml(html: string): any {
-    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
 
 
+  saveAnswersById(attemptId:any ,answers: any[]): void {
+    const observer={
+      next: (answer:any) => {
+      },
+      error: (err:Error)=>{
+        //Take dicition when occur Error
+        }
+    }
+    this.examService.saveSelectedStudentAnswer(attemptId,answers).subscribe(observer);
+  }
+
+  saveAnswersByText(attemptId:any, answers: any[]): void {
+    const observer={
+      next: (answer:any) => {
+      },
+      error: (err:Error)=>{
+        //Take dicition when occur Error
+        }
+    }
+    this.examService.saveCompleteStudentAnswer(attemptId,answers).subscribe(observer);
+  }
+
+  addAnswerByIDs(answer:any,questionType:any){
+
+    const existingAnswerIndex = this.answerID.findIndex(a => a.questionId === answer.questionId);
+    existingAnswerIndex !== -1 ? this.answerID[existingAnswerIndex] = answer :this.answerID.push(answer);
+
+    if(questionType == 'Multiple_choice'){
+      this.sentAnswerToChoice[answer.questionId] = answer.answersIds;
+    }
+    else if(questionType == 'Multiple_Answers'){
+      this.sentAnswerToMultibleAnswers[answer.questionId] = answer.answersIds;
+    }
+    else{
+      this.sentAnswerToTrue_False[answer.questionId] = answer.answersIds;
+    }
+  }
+  addAnswerByString(answer:any){
+    const existingAnswerIndex = this.answerMatching.findIndex(a => a.questionId === answer.questionId);
+    existingAnswerIndex !== -1 ? this.answerMatching[existingAnswerIndex] = answer :this.answerMatching.push(answer);
+
+    this.sentAnswerToMatching[answer.questionId] = answer.textAnswer;
+  }
+
+  savePage(): void {
+    this.saveAnswersById(this.attemptData.id,this.answerID);
+    this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+    console.log("ID",this.answerID,"matching",this.answerMatching)
+    this.answerID = [];
+    this.answerMatching = [];
+  }
+
+  submitExam(): void {
+
+    this.saveAnswersById(this.attemptData.id,this.answerID);
+    this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+    clearInterval(this.intervalId);
+    this.answerID = [];
+    this.answerMatching = [];
+
+    this.examService.createResult(this.attemptData.id).subscribe(
+      data =>{
+        console.log(data)
+      },
+      error =>{
+        // Handle Error
+      }
+    );
+    const observer={
+      next: (answer:any) => {
+
+        if(this.exam.showResult){
+        //go to Show Answer Page
+        this.router.navigate([`/exams/showAnswers/${this.attemptData.id}`]);
+
+      }else{
+        this.router.navigate(['/courses']);
+      }
+      },
+      error: (err:Error)=>{
+        //Take dicition when occur Error
+        }
+    }
+    this.examService.endExam(this.attemptData.id).subscribe(observer);
 }
-
-
-
+ngOnDestroy(): void {
+  clearInterval(this.intervalId);
+}
+}

@@ -3,8 +3,8 @@
   <mat-card class="card" >
     <div class="actions">
       <a title="delete" (click)="deleteQuestion()"><mat-icon class="delete">delete</mat-icon></a>
-      <a title="up" (click)="Up()"><mat-icon class="up">arrow_upward</mat-icon></a>
-      <a title="down" (click)="Down()"><mat-icon class="down">arrow_downward</mat-icon></a>
+      <!-- <a title="up" (click)="Up()"><mat-icon class="up">arrow_upward</mat-icon></a>
+      <a title="down" (click)="Down()"><mat-icon class="down">arrow_downward</mat-icon></a> -->
     </div>
     <span class="index">{{indexComponent}}.</span>
 
@@ -18,13 +18,14 @@
 
     <mat-card-content>
       <div formArrayName="questionAnswers">
+      <mat-radio-group>
         <ng-container *ngFor="let answerItem of answers.controls; let i = index">
           <div [formGroupName]="i">
               <ng-container *ngIf="isMultipleChoice; else singleAnswer">
                 <mat-checkbox class="check" formControlName="correctAnswer"></mat-checkbox>
               </ng-container>
               <ng-template #singleAnswer >
-                <mat-radio-button class="radio" [checked]="Answer[i]?.correctAnswer" (change)="onRadioChange($event)"[value]="i"></mat-radio-button>
+                <mat-radio-button class="radio" [checked]="(Answer[i]?.correctAnswer)"   (change)="onRadioChange($event)"[value]="i"></mat-radio-button>
               </ng-template>
 
               <app-text-editor class="option" (editorValue)="getAnswerText($event,i)"
@@ -47,7 +48,7 @@
 
           </div>
         </ng-container>
-
+      </mat-radio-group>
     </div>
       <button mat-raised-button class="add-option" type="button" (click)="addAnswer()">
         <mat-icon>add</mat-icon>Add option
@@ -57,7 +58,7 @@
       <label class="label-point">Points: </label>
       <input matInput class="point"  min="0" max="200" [value]="editQuestion?.points" maxlength="3" type="number" formControlName="points" required>
 
-      <mat-slide-toggle color="primary" class="btn-toggle" (click)="btnToggle()">Multiple Answers</mat-slide-toggle>
+      <mat-slide-toggle color="primary" class="btn-toggle"  [checked]="isMultipleChoice" (change)="btnToggle()">Multiple Answers</mat-slide-toggle>
 
   </mat-card>
 </form>

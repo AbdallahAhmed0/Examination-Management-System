@@ -1,4 +1,4 @@
-import { Exam } from './../Models/exam';
+import { Answer, Exam } from './../Models/exam';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { QuestionAnswer } from '../Models/question-answer-interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -75,8 +76,7 @@ export class ExamService {
   deleteExam(exam: Exam) {
     return this.httpClient
       .delete(`${environment.APPURL}/exam/delete`, { body: exam })
-      .pipe(retry(2), catchError(this.handleError))
-      .subscribe((data) => {});
+      .pipe(retry(2), catchError(this.handleError));
   }
 
   openSnackBar(message: string) {
@@ -87,22 +87,56 @@ export class ExamService {
 
   // Attempt Exam
   attemptExam(examId: number, userId: number) {
-    let body: object = {
-      examId: examId,
-      userId: userId,
-    };
+
     return this.httpClient
       .post(
         `${environment.APPURL}/exam/attemptExam/${examId}/${userId}`,
-        JSON.stringify(body),
         this.httpOption
       )
       .pipe(retry(2), catchError(this.handleError));
   }
-  renderExam(id: number): Observable<Exam> {
+
+  renderExam(id: number): Observable<any> {
     return this.httpClient
       .get<Exam>(`${environment.APPURL}/exam/renderExam/${id}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 
+  saveSelectedStudentAnswer(attemptId: number, answers: { questionId: number; answersIds: number[] }[]): Observable<any> {
+
+    return this.httpClient.post<any>(`${environment.APPURL}/exam/saveSelectedStudentAnswer/${attemptId}`,
+      JSON.stringify(answers), this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  saveCompleteStudentAnswer(attemptId: number, answers: { questionId: number; textAnswer: string }[]): Observable<any> {
+
+    return this.httpClient.post<any>(`${environment.APPURL}/exam/saveCompleteStudentAnswer/${attemptId}`,
+      JSON.stringify(answers), this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  createResult(examAttemptId: number): Observable<any> {
+
+    return this.httpClient.post(`${environment.APPURL}/exam/createResult/${examAttemptId}`, {})
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  endExam(examAttemptId: number): Observable<any> {
+
+    return this.httpClient.post(`${environment.APPURL}/exam/endExam/${examAttemptId}`, {})
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  getAllExamAnswers(examAttemptId: number): Observable<QuestionAnswer[]> {
+    return this.httpClient
+      .get<QuestionAnswer[]>(
+        `${environment.APPURL}/exam/getAllStudentAnswers/${examAttemptId}`,
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getResult(attemptId: number): Observable<any> {
+    return this.httpClient
+      .get(`${environment.APPURL}/exam/getResult/${attemptId}`, this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
+  }
 }

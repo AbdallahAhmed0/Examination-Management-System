@@ -1,0 +1,44 @@
+<!-- <h2>
+  Question {{ index }} ({{ question.points }} points)
+</h2> -->
+<div class="header">
+  <h1 class="name">Name</h1>
+    <div class="time">
+      time limit per Test: <span>5</span>
+    </div>
+    <div class="memory">
+      memory limit per Test: <span>4</span>
+    </div>
+  </div>
+  <!-- Descritopn Question -->
+  <div class="desc">
+    <!-- input -->
+  <div class="input">
+    <h1>Input</h1>
+    <P>djnksmlfdjsklcmkjngjsd;,lcfsdmkl</P>
+    <!-- <p [innerHTML]="sanitizeHtml(question.input)"></p> -->
+  </div>
+  <!-- Output -->
+  <div class="output">
+    <h1>Output</h1>
+    <P>djnksmlfdjsklcmkjngjsd;,lcfsdmkl</P>
+    <!-- <p [innerHTML]="sanitizeHtml(question.output)"></p> -->
+  </div>
+  <!-- Test Cases -->
+  <h2>Example:</h2>
+  <div class="testCase">
+    <h2>Input</h2>
+    <div class="input-example">
+      <p>2 3</p>
+      <p>1 2 3 5</p>
+    </div>
+    <h2>Output</h2>
+    <div class="output-example">
+      <p>1 2 3 5</p>
+    </div>
+  </div>
+  </div>
+  <div>
+    <button *ngFor="let lang of languages" (click)="changeLanguage(lang.value)" [ngClass]="{'checked': lang.checked}">{{ lang.name }}</button>
+  </div>
+    <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"(ngModelChange)="onCodeChange($event)"></ngx-monaco-editor>

@@ -63,12 +63,10 @@ delete(id:number){
   dialogRef.afterClosed().subscribe((result) => {
     if (result === 'confirm') {
 
-        this.adminService.deleteAdmin(id);
-
-        setTimeout(() => {
+      this.adminService.deleteAdmin(id).subscribe((data)=>{
           window.location.reload();
-          this.adminService.openSnackBar("Deleted");
-        }, 800);
+          this.adminService.openSnackBar("Deleted")
+      });
 
       }
     });

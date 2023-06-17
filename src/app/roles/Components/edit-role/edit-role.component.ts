@@ -30,7 +30,9 @@ export class EditRoleComponent implements OnInit {
 
   save(){
     this.role.role=this.editRoleName;
-    this.rolesService.updateRole(this.role);
+    this.rolesService.updateRole(this.role).subscribe(data=>{
+      this.rolesService.openSnackBar("Updated");
+    })
 
     this.goback();
 

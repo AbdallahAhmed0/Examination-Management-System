@@ -16,8 +16,8 @@ export class TextQuestionsComponent implements OnInit {
   form!: FormGroup;
 
   @Output() onDelete = new EventEmitter<Question>();
-  @Output() onUP = new EventEmitter<void>();
-  @Output() onDown = new EventEmitter<void>();
+  // @Output() onUP = new EventEmitter<void>();
+  // @Output() onDown = new EventEmitter<void>();
   @Output() questionData = new EventEmitter<object>();
   @Output() formValid = new EventEmitter<boolean>();
 
@@ -49,13 +49,23 @@ export class TextQuestionsComponent implements OnInit {
 
     // edit Questions
     if(this.editQuestion){
-      this.form = this.fb.group({
-        questionText: [this.editQuestion.questionText, Validators.required],
-        points: [this.editQuestion.points, Validators.required],
-        questionType: ['Matching', Validators.required],
-        questionAnswers: this.fb.array([this.createAnswer()])
-      });
-
+      if(this.editQuestion.id){
+          this.form = this.fb.group({
+            id:[this.editQuestion.id],
+            questionText: [this.editQuestion.questionText, Validators.required],
+            points: [this.editQuestion.points, Validators.required],
+            questionType: ['Matching', Validators.required],
+            questionAnswers: this.fb.array([this.createAnswer()])
+          });
+        }
+        else{
+          this.form = this.fb.group({
+            questionText: [this.editQuestion.questionText, Validators.required],
+            points: [this.editQuestion.points, Validators.required],
+            questionType: ['Matching', Validators.required],
+            questionAnswers: this.fb.array([this.createAnswer()])
+          });
+        }
     //select Question answer
     this.Answer = this.editQuestion.questionAnswers[0];
     this.answers.at(0).patchValue({
@@ -99,7 +109,7 @@ export class TextQuestionsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
 
-        this.onDelete.emit(this.form.value);
+        this.onDelete.emit();
       }
       });
     }
@@ -118,13 +128,13 @@ export class TextQuestionsComponent implements OnInit {
       this.answers.at(0).patchValue({ comment: this.commentValue });
 
     }
-    Up(){
-      this.onUP.emit();
+    // Up(){
+    //   this.onUP.emit();
 
-    }
-    Down(){
-      this.onDown.emit();
-    }
+    // }
+    // Down(){
+    //   this.onDown.emit();
+    // }
     toggleInput() {
       this.isHidden = !this.isHidden;
     }

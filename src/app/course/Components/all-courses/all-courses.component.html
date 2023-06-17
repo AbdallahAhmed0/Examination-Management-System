@@ -6,16 +6,21 @@
       <mat-card-title>{{course.courseName}}</mat-card-title>
       <mat-card-subtitle>{{course.courseCode}}</mat-card-subtitle>
     </mat-card-header> -->
-    <img mat-card-image [routerLink]="['/courses/edit', course.id]" src="https://www.sonicourses.com/uploads/thumbnails/course_thumbnails/course_thumbnail_soni_39.jpg" alt="Photo of course">
+    <img mat-card-image [routerLink]="['/courses/detail', course.id]" src="https://www.sonicourses.com/uploads/thumbnails/course_thumbnails/course_thumbnail_soni_39.jpg" alt="Photo of course">
     <mat-card-content>
       <p>
         <mat-card-title>{{course.courseName}}</mat-card-title>
         <mat-card-subtitle>{{course.courseCode}}</mat-card-subtitle>
 
       </p>
+      <div class="actions">
+        <a title="Edit" [routerLink]="['/courses/edit', course.id]">
+          <mat-icon class="edit-icon">edit</mat-icon>
+      </a>
+      <a  title="Delete" (click)="deleteCourse(course.id)">
+          <mat-icon class="delete-icon">delete</mat-icon>
+      </a>
+      </div>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button [routerLink]="['/courses/edit', course.id]" class="edit">Edit course</button>
-    </mat-card-actions>
   </mat-card>
 </div>

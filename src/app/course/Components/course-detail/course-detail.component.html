@@ -1,0 +1,48 @@
+<div class="contianer">
+<div class="course-details">
+  <h2>Course Details</h2>
+  <p>Name: {{ course.courseName }}</p>
+  <p>Code: {{ course.courseCode }}</p>
+  <p>Group: {{ course.groupName }}</p>
+  <p>Admins:</p>
+  <ul>
+    <li *ngFor="let admin of admins">
+    <b>Name</b>  :{{ admin.firstName }} {{ admin.lastName }}  <strong>speclization:</strong>  {{ admin.specialization }}
+    </li>
+  </ul>
+</div>
+<hr>
+<h2 style="text-align: center;">Course Exams</h2>
+<div class="exams-container">
+  <div class="exam-card" *ngFor="let exam of Exams">
+    <h2 class="exam-name">{{ exam.examName }}</h2>
+    <p>Duration: {{ exam.duration }} minutes</p>
+    <p>Start time: {{ exam.startTime }}</p>
+    <p>End time: {{ exam.endTime }}</p>
+    <p>Success rate: {{ exam.successRate }}%</p>
+    <p>State: {{ exam.state ? 'Active' : 'Inactive' }}</p>
+    <p>Show result: {{ exam.showResult ? 'Yes' : 'No' }}</p>
+  </div>
+</div>
+</div>
+
+
+<!-- <mat-card class="example-card"*ngFor="let exam of Exams" >
+  <mat-card-header>
+
+    <mat-card-title> examName :{{exam.examName}}</mat-card-title>
+    <mat-card-subtitle> exam duration:{{exam.duration}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image  src="https://i.insider.com/6410fe689aa2e6001956f2ca?width=1136&format=jpeg" alt="Photo of exam">
+  <mat-card-content>
+    <p>
+      <mat-card-title> successRate :{{exam.successRate}}</mat-card-title>
+      <mat-card-subtitle>{{exam.duration}}</mat-card-subtitle>
+
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" [routerLink]="['/exam/edit',exam.id]" class="edit">Edit Exam</button>
+    <button mat-raised-button color="warn"  (click)="deleteExam(exam.id)" class="delete">Delete Exam</button>
+  </mat-card-actions>
+</mat-card> -->

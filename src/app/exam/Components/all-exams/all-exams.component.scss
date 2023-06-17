@@ -82,7 +82,9 @@ td, th {
   font-size: 16px;
   margin: 15px 0px;
   color: #f6f4f4;
+  background: darken($color: #0cd463, $amount: 2%);
 }
+
 
 .wide-menu {
   width: 500px; /* set the width to whatever value you need */
@@ -110,6 +112,14 @@ td, th {
 ::ng-deep .custom-menu {
   width: 175px; /* replace with your desired width */
 }
+::ng-deep .mat-menu-panel.custom-menu {
+  background: darken(#0cd463, 7%);
+}
+
+::ng-deep .mat-menu-panel.custom-menu .mat-menu-item {
+  color: #f6f4f4;
+}
+
 
 .active{
   background:  #0cd463;

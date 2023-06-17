@@ -87,12 +87,11 @@ export class AdminsService {
     }
     deleteAdmin(id:number){
 
-      this.httpClient.delete(`${environment.APPURL}/admins/delete/${id}`)
+      return this.httpClient.delete(`${environment.APPURL}/admins/delete/${id}`)
       .pipe(
         retry(2),
         catchError(this.handleError)
-      ).subscribe(data => {
-      })
+      );
     }
 
     openSnackBar(message: string ) {

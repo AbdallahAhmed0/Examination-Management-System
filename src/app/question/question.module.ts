@@ -11,10 +11,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TextQuestionsComponent } from './text-questions/text-questions.component'
 
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-import { EditQuestionsComponent } from './edit-questions/edit-questions.component';
 import { CodeQuestionComponent } from './code-question/code-question.component';
 import { TrueFalseQuestionComponent } from './true-false-question/true-false-question.component';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { ImportQuestionsComponent } from './import-questions/import-questions.component';
 
 
 @NgModule({
@@ -23,9 +23,9 @@ import { TrueFalseQuestionComponent } from './true-false-question/true-false-que
     ChoiceQuestionsComponent,
     TextEditorComponent,
     TextQuestionsComponent,
-    EditQuestionsComponent,
     CodeQuestionComponent,
-    TrueFalseQuestionComponent
+    TrueFalseQuestionComponent,
+    ImportQuestionsComponent,
   ],
   imports: [
     CommonModule,

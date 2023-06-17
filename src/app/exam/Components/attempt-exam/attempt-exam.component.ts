@@ -9,10 +9,12 @@ import { ExamService } from '../../Services/exam.service';
   styleUrls: ['./attempt-exam.component.scss'],
 })
 export class AttemptExamComponent implements OnInit {
+
+  attemptData:any;
   constructor(
     private _examService: ExamService,
     private _activatedRoute: ActivatedRoute,
-    private router:Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,15 +32,17 @@ export class AttemptExamComponent implements OnInit {
     });
   }
 
-  // Send userId and examId then get response with user data
-  getAttemptExamData(userId: number) {
-    this._examService
-      .attemptExam(this.examId, userId)
-      .subscribe((data) => console.log(data));
-  }
 
-  attemptExam(examId:any) {
-     this.router.navigate(['exams/render/',examId]);   //This should take the user to the exam
-    this.getAttemptExamData(12); //FIXed userID
+  startExam(examId: any) {
+    this._examService
+    .attemptExam(this.examId, 1) //FIXed userID
+    .subscribe((data) => {
+      this.attemptData = data;
+      this._examService.renderExam(examId);
+      this.router.navigate(['exams/render/', examId],{state:{data:this.attemptData}}); //This should take the user to the exam
+
+  });
+
+
   }
 }
