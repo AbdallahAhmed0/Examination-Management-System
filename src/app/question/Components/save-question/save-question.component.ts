@@ -23,10 +23,10 @@ export class SaveQuestionComponent implements OnInit {
   testCases:any[]=[]
   exam?: Exam;
 
-  questions!: Question[] ;
-  codeQuestions!:coding[];
+  questions: Question[]=[] ;
+  codeQuestions:coding[]=[];
 
-  examId: number = 0;
+  examId!: number;
 
   importQuestions!: Question[];
 
@@ -38,7 +38,11 @@ export class SaveQuestionComponent implements OnInit {
   ngOnInit(): void {
 
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
-
+        // get Data of Exam
+        this.examService.getExamById(this.examId).subscribe((data) => {
+          this.exam = data;
+          // err => throwError(err || "an error happened while getting exam info")
+        });
 
 
     // get Standrad Questions of Exam
@@ -80,15 +84,6 @@ export class SaveQuestionComponent implements OnInit {
         });
         this.questions.push(...this.importQuestions)
       }
-
-
-
-    // get Data of Exam
-    this.examService.getExamById(this.examId).subscribe((data) => {
-      this.exam = data;
-      // err => throwError(err || "an error happened while getting exam info")
-    });
-
   }
 
 

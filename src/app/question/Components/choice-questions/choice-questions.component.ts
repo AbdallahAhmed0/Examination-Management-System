@@ -71,10 +71,7 @@ export class ChoiceQuestionsComponent implements OnInit {
         });
       }
 
-
-
       //select Question answer
-
       this.Answer = this.editQuestion?.questionAnswers || [];
       for (let i = 0; i < this.Answer.length; i++) {
         const answer = this.Answer[i];

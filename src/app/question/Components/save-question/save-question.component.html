@@ -87,7 +87,7 @@
       <button mat-menu-item (click)="showCodingQuestion()">Coding</button>
     </mat-menu>
 
-    <button *ngIf="questions.length" mat-raised-button [disabled]="!formValid" (click)="submit()" class="submit" type="submit">Save</button>
+    <button *ngIf="questions.length+codeQuestions.length" mat-raised-button [disabled]="!formValid" (click)="submit()" class="submit" type="submit">Save</button>
   </div>
 
 </div>

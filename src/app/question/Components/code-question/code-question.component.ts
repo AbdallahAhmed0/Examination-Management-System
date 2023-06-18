@@ -26,7 +26,7 @@ import 'froala-editor/js/plugins/word_paste.min.js';
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogeComponent } from 'src/app/Shared/material/dialog/dialog.component';
 
 @Component({
@@ -52,7 +52,6 @@ export class CodeQuestionComponent implements OnInit {
               private fb: FormBuilder){}
 
   ngOnInit(): void {
-
    //add question
     this.codingForm = this.fb.group({
       id: [''],
@@ -60,8 +59,8 @@ export class CodeQuestionComponent implements OnInit {
       points: ['', Validators.required],
       questionType: ['CODING', Validators.required],
       header: ['', Validators.required],
-      timelimit: ['', Validators.required],
-      testCases: this.fb.array([])
+      timeLimit: ['', Validators.required],
+      testCases: this.fb.array([this.createTestCase()])
     });
     // edit Questions
     if (this.editQuestion) {
@@ -72,7 +71,7 @@ export class CodeQuestionComponent implements OnInit {
           points: [this.editQuestion.points, Validators.required],
           questionType: ['CODING', Validators.required],
           header: [this.editQuestion.header, Validators.required],
-          timelimit: [this.editQuestion.timelimit, Validators.required],
+          timeLimit: [this.editQuestion.timeLimit, Validators.required],
           testCases: this.fb.array([])
         });
       }
@@ -83,30 +82,28 @@ export class CodeQuestionComponent implements OnInit {
           points: [this.editQuestion.points, Validators.required],
           questionType: ['CODING', Validators.required],
           header: [this.editQuestion.header, Validators.required],
-          timelimit: [this.editQuestion.timelimit, Validators.required],
+          timeLimit: [this.editQuestion.timeLimit, Validators.required],
           testCases: this.fb.array([])
         });
       }
-// //select TEST CASES
-//     this.TestCase = this.editQuestion?.testCases || [];
-//     for (let i = 0; i < this.TestCase.length; i++) {
-//       const answer = this.TestCase[i];
-//       let answerGroup;
-//       if (answer.id) {
-//         answerGroup = this.addTestCase(answer.id, answer.Input, answer.expectedOutput,answer.points);
-//       } else {
-//         answerGroup = this.addTestCase('', answer.Input, answer.expectedOutput,answer.points);
-//       }
-
-//       this.testCases.push(answerGroup);
-//     }
+    }
+    //select TEST CASES
+    this.TestCase = this.editQuestion?.testCases || [];
+      for (let i = 0; i < this.TestCase.length; i++) {
+        const answer = this.TestCase[i];
+        let answerGroup;
+        if (answer.id) {
+          answerGroup = this.createTestCase(answer.id, answer.input, answer.expectedOutput,answer.points);
+        } else {
+          answerGroup = this.createTestCase('', answer.input, answer.expectedOutput,answer.points);
+        }
+        this.testCases.push(answerGroup);
       }
-        this.addTestCase();
 
         this.codingForm.valueChanges.subscribe(value => {
-
+          this.calculatePoints();
           this.codeQuestionData.emit(this.codingForm.value);
-          this.formValid.emit(true);
+          this.formValid.emit(this.codingForm.valid);
         });
 
 
@@ -114,19 +111,37 @@ export class CodeQuestionComponent implements OnInit {
   get testCases(){
     return this.codingForm.get('testCases') as FormArray;
   }
-  addTestCase(id: any = '', input: string = '',output:string='',points:number = 0) {
-    this.testCases.push(this.fb.group({
+  createTestCase(id: any = '', input: string = '',output:string='',points:number = 0):FormGroup {
+  return this.fb.group({
       id: [id],
       input: [input, Validators.required],
       expectedOutput: [output, Validators.required],
       points: [points, Validators.required]
-    }));
+    });
+  }
+  addTestCase(){
+    this.testCases.push(this.createTestCase())
   }
 
   removeTestCase(index: number) {
     this.deleteTestCases.emit(this.testCases.at(index).value);
     this.testCases.removeAt(index);
   }
+  calculatePoints() {
+    const testCases = this.codingForm.get('testCases') as FormArray;
+    let totalPoints = 0;
+
+    testCases.controls.forEach((testCase: AbstractControl<any>) => {
+      const points = testCase.get('points')?.value;
+      totalPoints += points;
+    });
+
+    const pointsControl = this.codingForm.get('points');
+    if (pointsControl) {
+      pointsControl.setValue(totalPoints, { emitEvent: false });
+    }
+  }
+
 
   onSubmit() {
   }
