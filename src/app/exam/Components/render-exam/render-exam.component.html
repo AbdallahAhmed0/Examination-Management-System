@@ -64,10 +64,10 @@
             </ng-container>
 
               <!-- coding question  -->
-              <!-- <ng-container *ngIf="question.questionType === 'coding'">
+              <ng-container *ngIf="question.questionType === 'CODING'">
                 <app-code-question [index]="(currentPageIndex - 1) * questionsPerPage + i + 1"[question]="question"
-                (answer)="addAnswerByIDs($event,question.questionType)"[savedAnswer]="sentAnswerToTrue_False"></app-code-question>
-              </ng-container> -->
+                (answer)="addAnswerByIDs($event,question.questionType)"[savedAnswer]="sentAnswerToCoding"></app-code-question>
+              </ng-container>
           </mat-card-content>
         </mat-card>
       </div>

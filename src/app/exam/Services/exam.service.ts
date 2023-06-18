@@ -115,6 +115,20 @@ export class ExamService {
       JSON.stringify(answers), this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
+  saveJudgeCodeQuestion(attemptId: number, questionId: number, language: string, code: string): Observable<any> {
+    const requestBody = {
+      attemptId: attemptId,
+      questionId: questionId,
+      language: language,
+      code: code
+    };
+
+    return this.httpClient.post<any>(`${environment.APPURL}/exam/judgeCodeQuestion`, requestBody, this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+
+
   createResult(examAttemptId: number): Observable<any> {
 
     return this.httpClient.post(`${environment.APPURL}/exam/createResult/${examAttemptId}`, {})
@@ -139,4 +153,5 @@ export class ExamService {
       .get(`${environment.APPURL}/exam/getResult/${attemptId}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
+
 }

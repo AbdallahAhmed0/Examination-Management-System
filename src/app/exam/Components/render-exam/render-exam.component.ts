@@ -28,6 +28,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   sentAnswerToMultibleAnswers:{[key: string]: any} = {};
   sentAnswerToTrue_False:{[key: string]: any} = {};
   sentAnswerToMatching:{[key: string]: any} = {};
+  sentAnswerToCoding:{[key: string]: any} = {};
 
   constructor(
     private examService: ExamService,
