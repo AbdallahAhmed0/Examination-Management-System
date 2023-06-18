@@ -37,7 +37,6 @@
         </mat-card-content>
       </mat-card>
 
-    <!-- (onUP)="upChild(selectedComponent)"(onDown)="downChild(selectedComponent)" -->
 
     <ng-container *ngFor="let selectedComponent of selectedComponents; let i = index" >
 
@@ -70,19 +69,25 @@
       </app-true-false-question>
 
 
-      <app-text-editor  *ngIf="selectedComponent.name === 'coding'"></app-text-editor>
+      <app-code-question  *ngIf="selectedComponent.name === 'CODING'"
+      (onDelete)="removeChildCode($event,selectedComponent)"
+      (deleteTestCases)="removeTestCases($event)"
+      [indexComponent]="(i+1)"
+      (codeQuestionData)="addCodeQuestion($event,i)"
+      (formValid)="formIsValid($event)"
+      [editQuestion]="selectedComponent.data">
+    </app-code-question>
     </ng-container>
 
     <button mat-button class="btn-question" [matMenuTriggerFor]="question"><mat-icon>add</mat-icon>Add questions</button>
-    <mat-menu #question="matMenu" xPosition="after" [overlapTrigger]="false" class="question-menu">
+    <mat-menu #question="matMenu" xPosition="after">
       <button mat-menu-item (click)="showChoiceQuestions()">Multible Choice</button>
       <button mat-menu-item (click)="showTextQuestions()">Matching</button>
       <button mat-menu-item (click)="showTrue_falseQuestions()">True False</button>
-      <button mat-menu-item (click)="showTextEditor()">Coding</button>
+      <button mat-menu-item (click)="showCodingQuestion()">Coding</button>
     </mat-menu>
 
-
-    <button *ngIf="questions.length" mat-raised-button [disabled]="!formValid" (click)="submit()" class="submit" type="submit">Save</button>
+    <button *ngIf="questions.length+codeQuestions.length" mat-raised-button [disabled]="!formValid" (click)="submit()" class="submit" type="submit">Save</button>
   </div>
 
 </div>

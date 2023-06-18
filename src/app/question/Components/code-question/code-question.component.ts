@@ -1,5 +1,3 @@
-import { Component, OnInit } from '@angular/core';
-
 import 'froala-editor/js/plugins/align.min.js';
 import 'froala-editor/js/plugins/char_counter.min.js';
 import 'froala-editor/js/plugins/code_beautifier.min.js';
@@ -26,24 +24,172 @@ import 'froala-editor/js/plugins/table.min.js';
 import 'froala-editor/js/plugins/url.min.js';
 import 'froala-editor/js/plugins/word_paste.min.js';
 
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DialogeComponent } from 'src/app/Shared/material/dialog/dialog.component';
+
 @Component({
   selector: 'app-code-question',
   templateUrl: './code-question.component.html',
   styleUrls: ['./code-question.component.scss']
 })
 export class CodeQuestionComponent implements OnInit {
+  descriptionQuestion:string='<p><span style="font-size: 24px; font-family: Arial, Helvetica, sans-serif;">// Description of Question</span></p>';
 
-  constructor() { }
+  @Output() onDelete = new EventEmitter<any>();
+  @Output() codeQuestionData = new EventEmitter<object>();
+  @Output() formValid = new EventEmitter<boolean>();
+  @Output() deleteTestCases = new EventEmitter<any>();
+
+  @Input() indexComponent!:number;
+  @Input() editQuestion?:any;
+
+  TestCase:any[]=[];
+  codingForm!: FormGroup;
+
+  constructor(private dialog:MatDialog,
+              private fb: FormBuilder){}
 
   ngOnInit(): void {
+   //add question
+    this.codingForm = this.fb.group({
+      id: [''],
+      questionText: [this.descriptionQuestion, Validators.required],
+      points: ['', Validators.required],
+      questionType: ['CODING', Validators.required],
+      header: ['', Validators.required],
+      timeLimit: ['', Validators.required],
+      testCases: this.fb.array([this.createTestCase()])
+    });
+    // edit Questions
+    if (this.editQuestion) {
+      if (this.editQuestion.id) {
+        this.codingForm = this.fb.group({
+          id: [this.editQuestion.id],
+          questionText: [this.editQuestion.questionText, Validators.required],
+          points: [this.editQuestion.points, Validators.required],
+          questionType: ['CODING', Validators.required],
+          header: [this.editQuestion.header, Validators.required],
+          timeLimit: [this.editQuestion.timeLimit, Validators.required],
+          testCases: this.fb.array([])
+        });
+      }
+      else {
+        this.codingForm = this.fb.group({
+          id: [''],
+          questionText: [this.editQuestion.questionText, Validators.required],
+          points: [this.editQuestion.points, Validators.required],
+          questionType: ['CODING', Validators.required],
+          header: [this.editQuestion.header, Validators.required],
+          timeLimit: [this.editQuestion.timeLimit, Validators.required],
+          testCases: this.fb.array([])
+        });
+      }
+    }
+    //select TEST CASES
+    this.TestCase = this.editQuestion?.testCases || [];
+      for (let i = 0; i < this.TestCase.length; i++) {
+        const answer = this.TestCase[i];
+        let answerGroup;
+        if (answer.id) {
+          answerGroup = this.createTestCase(answer.id, answer.input, answer.expectedOutput,answer.points);
+        } else {
+          answerGroup = this.createTestCase('', answer.input, answer.expectedOutput,answer.points);
+        }
+        this.testCases.push(answerGroup);
+      }
+
+        this.codingForm.valueChanges.subscribe(value => {
+          this.calculatePoints();
+          this.codeQuestionData.emit(this.codingForm.value);
+          this.formValid.emit(this.codingForm.valid);
+        });
+
+
+      }
+  get testCases(){
+    return this.codingForm.get('testCases') as FormArray;
+  }
+  createTestCase(id: any = '', input: string = '',output:string='',points:any = ''):FormGroup {
+  return this.fb.group({
+      id: [id],
+      input: [input, Validators.required],
+      expectedOutput: [output, Validators.required],
+      points: [points, Validators.required]
+    });
+  }
+  addTestCase(){
+    this.testCases.push(this.createTestCase())
+  }
+
+  removeTestCase(index: number) {
+    this.deleteTestCases.emit(this.testCases.at(index).value);
+    this.testCases.removeAt(index);
+  }
+  calculatePoints() {
+    const testCases = this.codingForm.get('testCases') as FormArray;
+    let totalPoints = 0;
+
+    testCases.controls.forEach((testCase: AbstractControl<any>) => {
+      const points = testCase.get('points')?.value;
+      totalPoints += points;
+    });
+
+    const pointsControl = this.codingForm.get('points');
+    if (pointsControl) {
+      pointsControl.setValue(totalPoints, { emitEvent: false });
+    }
   }
 
 
+  onSubmit() {
+  }
+  deleteQuestion(id:number){
+
+    const dialogRef = this.dialog.open(DialogeComponent, {
+      width: '400px',
+      height:'280px'
+      });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+
+        this.onDelete.emit(id);
+      }
+      });
+    }
+// to prevent write any char in phone and nationalId
+onKeyDown(event: KeyboardEvent) {
+  const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','Enter',' ','ArrowUp','ArrowDown','Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'];
+  if (!allowedKeys.includes(event.key)) {
+    event.preventDefault();
+  }
+}
+autoResize(textarea: any) {
+  textarea.style.height = 'auto';
+  textarea.style.height = `${textarea.scrollHeight}px`;
+  if (textarea.value.trim() === '') {
+    textarea.style.height = '40px'; // Set a minimum height when all words are deleted
+  }
+}
+get id() {
+  return this.codingForm.get('id');
+}
+get header() {
+  return this.codingForm.get('header');
+}
+get timeLimit() {
+  return this.codingForm.get('timeLimit');
+}
+get questionText() {
+  return this.codingForm.get('questionText');
+}
 
   froalaOptions(placeholder:string){
       return {
         placeholderText:placeholder,
-        toolbarInline: false,
+        toolbarInline: true,
         charCounterCount: false,
         toolbarVisibleWithoutSelection: false,
         toolbarButtons: [
@@ -53,7 +199,7 @@ export class CodeQuestionComponent implements OnInit {
           'insertImage',  'insertFile', 'insertTable', 'undo', 'redo',
           'help', 'specialCharacters', 'codeView'
         ],
-        heightMin: 40,
+        heightMin: 80,
         imageUpload: true,
         imagePaste: true,
         fileUpload: true,
@@ -72,13 +218,6 @@ export class CodeQuestionComponent implements OnInit {
         },
         emoticonsUseImage: true,
         emoticonsStep: 4,
-        emoticonsSet: {
-          "people": [
-            {"code": "1F600", "icon": "😀", "title": "Grinning face"},
-            {"code": "1F601", "icon": "😁", "title": "Grinning face with smiling eyes"},
-            {"code": "1F602", "icon": "😂", "title": "Face with tears of joy"}
-          ]
-        },
         pluginsEnabled: [
           'align', 'charCounter', 'codeBeautifier', 'codeView', 'colors', 'draggable', 'emoticons',
           'entities', 'file', 'fontFamily', 'fontSize', 'fullscreen', 'help', 'image', 'inlineStyle',

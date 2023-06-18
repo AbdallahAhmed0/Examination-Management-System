@@ -1,8 +1,8 @@
-import { Component, EventEmitter , Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogeComponent } from '../../Shared/material/dialog/dialog.component';
-import { Question } from '../question';
+import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
+import { Question } from '../../Models/question';
 
 @Component({
   selector: 'app-choice-questions',
@@ -21,49 +21,49 @@ export class ChoiceQuestionsComponent implements OnInit {
   @Output() questionData = new EventEmitter<object>();
   @Output() formValid = new EventEmitter<boolean>();
 
-  @Input() indexComponent!:number;
-  @Input() editQuestion?:Question;
+  @Input() indexComponent!: number;
+  @Input() editQuestion?: Question;
 
-  question?:Question;
+  question?: Question;
 
-  questionTextValue:string='';
-  answerTextValue:string='';
-  commentValue:string='';
+  questionTextValue: string = '';
+  answerTextValue: string = '';
+  commentValue: string = '';
 
-  Answer:any[]=[];
+  Answer: any[] = [];
 
   isMultipleChoice: boolean = false;
-  isHidden:boolean[]=[false];
+  isHidden: boolean[] = [false];
 
 
   constructor(private fb: FormBuilder,
-              private dialog:MatDialog) {
+    private dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
-   // add questions
-  this.form = this.fb.group({
-    questionText: ['', Validators.required],
-    points: [0, Validators.required],
-    questionType: ['Multiple_choice', Validators.required],
-    questionAnswers: this.fb.array([this.createAnswer()])
-  });
+    // add questions
+    this.form = this.fb.group({
+      questionText: ['', Validators.required],
+      points: [0, Validators.required],
+      questionType: ['Multiple_choice', Validators.required],
+      questionAnswers: this.fb.array([this.createAnswer()])
+    });
 
-  // edit Questions
-  if(this.editQuestion){
-    if(this.editQuestion.id){
+    // edit Questions
+    if (this.editQuestion) {
+      if (this.editQuestion.id) {
         this.form = this.fb.group({
-          id:[this.editQuestion.id],
+          id: [this.editQuestion.id],
           questionText: [this.editQuestion.questionText, Validators.required],
           points: [this.editQuestion.points, Validators.required],
           questionType: [this.editQuestion.questionType, Validators.required],
           questionAnswers: this.fb.array([])
         });
       }
-      else{
+      else {
         this.form = this.fb.group({
-          id:[''],
+          id: [''],
           questionText: [this.editQuestion.questionText, Validators.required],
           points: [this.editQuestion.points, Validators.required],
           questionType: [this.editQuestion.questionType, Validators.required],
@@ -71,42 +71,39 @@ export class ChoiceQuestionsComponent implements OnInit {
         });
       }
 
+      //select Question answer
+      this.Answer = this.editQuestion?.questionAnswers || [];
+      for (let i = 0; i < this.Answer.length; i++) {
+        const answer = this.Answer[i];
+        let answerGroup;
+        if (answer.id) {
+          answerGroup = this.createAnswer(answer.id, answer.answerText, answer.correctAnswer, answer.comment);
+        } else {
+          answerGroup = this.createAnswer('', answer.answerText, answer.correctAnswer, answer.comment);
+        }
 
-
-  //select Question answer
-
-    this.Answer = this.editQuestion?.questionAnswers || [];
-    for (let i = 0; i < this.Answer.length; i++) {
-      const answer = this.Answer[i];
-      let answerGroup;
-      if(answer.id){
-            answerGroup = this.createAnswer(answer.id, answer.answerText, answer.correctAnswer, answer.comment);
-      }else{
-            answerGroup = this.createAnswer('',answer.answerText, answer.correctAnswer, answer.comment);
+        this.answers.push(answerGroup);
       }
-
-      this.answers.push(answerGroup);
-    }
       //select Multible Answers by btn-toggle
-      if(this.editQuestion?.questionType === 'Multiple_Answers'){
-        this.isMultipleChoice=true;
+      if (this.editQuestion?.questionType === 'Multiple_Answers') {
+        this.isMultipleChoice = true;
       }
 
+    }
+
+    this.form.valueChanges.subscribe(value => {
+
+      this.questionData.emit(this.form.value);
+      this.formValid.emit(this.form.valid);
+    });
+
   }
 
-  this.form.valueChanges.subscribe(value =>{
-
-    this.questionData.emit(this.form.value);
-    this.formValid.emit(this.form.valid);
-  });
-
-  }
 
 
-
-  createAnswer(id:any = '',answerText: string = '', correctAnswer: boolean = false, comment: string = ''): FormGroup {
+  createAnswer(id: any = '', answerText: string = '', correctAnswer: boolean = false, comment: string = ''): FormGroup {
     return this.fb.group({
-      id:[id],
+      id: [id],
       answerText: [answerText, Validators.required],
       correctAnswer: [correctAnswer],
       comment: [comment]
@@ -125,7 +122,7 @@ export class ChoiceQuestionsComponent implements OnInit {
     this.deleteOptions.emit(this.answers.at(i).value);
     this.answers.removeAt(i);
   }
-  onRadioChange(event:any){
+  onRadioChange(event: any) {
 
     for (let i = 0; i < this.answers.length; i++) {
       if (i !== event.value) {
@@ -137,18 +134,18 @@ export class ChoiceQuestionsComponent implements OnInit {
   }
 
 
-  getQuestionText(value:string){
-    this.questionTextValue=value;
+  getQuestionText(value: string) {
+    this.questionTextValue = value;
     this.form.get('questionText')?.setValue(this.questionTextValue);
 
   }
-  getAnswerText(value:string,index:number){
-    this.answerTextValue=value;
+  getAnswerText(value: string, index: number) {
+    this.answerTextValue = value;
     this.answers.at(index).patchValue({ answerText: this.answerTextValue });
 
   }
-  getComment(value:string,index:number){
-    this.commentValue=value;
+  getComment(value: string, index: number) {
+    this.commentValue = value;
     this.answers.at(index).patchValue({ comment: this.commentValue });
 
   }
@@ -161,45 +158,45 @@ export class ChoiceQuestionsComponent implements OnInit {
     textarea.style.height = `${textarea.scrollHeight}px`;
   }
 
-  deleteQuestion(){
+  deleteQuestion() {
     const dialogRef = this.dialog.open(DialogeComponent, {
       width: '400px',
-      height:'280px'
-      });
+      height: '280px'
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
 
         this.onDelete.emit();
       }
-      });
-
-    }
-
-    // Up(){
-    //   this.onUP.emit();
-
-    // }
-    // Down(){
-    //   this.onDown.emit();
-    // }
-    btnToggle(){
-      this.isMultipleChoice=!this.isMultipleChoice;
-      if(this.isMultipleChoice){
-        this.form.get('questionType')?.setValue('Multiple_Answers');
-      }else{
-        this.form.get('questionType')?.setValue('Multiple_choice');
-      }
-    }
-    toggleInput(index:number) {
-      this.isHidden[index] = !this.isHidden[index];
-    }
-    get questionText() {
-      return this.form.get('questionText');
-    }
-
+    });
 
   }
+
+  // Up(){
+  //   this.onUP.emit();
+
+  // }
+  // Down(){
+  //   this.onDown.emit();
+  // }
+  btnToggle() {
+    this.isMultipleChoice = !this.isMultipleChoice;
+    if (this.isMultipleChoice) {
+      this.form.get('questionType')?.setValue('Multiple_Answers');
+    } else {
+      this.form.get('questionType')?.setValue('Multiple_choice');
+    }
+  }
+  toggleInput(index: number) {
+    this.isHidden[index] = !this.isHidden[index];
+  }
+  get questionText() {
+    return this.form.get('questionText');
+  }
+
+
+}
 
 
 

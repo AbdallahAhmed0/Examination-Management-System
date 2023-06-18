@@ -3,7 +3,7 @@
 .container .form {
   margin: auto;
   margin-top: 20px;
-  max-width: 900px;
+  max-width: 1000px;
   padding: 20px;
   background-color: #fff;
   border-radius: 15px;
@@ -20,15 +20,15 @@ mat-card {
 .exam-header {
   display: flex;
   justify-content: center;
-  background-color: #ebebec;
+  background-color: #f6f6fa;
   padding: 20px;
   border-radius: 20px;
   margin: 15px;
 }
 
 .exam-name {
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 30px;
+  font-weight: 500;
 }
 
 .exam-details {
@@ -44,7 +44,7 @@ mat-card {
 
 .exam-details-right {
   display: flex;
-  flex-direction: column;
+  margin-left: 30%;
 }
 .mat-subheading-1{
   font-weight: 500;
@@ -77,12 +77,11 @@ border-radius: 8px;
 .btn-question:hover{
   background: darken(#3cb5be, 12%);
 }
-::ng-deep .mat-menu-panel.question-menu {
+::ng-deep .mat-menu-panel {
   background: darken(#3cb5be, 8%);
 }
-
-::ng-deep .mat-menu-panel.question-menu .mat-menu-item {
-  color: #f6f4f4;
+::ng-deep .mat-menu-item {
+  color:#f6f4f4 ;
 }
 
 .submit{

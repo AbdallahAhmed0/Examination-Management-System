@@ -5,12 +5,12 @@ mat-form-field{
 }
 .add-option{
   color: #FFFFFF;
-  background:#3cb5be;
+  background: darken(#3cb5be, 8%);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 16px;
   }
   .add-option:hover{
-    background: darken(#3cb5be, 12%);
+    background: darken(#3cb5be, 15%);
 
   }
 input{
@@ -91,13 +91,10 @@ a{
 .radio{
   margin: 5px 20px;
   position: relative;
-  top: 8px; /* Adjust this value to center the radio button */
-  width: 20px;
-
+  display: inline;
 }
 .mat-radio-button {
   transform: scale(1.18); /* increase size */
-  background: #FFFFFF;
   border-radius: 100%;
 }
 
@@ -117,14 +114,14 @@ a{
 .message{
   color: #777777;
   height: 40px;
-  padding-top:15px ;
+  padding-top:10px ;
+  margin-left: 50px;
 }
 .message:hover{
   color: darken(#777777, 15%);
 }
 .input-message{
   width: 75%;
-  margin-left: 60px;
 }
 .option{
   width: 60%;

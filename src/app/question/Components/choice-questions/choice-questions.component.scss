@@ -5,12 +5,12 @@ mat-form-field{
 }
 .add-option{
   color: #FFFFFF;
-  background: darken(#3cb5be, 8%);
+  background:#3cb5be;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 14px;
   }
   .add-option:hover{
-    background: darken(#3cb5be, 15%);
+    background: darken(#3cb5be, 12%);
 
   }
 input{
@@ -34,7 +34,6 @@ input{
   font-size: 26px;
   height: 40px;
   padding-top:15px ;
-
 }
 .delete:hover,.delete-icon:hover{
   color:darken(#777777, 15%);
@@ -74,14 +73,30 @@ a{
   margin: 5px;
 }
 
+::ng-deep .check .mat-checkbox-inner-container {
 
+  background: #FFF;
+  margin: 5px 20px;
+  width: 22px;
+  height: 22px;
+
+}
+::ng-deep .check .mat-checkbox-layout {
+  height: 50px;
+  padding-top: 20px;
+  border: none;
+
+}
 .radio{
   margin: 5px 20px;
   position: relative;
-  display: inline;
+  top: 8px; /* Adjust this value to center the radio button */
+  width: 20px;
+
 }
 .mat-radio-button {
   transform: scale(1.18); /* increase size */
+  background: #FFFFFF;
   border-radius: 100%;
 }
 
@@ -101,14 +116,14 @@ a{
 .message{
   color: #777777;
   height: 40px;
-  padding-top:10px ;
-  margin-left: 50px;
+  padding-top:15px ;
 }
 .message:hover{
   color: darken(#777777, 15%);
 }
 .input-message{
   width: 75%;
+  margin-left: 60px;
 }
 .option{
   width: 60%;

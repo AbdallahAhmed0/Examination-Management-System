@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Question } from './question';
+import { Question } from '../Models/question';
+import { coding, testCase } from './../Models/codingQuestion';
 
 @Injectable({
   providedIn: 'root',
@@ -61,8 +62,31 @@ export class QuestionService {
       .delete(`${environment.APPURL}/exam/deleteStandardQuestionAnswer`, { body: options })
       .pipe(retry(2), catchError(this.handleError))
       .subscribe((data) => { });
-
   }
+  // question Coding
+  saveCodeQuestions(questions: coding[], id: number): Observable<coding[]> {
+    return this.httpClient
+      .post<coding[]>(`${environment.APPURL}/exam/saveCodeQuestion/${id}`,
+        JSON.stringify(questions),
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  getCodeQuestionByExamId(ExamId:number):Observable<coding[]>{
+    return this.httpClient.get<coding[]>(`${environment.APPURL}/exam/getCodeQuestions/${ExamId}`).
+    pipe(retry(2), catchError(this.handleError));
+  }
+  deleteCodeQuestionById(id:number):Observable<coding[]>{
+    return this.httpClient.delete<coding[]>(`${environment.APPURL}/exam/deleteCodeQuestion/${id}`).
+    pipe(retry(2), catchError(this.handleError));
+  }
+  deleteTestCases(testCases: testCase[]) {
+    return this.httpClient
+      .delete(`${environment.APPURL}/exam/deleteTestCases`, { body: testCases })
+      .pipe(retry(2), catchError(this.handleError))
+      .subscribe((data) => { });
+  }
+
 
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {
