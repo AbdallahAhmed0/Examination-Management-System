@@ -23,10 +23,10 @@ export class SaveQuestionComponent implements OnInit {
   testCases:any[]=[]
   exam?: Exam;
 
-  questions: Question[] = [];
-  codeQuestions:coding[]=[];
+  questions!: Question[] ;
+  codeQuestions!:coding[];
 
-  examId!: number;
+  examId: number = 0;
 
   importQuestions!: Question[];
 
@@ -41,16 +41,33 @@ export class SaveQuestionComponent implements OnInit {
 
 
 
-    // get Questions of Exam
+    // get Standrad Questions of Exam
     this.questionService.getQuestions(this.examId).subscribe(data => {
-      this.questions = data,
+        this.questions = data,
         this.formValid = true
-      // select questions in selected Components
-      this.questions.forEach(question => {
 
-        this.selectedComponents.push({ id: this.index, name: question.questionType, data: question });
-        this.index++;
+         // select standard questions in selected Components
+          this.questions.forEach(question => {
+
+            this.selectedComponents.push({ id: this.index, name: question.questionType, data: question });
+            this.index++;
+          });
+
       });
+
+      // get Coding Questions of Exam
+    this.questionService.getCodeQuestionByExamId(this.examId).subscribe(data => {
+        this.codeQuestions = data,
+        this.formValid = true
+         // select Coding questions in selected Components
+            this.codeQuestions.forEach(question => {
+
+              this.selectedComponents.push({ id: this.index, name: question.questionType, data: question });
+              this.index++;
+            });
+
+      });
+
       // Get the array parameter from the state object
       this.importQuestions = history.state.data;
 
@@ -64,7 +81,6 @@ export class SaveQuestionComponent implements OnInit {
         this.questions.push(...this.importQuestions)
       }
 
-    });
 
 
     // get Data of Exam
@@ -108,6 +124,16 @@ export class SaveQuestionComponent implements OnInit {
     this.questions.splice(child.id - 1, 1);
     this.selectedComponents.splice(child.id - 1, 1);
 
+  }
+  removeChildCode(id:number,child: any) {
+    console.log(id)
+    if (this.codeQuestions[child.id - 1]) {
+      this.questionService.deleteCodeQuestionById(id);
+    }
+
+    this.codeQuestions.splice(child.id - 1, 1);
+    console.log(this.codeQuestions);
+    this.selectedComponents.splice(child.id - 1, 1);
   }
   removeOptions(option: any) {
     this.options.push(option);

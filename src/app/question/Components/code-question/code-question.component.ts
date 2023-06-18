@@ -55,8 +55,9 @@ export class CodeQuestionComponent implements OnInit {
 
    //add question
     this.codingForm = this.fb.group({
+      id: [''],
       questionText: [this.descriptionQuestion, Validators.required],
-      points: [10, Validators.required],
+      points: ['', Validators.required],
       questionType: ['CODING', Validators.required],
       header: ['', Validators.required],
       timelimit: ['', Validators.required],
@@ -77,6 +78,7 @@ export class CodeQuestionComponent implements OnInit {
       }
       else {
         this.codingForm = this.fb.group({
+          id: [''],
           questionText: [this.editQuestion.questionText, Validators.required],
           points: [this.editQuestion.points, Validators.required],
           questionType: ['CODING', Validators.required],
@@ -85,19 +87,20 @@ export class CodeQuestionComponent implements OnInit {
           testCases: this.fb.array([])
         });
       }
-//select TEST CASES
-    this.TestCase = this.editQuestion?.testCases || [];
-    for (let i = 0; i < this.TestCase.length; i++) {
-      const answer = this.TestCase[i];
-      let answerGroup;
-      if (answer.id) {
-        answerGroup = this.addTestCase(answer.id, answer.Input, answer.expectedOutput,answer.points);
-      } else {
-        answerGroup = this.addTestCase('', answer.Input, answer.expectedOutput,answer.points);
-      }
+// //select TEST CASES
+//     this.TestCase = this.editQuestion?.testCases || [];
+//     for (let i = 0; i < this.TestCase.length; i++) {
+//       const answer = this.TestCase[i];
+//       let answerGroup;
+//       if (answer.id) {
+//         answerGroup = this.addTestCase(answer.id, answer.Input, answer.expectedOutput,answer.points);
+//       } else {
+//         answerGroup = this.addTestCase('', answer.Input, answer.expectedOutput,answer.points);
+//       }
 
-      this.testCases.push(answerGroup);
-    }    }
+//       this.testCases.push(answerGroup);
+//     }
+      }
         this.addTestCase();
 
         this.codingForm.valueChanges.subscribe(value => {
@@ -127,7 +130,7 @@ export class CodeQuestionComponent implements OnInit {
 
   onSubmit() {
   }
-  deleteQuestion(){
+  deleteQuestion(id:number){
 
     const dialogRef = this.dialog.open(DialogeComponent, {
       width: '400px',
@@ -137,13 +140,9 @@ export class CodeQuestionComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
 
-        this.onDelete.emit();
+        this.onDelete.emit(id);
       }
       });
-    }
-
-    get header() {
-      return this.codingForm.get('header');
     }
 
 autoResize(textarea: any) {
@@ -152,6 +151,12 @@ autoResize(textarea: any) {
   if (textarea.value.trim() === '') {
     textarea.style.height = '40px'; // Set a minimum height when all words are deleted
   }
+}
+get id() {
+  return this.codingForm.get('id');
+}
+get header() {
+  return this.codingForm.get('header');
 }
 
   froalaOptions(placeholder:string){
