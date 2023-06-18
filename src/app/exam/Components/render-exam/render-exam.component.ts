@@ -2,6 +2,7 @@ import { ExamService } from './../../Services/exam.service';
 import { Question, Exam } from './../../Models/exam';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { coding } from 'src/app/question/Models/codingQuestion';
 
 @Component({
   selector: 'app-render-exam',
@@ -13,8 +14,10 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   responseString: string | undefined;
   answerID:any[] = [];
   answerMatching:any[] = [];
+  answerCoding:any[] = [];
 
   questions: Question[] = [];
+  codeQuestions:coding[]=[];
   questionPages: Question[][] = [];
   currentPageIndex:number = 1;
   questionsPerPage!:number;
@@ -28,7 +31,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   sentAnswerToMultibleAnswers:{[key: string]: any} = {};
   sentAnswerToTrue_False:{[key: string]: any} = {};
   sentAnswerToMatching:{[key: string]: any} = {};
-  sentAnswerToCoding:{[key: string]: any} = {};
+  sentAnswerToCoding:object[] = [];
 
   constructor(
     private examService: ExamService,
@@ -50,15 +53,20 @@ export class RenderExamComponent implements OnInit,OnDestroy {
       this.exam = data;
       this.startTimer(this.exam.duration);
 
-      if (data.questions) {
-        // Check if data.question is defined
-        this.questions = data.questions;
-        this.questionPages = this.chunk(this.questions, +data.questionsPerPage);
-        this.questionsPerPage = +data.questionsPerPage;
 
+      if (data.codeQuestionDtos) {
+        // Handle code questions
+          this.codeQuestions = data.codeQuestionDtos;
+      }
+      if (data.questions) {
+        // Handle regular questions
+        const regularQuestions = data.questions;
+        this.questionPages = this.chunk([...this.codeQuestions,...regularQuestions], +data.questionsPerPage);
+        this.questionsPerPage = +data.questionsPerPage;
       }
     });
   }
+
 
   startTimer(duration: number) {
     let minutes = duration;
@@ -127,6 +135,17 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     }
     this.examService.saveCompleteStudentAnswer(attemptId,answers).subscribe(observer);
   }
+  saveAnswersByCoding(attemptId:number,questionId:number,language:string,code:string): void {
+    const observer={
+      next: (answer:any) => {
+      },
+      error: (err:Error)=>{
+        //Take dicition when occur Error
+        }
+    }
+    this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).subscribe(observer);
+  }
+
 
   addAnswerByIDs(answer:any,questionType:any){
 
@@ -149,13 +168,21 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
     this.sentAnswerToMatching[answer.questionId] = answer.textAnswer;
   }
+  addAnswerByCoding(answer:any){
+    const existingAnswerIndex = this.answerCoding.findIndex(a => a.questionId === answer.questionId);
+    existingAnswerIndex !== -1 ? this.answerCoding[existingAnswerIndex] = answer :this.answerCoding.push(answer);
+
+    this.sentAnswerToCoding[answer.questionId] = answer;
+  }
 
   savePage(): void {
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
-    console.log("ID",this.answerID,"matching",this.answerMatching)
+    this.saveAnswersByCoding(this.attemptData.id,);
+    console.log("ID",this.answerID,"matching",this.answerMatching,"Coding",this.answerCoding)
     this.answerID = [];
     this.answerMatching = [];
+    this.answerCoding = [];
   }
 
   submitExam(): void {
@@ -165,6 +192,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     clearInterval(this.intervalId);
     this.answerID = [];
     this.answerMatching = [];
+    this.answerCoding = [];
 
     this.examService.createResult(this.attemptData.id).subscribe(
       data =>{

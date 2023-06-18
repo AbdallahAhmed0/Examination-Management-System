@@ -1,4 +1,4 @@
-import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, NgZone, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -11,27 +11,27 @@ export class CodeQuestionComponent implements OnInit {
   @Input() index!:number;
   @Input() savedAnswer?:any;
 
+  @Output() answer = new EventEmitter<object>();
+
+  lang:string='java';
   constructor(private sanitizer: DomSanitizer,
               private ngZone: NgZone) { }
 
   ngOnInit(): void {
   }
-// Sanitize the HTML content with the DomSanitizer service
-sanitizeHtml(html: string): any {
-  return this.sanitizer.bypassSecurityTrustHtml(html);
-}
 
 languages = [
-  { name: 'Java', value: 'java',checked: true },
+  { name: 'java', value: 'java',checked: true },
   { name: 'C++', value: 'C++',checked: false },
-  { name: 'Python', value: 'python',checked: false },
-  { name: 'JavaScript', value: 'javascript',checked: false },
+  { name: 'python', value: 'python',checked: false },
+  { name: 'javaScript', value: 'javascript',checked: false },
   { name: 'C#', value: 'c#',checked: false },
 ];
 editorOptions = {theme: 'vs-dark', language: 'java'};
-code: string= this.savedAnswer;
+code: string= '';
 
 changeLanguage(language: string): void {
+  this.lang = language;
   this.languages.forEach(lang => {
     lang.checked = lang.value === language;
   });
@@ -43,6 +43,11 @@ changeLanguage(language: string): void {
   });
 }
 onCodeChange(code: string): void {
-  this.savedAnswer = code;
+  this.answer.emit({questionId:this.question.id,language:this.lang,code:code});
 }
+// Sanitize the HTML content with the DomSanitizer service
+sanitizeHtml(html: string): any {
+  return this.sanitizer.bypassSecurityTrustHtml(html);
+}
+
 }

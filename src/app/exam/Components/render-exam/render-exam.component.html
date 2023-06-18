@@ -66,7 +66,7 @@
               <!-- coding question  -->
               <ng-container *ngIf="question.questionType === 'CODING'">
                 <app-code-question [index]="(currentPageIndex - 1) * questionsPerPage + i + 1"[question]="question"
-                (answer)="addAnswerByIDs($event,question.questionType)"[savedAnswer]="sentAnswerToCoding"></app-code-question>
+                (answer)="addAnswerByCoding($event)"[savedAnswer]="sentAnswerToCoding"></app-code-question>
               </ng-container>
           </mat-card-content>
         </mat-card>
