@@ -178,7 +178,10 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   savePage(): void {
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
-    this.saveAnswersByCoding(this.attemptData.id,);
+    // to sent question by question
+    this.answerCoding.forEach(ques=>{
+      this.saveAnswersByCoding(this.attemptData.id,ques.questionId,ques.language,ques.code);
+    })
     console.log("ID",this.answerID,"matching",this.answerMatching,"Coding",this.answerCoding)
     this.answerID = [];
     this.answerMatching = [];
@@ -189,6 +192,10 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+   // to sent question by question
+    this.answerCoding.forEach(ques=>{
+      this.saveAnswersByCoding(this.attemptData.id,ques.questionId,ques.language,ques.code);
+    })
     clearInterval(this.intervalId);
     this.answerID = [];
     this.answerMatching = [];
