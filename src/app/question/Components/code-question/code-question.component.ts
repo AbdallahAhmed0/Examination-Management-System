@@ -111,7 +111,7 @@ export class CodeQuestionComponent implements OnInit {
   get testCases(){
     return this.codingForm.get('testCases') as FormArray;
   }
-  createTestCase(id: any = '', input: string = '',output:string='',points:number = 0):FormGroup {
+  createTestCase(id: any = '', input: string = '',output:string='',points:any = ''):FormGroup {
   return this.fb.group({
       id: [id],
       input: [input, Validators.required],
@@ -159,7 +159,13 @@ export class CodeQuestionComponent implements OnInit {
       }
       });
     }
-
+// to prevent write any char in phone and nationalId
+onKeyDown(event: KeyboardEvent) {
+  const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9','Enter',' ','ArrowUp','ArrowDown','Backspace', 'ArrowLeft', 'ArrowRight', 'Delete'];
+  if (!allowedKeys.includes(event.key)) {
+    event.preventDefault();
+  }
+}
 autoResize(textarea: any) {
   textarea.style.height = 'auto';
   textarea.style.height = `${textarea.scrollHeight}px`;
@@ -172,6 +178,12 @@ get id() {
 }
 get header() {
   return this.codingForm.get('header');
+}
+get timeLimit() {
+  return this.codingForm.get('timeLimit');
+}
+get questionText() {
+  return this.codingForm.get('questionText');
 }
 
   froalaOptions(placeholder:string){
