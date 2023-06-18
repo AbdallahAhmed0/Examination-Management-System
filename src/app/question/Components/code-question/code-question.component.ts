@@ -35,7 +35,7 @@ import { DialogeComponent } from 'src/app/Shared/material/dialog/dialog.componen
   styleUrls: ['./code-question.component.scss']
 })
 export class CodeQuestionComponent implements OnInit {
-  descriptionQuestion:string='<p><span style="font-size: 24px; font-family: Arial, Helvetica, sans-serif;">// Description of Question</span></p>';
+  descriptionQuestion:string='<p><span style=\"font-size: 18px; font-family: Arial, Helvetica, sans-serif;\">## Description of Question</span></p><p><br></p><p><span style=\"font-size: 18px; font-family: Arial, Helvetica, sans-serif;\">## Input</span></p><p><br></p><p><span style=\"font-size: 18px; font-family: Arial, Helvetica, sans-serif;\">## Output</span></p><p><br></p><p><span style=\"font-size: 18px; font-family: Arial, Helvetica, sans-serif;\">## Example</span></p>';
 
   @Output() onDelete = new EventEmitter<any>();
   @Output() codeQuestionData = new EventEmitter<object>();

@@ -14,7 +14,6 @@
         <mat-error *ngIf="timeLimit?.touched && timeLimit?.hasError('required')">
           TimeLimit is Required!
       </mat-error>
-
         <input type="hidden" min="0" class="inp-header" formControlName="points" placeholder="Points" required />
       </div>
     </div>
@@ -38,7 +37,7 @@
           <div class="input-container-2">
             <textarea class="test-Case" formControlName="input" placeholder="Input" (keydown)="onKeyDown($event)"(input)="autoResize($event.target)" required></textarea>
             <textarea class="test-Case" formControlName="expectedOutput" placeholder="Output" (keydown)="onKeyDown($event)" (input)="autoResize($event.target)" required></textarea>
-            <input matInput type="number" min="0" class="test-Case test-Case-point" formControlName="points" placeholder="Points" required />
+            <input type="number" min="0" class="test-Case test-Case-point" formControlName="points" placeholder="Points" required />
 
             <button mat-icon-button type="button" (click)="removeTestCase(i)" *ngIf="testCases.length > 1" >
               <mat-icon class="delete-icon">delete</mat-icon>

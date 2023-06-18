@@ -1,4 +1,3 @@
-<p>{{savedAnswer|json}}</p>
 <h2>
   Question {{ index }} ({{ question.points }} points)
 </h2>
@@ -13,17 +12,18 @@
     <p [innerHTML]="sanitizeHtml(question.questionText)"></p>
   </div>
   <!-- Test Cases -->
-  <h2>Example:</h2>
-  <div *ngFor="let case of question.testCases"  class="testCase">
+  <!-- <h2>Example:</h2>
+  <div  class="testCase">
     <h2>Input</h2>
     <div class="input-example">
-      <p>{{case.input}}</p>
+      <p>2 3</p>
+      <p>1 2 3 5</p>
     </div>
     <h2>Output</h2>
     <div class="output-example">
-      <p>{{case.output}}</p>
+      <p>1 2 3 5</p>
     </div>
-  </div>
+  </div> -->
   <div>
     <button *ngFor="let lang of languages" (click)="changeLanguage(lang.value)" [ngClass]="{'checked': lang.checked}">{{ lang.name }}</button>
   </div>
