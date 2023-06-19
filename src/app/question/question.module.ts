@@ -34,7 +34,6 @@ import { ImportQuestionsComponent } from './import-questions/import-questions.co
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot()
 
