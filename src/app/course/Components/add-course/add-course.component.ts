@@ -65,7 +65,6 @@ export class AddCourseComponent implements OnInit {
         this.consoleError = err.message
         }
     }
-    console.log(this.newCourse.value);
 
    this.subCourse= this.courseService.addCourse(this.newCourse.value).subscribe(observer);
 

@@ -13,7 +13,7 @@ import { DialogeComponent } from '../../../Shared/material/dialog/dialog.compone
 })
 export class AllCoursesComponent implements OnInit {
   courses!:Course[];
-
+  consoleError:any;
   constructor(private courseService:CourseService,
               public dialog: MatDialog) { }
 
@@ -36,6 +36,7 @@ getCourses(){
 }
 
 deleteCourse(id:any){
+
   const dialogRef = this.dialog.open(DialogeComponent, {
     width: '400px',
     height:'280px'
@@ -44,12 +45,18 @@ deleteCourse(id:any){
   dialogRef.afterClosed().subscribe((result) => {
     if (result === 'confirm') {
 
-      this.courseService.deleteCourse(id).subscribe(data =>{
-        window.location.reload();
-        this.courseService.openSnackBar("Deleted");
-      })
+      this.courseService.deleteCourse(id).subscribe(
+        (data)=>{
+          window.location.reload();
+          this.courseService.openSnackBar("Deleted");},
+          (err)=>{
+            this.consoleError = err.message;
+            console.log(this.consoleError)
+          }
+      );
     }
     });
 
 }
+
 }
