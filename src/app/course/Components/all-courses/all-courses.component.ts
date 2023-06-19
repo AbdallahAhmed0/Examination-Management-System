@@ -13,7 +13,7 @@ import { DialogeComponent } from '../../../Shared/material/dialog/dialog.compone
 })
 export class AllCoursesComponent implements OnInit {
   courses!:Course[];
-  consoleError:any;
+  deleteCourseError?:{id:number,msg:string};
   constructor(private courseService:CourseService,
               public dialog: MatDialog) { }
 
@@ -21,22 +21,19 @@ export class AllCoursesComponent implements OnInit {
     this.getCourses()
 
   }
-  goCourse(id:number){
-    console.log(id);
 
-
-  }
 getCourses(){
 
   this.courseService.getAllCourses().subscribe(data=>{
     this.courses=data
-    console.log(data);
-
   })
 }
 
-deleteCourse(id:any){
+deleteCourse(course:any){
+  if(course.admins.length){
+    this.deleteCourseError = {id:course.id,msg:"Must Delete All Teachers in this Course Before Delete"};
 
+  }else{
   const dialogRef = this.dialog.open(DialogeComponent, {
     width: '400px',
     height:'280px'
@@ -45,18 +42,14 @@ deleteCourse(id:any){
   dialogRef.afterClosed().subscribe((result) => {
     if (result === 'confirm') {
 
-      this.courseService.deleteCourse(id).subscribe(
+      this.courseService.deleteCourse(course.id).subscribe(
         (data)=>{
           window.location.reload();
-          this.courseService.openSnackBar("Deleted");},
-          (err)=>{
-            this.consoleError = err.message;
-            console.log(this.consoleError)
-          }
+          this.courseService.openSnackBar("Deleted");}
       );
     }
     });
-
+  }
 }
 
 }
