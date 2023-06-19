@@ -181,6 +181,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     // to sent question by question
     this.answerCoding.forEach(ques=>{
       this.saveAnswersByCoding(this.attemptData.id,ques.questionId,ques.language,ques.code);
+      console.log(this.attemptData.id,ques.questionId,ques.language,ques.code)
     })
     console.log("ID",this.answerID,"matching",this.answerMatching,"Coding",this.answerCoding)
     this.answerID = [];

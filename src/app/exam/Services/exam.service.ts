@@ -3,6 +3,7 @@ import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
+  HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
@@ -116,14 +117,13 @@ export class ExamService {
       .pipe(retry(2), catchError(this.handleError));
   }
   saveJudgeCodeQuestion(attemptId: number, questionId: number, language: string, code: string): Observable<any> {
-    const requestBody = {
-      attemptId: attemptId,
-      questionId: questionId,
-      language: language,
-      code: code
-    };
+    const params = new HttpParams()
+      .set('attemptId', attemptId.toString())
+      .set('questionId', questionId.toString())
+      .set('language', language)
+      .set('code', code);
 
-    return this.httpClient.post<any>(`${environment.APPURL}/exam/judgeCodeQuestion`, requestBody, this.httpOption)
+    return this.httpClient.post<any>(`${environment.APPURL}/exam/judgeCodeQuestion`, null, { params: params })
       .pipe(retry(2), catchError(this.handleError));
   }
 

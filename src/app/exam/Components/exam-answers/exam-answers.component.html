@@ -5,8 +5,8 @@
       <h3> Status : {{(examResult?.passed == true) ? "Passed":"Failed"}}</h3>
     </div>
 
-    <!-- Question Block -->
-    <div *ngFor="let questionObject of examAnswers" class="question question__container">
+    <!-- Question Block Standard Questions -->
+    <div *ngFor="let questionObject of standardQuestionAnswers" class="question question__container">
       <p class="question__body" [innerHTML]="sanitizeHtml(questionObject.question.questionText)">
       </p>
       <div class="question__answers--container">
@@ -70,7 +70,6 @@
         </ng-container>
 
 
-        <!--FIX: update the matching code with the new structure of incoming data  -->
         <!-- =========== IF Matching Question =========== -->
         <ng-container *ngIf="questionObject.question.questionType === 'Matching'">
           <div class=" example-radio-button question__answers--answer ">
@@ -90,6 +89,12 @@
 
       </div>
     </div>
+  <!-- Question Block Coding Questions
+  <div *ngFor="let questionObject of standardQuestionAnswers" class="question question__container">
+    <p class="question__body" [innerHTML]="sanitizeHtml(questionObject.question.questionText)">
+    </p>
+    <div class="question__answers--container">
+      <h4 class="score color-info">Score : {{questionObject.points}} / {{questionObject.question.points}} </h4> -->
 
   </div>
 </section>

@@ -10,7 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ExamAnswersComponent implements OnInit {
   attemptId?:number;
-
+  standardQuestionAnswers:QuestionAnswer[]=[];
+  codeStudentAnswers:any;
   constructor(
     private sanitizer: DomSanitizer,
     private _examService: ExamService,
@@ -24,7 +25,7 @@ export class ExamAnswersComponent implements OnInit {
     this.getExamAnswers(this.attemptId);
     this.getResult(this.attemptId);
   }
-  examAnswers: QuestionAnswer[] = [];
+  examAnswers: any;
   examResult: any;
 
   // Security Step
@@ -38,6 +39,8 @@ export class ExamAnswersComponent implements OnInit {
   getExamAnswers(examAttemptId: number) {
     this._examService.getAllExamAnswers(examAttemptId).subscribe((response) => {
       this.examAnswers = response;
+      this.standardQuestionAnswers=this.examAnswers.standardQuestionAnswers;
+      this.codeStudentAnswers =this.examAnswers.codeStudentAnswers;
     });
   }
 
