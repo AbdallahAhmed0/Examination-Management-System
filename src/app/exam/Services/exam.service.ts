@@ -41,7 +41,8 @@ export class ExamService {
       return throwError(() => new Error(error.error.message));
     }
   }
-
+   //////////////////////////////////////////
+  // CRUD of Exam
   getAllExams(): Observable<Exam[]> {
     return this.httpClient
       .get<Exam[]>(`${environment.APPURL}/exam/getAll`)
@@ -80,12 +81,7 @@ export class ExamService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  openSnackBar(message: string) {
-    this._snackBar.open(message + ' sucessfully', 'close', {
-      duration: 3000,
-    });
-  }
-
+  /////////////////////////////////////////////////////
   // Attempt Exam
   attemptExam(examId: number, userId: number) {
 
@@ -103,13 +99,51 @@ export class ExamService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
+  getAllAttemptsByUserId(userId:number):Observable<any[]>{
+    return this.httpClient
+    .get<any[]>(`${environment.APPURL}/exam/attempts/${userId}`, this.httpOption)
+    .pipe(retry(2), catchError(this.handleError));
+}
+getAllUsersAttemptExam(examId:number):Observable<any[]>{
+  return this.httpClient
+  .get<any[]>(`${environment.APPURL}/exam/usersAttemptedExam/${examId}`, this.httpOption)
+  .pipe(retry(2), catchError(this.handleError));
+}
+  endExam(examAttemptId: number): Observable<any> {
+
+    return this.httpClient.post(`${environment.APPURL}/exam/endExam/${examAttemptId}`, {})
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  ////////////////////////////////////////////
+  // Answers Of Exam
+  getAllExamAnswers(examAttemptId: number): Observable<QuestionAnswer[]> {
+    return this.httpClient
+      .get<QuestionAnswer[]>(
+        `${environment.APPURL}/exam/getAllStudentAnswers/${examAttemptId}`,
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  createResult(examAttemptId: number): Observable<any> {
+
+    return this.httpClient.post(`${environment.APPURL}/exam/createResult/${examAttemptId}`, {})
+      .pipe(retry(2), catchError(this.handleError));
+  }
+  getResult(attemptId: number): Observable<any> {
+    return this.httpClient
+      .get(`${environment.APPURL}/exam/getResult/${attemptId}`, this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+     /////////////////////////////////////////////////
+     // Save Solution of Questions
   saveSelectedStudentAnswer(attemptId: number, answers: { questionId: number; answersIds: number[] }[]): Observable<any> {
 
     return this.httpClient.post<any>(`${environment.APPURL}/exam/saveSelectedStudentAnswer/${attemptId}`,
       JSON.stringify(answers), this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
-
   saveCompleteStudentAnswer(attemptId: number, answers: { questionId: number; textAnswer: string }[]): Observable<any> {
 
     return this.httpClient.post<any>(`${environment.APPURL}/exam/saveCompleteStudentAnswer/${attemptId}`,
@@ -127,31 +161,10 @@ export class ExamService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-
-
-  createResult(examAttemptId: number): Observable<any> {
-
-    return this.httpClient.post(`${environment.APPURL}/exam/createResult/${examAttemptId}`, {})
-      .pipe(retry(2), catchError(this.handleError));
-  }
-  endExam(examAttemptId: number): Observable<any> {
-
-    return this.httpClient.post(`${environment.APPURL}/exam/endExam/${examAttemptId}`, {})
-      .pipe(retry(2), catchError(this.handleError));
-  }
-  getAllExamAnswers(examAttemptId: number): Observable<QuestionAnswer[]> {
-    return this.httpClient
-      .get<QuestionAnswer[]>(
-        `${environment.APPURL}/exam/getAllStudentAnswers/${examAttemptId}`,
-        this.httpOption
-      )
-      .pipe(retry(2), catchError(this.handleError));
-  }
-
-  getResult(attemptId: number): Observable<any> {
-    return this.httpClient
-      .get(`${environment.APPURL}/exam/getResult/${attemptId}`, this.httpOption)
-      .pipe(retry(2), catchError(this.handleError));
+  openSnackBar(message: string) {
+    this._snackBar.open(message + ' sucessfully', 'close', {
+      duration: 3000,
+    });
   }
 
 }
