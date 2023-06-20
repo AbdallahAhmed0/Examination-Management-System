@@ -38,7 +38,7 @@ export class AllExamsComponent implements OnInit {
   constructor(
     private examService: ExamService,
     private router: Router,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {

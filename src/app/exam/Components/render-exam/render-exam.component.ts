@@ -3,8 +3,10 @@ import { Question, Exam } from './../../Models/exam';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { coding } from 'src/app/question/Models/codingQuestion';
+import { MatDialog } from '@angular/material/dialog';
+import { EndExamDialogeComponent } from 'src/app/Shared/material/end-exam-dialoge/end-exam-dialoge.component';
 
 @Component({
   selector: 'app-render-exam',
@@ -41,28 +43,38 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     private examService: ExamService,
     private route: ActivatedRoute,
     private router:Router,
-    private location: Location
+    private location: Location,
+    private dialog: MatDialog
+
   ) {}
 
                   /////////////////////////////////////
-  @HostListener('window:popstate', ['$event'])
-  onPopState(event: any): void {
-    if (!this.hasMadeDecision) {
-      event.preventDefault(); // Prevent the default back navigation
-      this.handleBrowserBack();
+    @HostListener('window:popstate', ['$event'])
+    onPopState(event: any): void {
+      if (!this.hasMadeDecision) {
+        event.preventDefault(); // Prevent the default back navigation
+        this.handleBrowserBack();
+      }
     }
-  }
 
-  private handleBrowserBack(): void {
-    // Show a confirmation dialog or perform any necessary actions
-    const confirmed = window.confirm('Are you sure you want to navigate away?');
+    private handleBrowserBack(): void {
+      // Open the MatDialog and get the reference to the dialog instance
+      const dialogRef = this.dialog.open(EndExamDialogeComponent, {
+        width: '400px',
+        height: '280px',
+      });
 
-    if (confirmed) {
-      this.hasMadeDecision = true;
-      this.location.back(); // Continue with the back navigation
+      // Subscribe to the dialog's afterClosed event
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === 'confirm') {
+          window.history.back(); // Go back to the previous page
+        } else {
+          // User clicked cancel, do nothing or perform any alternative action
+          this.hasMadeDecision = true;
+        }
+      });
     }
-  }
-                /////////////////////////////////////////
+                      /////////////////////////////////////////
 
   ngOnInit(): void {
     const examId = parseInt(this.route.snapshot.paramMap.get('id') as string);
@@ -229,22 +241,35 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     this.answerMatching = [];
     this.answerCoding = [];
 
-    const observer={
-      next: (answer:any) => {
-        // create result
-        this.examService.createResult(this.attemptData.id).subscribe(
-          data =>{ console.log(data) });
-
-        if(this.exam.showResult){
-        //go to Show Answer Page
-        this.router.navigate([`/exams/showAnswers/${this.attemptData.id}`]);
-      }else{
-        this.router.navigate(['/courses']);
+    
+    const dialogRef = this.dialog.open(EndExamDialogeComponent, {
+      width: '400px',
+      height: '280px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+        this.endExam();
       }
-      history.pushState(null, '');
+    });
+
+}
+endExam(){
+  const observer={
+    next: (answer:any) => {
+      // create result
+      this.examService.createResult(this.attemptData.id).subscribe(
+        data =>{ console.log(data) });
+
+      if(this.exam.showResult){
+      //go to Show Answer Page
+      this.router.navigate([`/exams/showAnswers/${this.attemptData.id}`]);
+    }else{
+      this.router.navigate(['/courses']);
     }
-    }
-    this.examService.endExam(this.attemptData.id).subscribe(observer);
+    history.pushState(null, '');
+  }
+  }
+  this.examService.endExam(this.attemptData.id).subscribe(observer);
 
 }
 ngOnDestroy(): void {

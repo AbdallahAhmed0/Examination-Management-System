@@ -3,6 +3,8 @@ import { throwError } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Exam } from '../../Models/exam';
 import { ExamService } from '../../Services/exam.service';
+import { StartExamDialogeComponent } from 'src/app/Shared/material/start-exam-dialoge/start-exam-dialoge.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-attempt-exam',
   templateUrl: './attempt-exam.component.html',
@@ -21,7 +23,9 @@ export class AttemptExamComponent implements OnInit {
   constructor(
     private _examService: ExamService,
     private _activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
+
   ) {}
 
   ngOnInit(): void {
@@ -46,14 +50,23 @@ export class AttemptExamComponent implements OnInit {
 
 
   startExam(examId: any) {
-    this._examService
-    .attemptExam(this.examId, 1) //FIXed userID
-    .subscribe((data) => {
-      this.attemptData = data;
-      this._examService.renderExam(examId);
-      this.router.navigate(['exams/render/', examId],{state:{data:this.attemptData}}); //This should take the user to the exam
+    const dialogRef = this.dialog.open(StartExamDialogeComponent, {
+      width: '400px',
+      height: '280px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+        this._examService
+        .attemptExam(this.examId, 1) //FIXed userID
+        .subscribe((data) => {
+          this.attemptData = data;
+          this._examService.renderExam(examId);
+          this.router.navigate(['exams/render/', examId],{state:{data:this.attemptData}}); //This should take the user to the exam
 
-  });
+      });
+      }
+    });
+
   }
   CheckIfStudentAttemptExam(array1: any[], array2: any[]): boolean {
       for (let obj1 of array1) {
