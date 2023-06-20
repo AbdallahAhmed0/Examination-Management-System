@@ -1,13 +1,13 @@
 <div class="contianer">
 <div class="course-details">
   <h2>Course Details</h2>
-  <p>Name: {{ course.courseName }}</p>
-  <p>Code: {{ course.courseCode }}</p>
-  <p>Group: {{ course.groupName }}</p>
+  <p>Name: {{ course?.courseName }}</p>
+  <p>Code: {{ course?.courseCode }}</p>
+  <p>Group: {{ course?.groupName }}</p>
   <p>Admins:</p>
   <ul>
     <li *ngFor="let admin of admins">
-    <b>Name</b>  :{{ admin.firstName }} {{ admin.lastName }}  <strong>speclization:</strong>  {{ admin.specialization }}
+    <span class="name">Name</span>  :{{ admin.firstName }} {{ admin.lastName }}  <span class="name">speclization:</span>  {{ admin.specialization }}
     </li>
   </ul>
 </div>
@@ -17,11 +17,13 @@
   <div class="exam-card" *ngFor="let exam of Exams">
     <h2 class="exam-name">{{ exam.examName }}</h2>
     <p>Duration: {{ exam.duration }} minutes</p>
-    <p>Start time: {{ exam.startTime }}</p>
-    <p>End time: {{ exam.endTime }}</p>
+    <p>Start time: <span class="date">{{ exam.startTime }}</span></p>
+    <p >End time: <span class="date">{{ exam.endTime }}</span></p>
     <p>Success rate: {{ exam.successRate }}%</p>
-    <p>State: {{ exam.state ? 'Active' : 'Inactive' }}</p>
+    <p>State: <span [ngClass]="{'active': exam.state,'inActive': !exam.state}">{{ exam.state ? 'Active' : 'Inactive' }}</span></p>
     <p>Show result: {{ exam.showResult ? 'Yes' : 'No' }}</p>
+    <button mat-raised-button class="attempt-btn " [routerLink]="['/exams/attempt/',exam.id]">attempt Exam</button>
+
   </div>
 </div>
 </div>
