@@ -180,6 +180,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
       },
       error: (err:Error)=>{
         //Take dicition when occur Error
+        console.log(err)
         }
     }
     this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).subscribe(observer);
@@ -241,7 +242,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     this.answerMatching = [];
     this.answerCoding = [];
 
-    
+
     const dialogRef = this.dialog.open(EndExamDialogeComponent, {
       width: '400px',
       height: '280px',
