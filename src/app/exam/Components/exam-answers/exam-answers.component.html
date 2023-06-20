@@ -85,16 +85,24 @@
             </p>
           </div>
         </ng-container>
-        <!-- =====================================  -->
-
       </div>
     </div>
-  <!-- Question Block Coding Questions
-  <div *ngFor="let questionObject of standardQuestionAnswers" class="question question__container">
+
+  <!-- Question Block Coding Questions -->
+  <div *ngFor="let questionObject of codeStudentAnswers" class="question question__container">
     <p class="question__body" [innerHTML]="sanitizeHtml(questionObject.question.questionText)">
     </p>
     <div class="question__answers--container">
-      <h4 class="score color-info">Score : {{questionObject.points}} / {{questionObject.question.points}} </h4> -->
+      <h4 class="score color-info">Score : {{questionObject.points}} / {{questionObject.question.points}} </h4>
 
+              <!-- =========== Coding Question =========== -->
+        <div class=" example-radio-button question__answers--answer ">
+          <p [ngClass]="{'correct--answer':questionObject.passedTestCases.length,
+          'wrong--answer':!questionObject.passedTestCases.length}">
+          Number Of Test Cases Passed: {{questionObject.passedTestCases}}</p>
+          <p [innerHTML]="sanitizeHtml(questionObject.submission)"></p>
+        </div>
+    </div>
+  </div>
   </div>
 </section>

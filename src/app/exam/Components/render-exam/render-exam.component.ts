@@ -1,7 +1,9 @@
 import { ExamService } from './../../Services/exam.service';
 import { Question, Exam } from './../../Models/exam';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Location } from '@angular/common';
+
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { coding } from 'src/app/question/Models/codingQuestion';
 
 @Component({
@@ -10,6 +12,8 @@ import { coding } from 'src/app/question/Models/codingQuestion';
   styleUrls: ['./render-exam.component.scss'],
 })
 export class RenderExamComponent implements OnInit,OnDestroy {
+  private hasMadeDecision = false;
+
   exam: Exam = {} as Exam;
   responseString: string | undefined;
   answerID:any[] = [];
@@ -36,16 +40,39 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   constructor(
     private examService: ExamService,
     private route: ActivatedRoute,
-    private router:Router
+    private router:Router,
+    private location: Location
   ) {}
 
+                  /////////////////////////////////////
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any): void {
+    if (!this.hasMadeDecision) {
+      event.preventDefault(); // Prevent the default back navigation
+      this.handleBrowserBack();
+    }
+  }
+
+  private handleBrowserBack(): void {
+    // Show a confirmation dialog or perform any necessary actions
+    const confirmed = window.confirm('Are you sure you want to navigate away?');
+
+    if (confirmed) {
+      this.hasMadeDecision = true;
+      this.location.back(); // Continue with the back navigation
+    }
+  }
+                /////////////////////////////////////////
 
   ngOnInit(): void {
     const examId = parseInt(this.route.snapshot.paramMap.get('id') as string);
     this.renderExam(examId);
     // Get the array parameter from the state object
     this.attemptData = history.state.data;
-    console.log(this.attemptData)
+    console.log(history.state.data)
+    if(!this.attemptData){
+      this.router.navigate(['/exams']);
+    }
   }
 
   renderExam(examId: number): void {
@@ -202,30 +229,23 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     this.answerMatching = [];
     this.answerCoding = [];
 
-    this.examService.createResult(this.attemptData.id).subscribe(
-      data =>{
-        console.log(data)
-      },
-      error =>{
-        // Handle Error
-      }
-    );
     const observer={
       next: (answer:any) => {
+        // create result
+        this.examService.createResult(this.attemptData.id).subscribe(
+          data =>{ console.log(data) });
 
         if(this.exam.showResult){
         //go to Show Answer Page
         this.router.navigate([`/exams/showAnswers/${this.attemptData.id}`]);
-
       }else{
         this.router.navigate(['/courses']);
       }
-      },
-      error: (err:Error)=>{
-        //Take dicition when occur Error
-        }
+      history.pushState(null, '');
+    }
     }
     this.examService.endExam(this.attemptData.id).subscribe(observer);
+
 }
 ngOnDestroy(): void {
   clearInterval(this.intervalId);

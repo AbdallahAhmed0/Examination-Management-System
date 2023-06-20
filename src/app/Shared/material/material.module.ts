@@ -45,6 +45,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { DialogeComponent } from './dialog/dialog.component';
+import { EndExamDialogeComponent } from './end-exam-dialoge/end-exam-dialoge.component';
+import { StartExamDialogeComponent } from './start-exam-dialoge/start-exam-dialoge.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { DialogeComponent } from './dialog/dialog.component';
 
 
   declarations: [
-    DialogeComponent
+    DialogeComponent,
+    EndExamDialogeComponent,
+    StartExamDialogeComponent
   ],
 
   imports: [
