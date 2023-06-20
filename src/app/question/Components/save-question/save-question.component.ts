@@ -18,6 +18,7 @@ export class SaveQuestionComponent implements OnInit {
 
   selectedComponents: any[] = [];
   index: number = 1;
+  indexCode:number = 1;
 
   options: any[] = [];
   testCases:any[]=[]
@@ -56,8 +57,18 @@ export class SaveQuestionComponent implements OnInit {
             this.selectedComponents.push({ id: this.index, name: question.questionType, data: question });
             this.index++;
           });
+           // Get the array parameter from the state object
+            this.importQuestions = history.state.data;
+            if (this.importQuestions) {
 
-      });
+              this.importQuestions.forEach(question => {
+
+                this.selectedComponents.push({ id: this.index, name: question.questionType, data: question });
+                this.index++;
+              });
+              this.questions.push(...this.importQuestions)
+            }
+            });
 
       // get Coding Questions of Exam
     this.questionService.getCodeQuestionByExamId(this.examId).subscribe(data => {
@@ -66,24 +77,11 @@ export class SaveQuestionComponent implements OnInit {
          // select Coding questions in selected Components
             this.codeQuestions.forEach(question => {
 
-              this.selectedComponents.push({ id: this.index, name: question.questionType, data: question });
-              this.index++;
+              this.selectedComponents.push({ id: this.indexCode, name: question.questionType, data: question });
+              this.indexCode++;
             });
 
       });
-
-      // Get the array parameter from the state object
-      this.importQuestions = history.state.data;
-
-      if (this.importQuestions) {
-
-        this.importQuestions.forEach(question => {
-
-          this.selectedComponents.push({ id: this.index, name: question.questionType, data: question });
-          this.index++;
-        });
-        this.questions.push(...this.importQuestions)
-      }
   }
 
 
@@ -125,7 +123,6 @@ export class SaveQuestionComponent implements OnInit {
     if (this.codeQuestions[child.id - 1]) {
       this.questionService.deleteCodeQuestionById(id);
     }
-
     this.codeQuestions.splice(child.id - 1, 1);
     console.log(this.codeQuestions);
     this.selectedComponents.splice(child.id - 1, 1);
@@ -155,8 +152,9 @@ export class SaveQuestionComponent implements OnInit {
   addQuestion(data: any, index: number) {
     this.questions[index] = data;
   }
-  addCodeQuestion(data: any, index: number) {
-    this.codeQuestions[index] = data;
+  addCodeQuestion(data: any, indexCode: number) {
+    this.codeQuestions[indexCode] = data;
+    console.log(this.codeQuestions)
   }
   formIsValid(valid: boolean) {
     this.formValid = valid;
@@ -179,8 +177,10 @@ export class SaveQuestionComponent implements OnInit {
       },
     };
     //add standard questions
+    console.log(this.questions)
     this.questionService.saveQuestions(this.questions, this.examId).subscribe(observer);
     //add coding questions
+    console.log(this.codeQuestions)
     this.questionService.saveCodeQuestions(this.codeQuestions, this.examId).subscribe(observer);
   }
   importData(id: any) {
