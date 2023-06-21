@@ -15,16 +15,16 @@ mat-paginator{
   font-size: 12px;
 }
 
-
-.btn-add{
-  font-size: 17px;
-  margin-top: 40px;
+.buttons-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
 }
-.mat-form-field {
 
-  font-size: 18px;
-  width: 30%;
-  float: right;
+.btn-add, .search{
+  font-size: 14px;
 }
 
 td, th {
@@ -140,6 +140,7 @@ td, th {
 
 // Small Screens
 @media (max-width: 992px){
+
   .mat-table{
     border: 0;
     vertical-align: middle;
@@ -174,7 +175,7 @@ td, th {
   }
 
   .mat-table .mat-cell:before {
-    
+
     content: attr(data-label);
     float: left;
     text-transform: uppercase;

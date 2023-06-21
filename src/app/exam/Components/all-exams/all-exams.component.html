@@ -2,26 +2,30 @@
   <p>Exams</p>
 
   <div>
-    <mat-form-field appearance="standard">
-      <input
-        matInput
-        placeholder="Search"
-        (keyup)="applyFilter($event)"
-        #input
-      />
-    </mat-form-field>
 
-    <button mat-button class="btn-add" style="color: #007bff" (click)="add()">
-      <mat-icon>add</mat-icon> Add Exam
-    </button>
-    <button
-      mat-button
-      class="btn-add"
-      (click)="exportData()"
-      style="color: #007bff"
-    >
-      <mat-icon>exit_to_app</mat-icon> Export Exams
-    </button>
+    <div class="buttons-container">
+      <button mat-button class="btn-add" style="color: #007bff" (click)="add()">
+        <mat-icon>add</mat-icon> Add Exam
+      </button>
+      <button
+        mat-button
+        class="btn-add"
+        (click)="exportData()"
+        style="color: #007bff"
+      >
+        <mat-icon>exit_to_app</mat-icon> Export Exams
+      </button>
+
+      <mat-form-field appearance="standard">
+        <input
+          matInput
+          placeholder="Search"
+          (keyup)="applyFilter($event)"
+          #input
+          class="search"
+        />
+      </mat-form-field>
+    </div>
 
     <table
       mat-table
