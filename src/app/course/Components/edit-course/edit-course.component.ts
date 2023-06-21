@@ -57,24 +57,12 @@ export class EditCourseComponent implements OnInit {
           code:[data.courseCode,[Validators.required,Validators.minLength(3)]],
           group:[chosenGroup,[Validators.required]],
           adminIds:["",]
-
-
         })
-
-
-
-
       })
-
-
     })
   }
-
-
-
   goback(){
     this.router.navigateByUrl('/courses');
-
   }
   updateCourse(){
 

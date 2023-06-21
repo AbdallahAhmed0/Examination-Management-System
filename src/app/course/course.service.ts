@@ -62,15 +62,6 @@ export class CourseService {
       )
       .pipe(retry(2), catchError(this.handleError));
   }
-  updateCourse(course: Course): Observable<Course> {
-    return this.httpClient
-      .post<Course>(
-        `${environment.APPURL}/courses`,
-        JSON.stringify(course),
-        this.httpOption
-      )
-      .pipe(retry(2), catchError(this.handleError));
-  }
   deleteCourse(id: number) {
     return this.httpClient
       .delete(`${environment.APPURL}/courses/${id}`)

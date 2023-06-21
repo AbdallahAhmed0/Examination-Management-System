@@ -175,15 +175,10 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     this.examService.saveCompleteStudentAnswer(attemptId,answers).subscribe(observer);
   }
   saveAnswersByCoding(attemptId:number,questionId:number,language:string,code:string): void {
-    const observer={
-      next: (answer:any) => {
-      },
-      error: (err:Error)=>{
-        //Take dicition when occur Error
-        console.log(err)
-        }
-    }
-    this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).subscribe(observer);
+
+    this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).subscribe(data =>{
+      console.log(data)
+    });
   }
 
 

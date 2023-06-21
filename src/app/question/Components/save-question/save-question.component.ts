@@ -18,7 +18,6 @@ export class SaveQuestionComponent implements OnInit {
 
   selectedComponents: any[] = [];
   index: number = 1;
-  indexCode:number = 1;
 
   options: any[] = [];
   testCases:any[]=[]
@@ -77,8 +76,8 @@ export class SaveQuestionComponent implements OnInit {
          // select Coding questions in selected Components
             this.codeQuestions.forEach(question => {
 
-              this.selectedComponents.push({ id: this.indexCode, name: question.questionType, data: question });
-              this.indexCode++;
+              this.selectedComponents.push({ id: this.index, name: question.questionType, data: question });
+              this.index++;
             });
 
       });
@@ -116,15 +115,15 @@ export class SaveQuestionComponent implements OnInit {
 
     this.questions.splice(child.id - 1, 1);
     this.selectedComponents.splice(child.id - 1, 1);
-
+    console.log(this.selectedComponents)
   }
   removeChildCode(id:number,child: any) {
-    console.log(id)
     if (this.codeQuestions[child.id - 1]) {
       this.questionService.deleteCodeQuestionById(id);
     }
+    console.log(this.selectedComponents)
+
     this.codeQuestions.splice(child.id - 1, 1);
-    console.log(this.codeQuestions);
     this.selectedComponents.splice(child.id - 1, 1);
   }
   removeOptions(option: any) {
@@ -152,9 +151,8 @@ export class SaveQuestionComponent implements OnInit {
   addQuestion(data: any, index: number) {
     this.questions[index] = data;
   }
-  addCodeQuestion(data: any, indexCode: number) {
-    this.codeQuestions[indexCode] = data;
-    console.log(this.codeQuestions)
+  addCodeQuestion(data: any, index: number) {
+    this.codeQuestions[index] = data;
   }
   formIsValid(valid: boolean) {
     this.formValid = valid;
@@ -177,10 +175,8 @@ export class SaveQuestionComponent implements OnInit {
       },
     };
     //add standard questions
-    console.log(this.questions)
     this.questionService.saveQuestions(this.questions, this.examId).subscribe(observer);
     //add coding questions
-    console.log(this.codeQuestions)
     this.questionService.saveCodeQuestions(this.codeQuestions, this.examId).subscribe(observer);
   }
   importData(id: any) {

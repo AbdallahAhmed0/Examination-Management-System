@@ -17,8 +17,8 @@
   <div class="exam-card" *ngFor="let exam of Exams">
     <h2 class="exam-name">{{ exam.examName }}</h2>
     <p>Duration: {{ exam.duration }} minutes</p>
-    <p>Start time: <span class="date">{{ exam.startTime }}</span></p>
-    <p >End time: <span class="date">{{ exam.endTime }}</span></p>
+    <p>Start time:{{ exam.startTime }}</p>
+    <p >End time: {{ exam.endTime }}</p>
     <p>Success rate: {{ exam.successRate }}%</p>
     <p>State: <span [ngClass]="{'active': exam.state,'inActive': !exam.state}">{{ exam.state ? 'Active' : 'Inactive' }}</span></p>
     <p>Show result: {{ exam.showResult ? 'Yes' : 'No' }}</p>
