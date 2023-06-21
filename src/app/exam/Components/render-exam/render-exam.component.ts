@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { coding } from 'src/app/question/Models/codingQuestion';
 import { MatDialog } from '@angular/material/dialog';
 import { EndExamDialogeComponent } from 'src/app/Shared/material/end-exam-dialoge/end-exam-dialoge.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-render-exam',
@@ -32,6 +33,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   attemptData: any;
   intervalId:any;
 
+  statusCode:any;
   // when click previous and next send value to questions components untile save in form
   sentAnswerToChoice:{[key: string]: any} = {};
   sentAnswerToMultibleAnswers:{[key: string]: any} = {};
@@ -44,8 +46,8 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     private route: ActivatedRoute,
     private router:Router,
     private location: Location,
-    private dialog: MatDialog
-
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
                   /////////////////////////////////////
@@ -176,10 +178,24 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   }
   saveAnswersByCoding(attemptId:number,questionId:number,language:string,code:string): void {
 
-    this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).subscribe(data =>{
-      console.log(data)
-    });
-  }
+    this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).subscribe();
+
+    // check if Answer Compilation Error
+    this.examService.getStatusCode(attemptId,questionId).subscribe(response =>{
+      this.statusCode = response;
+      //show message to learn Comilation Error
+
+      if(!this.statusCode.status){
+          const snackBarRef = this.snackBar.open('Compilation Error '+this.statusCode.log, 'Close', {
+            duration: 7000,
+            verticalPosition: 'top',
+            panelClass: ['mat-toolbar', 'mat-warn']
+          });
+        }
+      })
+    }
+
+
 
 
   addAnswerByIDs(answer:any,questionType:any){

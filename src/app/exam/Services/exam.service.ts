@@ -135,6 +135,11 @@ getAllUsersAttemptExam(examId:number):Observable<any[]>{
       .get(`${environment.APPURL}/exam/getResult/${attemptId}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
+  getStatusCode(attemptId:number,questionId:number):Observable<any> {
+    return this.httpClient
+      .get(`${environment.APPURL}/exam/getCodeStatus/${attemptId}/${questionId}`, this.httpOption)
+      .pipe(retry(2), catchError(this.handleError));
+  }
 
      /////////////////////////////////////////////////
      // Save Solution of Questions
