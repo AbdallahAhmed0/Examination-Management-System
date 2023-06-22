@@ -50,13 +50,13 @@ export class CourseService {
   }
   getGroups(): Observable<any[]> {
     return this.httpClient
-      .get<any[]>(`${environment.APPURL}/groups/save`)
+      .get<any[]>(`${environment.APPURL}/groups/getAll`)
       .pipe(retry(2), catchError(this.handleError));
   }
   saveCourse(course: Course): Observable<Course> {
     return this.httpClient
       .post<Course>(
-        `${environment.APPURL}/courses/save`,
+        `${environment.APPURL}/courses/add`,
         JSON.stringify(course),
         this.httpOption
       )

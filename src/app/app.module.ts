@@ -12,6 +12,7 @@ import { MaterialModule } from './Shared/material/material.module';
 import { AdminsModule } from './admins/admins.module';
 import { RolesModule } from './roles/roles.module';
 import { StudentsModule } from './students/students.module';
+import { CustomDialogeComponent } from './Shared/material/custom-dialoge/custom-dialoge.component';
 
 
 
@@ -19,7 +20,8 @@ import { StudentsModule } from './students/students.module';
   declarations: [
     AppComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    CustomDialogeComponent
   ],
   imports: [
     BrowserModule,

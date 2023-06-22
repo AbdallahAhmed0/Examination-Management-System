@@ -13,9 +13,6 @@
         <mat-card-subtitle>{{course.courseCode}}</mat-card-subtitle>
       </p>
       <div class="actions">
-        <mat-error *ngIf="deleteCourseError?.msg && deleteCourseError?.id == course.id ">
-          {{deleteCourseError?.msg}}</mat-error>
-          
         <a title="Edit" [routerLink]="['/courses/edit', course.id]">
           <mat-icon class="edit-icon">edit</mat-icon>
       </a>

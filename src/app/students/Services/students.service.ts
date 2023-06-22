@@ -84,7 +84,7 @@ export class StudentsService {
   }
   getGroups(): Observable<any[]> {
     return this.httpClient
-      .get<any[]>(`${environment.APPURL}/groups`)
+      .get<any[]>(`${environment.APPURL}/groups/getAll`)
       .pipe(retry(2), catchError(this.handleError));
   }
 

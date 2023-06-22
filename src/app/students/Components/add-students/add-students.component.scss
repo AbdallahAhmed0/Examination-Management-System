@@ -1,7 +1,9 @@
 .container{
 
   margin: 35px;
-
+  @media (max-width: 992px) {
+    margin: 25px 0px ;
+  }
   p{
       font-size: 27px;
       @media (max-width: 992px) {
@@ -13,7 +15,8 @@
 font-size: 18px;
 margin-top: 50px;
 @media (max-width: 992px) {
-  margin-top: 20px;
+  margin-top: 25px;
+  margin-bottom: 15px;
   font-size: 18px;
 }
 }
@@ -26,9 +29,11 @@ margin-top: 50px;
 
   @media (max-width: 992px) {
     width: 90%;
+    margin: 10px auto;
   }
   @media (max-width: 768px) {
-    width: 100%;
+    width: 97%;
+    margin: 10px auto;
   }
   .add{
       background: #3cb5be;

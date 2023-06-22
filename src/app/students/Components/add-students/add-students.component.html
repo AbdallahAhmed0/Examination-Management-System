@@ -109,7 +109,9 @@
         </mat-error>
 
       </mat-form-field>
-      <app-check-role (checkRole)="selectedRole($event)"></app-check-role>
+      <p>
+        <app-check-role (checkRole)="selectedRole($event)"></app-check-role>
+      </p>
 
       <section class="checkbox">
         <mat-checkbox formControlName="enable" class="check" color="primary"

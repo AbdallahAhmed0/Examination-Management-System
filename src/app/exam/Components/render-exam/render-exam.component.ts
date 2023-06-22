@@ -91,26 +91,26 @@ export class RenderExamComponent implements OnInit,OnDestroy {
       this.router.navigate(['/exams']);
     }
     /////////////////////////////////////////////////////
-    this.routerSubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Open the confirmation dialog and get the reference to the dialog instance
-        const dialogRef = this.dialog.open(EndExamDialogeComponent, {
-          width: '400px',
-          height: '280px',
-        });
+    // this.routerSubscription = this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     // Open the confirmation dialog and get the reference to the dialog instance
+    //     const dialogRef = this.dialog.open(EndExamDialogeComponent, {
+    //       width: '400px',
+    //       height: '280px',
+    //     });
 
-        // Subscribe to the dialog's afterClosed event
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result === 'confirm') {
-            // User confirmed, allow the routing change
-            // You can optionally navigate to the new route here
-          } else {
-            // User canceled, prevent the routing change
-            this.router.navigate([], { skipLocationChange: true });
-          }
-        });
-      }
-    });
+    //     // Subscribe to the dialog's afterClosed event
+    //     dialogRef.afterClosed().subscribe((result) => {
+    //       if (result === 'confirm') {
+    //         // User confirmed, allow the routing change
+    //         // You can optionally navigate to the new route here
+    //       } else {
+    //         // User canceled, prevent the routing change
+    //         this.router.navigate([], { skipLocationChange: true });
+    //       }
+    //     });
+    //   }
+    // });
 
   }
 

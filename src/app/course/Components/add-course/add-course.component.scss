@@ -51,10 +51,19 @@ mat-slider {
     background-color: #f7f7f7;
     padding: 20px;
     border-radius: 5px;
-    margin: 0px 17%;
+    margin: 0px auto;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-    width: 90%;
-
+    width: 85%;
+  }
+  mat-form-field {
+    margin: 8px 10%;
+    width: 80%;
+  }
+  .add {
+    margin: 20px;
+  }
+  .submit {
+    margin-left: 20px;
   }
 }
 
