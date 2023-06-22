@@ -118,13 +118,13 @@ export class SaveQuestionComponent implements OnInit {
     console.log(this.selectedComponents)
   }
   removeChildCode(id:number,child: any) {
-    if (this.codeQuestions[child.id - 1]) {
-      this.questionService.deleteCodeQuestionById(id);
-    }
-    console.log(this.selectedComponents)
 
-    this.codeQuestions.splice(child.id - 1, 1);
-    this.selectedComponents.splice(child.id - 1, 1);
+      this.questionService.deleteCodeQuestionById(id).subscribe();
+      this.codeQuestions.splice(child.id - 1, 1);
+      this.selectedComponents.splice(child.id - 1, 1);
+
+      console.log(this.codeQuestions)
+
   }
   removeOptions(option: any) {
     this.options.push(option);

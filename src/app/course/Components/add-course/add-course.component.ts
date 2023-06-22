@@ -66,7 +66,7 @@ export class AddCourseComponent implements OnInit {
         }
     }
 
-   this.subCourse= this.courseService.addCourse(this.newCourse.value).subscribe(observer);
+  this.subCourse= this.courseService.saveCourse(this.newCourse.value).subscribe(observer);
 
 
   }

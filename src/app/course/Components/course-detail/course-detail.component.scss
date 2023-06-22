@@ -102,3 +102,18 @@ h2 {
   font-size: 16px;
   border-radius: 3px;
 }
+@media (max-width: 968px) {
+  .exams-container {
+    justify-content: center;
+  }
+
+  .exam-card {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 620px) {
+  .exam-card {
+    width: 100%;
+  }
+}

@@ -108,10 +108,11 @@
 
           <button mat-button class="actions" [matMenuTriggerFor]="actions">Actions</button>
           <mat-menu #actions="matMenu" class="custom-menu" [overlapTrigger]="false">
+            <button mat-menu-item [routerLink]="['/save', row.id]">Questions</button>
             <button mat-menu-item (click)="edit(row.id)">Edit Exam</button>
             <button mat-menu-item (click)="delete(row)">Delete Exam</button>
-            <button mat-menu-item [routerLink]="['/save', row.id]">Questions</button>
             <button mat-menu-item [routerLink]="['exams/attempt/', row.id]">Attempt Exam</button>
+            <button mat-menu-item [routerLink]="['exams/showStudents/', row.id]">Student Attempt Exam</button>
           </mat-menu>
           <!-- <div class="actions">
             <a title="View" (click)="attemptExam(row.id)" >

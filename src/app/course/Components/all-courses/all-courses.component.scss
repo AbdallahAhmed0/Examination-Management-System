@@ -3,7 +3,6 @@
   margin: 10px ;
   height: 295px;
   padding: 0px;
-  margin-bottom: 25px;
 
 }
 
@@ -71,12 +70,25 @@ a{
 .delete-icon:hover{
   background: darken($color: #f20202, $amount: 10);
 }
-mat-error{
-  margin: 8px;
-  font-size: 17px;
-  background: #ff2727;
-  color: #fff;
-  height: 30px;
-  padding-top: 4px;
-  border-radius: 4px;
+@media (max-width: 958px) {
+  .example-card {
+    width: 100%;
+    margin: 20px;
+  }
+
+  img {
+    height: 120px;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .example-card {
+    margin: 5px;
+  }
+
+  img {
+    height: 100px;
+    margin-bottom: 10px;
+  }
 }

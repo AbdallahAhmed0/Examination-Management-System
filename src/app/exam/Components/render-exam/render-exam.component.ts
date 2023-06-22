@@ -3,11 +3,12 @@ import { Question, Exam } from './../../Models/exam';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { coding } from 'src/app/question/Models/codingQuestion';
 import { MatDialog } from '@angular/material/dialog';
 import { EndExamDialogeComponent } from 'src/app/Shared/material/end-exam-dialoge/end-exam-dialoge.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-render-exam',
@@ -34,6 +35,8 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   intervalId:any;
 
   statusCode:any;
+  routerSubscription?: Subscription;
+
   // when click previous and next send value to questions components untile save in form
   sentAnswerToChoice:{[key: string]: any} = {};
   sentAnswerToMultibleAnswers:{[key: string]: any} = {};
@@ -51,31 +54,31 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   ) {}
 
                   /////////////////////////////////////
-    @HostListener('window:popstate', ['$event'])
-    onPopState(event: any): void {
-      if (!this.hasMadeDecision) {
-        event.preventDefault(); // Prevent the default back navigation
-        this.handleBrowserBack();
-      }
-    }
+    // @HostListener('window:popstate', ['$event'])
+    // onPopState(event: any): void {
+    //   if (!this.hasMadeDecision) {
+    //     event.preventDefault(); // Prevent the default back navigation
+    //     this.handleBrowserBack();
+    //   }
+    // }
 
-    private handleBrowserBack(): void {
-      // Open the MatDialog and get the reference to the dialog instance
-      const dialogRef = this.dialog.open(EndExamDialogeComponent, {
-        width: '400px',
-        height: '280px',
-      });
+    // private handleBrowserBack(): void {
+    //   // Open the MatDialog and get the reference to the dialog instance
+    //   const dialogRef = this.dialog.open(EndExamDialogeComponent, {
+    //     width: '400px',
+    //     height: '280px',
+    //   });
 
-      // Subscribe to the dialog's afterClosed event
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result === 'confirm') {
-          window.history.back(); // Go back to the previous page
-        } else {
-          // User clicked cancel, do nothing or perform any alternative action
-          this.hasMadeDecision = true;
-        }
-      });
-    }
+    //   // Subscribe to the dialog's afterClosed event
+    //   dialogRef.afterClosed().subscribe((result) => {
+    //     if (result === 'confirm') {
+    //       window.history.back(); // Go back to the previous page
+    //     } else {
+    //       // User clicked cancel, do nothing or perform any alternative action
+    //       this.hasMadeDecision = true;
+    //     }
+    //   });
+    // }
                       /////////////////////////////////////////
 
   ngOnInit(): void {
@@ -87,6 +90,28 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     if(!this.attemptData){
       this.router.navigate(['/exams']);
     }
+    /////////////////////////////////////////////////////
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Open the confirmation dialog and get the reference to the dialog instance
+        const dialogRef = this.dialog.open(EndExamDialogeComponent, {
+          width: '400px',
+          height: '280px',
+        });
+
+        // Subscribe to the dialog's afterClosed event
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result === 'confirm') {
+            // User confirmed, allow the routing change
+            // You can optionally navigate to the new route here
+          } else {
+            // User canceled, prevent the routing change
+            this.router.navigate([], { skipLocationChange: true });
+          }
+        });
+      }
+    });
+
   }
 
   renderExam(examId: number): void {

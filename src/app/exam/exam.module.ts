@@ -15,6 +15,7 @@ import { MultibleAnswersQuestionComponent } from './Components/questions-render-
 import { TrueFalseQuestionComponent } from './Components/questions-render-exam/true-false-question/true-false-question.component';
 import { ExamAnswersComponent } from './Components/exam-answers/exam-answers.component';
 import { CodeQuestionComponent } from './Components/questions-render-exam/code-question/code-question.component';
+import { ExamStudentsComponent } from './Components/exam-students/exam-students.component';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
@@ -30,7 +31,8 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
     MultibleAnswersQuestionComponent,
     TrueFalseQuestionComponent,
     ExamAnswersComponent,
-    CodeQuestionComponent
+    CodeQuestionComponent,
+    ExamStudentsComponent
   ],
   imports: [
     CommonModule,

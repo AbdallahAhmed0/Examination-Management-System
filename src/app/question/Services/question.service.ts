@@ -76,8 +76,8 @@ export class QuestionService {
     return this.httpClient.get<coding[]>(`${environment.APPURL}/exam/getCodeQuestions/${ExamId}`).
     pipe(retry(2), catchError(this.handleError));
   }
-  deleteCodeQuestionById(id:number):Observable<coding[]>{
-    return this.httpClient.delete<coding[]>(`${environment.APPURL}/exam/deleteCodeQuestion/${id}`).
+  deleteCodeQuestionById(id:number):Observable<coding>{
+    return this.httpClient.delete<coding>(`${environment.APPURL}/exam/deleteCodeQuestion/${id}`).
     pipe(retry(2), catchError(this.handleError));
   }
   deleteTestCases(testCases: testCase[]) {

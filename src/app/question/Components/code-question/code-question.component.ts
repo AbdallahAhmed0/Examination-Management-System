@@ -154,7 +154,6 @@ export class CodeQuestionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
-
         this.onDelete.emit(id);
       }
       });

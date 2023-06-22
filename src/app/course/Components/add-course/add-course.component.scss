@@ -1,5 +1,9 @@
 .contianer {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
 }
 
@@ -14,7 +18,7 @@
   border-radius: 5px;
   margin: 0px 17%;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-  width: 65%;
+  width: 75%;
 
 }
 .add {
@@ -24,7 +28,7 @@
 
 mat-form-field {
   margin: 8px 25%;
-  width: 50%;
+  width: 70%;
 }
 
 mat-slider {
@@ -42,4 +46,15 @@ mat-slider {
   cursor: not-allowed;
 }
 
+@media (max-width: 920px) {
+  .form {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 0px 17%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    width: 90%;
+
+  }
+}
 

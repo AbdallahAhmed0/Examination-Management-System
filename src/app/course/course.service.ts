@@ -45,18 +45,18 @@ export class CourseService {
   }
   getAllCourses(): Observable<Course[]> {
     return this.httpClient
-      .get<Course[]>(`${environment.APPURL}/courses`)
+      .get<Course[]>(`${environment.APPURL}/courses/getAll`)
       .pipe(retry(2), catchError(this.handleError));
   }
   getGroups(): Observable<any[]> {
     return this.httpClient
-      .get<any[]>(`${environment.APPURL}/groups`)
+      .get<any[]>(`${environment.APPURL}/groups/save`)
       .pipe(retry(2), catchError(this.handleError));
   }
-  addCourse(course: Course): Observable<Course> {
+  saveCourse(course: Course): Observable<Course> {
     return this.httpClient
       .post<Course>(
-        `${environment.APPURL}/courses`,
+        `${environment.APPURL}/courses/save`,
         JSON.stringify(course),
         this.httpOption
       )
@@ -64,18 +64,18 @@ export class CourseService {
   }
   deleteCourse(id: number) {
     return this.httpClient
-      .delete(`${environment.APPURL}/courses/${id}`)
+      .delete(`${environment.APPURL}/courses/delete/${id}`)
 
       .pipe(retry(2), catchError(this.handleError));
   }
   getExamsofCourse(id: number): Observable<Exam[]> {
     return this.httpClient
-      .get<Exam[]>(`${environment.APPURL}/exam/getAll/${id}`)
+      .get<Exam[]>(`${environment.APPURL}/exam/getAllCourseExams/${id}`)
       .pipe(retry(2), catchError(this.handleError));
   }
   getCourseById(id: number): Observable<Course> {
     return this.httpClient
-      .get<Course>(`${environment.APPURL}/courses/${id}`, this.httpOption)
+      .get<Course>(`${environment.APPURL}/courses/get/${id}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 

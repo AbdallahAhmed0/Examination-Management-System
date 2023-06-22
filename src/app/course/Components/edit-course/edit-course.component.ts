@@ -84,7 +84,7 @@ export class EditCourseComponent implements OnInit {
     this.EditCourse.id=this.id
     console.log(this.EditCourse);
 
-    this.subCourse= this.courseService.addCourse(this.EditCourse).subscribe(observer);
+    this.subCourse= this.courseService.saveCourse(this.EditCourse).subscribe(observer);
 
 
   }
