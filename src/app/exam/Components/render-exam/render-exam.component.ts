@@ -3,12 +3,12 @@ import { Question, Exam } from './../../Models/exam';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { coding } from 'src/app/question/Models/codingQuestion';
 import { MatDialog } from '@angular/material/dialog';
 import { EndExamDialogeComponent } from 'src/app/Shared/material/end-exam-dialoge/end-exam-dialoge.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
 
 @Component({
   selector: 'app-render-exam',
@@ -16,7 +16,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./render-exam.component.scss'],
 })
 export class RenderExamComponent implements OnInit,OnDestroy {
-  private hasMadeDecision = false;
 
   exam: Exam = {} as Exam;
   responseString: string | undefined;
@@ -34,8 +33,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   attemptData: any;
   intervalId:any;
 
-  statusCode:any;
-  routerSubscription?: Subscription;
+  statusCode?:any;
 
   // when click previous and next send value to questions components untile save in form
   sentAnswerToChoice:{[key: string]: any} = {};
@@ -48,9 +46,9 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     private examService: ExamService,
     private route: ActivatedRoute,
     private router:Router,
-    private location: Location,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private preventGuard: PreventRenderWithoutAttemptGuard
   ) {}
 
                   /////////////////////////////////////
@@ -90,28 +88,6 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     if(!this.attemptData){
       this.router.navigate(['/exams']);
     }
-    /////////////////////////////////////////////////////
-    // this.routerSubscription = this.router.events.subscribe((event) => {
-    //   if (event instanceof NavigationEnd) {
-    //     // Open the confirmation dialog and get the reference to the dialog instance
-    //     const dialogRef = this.dialog.open(EndExamDialogeComponent, {
-    //       width: '400px',
-    //       height: '280px',
-    //     });
-
-    //     // Subscribe to the dialog's afterClosed event
-    //     dialogRef.afterClosed().subscribe((result) => {
-    //       if (result === 'confirm') {
-    //         // User confirmed, allow the routing change
-    //         // You can optionally navigate to the new route here
-    //       } else {
-    //         // User canceled, prevent the routing change
-    //         this.router.navigate([], { skipLocationChange: true });
-    //       }
-    //     });
-    //   }
-    // });
-
   }
 
   renderExam(examId: number): void {
@@ -206,18 +182,16 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).subscribe();
 
     // check if Answer Compilation Error
-    this.examService.getStatusCode(attemptId,questionId).subscribe(response =>{
-      this.statusCode = response;
-      //show message to learn Comilation Error
+  this.examService.getStatusCode(attemptId, questionId).subscribe((response) => {
 
-      if(!this.statusCode.status){
-          const snackBarRef = this.snackBar.open('Compilation Error '+this.statusCode.log, 'Close', {
+      if(!response.status){
+          const snackBarRef = this.snackBar.open('Compilation Error '+response.log, 'Close', {
             duration: 7000,
             verticalPosition: 'top',
             panelClass: ['mat-toolbar', 'mat-warn']
           });
         }
-      })
+      });
     }
 
 
@@ -293,6 +267,9 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 endExam(){
   const observer={
     next: (answer:any) => {
+      // sent to guards to allow change routing
+      this.examService.variableSubject.next(true);
+      this.preventGuard.setAttemptRoute(false);
       // create result
       this.examService.createResult(this.attemptData.id).subscribe(
         data =>{ console.log(data) });

@@ -6,7 +6,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { QuestionAnswer } from '../Models/question-answer-interface';
@@ -15,6 +15,7 @@ import { QuestionAnswer } from '../Models/question-answer-interface';
 })
 export class ExamService {
   httpOption;
+  variableSubject = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar) {
     this.httpOption = {
@@ -23,6 +24,7 @@ export class ExamService {
       }),
     };
   }
+
 
   private handleError(error: HttpErrorResponse) {
     // Generic Error handler

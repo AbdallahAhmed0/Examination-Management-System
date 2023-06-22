@@ -8,13 +8,19 @@ import { RenderExamComponent } from './Components/render-exam/render-exam.compon
 import { ExamAnswersComponent } from './Components/exam-answers/exam-answers.component';
 import { CodeQuestionComponent } from './Components/questions-render-exam/code-question/code-question.component';
 import { ExamStudentsComponent } from './Components/exam-students/exam-students.component';
+import { PreventUrlChangeGuard } from './prevent-url-change.guard';
+import { PreventRenderWithoutAttemptGuard } from './hasVisitedAttemptRoute.guard';
 
 const routes: Routes = [
   {path: '', component:AllExamsComponent},
   {path:'exams/add',component:AddExamComponent},
   {path:'exams/edit/:id',component:EditExamComponent},
   {path:'exams/attempt/:examId',component:AttemptExamComponent},
-  {path:'exams/render/:id',component:RenderExamComponent},
+  {path:'exams/render/:id',component:RenderExamComponent,
+  canDeactivate: [PreventUrlChangeGuard],
+  canActivate: [PreventRenderWithoutAttemptGuard]
+
+},
   {path:'exams/showAnswers/:attemptId',component:ExamAnswersComponent},
   {path:'exams/code',component:CodeQuestionComponent},
   {path:"exams/showStudents/:id",component:ExamStudentsComponent}

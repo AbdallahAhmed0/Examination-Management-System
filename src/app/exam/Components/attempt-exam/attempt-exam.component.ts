@@ -5,6 +5,7 @@ import { Exam } from '../../Models/exam';
 import { ExamService } from '../../Services/exam.service';
 import { StartExamDialogeComponent } from 'src/app/Shared/material/start-exam-dialoge/start-exam-dialoge.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
 @Component({
   selector: 'app-attempt-exam',
   templateUrl: './attempt-exam.component.html',
@@ -24,9 +25,11 @@ export class AttemptExamComponent implements OnInit {
     private _examService: ExamService,
     private _activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private preventGuard: PreventRenderWithoutAttemptGuard
+  ) {
 
-  ) {}
+  }
 
   ngOnInit(): void {
     this.getExamInfo();
@@ -56,6 +59,9 @@ export class AttemptExamComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
+        //accses to start exam
+        this.preventGuard.setAttemptRoute(true);
+
         this._examService
         .attemptExam(this.examId, 1) //FIXed userID
         .subscribe((data) => {
