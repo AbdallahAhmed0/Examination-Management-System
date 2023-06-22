@@ -2,14 +2,6 @@
   <p>Exams</p>
 
   <div>
-    <mat-form-field appearance="standard">
-      <input
-        matInput
-        placeholder="Search"
-        (keyup)="applyFilter($event)"
-        #input
-      />
-    </mat-form-field>
 
     <button mat-button class="btn-add" style="color: #007bff" (click)="add()">
       <mat-icon>add</mat-icon> Add Exam
@@ -22,7 +14,14 @@
     >
       <mat-icon>exit_to_app</mat-icon> Export Exams
     </button>
-
+<mat-form-field appearance="standard">
+      <input
+        matInput
+        placeholder="Search"
+        (keyup)="applyFilter($event)"
+        #input
+      />
+    </mat-form-field>
     <table
       mat-table
       id="examsTable"

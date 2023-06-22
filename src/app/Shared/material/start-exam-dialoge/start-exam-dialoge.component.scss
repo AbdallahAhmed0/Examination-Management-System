@@ -30,14 +30,28 @@ mat-dialog-content{
   text-align: center;
   font-size: 16px;
 }
+mat-dialog-actions{
+  margin-top: 20px;
+}
 mat-icon{
 
   color: #0cd463;
-  width: 90px;
-  height: 85px;
+  width: 80px;
+  height: 75px;
   font-size: 90px;
   margin-left:37% ;
 }
 .cancel:hover{
   background: darken(#eae9e9, $amount: 15%);
+}
+@media (max-width: 992px){
+  mat-dialog-content{
+    margin-top: 17px;
+    text-align: center;
+    font-size: 15px;
+  }
+  mat-dialog-actions{
+    margin-top: 0px;
+  }
+
 }

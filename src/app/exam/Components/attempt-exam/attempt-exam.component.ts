@@ -52,7 +52,7 @@ export class AttemptExamComponent implements OnInit {
   startExam(examId: any) {
     const dialogRef = this.dialog.open(StartExamDialogeComponent, {
       width: '400px',
-      height: '280px',
+      height: '270px',
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
