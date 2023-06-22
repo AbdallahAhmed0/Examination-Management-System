@@ -118,8 +118,9 @@ export class SaveQuestionComponent implements OnInit {
     console.log(this.selectedComponents)
   }
   removeChildCode(id:number,child: any) {
-
+    if (typeof id === 'number') {
       this.questionService.deleteCodeQuestionById(id).subscribe();
+    }
       this.codeQuestions.splice(child.id - 1, 1);
       this.selectedComponents.splice(child.id - 1, 1);
 
@@ -165,20 +166,54 @@ export class SaveQuestionComponent implements OnInit {
     if (this.testCases.length) {
       this.questionService.deleteTestCases(this.testCases);
     }
+    //filter array of question
+    const filteredQuestions = this.questions.filter((item) => typeof item === 'object');
+    const filteredCodeQuestions = this.codeQuestions.filter((item) => typeof item === 'object');
+
+
+
+    let api1ReturnedTrue = false;
+    let api2ReturnedTrue = false;
+
     const observer = {
-      next: (Question: any[]) => {
-        this.router.navigateByUrl('/exams');
-        this.questionService.openSnackBar('Added');
-      },
-      error: (err: Error) => {
-        this.consoleError = err.message;
-      },
-    };
-    //add standard questions
-    this.questionService.saveQuestions(this.questions, this.examId).subscribe(observer);
-    //add coding questions
-    this.questionService.saveCodeQuestions(this.codeQuestions, this.examId).subscribe(observer);
-  }
+  next: (Question: any[]) => {
+    // Check if both API calls have returned true
+    if (api1ReturnedTrue && api2ReturnedTrue) {
+      this.router.navigateByUrl('/exams');
+      this.questionService.openSnackBar('Added');
+    }
+  },
+  error: (err: Error) => {
+    this.consoleError = err.message;
+  },
+};
+
+// Add standard questions
+this.questionService.saveQuestions(filteredQuestions, this.examId).subscribe({
+  next: (response: any) => {
+    // Handle successful response from the first API call
+    api1ReturnedTrue = true;
+    observer.next(response);
+  },
+  error: (error: any) => {
+    // Handle error from the first API call
+    observer.error(error);
+  },
+});
+
+// Add coding questions
+this.questionService.saveCodeQuestions(filteredCodeQuestions, this.examId).subscribe({
+  next: (response: any) => {
+    // Handle successful response from the second API call
+    api2ReturnedTrue = true;
+    observer.next(response);
+  },
+  error: (error: any) => {
+    // Handle error from the second API call
+    observer.error(error);
+  },
+});
+}
   importData(id: any) {
     this.router.navigate([`save/${id}/import`]);
   }

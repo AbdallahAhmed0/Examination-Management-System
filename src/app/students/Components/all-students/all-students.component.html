@@ -2,14 +2,7 @@
   <p>Students</p>
 
   <div>
-    <mat-form-field appearance="standard">
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Search"
-        #input
-      />
-    </mat-form-field>
+
 
     <button mat-button class="btn-add" (click)="add()" style="color: #007bff">
       <mat-icon>add</mat-icon> Add Student
@@ -23,7 +16,14 @@
       <mat-icon>exit_to_app</mat-icon> Export Students
     </button>
     <button mat-button class="btn-add" (click)="importData()" style="color:#007bff;" ><mat-icon>assignment_returned</mat-icon> Import Students</button>
-
+    <mat-form-field appearance="standard">
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Search"
+        #input
+      />
+    </mat-form-field>
     <table mat-table id="adminTable" [dataSource]="dataSource" matSort>
       <!-- ID Column -->
       <ng-container matColumnDef="id">
