@@ -39,10 +39,9 @@ a{
   margin: 10px 0px;
   border-radius: 6px;
   text-align: center;
-
 }
-.edit-icon{
 
+.edit-icon{
   background: #0cd463;
   color: #fff;
   font-size: 30px;
@@ -52,11 +51,17 @@ a{
   margin: 10px 0px;
   border-radius: 6px;
   text-align: center;
-
 }
+
 .delete-icon:hover{
   background: #dc0808;
 }
 .edit-icon:hover{
   background: #0aae51;
+}
+
+@media (max-width: 992px){
+  table{
+    width: 85%;
+  }
 }

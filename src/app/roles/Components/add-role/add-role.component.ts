@@ -7,30 +7,52 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-add-role',
   templateUrl: './add-role.component.html',
-  styleUrls: ['./add-role.component.scss']
+  styleUrls: ['./add-role.component.scss'],
 })
 export class AddRoleComponent implements OnInit {
+  roleName!: string;
 
-  roleName!:string;
+  role: Role = {} as Role;
 
+  privileges: { id: number; name: string; checked: boolean }[] = [];
 
-  role:Role={} as Role;
+  privilegeGroups: {
+    name: string;
+    privileges: { id: number; name: string; checked: boolean }[];
+  }[] = [];
 
-
-  constructor(private rolesService:RolesService, private router:Router) { }
-
+  constructor(private rolesService: RolesService, private router: Router) {}
 
   ngOnInit(): void {
-  }
-  addRole(){
-    this.role.role=this.roleName;
-    this.rolesService.addRole(this.role).subscribe(data =>{
-      this.rolesService.openSnackBar("Added");
+    this.rolesService.getPrivileges().subscribe((data) => {
+      this.privileges = data.map((privilege) => ({
+        id: privilege.id,
+        name: privilege.name,
+        checked: false,
+      }));
+      console.log(this.privileges);
+
+      // Divide the privileges into 8 groups with 5 privileges in each group
+      for (let i = 0; i < 8; i++) {
+        this.privilegeGroups.push({
+          name: `${i + 1}`,
+          privileges: this.privileges.slice(i * 5, (i + 1) * 5),
+        });
+      }
     });
-    this.goback()
-  }
-  goback(){
-    this.router.navigate(['roles']);
   }
 
+  addRole() {
+    const selectedPrivileges = this.privileges
+    .filter((privilege) => privilege.checked);
+  this.rolesService.addRoleWithPrivileges(this.roleName, selectedPrivileges)
+    .subscribe((data) => {
+      this.rolesService.openSnackBar('Added');
+      this.goback();
+    });
+  }
+
+  goback() {
+    this.router.navigate(['roles']);
+  }
 }

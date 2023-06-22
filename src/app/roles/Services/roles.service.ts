@@ -59,16 +59,25 @@ export class RolesService {
       );
 
   }
-  addRole(role: Role) {
-    return this.http.post<Role>(`${environment.APPURL}/roles/add`, JSON.stringify(role), this.httpOption)
+  
+  addRoleWithPrivileges(roleName: string, selectedPrivileges: any[]): Observable<Role> {
+    const role: Role = {
+      role: roleName,
+      privileges: selectedPrivileges.map(privilege => ({ id: privilege.id, name: privilege.name }))
+    };
+    return this.http.post<Role>(`${environment.APPURL}/roles/add`, role, this.httpOption)
       .pipe(
         retry(2),
         catchError(this.handleError)
       );
-
   }
-  updateRole(role: Role) {
-    return this.http.post<Role>(`${environment.APPURL}/roles/update`, JSON.stringify(role), this.httpOption)
+
+  updateRoleWithPrivileges(role: Role, selectedPrivileges: any[]): Observable<Role> {
+    const updatedRole: Role = {
+      ...role,
+      privileges: selectedPrivileges.map(privilege => ({ id: privilege.id, name: privilege.name }))
+    };
+    return this.http.post<Role>(`${environment.APPURL}/roles/update`, updatedRole, this.httpOption)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -81,5 +90,13 @@ export class RolesService {
         retry(2),
         catchError(this.handleError));
 
+  }
+
+  getPrivileges(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.APPURL}/privilege`, this.httpOption)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
   }
 }
