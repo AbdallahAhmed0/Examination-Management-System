@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../Services/auth.service';
 import { first } from 'rxjs';
 
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,6 +35,7 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit() {
+
       this.submitted = true;
 
       // stop here if form is invalid
@@ -42,13 +45,18 @@ export class LoginComponent implements OnInit {
 
       this.loading = true;
       this.authenticationService.login(this.email?.value, this.password?.value)
-          .pipe(first())
           .subscribe({
-              next: () => {
+              next: (response) => {
+                const helper = new JwtHelperService();
+                const decodedToken = helper.decodeToken(response.token);
+
+                console.log(decodedToken); // Output the decoded token object
+
                   // get return url from query parameters or default to home page
                   //write route by role
-                  const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                  this.router.navigateByUrl(returnUrl);
+
+                  // const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                  // this.router.navigateByUrl(returnUrl);
               },
               error: error => {
                   this.error = error;

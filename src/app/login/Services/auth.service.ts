@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { User } from '../Model/user';
 import { Role } from '../../roles/Models/role';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, retry, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
@@ -11,6 +11,31 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
+  httpOption;
+
+  private handleError(error: HttpErrorResponse) {
+    // Generic Error handler
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+      // Return an observable with a user-facing error message.
+    return throwError(
+      ()=>new Error('Error occured, please try again')
+    )
+
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+        return throwError(
+          ()=>new Error(error.error.message)
+        )
+
+    }
+  }
+
+
 
   private userSubject: BehaviorSubject<User | null>;
   public user: Observable<User | null>;
@@ -18,6 +43,13 @@ export class AuthService {
   constructor(
       private router: Router,
       private http: HttpClient) {
+
+        this.httpOption = {
+          headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+
+          })
+        };
       this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
       this.user = this.userSubject.asObservable();
   }
@@ -26,20 +58,18 @@ export class AuthService {
       return this.userSubject.value;
   }
 
-  login(username: string, password: string) {
-      return this.http.post<any>(`${environment.APPURL}/users/authenticate`, { username, password })
-          .pipe(map(user => {
-              // store user details and jwt token in local storage to keep user logged in between page refreshes
-              localStorage.setItem('user', JSON.stringify(user));
-              this.userSubject.next(user);
-              return user;
-          }));
+  login(email: string, password: string):Observable<any> {
+    // return this.http.post<any>(`${environment.APPURL}/auth/login`,JSON.stringify({email:email,password:password}),this.httpOption )
+    
+    return this.http.post<any>(`http://142.93.192.45:8088/api/auth/login`,JSON.stringify({email:email,password:password}),this.httpOption )
+        .pipe( retry(2),
+        catchError(this.handleError));
   }
-
   logout() {
-      // remove user from local storage to log user out
-      localStorage.removeItem('user');
-      this.userSubject.next(null);
-      this.router.navigate(['/login']);
+      // return this.http.post<any>(`${environment.APPURL}/auth/logout`,this.httpOption )
+
+      return this.http.post<any>(`http://142.93.192.45:8088/api/auth/logout`,this.httpOption )
+      .pipe( retry(2),
+      catchError(this.handleError));
   }
 }
