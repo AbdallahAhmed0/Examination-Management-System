@@ -3,10 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "node server.js",
+    "build": "ng build --configuration=production"
   },
   "private": true,
   "dependencies": {
@@ -58,5 +56,9 @@
   "main": "karma.conf.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "18.10.0",
+    "npm": "8.0.0"
+  }
 }
