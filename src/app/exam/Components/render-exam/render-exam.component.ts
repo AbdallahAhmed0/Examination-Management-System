@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EndExamDialogeComponent } from 'src/app/Shared/material/end-exam-dialoge/end-exam-dialoge.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-render-exam',
@@ -33,7 +34,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   attemptData: any;
   intervalId:any;
 
-  statusCode?:any;
+  statusCode:any={status:'',log:''};
 
   // when click previous and next send value to questions components untile save in form
   sentAnswerToChoice:{[key: string]: any} = {};
@@ -51,33 +52,6 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     private preventGuard: PreventRenderWithoutAttemptGuard
   ) {}
 
-                  /////////////////////////////////////
-    // @HostListener('window:popstate', ['$event'])
-    // onPopState(event: any): void {
-    //   if (!this.hasMadeDecision) {
-    //     event.preventDefault(); // Prevent the default back navigation
-    //     this.handleBrowserBack();
-    //   }
-    // }
-
-    // private handleBrowserBack(): void {
-    //   // Open the MatDialog and get the reference to the dialog instance
-    //   const dialogRef = this.dialog.open(EndExamDialogeComponent, {
-    //     width: '400px',
-    //     height: '280px',
-    //   });
-
-    //   // Subscribe to the dialog's afterClosed event
-    //   dialogRef.afterClosed().subscribe((result) => {
-    //     if (result === 'confirm') {
-    //       window.history.back(); // Go back to the previous page
-    //     } else {
-    //       // User clicked cancel, do nothing or perform any alternative action
-    //       this.hasMadeDecision = true;
-    //     }
-    //   });
-    // }
-                      /////////////////////////////////////////
 
   ngOnInit(): void {
     const examId = parseInt(this.route.snapshot.paramMap.get('id') as string);
@@ -179,19 +153,33 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   }
   saveAnswersByCoding(attemptId:number,questionId:number,language:string,code:string): void {
 
-    this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).subscribe();
+    this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).pipe(
+      tap((response:any) => {
+      this.statusCode = response
+        if(!this.statusCode.status){
+            const snackBarRef = this.snackBar.open('Compilation Error '+this.statusCode.log, 'Close', {
+              duration: 7000,
+              verticalPosition: 'top',
+              panelClass: ['mat-toolbar', 'mat-warn']
+            })
 
+          }
+        })
+      ).subscribe();
     // check if Answer Compilation Error
-  this.examService.getStatusCode(attemptId, questionId).subscribe((response) => {
+      // this.examService.getStatusCode(attemptId, questionId).pipe(
+      //   tap((response:any) => {
+      //   this.statusCode = response
+      //     if(!this.statusCode.status){
+      //         const snackBarRef = this.snackBar.open('Compilation Error '+this.statusCode.log, 'Close', {
+      //           duration: 7000,
+      //           verticalPosition: 'top',
+      //           panelClass: ['mat-toolbar', 'mat-warn']
+      //         })
 
-      if(!response.status){
-          const snackBarRef = this.snackBar.open('Compilation Error '+response.log, 'Close', {
-            duration: 7000,
-            verticalPosition: 'top',
-            panelClass: ['mat-toolbar', 'mat-warn']
-          });
-        }
-      });
+      //       }
+      //     })
+      //   ).subscribe();
     }
 
 

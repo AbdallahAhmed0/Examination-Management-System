@@ -108,24 +108,21 @@ export class SaveQuestionComponent implements OnInit {
     this.formValid = false;
 
   }
-  removeChild(child: any) {
-    if (this.questions[child.id - 1]) {
-      this.questionService.deleteQuestion(this.questions[child.id - 1]);
+  removeChild(child: any,i:number) {
+    if (typeof this.questions[i]?.id === 'number') {
+      this.questionService.deleteQuestion(this.questions[i]);
     }
-
-    this.questions.splice(child.id - 1, 1);
-    this.selectedComponents.splice(child.id - 1, 1);
-    console.log(this.selectedComponents)
+    this.questions.splice(i, 1);
+    console.log(this.questions)
+    this.selectedComponents.splice(i, 1);
   }
-  removeChildCode(id:number,child: any) {
+  removeChildCode(id:number,child: any,i:number) {
     if (typeof id === 'number') {
       this.questionService.deleteCodeQuestionById(id).subscribe();
     }
-      this.codeQuestions.splice(child.id - 1, 1);
-      this.selectedComponents.splice(child.id - 1, 1);
-
+      this.codeQuestions.splice(i, 1);
       console.log(this.codeQuestions)
-
+      this.selectedComponents.splice(i, 1);
   }
   removeOptions(option: any) {
     this.options.push(option);
@@ -161,6 +158,7 @@ export class SaveQuestionComponent implements OnInit {
 
   submit() {
     if (this.options.length) {
+      console.log(this.options)
       this.questionService.deleteOptions(this.options);
     }
     if (this.testCases.length) {

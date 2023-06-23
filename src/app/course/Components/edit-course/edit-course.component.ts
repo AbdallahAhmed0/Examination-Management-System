@@ -74,7 +74,7 @@ export class EditCourseComponent implements OnInit {
     const observer={
       next: (course:Course) => {
         this.router.navigateByUrl('/courses');
-        this.courseService.openSnackBar('Added');
+        this.courseService.openSnackBar('Updated');
       },
       error: (err:Error)=>{
         this.consoleError = err.message
@@ -97,7 +97,6 @@ export class EditCourseComponent implements OnInit {
   }
   getAdmins(){
     this.adminservice.getAllAdmins().subscribe(data=>{
-
       this.admins=data
     })
   }

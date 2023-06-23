@@ -97,9 +97,9 @@
 
               <!-- =========== Coding Question =========== -->
         <div class=" example-radio-button question__answers--answer ">
-          <p [ngClass]="{'correct--answer':questionObject.passedTestCases.length,
-          'wrong--answer':!questionObject.passedTestCases.length}">
-          Number Of Test Cases Passed: {{questionObject.passedTestCases}}</p>
+          <span class="question__answers--answer " [ngClass]="{'correct--answer':questionObject.passedTestCases,
+          'wrong--answer':!questionObject.passedTestCases}">
+          Number Of Test Cases Passed: {{questionObject.passedTestCases}}</span>
           <p [innerHTML]="sanitizeHtml(questionObject.submission)"></p>
         </div>
     </div>

@@ -41,7 +41,7 @@
     <ng-container *ngFor="let selectedComponent of selectedComponents; let i = index" >
 
       <app-choice-questions   *ngIf="selectedComponent.name === 'Multiple_Answers' || selectedComponent.name === 'Multiple_choice'"
-      (onDelete)="removeChild(selectedComponent)"
+      (onDelete)="removeChild(selectedComponent,i)"
       (deleteOptions)="removeOptions($event)"
       [indexComponent]="(i+1)"
       (questionData)="addQuestion($event,i)"
@@ -51,7 +51,7 @@
     </app-choice-questions>
 
       <app-text-questions *ngIf="selectedComponent.name === 'Matching'"
-      (onDelete)="removeChild(selectedComponent)"
+      (onDelete)="removeChild(selectedComponent,i)"
       [indexComponent]="(i+1)"
       (questionData)="addQuestion($event,i)"
       (formValid)="formIsValid($event)"
@@ -60,7 +60,7 @@
       </app-text-questions>
       <app-true-false-question *ngIf="selectedComponent.name === 'True_False'"
 
-      (onDelete)="removeChild(selectedComponent)"
+      (onDelete)="removeChild(selectedComponent,i)"
       [indexComponent]="(i+1)"
       (questionData)="addQuestion($event,i)"
       (formValid)="formIsValid($event)"
@@ -70,7 +70,7 @@
 
 
       <app-code-question  *ngIf="selectedComponent.name === 'CODING'"
-      (onDelete)="removeChildCode($event,selectedComponent)"
+      (onDelete)="removeChildCode($event,selectedComponent,i)"
       (deleteTestCases)="removeTestCases($event)"
       [indexComponent]="(i+1)"
       (codeQuestionData)="addCodeQuestion($event,i)"
