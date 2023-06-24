@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs';
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   sidenav!: MatSidenav;
 
 
-
+isLogin:boolean = false;
 
   constructor(private observer:BreakpointObserver,
               private cd:ChangeDetectorRef,
@@ -27,15 +27,11 @@ export class AppComponent implements OnInit {
               private storageService:StorageServiceService){}
 
   ngOnInit(): void {
+    this.isLogin = this.storageService.isLoggedIn();
   }
 
-  // check router contain login or not
-  get isLogin(): boolean {
-    return this.storageService.isLoggedIn();
-    }
-
   ngAfterViewInit() {
-
+    this.isLogin = this.storageService.isLoggedIn();
   // check if user login or not to show dashboard
   if(this.isLogin){
       this.observer.observe(['(max-width: 800px)']).subscribe((res) => {

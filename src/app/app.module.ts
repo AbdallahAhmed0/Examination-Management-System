@@ -14,6 +14,8 @@ import { RolesModule } from './roles/roles.module';
 import { StudentsModule } from './students/students.module';
 import { DashboardAdminComponent } from './dashboard/dashboard-admin/dashboard-admin.component';
 import { DashbordExamComponent } from './dashboard/dashboard-admin/dashbord-exam/dashbord-exam.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './login/Interceptors/jwt.interceptor';
 
 
 
@@ -36,7 +38,10 @@ import { DashbordExamComponent } from './dashboard/dashboard-admin/dashbord-exam
     ExamModule
 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

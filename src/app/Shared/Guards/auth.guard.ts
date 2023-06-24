@@ -24,8 +24,10 @@ roles:Object[]=[];
           // if (this.roles.some((role:any) => role.authority === 'SHOW_EXAMS_LIST_ROLE') ||
           // this.roles.some((role:any) => role.authority === 'SHOW_EXAM_ROLE')) {
           //   this.router.navigate(['/dashboard']);
+          //   return true;
           // }else if(this.roles.some((role:any) => role.authority ==='SHOW_COURSE_OF_GROUP_ROLE')){
           //   this.router.navigate(['/courses']);
+          //   return true;
           // }
           return true;
 
