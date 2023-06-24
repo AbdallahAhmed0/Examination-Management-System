@@ -45,16 +45,43 @@ mat-form-field{
   font-size: 16px;
   border-radius: 25px;
   margin-bottom: 25px;
+
+  &:hover{
+    background: darken($color: #1b57fb, $amount: 15%);
+  }
+  &:disabled{
+    background: #e7e5e5;
+  }
 }
-.login:hover{
-  background: darken($color: #1b57fb, $amount: 15%);
+.alert-error{
+  display: block;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  background-color: rgba(255, 0, 0, 0.2);
+
 }
 @media (max-width: 768px) {
   .center-container {
-   margin: 20px;
+    padding: auto;
   }
-  .card-image {
+  .card{
+    margin: 25px;
+  }
+  .login{
+    width: 60%;
+    font-size: 14px;
+    margin-left: 20%;
+    height: 27px;
+    line-height:0px
 
-    margin-bottom: 8px;
+  }
+  mat-form-field{
+    font-size: 14px;
+    width: 60%;
+    display: block;
+    margin: 25px;
+    margin-left: 20%;
+
   }
 }

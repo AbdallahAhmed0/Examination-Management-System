@@ -50,7 +50,7 @@ export class AdminsService {
   }
 
   getAllAdmins():Observable<Admin[]>{
-    return this.httpClient.get<Admin[]>(`${environment.APPURL}/admins/getAll`)
+    return this.httpClient.get<Admin[]>(`${environment.APPURL}/admins/getAll`,this.httpOption)
     .pipe(
         retry(2),
         catchError(this.handleError)
@@ -87,7 +87,7 @@ export class AdminsService {
     }
     deleteAdmin(id:number){
 
-      this.httpClient.delete(`${environment.APPURL}/admins/delete/${id}`)
+      this.httpClient.delete(`${environment.APPURL}/admins/delete/${id}`,this.httpOption)
       .pipe(
         retry(2),
         catchError(this.handleError)

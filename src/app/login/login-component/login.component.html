@@ -5,12 +5,14 @@
       <div class="card-image">
       <img src="../../../assets/Online-Examination-System.jpg" alt="Image" />
     </div>
+    <div class="alert-error" *ngIf="errorMessage != ''">
+      {{errorMessage}}
+    </div>
     <div class="form">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
+      <form [formGroup]="loginForm"  (ngSubmit)="onSubmit()">
         <mat-form-field>
             <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && email?.errors }" />
+            <input matInput type="email" formControlName="email"/>
             <mat-error *ngIf="email?.hasError('required')">
                 Email is required
               </mat-error>
@@ -21,8 +23,7 @@
 
           <mat-form-field>
             <mat-label>Password</mat-label>
-            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"
-              [ngClass]="{ 'is-invalid': submitted && password?.errors }" />
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password"/>
               <mat-icon matSuffix (click)="hidePassword = !hidePassword">
                 {{hidePassword ? 'visibility_off' : 'visibility'}}
               </mat-icon>
@@ -30,15 +31,12 @@
                 Password is required
               </mat-error>
           </mat-form-field>
-          <button mat-raised-button class="login" [disabled]="loading">
+          <button mat-raised-button class="login" [disabled]="!loginForm.valid">
           Login
         </button>
         <div class="forgot-password">
-          <a href="#">Forgot Password?</a>
+          <a [routerLink]="['/login/forgetpassword']">Forgot Password?</a>
         </div>
-        <mat-error *ngIf="error">
-          {{ error|json }}
-        </mat-error>
       </form>
     </div>
     </div>

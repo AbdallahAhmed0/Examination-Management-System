@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './Shared/Guards/auth.guard';
+import { LoginComponent } from './login/login-component/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path:"login",
-    loadChildren:()=>import('./login/login.module').then(l => l.LoginModule)
+    loadChildren:()=>import('./login/login.module').then(l => l.LoginModule),
+
   },
   {
     path: "admins",
     loadChildren: () =>
-      import("./admins/admins.module").then((a) => a.AdminsModule),
-      canActivate: [AuthGuard],
-  },
+      import("./admins/admins.module").then((a) => a.AdminsModule)  },
   {
     path: "roles",
     loadChildren: () =>
@@ -41,8 +41,9 @@ const routes: Routes = [
   {
     path: "courses",
     loadChildren: () =>
-      import("./course/course.module").then((m) => m.CourseModule),
-      canActivate: [AuthGuard],
+      import("./course/course.module").then((m) => m.CourseModule)  },
+  {
+    path:'**', redirectTo:'login'
   }
 
 
