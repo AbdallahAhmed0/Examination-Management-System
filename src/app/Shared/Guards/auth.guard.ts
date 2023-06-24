@@ -8,7 +8,7 @@ import { StorageServiceService } from 'src/app/login/Services/storage-service.se
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-roles:any[]=['SHOW_COURSE_OF_GROUP_ROLE'];
+roles:Object[]=[];
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -20,14 +20,15 @@ roles:any[]=['SHOW_COURSE_OF_GROUP_ROLE'];
       const user = this.storageService.getUser();
       if (user) {
           // check if route is restricted by role
-          // this.roles = this.storageService.getUser().roles;
-
-          if (this.roles.includes('SHOW_EXAMS_LIST_ROLE') || this.roles.includes('SHOW_EXAM_ROLE')) {
-            this.router.navigate(['/dashboard']);
-          }else if(this.roles.includes('SHOW_COURSE_OF_GROUP_ROLE')){
-            this.router.navigate(['/courses']);
-          }
+          // this.roles = user.permissions;
+          // if (this.roles.some((role:any) => role.authority === 'SHOW_EXAMS_LIST_ROLE') ||
+          // this.roles.some((role:any) => role.authority === 'SHOW_EXAM_ROLE')) {
+          //   this.router.navigate(['/dashboard']);
+          // }else if(this.roles.some((role:any) => role.authority ==='SHOW_COURSE_OF_GROUP_ROLE')){
+          //   this.router.navigate(['/courses']);
+          // }
           return true;
+
       }else{
             // not logged in so redirect to login page with the return url
             this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });

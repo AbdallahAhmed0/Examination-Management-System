@@ -12,12 +12,16 @@ const routes: Routes = [
   },
   {
     path:'dashboard',
-    component:DashbordExamComponent
+    component:DashbordExamComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "admins",
     loadChildren: () =>
-      import("./admins/admins.module").then((a) => a.AdminsModule)  },
+      import("./admins/admins.module").then((a) => a.AdminsModule),
+      canActivate: [AuthGuard],
+    },
+      
   {
     path: "roles",
     loadChildren: () =>
@@ -45,7 +49,9 @@ const routes: Routes = [
   {
     path: "courses",
     loadChildren: () =>
-      import("./course/course.module").then((m) => m.CourseModule)  },
+      import("./course/course.module").then((m) => m.CourseModule),
+      canActivate: [AuthGuard],
+    },
   {
     path:'**', redirectTo:'login'
   }

@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  roles:string[]=['SHOW_COURSE_OF_GROUP_ROLE'];
+  roles:Object[]=[];
 
   constructor(
         private formBuilder: FormBuilder,
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
 
       if (this.storageService.isLoggedIn()) {
         this.isLoggedIn = true;
-        // this.roles = this.storageService.getUser().roles;
+        this.roles = this.storageService.getUser().permissions;
       }
 
   }
@@ -53,15 +53,22 @@ export class LoginComponent implements OnInit {
                 const decodedToken = helper.decodeToken(response.token);
 
                 this.storageService.saveUser(decodedToken,response);
-
+                this.roles = decodedToken.permissions;                
                 console.log(this.storageService.getUser())
-                if (this.roles.includes('SHOW_EXAMS_LIST_ROLE') || this.roles.includes('SHOW_EXAM_ROLE')) {
-                  this.router.navigate(['/admins']);
-                }else if(this.roles.includes('SHOW_COURSE_OF_GROUP_ROLE')){
+                console.log(this.roles)
+                if (this.roles.some((role:any) => role.authority === 'SHOW_EXAMS_LIST_ROLE') ||
+                    this.roles.some((role:any) => role.authority === 'SHOW_EXAM_ROLE')) {
+                  this.router.navigate(['/dashboard']);
+                  console.log('dash')
+  
+                }else if(this.roles.some((role:any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE')){
                   this.router.navigate(['/courses']);
+                  console.log('courses')
+
                 }else{
                   // not logged in so redirect to login page with the return url
                   this.router.navigate(['/login']);
+                  console.log('login')
             }
                 this.isLoginFailed = false;
                 this.isLoggedIn = true;
