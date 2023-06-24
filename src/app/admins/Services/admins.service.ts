@@ -50,7 +50,7 @@ export class AdminsService {
   }
 
   getAllAdmins():Observable<Admin[]>{
-    return this.httpClient.get<Admin[]>(`${environment.APPURL}/admins/getAll`,this.httpOption)
+    return this.httpClient.get<Admin[]>(`${environment.APPURL}/admins/getAll`)
     .pipe(
         retry(2),
         catchError(this.handleError)
@@ -87,12 +87,11 @@ export class AdminsService {
     }
     deleteAdmin(id:number){
 
-      this.httpClient.delete(`${environment.APPURL}/admins/delete/${id}`,this.httpOption)
+      return this.httpClient.delete(`${environment.APPURL}/admins/delete/${id}`)
       .pipe(
         retry(2),
         catchError(this.handleError)
-      ).subscribe(data => {
-      })
+      );
     }
 
     openSnackBar(message: string ) {

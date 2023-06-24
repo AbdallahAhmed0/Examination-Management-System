@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './Shared/Guards/auth.guard';
-import { LoginComponent } from './login/login-component/login.component';
+import { DashbordExamComponent } from './dashboard/dashboard-admin/dashbord-exam/dashbord-exam.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -9,6 +9,10 @@ const routes: Routes = [
     path:"login",
     loadChildren:()=>import('./login/login.module').then(l => l.LoginModule),
 
+  },
+  {
+    path:'dashboard',
+    component:DashbordExamComponent
   },
   {
     path: "admins",

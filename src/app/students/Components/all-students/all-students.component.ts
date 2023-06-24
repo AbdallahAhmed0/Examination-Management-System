@@ -70,15 +70,11 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
 
-          this.studentService.deleteStudent(id);
-          setTimeout(() => {
+          this.studentService.deleteStudent(id).subscribe((data)=>{
             window.location.reload();
             this.studentService.openSnackBar("Deleted");
-          }, 800);
-
-
+          })
         }
-
       });
 
   }

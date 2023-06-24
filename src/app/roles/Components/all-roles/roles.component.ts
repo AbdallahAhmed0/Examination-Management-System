@@ -49,10 +49,11 @@ export class RolesComponent implements OnInit  {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
-        this.rolesService.deleteRole(id);
+        this.rolesService.deleteRole(id).subscribe((data)=>{
+          window.location.reload();
+          this.rolesService.openSnackBar("Deleted");
+        })
         }
-        window.location.reload();
-
       });
 
 
@@ -62,5 +63,4 @@ export class RolesComponent implements OnInit  {
 
   }
 }
-
 

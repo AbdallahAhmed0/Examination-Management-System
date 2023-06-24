@@ -1,22 +1,38 @@
 
 <mat-tab-group (selectedTabChange)="goback()">
 
-<mat-tab label="Edit Role">
-    <div class="container">
-      <h1 >Edit Role</h1>
-      <div>
-       <form class="example-form" #form="ngForm" (ngSubmit)="save()">
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Edit Role</mat-label>
-        <input matInput placeholder="Role"[(ngModel)]="editRoleName" value="{{roleEdit.role}}" name="roleName"  required>
-      </mat-form-field>
-      <button mat-raised-button type="submit" [disabled]="form.invalid" color="primary">Save</button>
+  <mat-tab label="Edit Role">
+      <div class="container">
+        <h1 >Edit Role</h1>
+        <div>
+         <form class="example-form" #form="ngForm" (ngSubmit)="save()">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Edit Role</mat-label>
+          <input matInput placeholder="Role"[(ngModel)]="editRoleName" value="{{roleEdit.role}}" name="roleName"  required>
+        </mat-form-field>
 
-     </form>
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Permissions</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div *ngFor="let group of privilegeGroups" class="group-container">
+              <div class="group-header">{{ group.name }}</div>
+              <div *ngFor="let privilege of group.privileges" class="privilege-checkbox">
+                <mat-checkbox [(ngModel)]="privilege.checked" [name]="'privilege-' + privilege.id"></mat-checkbox>
+                <label>{{privilege.name}}</label>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <button mat-raised-button type="submit" [disabled]="form.invalid" color="primary">Save</button>
+
+       </form>
+        </div>
       </div>
-    </div>
-</mat-tab>
-<mat-tab label="All Role">
-</mat-tab>
+  </mat-tab>
+  <mat-tab label="All Role">
+  </mat-tab>
 
-</mat-tab-group>
+  </mat-tab-group>

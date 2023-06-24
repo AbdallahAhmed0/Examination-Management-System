@@ -42,3 +42,30 @@
     background: darken(#0cd463, 15%);
   }
 }
+.attempt-btn:disabled{
+  background: #e8e6e6;
+}
+// Small Screens
+@media (max-width: 992px){
+  .container{
+    width: 95%;
+  }
+  .exam-info {
+
+    &__heading {
+      font-size: 2rem;
+      font-weight: 500;
+    }
+  }
+  h2{
+    font-size: 0.5rem;
+    font-weight: 500;
+  }
+    span{
+      font-size: 0.4rem;
+      font-weight: 400;
+      margin-left: 8px;
+
+    }
+
+}

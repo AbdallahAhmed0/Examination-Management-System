@@ -21,18 +21,18 @@ export class StudentsService {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
       // Return an observable with a user-facing error message.
-    return throwError(
-      ()=>new Error('Error occured, please try again')
-    )
+      return throwError(
+        () => new Error('Error occured, please try again')
+      )
 
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       console.error(
         `Backend returned code ${error.status}, body was: `, error.error);
-        return throwError(
-          ()=>new Error(error.error.message)
-        )
+      return throwError(
+        () => new Error(error.error.message)
+      )
 
     }
   }
@@ -78,16 +78,15 @@ export class StudentsService {
   }
 
   deleteStudent(id: number) {
-    this.httpClient
+    return this.httpClient
       .delete(`${environment.APPURL}/students/delete/${id}`)
-      .pipe(retry(2), catchError(this.handleError))
-      .subscribe((data) => {});
+      .pipe(retry(2), catchError(this.handleError));
   }
   getGroups(): Observable<any[]> {
     return this.httpClient
-      .get<any[]>(`${environment.APPURL}/groups`)
+      .get<any[]>(`${environment.APPURL}/groups/getAll`)
       .pipe(retry(2), catchError(this.handleError));
-  }
+  }
 
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {

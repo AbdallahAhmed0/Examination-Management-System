@@ -44,7 +44,7 @@
 
 <br>
 <mat-form-field appearance="fill">
-  <mat-label>{{course.groupName}}</mat-label>
+  <mat-label>choose Group</mat-label>
   <mat-select formControlName="group" matinput >
     <mat-option *ngFor="let group of theGroups" [value]='group'>{{group.name}}</mat-option>
   </mat-select>
@@ -74,7 +74,7 @@
 
 
 
-  <button mat-raised-button [disabled]="courseform.invalid" class="submit" type="submit">Submit</button>
+  <button mat-raised-button [disabled]="courseform.invalid" class="submit" type="submit">Save</button>
   </form>
   </div>
   </div>

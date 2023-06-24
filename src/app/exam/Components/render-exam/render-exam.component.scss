@@ -2,9 +2,8 @@
 // Exam details section
 
 .container .form {
-  margin: auto;
-  margin-top: 20px;
-  max-width: 900px;
+  margin: 35px auto;
+  max-width: 1000px;
   padding: 20px;
   background-color: #fff;
   border-radius: 15px;
@@ -20,15 +19,15 @@ mat-card {
 .exam-header {
   display: flex;
   justify-content: center;
-  background-color: #ebebec;
+  background-color: #f6f6fa;
   padding: 20px;
   border-radius: 20px;
   margin: 15px;
 }
 
 .exam-name {
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 30px;
+  font-weight: 500;
 }
 
 .exam-details {
@@ -44,11 +43,12 @@ mat-card {
 
 .exam-details-right {
   display: flex;
-  flex-direction: column;
+  margin-left: 30%;
 }
 .mat-subheading-1{
   font-weight: 500;
   margin-right: 10px;
+
 }
 
 
@@ -68,34 +68,29 @@ mat-card-content{
   margin: 15px;
 }
 
-mat-radio-group, .mat-checkbox-group {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-}
 
-button.next, button.pervious {
-  text-decoration: none;
-  display: inline-block;
-  padding: 8px 16px;
+.previous,.next {
+  margin:20px 10px;
+  font-size: 16px;
+  width: 80px;
+  height: 35px;
+  color: #FFF;
+  background: #007bff;
+}
+.previous{
+  width: 90px;
+}
+.next{
+  float: right;
+}
+.previous:hover,.next:hover{
+  background: darken($color: #007bff, $amount: 14%);
+}
+.previous:disabled,.next:disabled{
+  background: #f6f6fa;
 }
 
 
 .round {
   border-radius: 50%;
-}
-.submit-button
-{
-margin: 20px;
-display: flex;
-}
-.save{
-  background: darken(#0cd463, 3%);
-  color: #fff;
-  margin: 15px;
-
-}
-.save:hover{
-  background: darken(#0cd463, 20%);
-
 }

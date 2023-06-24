@@ -1,0 +1,63 @@
+
+.contianer{
+  margin: 20px;
+
+}
+.form{
+  margin: 50px;
+  border: 2px solid rgb(211, 208, 208);
+  border-radius: 10px;
+  width: 80%;
+
+.import{
+  background: #3cb5be;
+  color: #ffffff;
+  height: 60px;
+  font-size: 25px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  }
+}
+form{
+
+  margin:100px;
+
+
+      width: 95%;
+      display: block;
+      margin: 20px  ;
+
+      input{
+        font-size: 16px;
+        display: block;
+        margin: 20px;
+        border: 1px solid rgb(211, 208, 208);
+        border-radius: 10px;
+        padding: 10px;
+        width: 80%;
+
+
+      }
+
+
+mat-label{
+  font-size: 18px;
+  font-weight: 500;
+  display: block;
+}
+}
+.submit{
+  width: 90px;
+  height: 40px;
+  font-size: 18px;
+  margin:16px 40px ;
+  background: rgb(14, 175, 14);
+  color: #ffffff;
+  display: block;
+
+}
+.btn-list{
+  font-size: 17px;
+  margin-top: 50px;
+}

@@ -1,7 +1,7 @@
 .example-card {
-  width: 45%;
-  margin: 20px ;
-  height: 280px;
+  width: 47%;
+  margin: 10px ;
+  height: 295px;
   padding: 0px;
 
 }
@@ -9,6 +9,7 @@
 .container{
   display: flex;
   flex-wrap: wrap;
+  margin: 0px;
 
 }
 img{
@@ -20,18 +21,77 @@ img{
 }
 .btn-list
 {
+  background-color: #0ec82d;
+  margin: 25px;
+  padding: 5px 12px;
+  font-size: 16px;
+}
+.btn-list:hover,.edit-icon:hover{
+background: darken($color: #0ec82d, $amount: 10%);
+}
+
+mat-card-content{
+  padding-left: 15px;
+}
+a{
+  cursor: pointer;
+}
+.delete-icon{
+
+  background: #f20202;
+  color: #fff;
+  font-size: 30px;
+  width: 45px;
+  height: 45px;
+  padding: 8px;
+  margin: 10px 0px;
+  border-radius: 6px;
+  text-align: center;
+}
+.edit-icon{
+
+  color: #fff;
+  padding: 8px;
+  margin: 10px 0px;
+  border-radius: 6px;
+  font-size: 30px;
+  background:  #0cd463;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  margin-right: 15px;
+
+}
+.actions{
+  display: flex;
+  justify-content: flex-end;
   margin: 25px;
 }
-.edit{
-  color: #fff;
-    margin: 10px 0px;
-    border-radius: 6px;
-    background:  #0cd463;
-    text-align: center;
+.delete-icon:hover{
+  background: darken($color: #f20202, $amount: 10);
 }
-.edit:hover{
-  background: darken($color: #0cd463, $amount: 10%);
+@media (max-width: 958px) {
+  .example-card {
+    width: 100%;
+    margin: 20px;
+    height: 255px;
+
+  }
+
+  img {
+    height: 120px;
+    margin-bottom: 15px;
+  }
 }
-mat-card-content,mat-card-actions{
-  padding-left: 15px;
+
+@media (max-width: 480px) {
+  .example-card {
+    margin: 15px;
+    height: 230px;
+  }
+
+  img {
+    height: 100px;
+    margin-bottom: 10px;
+  }
 }
