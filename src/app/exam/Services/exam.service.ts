@@ -43,7 +43,7 @@ export class ExamService {
 
   getAllExams(): Observable<Exam[]> {
     return this.httpClient
-      .get<Exam[]>(`${environment.APPURL}/exam/getAll`)
+      .get<Exam[]>(`${environment.APPURL}/exam/getAllExams`)
       .pipe(retry(2), catchError(this.handleError));
   }
 
