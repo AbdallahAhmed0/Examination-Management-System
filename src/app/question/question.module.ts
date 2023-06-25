@@ -8,13 +8,14 @@ import { MaterialModule } from '../Shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextEditorComponent } from './Components/text-editor/text-editor.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TextQuestionsComponent } from './Components/text-questions/text-questions.component'
 
 import { CodeQuestionComponent } from './Components/code-question/code-question.component';
 import { TrueFalseQuestionComponent } from './Components/true-false-question/true-false-question.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { ImportQuestionsComponent } from './Components/import-questions/import-questions.component';
+import { JwtInterceptor } from '../login/Interceptors/jwt.interceptor';
 
 
 @NgModule({
@@ -37,6 +38,10 @@ import { ImportQuestionsComponent } from './Components/import-questions/import-q
 
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot()
+
+  ],
+  providers:[
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
 
   ]
 })

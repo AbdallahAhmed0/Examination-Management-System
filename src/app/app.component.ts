@@ -27,7 +27,7 @@ isLogin:boolean = false;
               private storageService:StorageServiceService){}
 
   ngOnInit(): void {
-    this.isLogin = this.storageService.isLoggedIn();
+      this.isLogin = this.storageService.isLoggedIn();
   }
 
   ngAfterViewInit() {

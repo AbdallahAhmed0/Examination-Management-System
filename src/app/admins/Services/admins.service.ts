@@ -4,6 +4,7 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Admin } from './../Models/admin';
 import { environment } from './../../../environments/environment';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 
 
 @Injectable({
@@ -37,20 +38,25 @@ export class AdminsService {
   }
 
   constructor(private httpClient:HttpClient,
-              private _snackBar: MatSnackBar) {
+              private _snackBar: MatSnackBar,
+              private storageService:StorageServiceService) { 
 
-
+                const token = this.storageService.getToken();
+                const isLoggedIn = this.storageService.isLoggedIn();
+                if (isLoggedIn) {
+                  console.log(token)
     this.httpOption = {
       headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
       })
     };
+  }
 
   }
 
   getAllAdmins():Observable<Admin[]>{
-    return this.httpClient.get<Admin[]>(`${environment.APPURL}/admins/getAll`)
+    return this.httpClient.get<Admin[]>(`${environment.APPURL}/admins/getAll`,this.httpOption)
     .pipe(
         retry(2),
         catchError(this.handleError)
@@ -87,7 +93,7 @@ export class AdminsService {
     }
     deleteAdmin(id:number){
 
-      return this.httpClient.delete(`${environment.APPURL}/admins/delete/${id}`)
+      return this.httpClient.delete(`${environment.APPURL}/admins/delete/${id}`,this.httpOption)
       .pipe(
         retry(2),
         catchError(this.handleError)
