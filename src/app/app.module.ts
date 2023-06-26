@@ -39,7 +39,7 @@ import { JwtInterceptor } from './login/Interceptors/jwt.interceptor';
 
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
 
   ],
   bootstrap: [AppComponent]

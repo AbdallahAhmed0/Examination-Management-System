@@ -53,7 +53,7 @@ export class StudentsService {
 
   getStudentById(id: number): Observable<Student> {
     return this.httpClient
-      .get<Student>(`${environment.APPURL}/students/get/${id}`, this.httpOption)
+      .get<Student>(`${environment.APPURL}/students/get/${id}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -61,9 +61,7 @@ export class StudentsService {
     return this.httpClient
       .post<Student>(
         `${environment.APPURL}/students/add`,
-        JSON.stringify(student),
-        this.httpOption
-      )
+        JSON.stringify(student))
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -71,9 +69,7 @@ export class StudentsService {
     return this.httpClient
       .post<Student>(
         `${environment.APPURL}/students/update`,
-        JSON.stringify(student),
-        this.httpOption
-      )
+        JSON.stringify(student))
       .pipe(retry(2), catchError(this.handleError));
   }
 

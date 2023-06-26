@@ -54,21 +54,18 @@ export class LoginComponent implements OnInit {
 
                 this.storageService.saveUser(decodedToken,response);
                 this.roles = decodedToken.permissions;                
-                console.log(this.storageService.getUser())
-                console.log(this.roles)
+              
                 if (this.roles.some((role:any) => role.authority === 'SHOW_EXAMS_LIST_ROLE') ||
                     this.roles.some((role:any) => role.authority === 'SHOW_EXAM_ROLE')) {
+                      console.log(this.roles)
                   this.router.navigate(['/dashboard']);
-                  console.log('dash')
   
                 }else if(this.roles.some((role:any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE')){
                   this.router.navigate(['/courses']);
-                  console.log('courses')
 
                 }else{
                   // not logged in so redirect to login page with the return url
                   this.router.navigate(['/login']);
-                  console.log('login')
             }
                 this.isLoginFailed = false;
                 this.isLoggedIn = true;

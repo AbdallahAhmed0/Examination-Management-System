@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AuthService } from 'src/app/login/Services/auth.service';
-import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 
 
 @Component({
@@ -11,8 +10,7 @@ import { StorageServiceService } from 'src/app/login/Services/storage-service.se
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private storageService:StorageServiceService,
-              private authService:AuthService ) { }
+  constructor(private authService:AuthService ) { }
 
   @Input()sidenav!:MatSidenav;
 
@@ -25,7 +23,6 @@ ngOnInit(): void {
     this.toggleSidebar.emit();
   }
   logout(){
-    const token = this.storageService.getToken();
     this.authService.logout();
   }
 }

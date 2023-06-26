@@ -47,8 +47,8 @@ export class AdminsService {
                   console.log(token)
     this.httpOption = {
       headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+        // 'Content-Type': 'application/json',
+        'Authorization': `Bearer${token.token}`
       })
     };
   }

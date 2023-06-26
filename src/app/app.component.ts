@@ -27,11 +27,15 @@ isLogin:boolean = false;
               private storageService:StorageServiceService){}
 
   ngOnInit(): void {
-      this.isLogin = this.storageService.isLoggedIn();
+    this.storageService.loggedIn$.subscribe((isLoggedIn: boolean) => {
+      // Handle the login status change
+      this.isLogin =isLoggedIn;
+
+    });
+
   }
 
   ngAfterViewInit() {
-    this.isLogin = this.storageService.isLoggedIn();
   // check if user login or not to show dashboard
   if(this.isLogin){
       this.observer.observe(['(max-width: 800px)']).subscribe((res) => {

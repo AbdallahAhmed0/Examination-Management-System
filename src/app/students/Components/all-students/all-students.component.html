@@ -1,5 +1,14 @@
 <div class="contianer">
   <p>Students</p>
+
+  <mat-form-field appearance="standard">
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Search"
+      #input
+    />
+  </mat-form-field>
   <button mat-button class="btn-add" (click)="add()" style="color: #007bff">
   <mat-icon>add</mat-icon> Add Student
 </button>
@@ -14,14 +23,7 @@
 <button mat-button class="btn-add" (click)="importData()" style="color:#007bff;" ><mat-icon>assignment_returned</mat-icon> Import Students</button>
 
   <div>
-  <mat-form-field appearance="standard">
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Search"
-        #input
-      />
-    </mat-form-field>
+  
     <table mat-table id="adminTable" [dataSource]="dataSource" matSort>
       <!-- ID Column -->
       <ng-container matColumnDef="id">

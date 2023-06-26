@@ -5,6 +5,7 @@ import { User } from '../Model/user';
 import { catchError, map, retry, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,9 @@ export class AuthService {
     }
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private storageService:StorageServiceService,
+              private route:Router) {
 
         this.httpOption = {
           headers: new HttpHeaders({
@@ -58,8 +61,8 @@ export class AuthService {
         .pipe(catchError(this.handleError));
   }
   logout() {
-      // return this.http.post<any>(`${environment.APPURL}/auth/logout`,this.httpOption )
-      return this.http.post<any>(`http://142.93.192.45:8088/api/auth/logout`,this.httpOption )
-      .pipe(catchError(this.handleError));
+    this.storageService.clean();
+    this.route.navigate(['/login'])
+    
   }
 }
