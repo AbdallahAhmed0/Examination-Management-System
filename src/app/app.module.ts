@@ -16,6 +16,8 @@ import { DashboardAdminComponent } from './dashboard/dashboard-admin/dashboard-a
 import { DashbordExamComponent } from './dashboard/dashboard-admin/dashbord-exam/dashbord-exam.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './login/Interceptors/jwt.interceptor';
+import { QuestionModule } from './question/question.module';
+import { CourseModule } from './course/course.module';
 
 
 
@@ -35,7 +37,9 @@ import { JwtInterceptor } from './login/Interceptors/jwt.interceptor';
     AdminsModule,
     RolesModule,
     StudentsModule,
-    ExamModule
+    ExamModule,
+    QuestionModule,
+    CourseModule
 
   ],
   providers: [

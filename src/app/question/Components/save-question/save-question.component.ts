@@ -179,6 +179,7 @@ export class SaveQuestionComponent implements OnInit {
     if (api1ReturnedTrue && api2ReturnedTrue) {
       this.router.navigateByUrl('/exams');
       this.questionService.openSnackBar('Added');
+      console.log(Question)
     }
   },
   error: (err: Error) => {
