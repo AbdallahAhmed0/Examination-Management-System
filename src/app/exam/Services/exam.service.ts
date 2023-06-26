@@ -53,11 +53,11 @@ export class ExamService {
 
   getExamById(id: number): Observable<Exam> {
     return this.httpClient
-      .get<Exam>(`${environment.APPURL}/exam/${id}`, this.httpOption)
+      .get<Exam>(`${environment.APPURL}/exam/${id}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  addExam(exam: Exam): Observable<Exam> {
+  saveExam(exam: Exam): Observable<Exam> {
     return this.httpClient
       .post<Exam>(
         `${environment.APPURL}/exam/save`,
@@ -67,16 +67,7 @@ export class ExamService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  updateExam(exam: Exam): Observable<Exam> {
-    return this.httpClient
-      .post<Exam>(
-        `${environment.APPURL}/exam/save`,
-        JSON.stringify(exam),
-        this.httpOption
-      )
-      .pipe(retry(2), catchError(this.handleError));
-  }
-
+  
   deleteExam(exam: Exam) {
     return this.httpClient
       .delete(`${environment.APPURL}/exam/delete`, { body: exam })

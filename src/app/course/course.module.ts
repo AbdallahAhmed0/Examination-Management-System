@@ -8,8 +8,6 @@ import { AllCoursesComponent } from './Components/all-courses/all-courses.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../Shared/material/material.module';
 import { CourseDetailComponent } from './Components/course-detail/course-detail.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from '../login/Interceptors/jwt.interceptor';
 
 
 @NgModule({
@@ -27,10 +25,6 @@ import { JwtInterceptor } from '../login/Interceptors/jwt.interceptor';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule
-  ],
-  providers:[
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
-
   ]
 })
 export class CourseModule { }

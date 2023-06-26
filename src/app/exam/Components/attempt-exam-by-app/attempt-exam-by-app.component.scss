@@ -33,37 +33,32 @@
     }
   }
 }
-.attempt-btn {
-  background: darken(#0cd463, 7%);
-  padding: 0.3rem 2rem;
-  border-radius: 2rem;
-  color: #fff;
-  &:hover {
-    background: darken(#0cd463, 15%);
-  }
-}
-.attempt-btn:disabled{
-  background: #e8e6e6;
+.idExam{
+  background: #3174efe9;
+  color: #FFF;
+  padding: 5px;
+  width: 40%;
+
 }
 .question{
-  &__answers {
-    &--answer {
-      display: block;
-      margin: 0.5rem 0;
-      padding: 0.5rem;
-      border-radius: 0.2rem;
-      &.correct--answer,
-      .correct--answer {
-        background-color: rgba(0, 128, 0, 0.2);
-      }
-      &.wrong--answer,
-      .wrong--answer {
-        background-color: rgba(255, 0, 0, 0.2);
-      }
+&__answers {
+  &--answer {
+    display: block;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    &.correct--answer,
+    .correct--answer {
+      background-color: rgba(0, 128, 0, 0.2);
+    }
+    &.wrong--answer,
+    .wrong--answer {
+      background-color: rgba(255, 0, 0, 0.2);
     }
   }
-}  
-// Small Screens
+}
+
+}// Small Screens
 @media (max-width: 992px){
   .container{
     width: 95%;
@@ -87,3 +82,4 @@
     }
 
 }
+

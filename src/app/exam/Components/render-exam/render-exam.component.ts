@@ -78,6 +78,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
         // Handle regular questions
         const regularQuestions = data.questions;
         this.questionPages = this.chunk([...this.codeQuestions,...regularQuestions], +data.questionsPerPage);
+        console.log(data)
         this.questionsPerPage = +data.questionsPerPage;
       }
     });

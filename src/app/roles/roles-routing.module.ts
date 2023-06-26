@@ -6,8 +6,8 @@ import { AddRoleComponent } from './Components/add-role/add-role.component';
 
 const routes: Routes = [
   {path:'',component:RolesComponent},
-  {path:'roles/edit/:id',component:EditRoleComponent},
-  {path:'roles/add',component:AddRoleComponent}
+  {path:'edit/:id',component:EditRoleComponent},
+  {path:'add',component:AddRoleComponent}
 ];
 
 @NgModule({

@@ -8,7 +8,6 @@ import { CourseDetailComponent } from './Components/course-detail/course-detail.
 
 const routes: Routes = [
   {path: '', component:AllCoursesComponent},
-  {path:'courses',component:AllCoursesComponent},
   {path:'add',component:AddCourseComponent},
   {path:'edit/:id',component:EditCourseComponent},
   {path:'detail/:id',component:CourseDetailComponent}

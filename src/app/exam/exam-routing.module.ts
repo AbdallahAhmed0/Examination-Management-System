@@ -10,20 +10,22 @@ import { CodeQuestionComponent } from './Components/questions-render-exam/code-q
 import { ExamStudentsComponent } from './Components/exam-students/exam-students.component';
 import { PreventUrlChangeGuard } from './prevent-url-change.guard';
 import { PreventRenderWithoutAttemptGuard } from './hasVisitedAttemptRoute.guard';
+import { AttemptExamByAppComponent } from './Components/attempt-exam-by-app/attempt-exam-by-app.component';
 
 const routes: Routes = [
   {path: '', component:AllExamsComponent},
-  {path:'exams/add',component:AddExamComponent},
-  {path:'exams/edit/:id',component:EditExamComponent},
-  {path:'exams/attempt/:examId',component:AttemptExamComponent},
-  {path:'exams/render/:id',component:RenderExamComponent,
+  {path:'add',component:AddExamComponent},
+  {path:'edit/:id',component:EditExamComponent},
+  {path:'attempt/:examId',component:AttemptExamComponent},
+  {path:'attemptByApp/:examId',component:AttemptExamByAppComponent},
+  {path:'render/:id',component:RenderExamComponent,
   canDeactivate: [PreventUrlChangeGuard],
   canActivate: [PreventRenderWithoutAttemptGuard]
 
 },
-  {path:'exams/showAnswers/:attemptId',component:ExamAnswersComponent},
-  {path:'exams/code',component:CodeQuestionComponent},
-  {path:"exams/showStudents/:id",component:ExamStudentsComponent}
+  {path:'showAnswers/:attemptId',component:ExamAnswersComponent},
+  {path:'code',component:CodeQuestionComponent},
+  {path:"showStudents/:id",component:ExamStudentsComponent}
 
 ];
 

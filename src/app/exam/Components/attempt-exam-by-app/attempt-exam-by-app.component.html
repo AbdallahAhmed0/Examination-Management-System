@@ -5,18 +5,17 @@
       <ng-container *ngIf="examInfo">
         <div class="exam-info__container">
           <div class="exam-info__data">
+            <h3 class="idExam">Exam Id: {{examInfo.id}}</h3>
             <h3>Exam Name: <span>{{examInfo.examName}}</span></h3>
             <h3>Duration: <span>{{examInfo.duration}}</span></h3>
             <h3>Start Time: <span>{{examInfo.startTime}}</span></h3>
             <h3>End Time: <span>{{examInfo.endTime}}</span></h3>
             <h3>Success Rate: <span>{{examInfo.successRate}}</span></h3>
-            <div class="question__answers--answer " [ngClass]="{'correct--answer':result.passed,
+          </div>
+        </div>
+        <div class="question__answers--answer " [ngClass]="{'correct--answer':result.passed,
         'wrong--answer':!result.passeds}" *ngIf="ifUSerAttemptExam">
         Score: {{result.score}} ,Passed: {{result.passed}} </div>
-          </div>
-          <button mat-raised-button class="attempt-btn mat-h3" [hidden]="!examInfo.state || ifUSerAttemptExam " (click)="startExam(examInfo.id)">Start Exam</button>
-          
-        </div>
       </ng-container>
     </div>
   </section>

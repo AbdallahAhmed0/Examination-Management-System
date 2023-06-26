@@ -110,8 +110,9 @@
             <button mat-menu-item [routerLink]="['/save', row.id]">Questions</button>
             <button mat-menu-item (click)="edit(row.id)">Edit Exam</button>
             <button mat-menu-item (click)="delete(row)">Delete Exam</button>
-            <button mat-menu-item [routerLink]="['exams/attempt/', row.id]">Attempt Exam</button>
-            <button mat-menu-item [routerLink]="['exams/showStudents/', row.id]">Student Attempt Exam</button>
+            <button mat-menu-item *ngIf="!row.noCheatingApp" [routerLink]="['attempt/', row.id]">Attempt Exam</button>
+            <button mat-menu-item *ngIf="row.noCheatingApp" [routerLink]="['attemptByApp/', row.id]">Attempt Exam</button>
+            <button mat-menu-item [routerLink]="['showStudents/', row.id]">Student Attempt Exam</button>
           </mat-menu>
           <!-- <div class="actions">
             <a title="View" (click)="attemptExam(row.id)" >

@@ -7,10 +7,9 @@ import { ImportStudentComponent } from './Components/import-student/import-stude
 
 const routes: Routes = [
   {path: '', component:AllStudentsComponent},
-  {path:'students',component:AllStudentsComponent},
-  {path:'students/add',component:AddStudentsComponent},
-  {path:'students/edit/:id',component:EditStudentsComponent},
-  {path:'students/import',component:ImportStudentComponent}
+  {path:'add',component:AddStudentsComponent},
+  {path:'edit/:id',component:EditStudentsComponent},
+  {path:'import',component:ImportStudentComponent}
 
 ];
 

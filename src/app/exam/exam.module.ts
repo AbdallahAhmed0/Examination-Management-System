@@ -20,8 +20,7 @@ import { ExamStudentsComponent } from './Components/exam-students/exam-students.
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { PreventUrlChangeGuard } from './prevent-url-change.guard';
 import { PreventRenderWithoutAttemptGuard } from './hasVisitedAttemptRoute.guard';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from '../login/Interceptors/jwt.interceptor';
+import { AttemptExamByAppComponent } from './Components/attempt-exam-by-app/attempt-exam-by-app.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,8 @@ import { JwtInterceptor } from '../login/Interceptors/jwt.interceptor';
     TrueFalseQuestionComponent,
     ExamAnswersComponent,
     CodeQuestionComponent,
-    ExamStudentsComponent
+    ExamStudentsComponent,
+    AttemptExamByAppComponent
   ],
   imports: [
     CommonModule,
@@ -46,9 +46,9 @@ import { JwtInterceptor } from '../login/Interceptors/jwt.interceptor';
     ReactiveFormsModule,
     MonacoEditorModule.forRoot()
   ],
-  providers: [PreventUrlChangeGuard,PreventRenderWithoutAttemptGuard,
-      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
-  
+  providers: [
+    PreventUrlChangeGuard,
+    PreventRenderWithoutAttemptGuard
     ],
 
 })

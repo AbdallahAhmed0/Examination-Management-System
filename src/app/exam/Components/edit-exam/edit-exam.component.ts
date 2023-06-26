@@ -52,6 +52,7 @@ export class EditExamComponent implements OnInit {
               state:[false,[]],
               questionsPerPage:[data.questionsPerPage,[Validators.required]],
               showResult: [data.showResult],
+              noCheatingApp:[data.noCheatingApp],
               startTime:[this.formatDateToform(data.startTime.toString()),[Validators.required]],
               endTime:[this.formatDateToform(data.endTime.toString()),[Validators.required]]
 
@@ -82,7 +83,7 @@ export class EditExamComponent implements OnInit {
       this.EditExam.id=this.id.toString();
 
 
-        this.subExam= this.examService.updateExam(this.EditExam).subscribe(observer);
+        this.subExam= this.examService.saveExam(this.EditExam).subscribe(observer);
 
     }
     goback(){
@@ -149,6 +150,9 @@ export class EditExamComponent implements OnInit {
     }
   get showResult(){
       return this.newExam.get('showResult')
+    }
+    get noCheatingApp(){
+      return this.newExam.get('noCheatingApp')
     }
 
   }

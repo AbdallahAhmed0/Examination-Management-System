@@ -61,7 +61,7 @@ export class StudentsService {
     return this.httpClient
       .post<Student>(
         `${environment.APPURL}/students/add`,
-        JSON.stringify(student))
+        JSON.stringify(student),this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -69,7 +69,7 @@ export class StudentsService {
     return this.httpClient
       .post<Student>(
         `${environment.APPURL}/students/update`,
-        JSON.stringify(student))
+        JSON.stringify(student),this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
 

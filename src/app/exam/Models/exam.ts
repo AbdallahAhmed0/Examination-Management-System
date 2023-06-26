@@ -10,6 +10,7 @@ export interface Exam {
   state: boolean;
   questionsPerPage: string;
   showResult: boolean;
+  noCheatingApp: boolean,
   course: Course;
   question: Question[];
 }

@@ -26,7 +26,7 @@ import { ImportAdminComponent } from './Components/import-admin/import-admin.com
     FormsModule,
     MaterialModule,
     RolesModule
-  ],
+  ]
 
 })
 export class AdminsModule { }

@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
               
                 if (this.roles.some((role:any) => role.authority === 'SHOW_EXAMS_LIST_ROLE') ||
                     this.roles.some((role:any) => role.authority === 'SHOW_EXAM_ROLE')) {
-                      console.log(this.roles)
                   this.router.navigate(['/dashboard']);
   
                 }else if(this.roles.some((role:any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE')){

@@ -39,6 +39,7 @@ export class AddExamComponent implements OnInit {
       state:[false,[]],
       questionsPerPage:["",[Validators.required]],
       showResult: [true],
+      noCheatingApp:[true],
       startTime:["",[Validators.required]],
       endTime:["",[Validators.required]]
 
@@ -60,8 +61,6 @@ export class AddExamComponent implements OnInit {
     this.startTime?.setValue(this.transformDate(start))
     this.endTime?.setValue(this.transformDate(end))
 
-
-    console.log(this.newExam.value)
     const observer={
       next: (exam:Exam) => {
         this.router.navigateByUrl('/exams');
@@ -72,7 +71,7 @@ export class AddExamComponent implements OnInit {
         }
     }
 
-    this.subExam= this.examService.addExam(this.newExam.value).subscribe(observer);
+    this.subExam= this.examService.saveExam(this.newExam.value).subscribe(observer);
 
 }
 
@@ -128,5 +127,8 @@ export class AddExamComponent implements OnInit {
   }
 get showResult(){
     return this.newExam.get('showResult')
+  }
+  get noCheatingApp(){
+    return this.newExam.get('noCheatingApp')
   }
 }
