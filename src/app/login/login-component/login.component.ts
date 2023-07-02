@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  roles:Object[]=[];
+  permissions:Object[]=[];
 
   constructor(
         private formBuilder: FormBuilder,
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
 
       if (this.storageService.isLoggedIn()) {
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().permissions;
+        this.permissions = this.storageService.getUser().permissions;
       }
 
   }
@@ -53,13 +53,13 @@ export class LoginComponent implements OnInit {
                 const decodedToken = helper.decodeToken(response.token);
 
                 this.storageService.saveUser(decodedToken,response);
-                this.roles = decodedToken.permissions;                
-              
-                if (this.roles.some((role:any) => role.authority === 'SHOW_EXAMS_LIST_ROLE') ||
-                    this.roles.some((role:any) => role.authority === 'SHOW_EXAM_ROLE')) {
+                this.permissions = decodedToken.permissions;
+
+                if (this.permissions.some((role:any) => role.authority === 'SHOW_EXAMS_LIST_ROLE') ||
+                    this.permissions.some((role:any) => role.authority === 'SHOW_EXAM_ROLE')) {
                   this.router.navigate(['/dashboard']);
-  
-                }else if(this.roles.some((role:any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE')){
+
+                }else if(this.permissions.some((role:any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE')){
                   this.router.navigate(['/courses']);
 
                 }else{

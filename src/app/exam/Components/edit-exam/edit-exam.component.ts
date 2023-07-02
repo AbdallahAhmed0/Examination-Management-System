@@ -38,7 +38,6 @@ export class EditExamComponent implements OnInit {
 
         this.examService.getExamById(this.id).subscribe(data =>{
             this.exam=data;
-
             this.editCourse=this.exam.course;
             this.sliderValue=data.successRate
             this.sliderValue=data.successRate
@@ -96,7 +95,6 @@ export class EditExamComponent implements OnInit {
     }
     transformDate(time:any){
       let transformedDate
-      console.log(time);
 
 
      let myDate = new Date(time);
