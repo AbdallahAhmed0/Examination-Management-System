@@ -1,6 +1,6 @@
+import { Course } from './../course/course.model';
 import { Injectable } from '@angular/core';
 import { CourseService } from '../course/course.service';
-import { Course } from '../course/course.model';
 import { Observable } from 'rxjs';
 import { Exam } from '../exam/Models/exam';
 import { Student } from '../students/Models/student';
@@ -10,17 +10,33 @@ import { Student } from '../students/Models/student';
 })
 export class CourseSharedServiceService {
 
+
   constructor(private courseService: CourseService) { }
 
-  getCoursesByAdminId(adminId: number): Observable<Course[]> {
-    return this.courseService.getCoursesByAdminId(adminId);
+  getCoursesByAdminId(adminId: number): Course[] {
+    let courses: Course[] = [];
+    this.courseService.getCoursesByAdminId(adminId).subscribe( data => {
+      courses.push(...data);
+    });
+    return courses;
   }
 
-  getExamsForCourse(courseId: number): Observable<Exam[]> {
-    return this.courseService.getExamsForCourse(courseId);
+  getExamsForCourses(courses: Course[]): Exam[] {
+    let exams: Exam[] = [];
+    for (let course of courses) {
+      let courseId: number = course.id? course.id : 0;
+      this.courseService.getExamsForCourse(courseId).subscribe( data => {
+        exams.push(...data);
+      });
+    }
+    return exams;
   }
 
-  getStudentsByCourseId(courseId: number): Observable<Student[]> {
-    return this.courseService.getStudentsByCourseId(courseId);
+  getStudentsByCourseId(courseId: number): Student[] {
+    let students: Student[] = [];
+    this.courseService.getStudentsByCourseId(courseId).subscribe( data => {
+      students.push(...data);
+    });
+    return students;
   }
 }

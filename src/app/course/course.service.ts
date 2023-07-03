@@ -79,7 +79,7 @@ export class CourseService {
 
       .pipe(retry(2), catchError(this.handleError));
   }
-  
+
   getExamsofCourse(id: number): Observable<Exam[]> {
     return this.httpClient
       .get<Exam[]>(`${environment.APPURL}/exam/getAll/${id}`)
