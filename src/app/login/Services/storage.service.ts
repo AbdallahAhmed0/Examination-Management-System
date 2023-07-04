@@ -7,7 +7,7 @@ const TOKEN = 'token';
 @Injectable({
   providedIn: 'root'
 })
-export class StorageServiceService {
+export class StorageService {
   private loggedInSubject: BehaviorSubject<boolean>;
   public loggedIn$: Observable<boolean>;
 
