@@ -9,6 +9,7 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Exam } from '../exam/Models/exam';
+import { Student } from '../students/Models/student';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,31 @@ export class CourseService {
       .get<Course>(`${environment.APPURL}/courses/get/${id}`, this.httpOption)
       .pipe(retry(2), catchError(this.handleError));
   }
+
+  getCoursesByAdminId(adminId: number): Observable<Course[]> {
+    return this.httpClient
+      .get<Course[]>(
+        `${environment.APPURL}/courses/getCoursesByAdminId/${adminId}`
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getExamsForCourse(courseId: number): Observable<Exam[]> {
+    return this.httpClient
+      .get<Exam[]>(
+        `${environment.APPURL}/courses/getAllCourseExams/${courseId}`
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getStudentsByCourseId(courseId: number): Observable<Student[]> {
+    return this.httpClient
+      .get<Student[]>(
+        `${environment.APPURL}/courses/getStudentsByCourseId/${courseId}`
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
 
   openSnackBar(message: string) {
     this._snackBar.open(message + ' sucessfully', 'close', {

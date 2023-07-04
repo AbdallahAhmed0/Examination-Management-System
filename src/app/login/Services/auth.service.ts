@@ -57,8 +57,13 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     // return this.http.post<any>(`${environment.APPURL}/auth/login`,JSON.stringify({email:email,password:password}),this.httpOption )
 
+<<<<<<< HEAD
     return this.http.post<any>(`http://142.93.192.45:8088/api/auth/login`, JSON.stringify({ email: email, password: password }), this.httpOption)
       .pipe(catchError(this.handleError));
+=======
+    return this.http.post<any>(`http://142.93.192.45:8087/api/auth/login`,JSON.stringify({email:email,password:password}),this.httpOption )
+        .pipe(catchError(this.handleError));
+>>>>>>> 9095859eefeefd5ede17393ad6884d242ea8d017
   }
   logout() {
     this.storageService.clean();
