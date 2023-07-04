@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
 
 import * as XLSX from 'xlsx';
+import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 
 @Component({
   selector: 'app-all-exams',
@@ -31,6 +32,7 @@ export class AllExamsComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
 
   exams!: Exam[];
+  permissions: Object[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -38,11 +40,19 @@ export class AllExamsComponent implements OnInit {
   constructor(
     private examService: ExamService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private storageService: StorageServiceService
   ) {}
 
   ngOnInit() {
+    this.permissions = this.storageService.getUser().permissions;
+    if (
+      this.permissions.some(
+        (role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'
+      )
+    ) {
     this.getExams();
+    }
   }
 
   applyFilter(event: Event) {

@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Exam } from 'src/app/exam/Models/exam';
 import { ExamService } from 'src/app/exam/Services/exam.service';
+import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 
 @Component({
   selector: 'app-dashbord-exam',
@@ -25,15 +26,26 @@ export class DashbordExamComponent implements OnInit {
   ];
   dataSource!: MatTableDataSource<any>;
   exams!: Exam[];
+  permissions: Object[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private examService: ExamService) {}
+  constructor(
+    private examService: ExamService,
+    private storageService: StorageServiceService
+  ) {}
 
   ngOnInit(): void {
-    this.getExams();
-    this.no++;
+    this.permissions = this.storageService.getUser().permissions;
+    if (
+      this.permissions.some(
+        (role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'
+      )
+    ) {
+      this.getExams();
+      this.no++;
+    }
   }
 
   toggleLiveExams() {

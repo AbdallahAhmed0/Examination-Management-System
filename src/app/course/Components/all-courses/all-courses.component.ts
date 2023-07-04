@@ -5,6 +5,7 @@ import { CourseService } from './../../course.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
 import { CustomDialogeComponent } from 'src/app/Shared/material/custom-dialoge/custom-dialoge.component';
+import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 
 
 @Component({
@@ -14,13 +15,22 @@ import { CustomDialogeComponent } from 'src/app/Shared/material/custom-dialoge/c
 })
 export class AllCoursesComponent implements OnInit {
   courses!:Course[];
+  permissions: Object[] = [];
+
   sentDataToDialoge:object={value:'',header:''};
   constructor(private courseService:CourseService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private storageService: StorageServiceService) { }
 
   ngOnInit(): void {
+    this.permissions = this.storageService.getUser().permissions;
+    if (
+      this.permissions.some(
+        (role: any) => role.authority === 'SHOW_STUDENTS_LIST_ROLE'
+      )
+    ) {
     this.getCourses()
-
+    }
   }
 
 getCourses(){
@@ -39,7 +49,7 @@ deleteCourse(course:any){
       data: { value: 'Must Delete All Teachers in this Course Before Delete.',
               header:'Not Allowed' } // Pass the value as an object property
     });
-    
+
     dialogRef.afterClosed().subscribe((result) => {
     });
       // check if course contain Exams
@@ -50,7 +60,7 @@ deleteCourse(course:any){
       data: { value: 'Must Delete All Exams in this Course Before Delete.',
               header:'Not Allowed' } // Pass the value as an object property
     });
-    
+
     dialogRef.afterClosed().subscribe((result) => {
     });
   }else{

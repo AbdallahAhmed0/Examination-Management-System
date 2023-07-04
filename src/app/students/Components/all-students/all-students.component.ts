@@ -11,6 +11,7 @@ import { Student } from '../../Models/student';
 import { StudentsService } from '../../Services/students.service';
 
 import * as XLSX from 'xlsx';
+import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 
 @Component({
   selector: 'app-all-students',
@@ -31,6 +32,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
   dataSource!: MatTableDataSource<any>;
 
   students!: Student[];
+  permissions: Object[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -38,7 +40,8 @@ export class AllStudentsComponent implements OnInit, OnChanges {
   constructor(
     private studentService: StudentsService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private storageService: StorageServiceService
   ) {}
 
   ngOnChanges(): void {
@@ -46,7 +49,14 @@ export class AllStudentsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.permissions = this.storageService.getUser().permissions;
+    if (
+      this.permissions.some(
+        (role: any) => role.authority === 'SHOW_STUDENTS_LIST_ROLE'
+      )
+    ) {
     this.getStudents();
+    }
   }
 
   applyFilter(event: Event) {
