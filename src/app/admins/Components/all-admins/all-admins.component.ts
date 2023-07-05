@@ -10,7 +10,7 @@ import { Admin } from './../../Models/admin';
 import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
 
 import * as XLSX from 'xlsx';
-import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
+import { StorageService} from 'src/app/login/Services/storage.service';
 
 @Component({
   selector: 'app-all-admins',
@@ -41,7 +41,7 @@ export class AllAdminsComponent implements OnInit, OnDestroy {
     private adminService: AdminsService,
     private router: Router,
     private dialog: MatDialog,
-    private storageService: StorageServiceService
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {

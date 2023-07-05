@@ -11,7 +11,7 @@ import { Student } from '../../Models/student';
 import { StudentsService } from '../../Services/students.service';
 
 import * as XLSX from 'xlsx';
-import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
+import { StorageService } from 'src/app/login/Services/storage.service';
 
 @Component({
   selector: 'app-all-students',
@@ -41,7 +41,7 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     private studentService: StudentsService,
     private router: Router,
     private dialog: MatDialog,
-    private storageService: StorageServiceService
+    private storageService: StorageService
   ) {}
 
   ngOnChanges(): void {

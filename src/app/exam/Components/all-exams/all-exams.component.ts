@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
 
 import * as XLSX from 'xlsx';
-import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
+import { StorageService } from 'src/app/login/Services/storage.service';
 
 @Component({
   selector: 'app-all-exams',
@@ -41,7 +41,7 @@ export class AllExamsComponent implements OnInit {
     private examService: ExamService,
     private router: Router,
     private dialog: MatDialog,
-    private storageService: StorageServiceService
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {

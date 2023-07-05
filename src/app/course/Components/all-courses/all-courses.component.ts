@@ -5,7 +5,7 @@ import { CourseService } from './../../course.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
 import { CustomDialogeComponent } from 'src/app/Shared/material/custom-dialoge/custom-dialoge.component';
-import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
+import { StorageService } from 'src/app/login/Services/storage.service';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class AllCoursesComponent implements OnInit {
   sentDataToDialoge:object={value:'',header:''};
   constructor(private courseService:CourseService,
               public dialog: MatDialog,
-              private storageService: StorageServiceService) { }
+              private storageService: StorageService) { }
 
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;

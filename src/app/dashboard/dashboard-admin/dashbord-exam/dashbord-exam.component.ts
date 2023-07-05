@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Exam } from 'src/app/exam/Models/exam';
 import { ExamService } from 'src/app/exam/Services/exam.service';
-import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
+import { StorageService } from 'src/app/login/Services/storage.service';
 
 @Component({
   selector: 'app-dashbord-exam',
@@ -33,7 +33,7 @@ export class DashbordExamComponent implements OnInit {
 
   constructor(
     private examService: ExamService,
-    private storageService: StorageServiceService
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {

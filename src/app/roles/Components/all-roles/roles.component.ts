@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Role } from '../../Models/role';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
-import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
+import { StorageService} from 'src/app/login/Services/storage.service';
 
 @Component({
   selector: 'app-roles',
@@ -24,7 +24,7 @@ export class RolesComponent implements OnInit {
     private rolesService: RolesService,
     private router: Router,
     private dialog: MatDialog,
-    private storageService: StorageServiceService
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
