@@ -26,7 +26,7 @@ export class AllCoursesComponent implements OnInit {
     this.permissions = this.storageService.getUser().permissions;
     if (
       this.permissions.some(
-        (role: any) => role.authority === 'SHOW_STUDENTS_LIST_ROLE'
+        (role: any) => role.authority === 'SHOW_COURSES_LIST_ROLE'
       )
     ) {
     this.getCourses()
