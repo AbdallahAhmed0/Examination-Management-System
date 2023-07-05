@@ -1,15 +1,15 @@
 import { ExamService } from './../../Services/exam.service';
 import { Question, Exam } from './../../Models/exam';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { coding } from 'src/app/question/Models/codingQuestion';
 import { MatDialog } from '@angular/material/dialog';
 import { EndExamDialogeComponent } from 'src/app/Shared/material/end-exam-dialoge/end-exam-dialoge.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
 import { tap } from 'rxjs';
+import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
+import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
 
 @Component({
   selector: 'app-render-exam',
@@ -49,16 +49,22 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     private router:Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private preventGuard: PreventRenderWithoutAttemptGuard
+    private storageServices:StorageServiceService,
+    private preventGuard:PreventRenderWithoutAttemptGuard,
+
   ) {}
 
 
   ngOnInit(): void {
     const examId = parseInt(this.route.snapshot.paramMap.get('id') as string);
     this.renderExam(examId);
-    // Get the array parameter from the state object
-    this.attemptData = history.state.data;
-    console.log(history.state.data)
+
+     // Delay before getting attempt Data from local storage
+  setTimeout(() => {
+    this.attemptData = JSON.parse(this.storageServices.getAttemptData());
+    console.log(this.attemptData.id);
+  }, 2000); // Adjust the delay time (in milliseconds) as needed
+
     if(!this.attemptData){
       this.router.navigate(['/exams']);
     }
@@ -78,7 +84,6 @@ export class RenderExamComponent implements OnInit,OnDestroy {
         // Handle regular questions
         const regularQuestions = data.questions;
         this.questionPages = this.chunk([...this.codeQuestions,...regularQuestions], +data.questionsPerPage);
-        console.log(data)
         this.questionsPerPage = +data.questionsPerPage;
       }
     });
@@ -86,8 +91,27 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
 
   startTimer(duration: number) {
-    let minutes = duration;
-    let seconds = 0;
+    let startTime: number;
+
+    // Check if the starting time is stored in local storage
+    const storedStartTime = localStorage.getItem('examStartTime');
+    if (storedStartTime) {
+      startTime = Number(storedStartTime);
+    } else {
+      startTime = Date.now(); // Set the starting time to the current timestamp
+      localStorage.setItem('examStartTime', startTime.toString()); // Store the starting time in local storage
+    }
+
+    // Calculate the elapsed time since the start
+    const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+
+    let minutes = duration - Math.floor(elapsedTime / 60);
+    let seconds = 60 - (elapsedTime % 60);
+    if (seconds === 60) {
+      seconds = 0;
+      minutes++;
+    }
+
     this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
     // Create a setInterval function that will update the remaining time every second
@@ -99,6 +123,10 @@ export class RenderExamComponent implements OnInit,OnDestroy {
         minutes--;
         if (minutes < 0) {
           // Submit the exam if time is up
+          this.endExam();
+          clearInterval(this.intervalId);
+          localStorage.removeItem('examStartTime'); // Clear the stored starting time
+          return;
         } else {
           seconds = 59;
         }
@@ -108,13 +136,13 @@ export class RenderExamComponent implements OnInit,OnDestroy {
       // Check if both minutes and seconds are equal to 0
       if (minutes === 0 && seconds === 0) {
         // Submit the exam if time is up
-        this.submitExam();
+        this.endExam();
         clearInterval(this.intervalId);
+        localStorage.removeItem('examStartTime'); // Clear the stored starting time
       }
     }, 1000);
   }
-
-  chunk(questions: Question[], size: number): Question[][] {
+    chunk(questions: Question[], size: number): Question[][] {
     return Array.from(
       { length: Math.ceil(questions.length / size) },
       (_, index) => questions.slice(index * size, index * size + size)
@@ -215,6 +243,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   }
 
   savePage(): void {
+    console.log(this.attemptData)
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
     // to sent question by question
@@ -259,6 +288,7 @@ endExam(){
       // sent to guards to allow change routing
       this.examService.variableSubject.next(true);
       this.preventGuard.setAttemptRoute(false);
+
       // create result
       this.examService.createResult(this.attemptData.id).subscribe(
         data =>{ console.log(data) });
@@ -273,7 +303,7 @@ endExam(){
   }
   }
   this.examService.endExam(this.attemptData.id).subscribe(observer);
-
+  // remove Attempt Date on local storge
 }
 ngOnDestroy(): void {
   clearInterval(this.intervalId);

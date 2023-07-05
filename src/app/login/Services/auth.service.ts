@@ -63,6 +63,5 @@ export class AuthService {
   logout() {
     this.storageService.clean();
     this.route.navigate(['/login'])
-
   }
 }

@@ -33,7 +33,6 @@ export class StorageServiceService {
   public getUser(): any {
     const user = window.sessionStorage.getItem(USER_KEY);
     if (user) {
-      // console.log(user);
       return JSON.parse(user);
     }
 
@@ -57,4 +56,16 @@ export class StorageServiceService {
 
     return false;
   }
+  saveAttemptData(data:any){
+    window.sessionStorage.removeItem('AttEMPT_DATA');
+    window.sessionStorage.setItem('AttEMPT_DATA', JSON.stringify(data));
+
+  }
+  getAttemptData():any {
+    return window.sessionStorage.getItem('AttEMPT_DATA');
+  }
+  removeAttemptData(){
+    window.sessionStorage.removeItem('AttEMPT_DATA');
+  }
+
 }
