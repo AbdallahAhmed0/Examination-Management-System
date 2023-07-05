@@ -4,10 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import {DialogeComponent} from '../../../Shared/material/dialog/dialog.component';
 import { ExamService } from './../../Services/exam.service';
 
 
@@ -27,9 +26,7 @@ export class ExamStudentsComponent implements OnInit {
 
 
   constructor(private ExamService:ExamService,
-    private router:Router,
-    private activatedRoute:ActivatedRoute,
-    private dialog: MatDialog) { }
+    private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
 

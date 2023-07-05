@@ -91,57 +91,51 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
 
   startTimer(duration: number) {
+    const storedStartTime = localStorage.getItem('examStartTime');
     let startTime: number;
 
-    // Check if the starting time is stored in local storage
-    const storedStartTime = localStorage.getItem('examStartTime');
     if (storedStartTime) {
       startTime = Number(storedStartTime);
     } else {
-      startTime = Date.now(); // Set the starting time to the current timestamp
-      localStorage.setItem('examStartTime', startTime.toString()); // Store the starting time in local storage
+      startTime = Date.now();
+      localStorage.setItem('examStartTime', startTime.toString());
     }
 
-    // Calculate the elapsed time since the start
     const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    const remainingTime = duration * 60 - elapsedTime;
 
-    let minutes = duration - Math.floor(elapsedTime / 60);
-    let seconds = 60 - (elapsedTime % 60);
-    if (seconds === 60) {
-      seconds = 0;
-      minutes++;
+    if (remainingTime <= 0) {
+      this.endExam();
+      return;
     }
+
+    let minutes = Math.floor(remainingTime / 60);
+    let seconds = remainingTime % 60;
 
     this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-    // Create a setInterval function that will update the remaining time every second
     this.intervalId = setInterval(() => {
-      // Decrement the seconds
       seconds--;
       if (seconds < 0) {
-        // Decrement the minutes if seconds reach 0
         minutes--;
         if (minutes < 0) {
-          // Submit the exam if time is up
           this.endExam();
           clearInterval(this.intervalId);
-          localStorage.removeItem('examStartTime'); // Clear the stored starting time
           return;
         } else {
           seconds = 59;
         }
       }
-      // Update the remaining time
       this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-      // Check if both minutes and seconds are equal to 0
+
       if (minutes === 0 && seconds === 0) {
-        // Submit the exam if time is up
         this.endExam();
         clearInterval(this.intervalId);
-        localStorage.removeItem('examStartTime'); // Clear the stored starting time
+        localStorage.removeItem('examStartTime');
       }
     }, 1000);
   }
+
     chunk(questions: Question[], size: number): Question[][] {
     return Array.from(
       { length: Math.ceil(questions.length / size) },
@@ -195,20 +189,6 @@ export class RenderExamComponent implements OnInit,OnDestroy {
           }
         })
       ).subscribe();
-    // check if Answer Compilation Error
-      // this.examService.getStatusCode(attemptId, questionId).pipe(
-      //   tap((response:any) => {
-      //   this.statusCode = response
-      //     if(!this.statusCode.status){
-      //         const snackBarRef = this.snackBar.open('Compilation Error '+this.statusCode.log, 'Close', {
-      //           duration: 7000,
-      //           verticalPosition: 'top',
-      //           panelClass: ['mat-toolbar', 'mat-warn']
-      //         })
-
-      //       }
-      //     })
-      //   ).subscribe();
     }
 
 
@@ -283,6 +263,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
 }
 endExam(){
+  localStorage.removeItem('examStartTime');
   const observer={
     next: (answer:any) => {
       // sent to guards to allow change routing
@@ -299,7 +280,6 @@ endExam(){
     }else{
       this.router.navigate(['/courses']);
     }
-    history.pushState(null, '');
   }
   }
   this.examService.endExam(this.attemptData.id).subscribe(observer);

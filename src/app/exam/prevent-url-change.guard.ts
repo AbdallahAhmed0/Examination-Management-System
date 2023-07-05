@@ -21,8 +21,7 @@ export class PreventUrlChangeGuard implements CanDeactivate<any> {
       // Subscribe to the dialog's afterClosed event
       if(this.examServices.variableSubject.getValue()){
         observer.next(true); // allow the URL change
-        this.examServices.variableSubject.next(false);
-
+        // this.examServices.variableSubject.next(false);
       }else{
         const dialogRef = this.dialog.open(CustomDialogeComponent, {
           width: '400px',

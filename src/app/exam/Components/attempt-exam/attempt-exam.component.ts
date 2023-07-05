@@ -69,11 +69,10 @@ export class AttemptExamComponent implements OnInit {
 
         //accses to start exam
         this.preventGuard.setAttemptRoute(true);
-
         this._examService
         .attemptExam(this.examId, this.userId)
         .subscribe((data) => {
-          
+
         //save attempt Data in local storage
           this.storageService.saveAttemptData(data);
           this._examService.renderExam(examId);

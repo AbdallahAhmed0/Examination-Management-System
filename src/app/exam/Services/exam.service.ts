@@ -67,7 +67,7 @@ export class ExamService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  
+
   deleteExam(exam: Exam) {
     return this.httpClient
       .delete(`${environment.APPURL}/exam/delete`, { body: exam })
