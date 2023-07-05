@@ -5,7 +5,7 @@ import { Exam } from '../../Models/exam';
 import { ExamService } from '../../Services/exam.service';
 import { StartExamDialogeComponent } from 'src/app/Shared/material/start-exam-dialoge/start-exam-dialoge.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
+import { PreventRenderWithoutAttemptGuard } from '../../guards/hasVisitedAttemptRoute.guard';
 import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 @Component({
   selector: 'app-attempt-exam',

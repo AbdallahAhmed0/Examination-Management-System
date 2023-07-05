@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
       if (this.storageService.isLoggedIn()) {
         this.isLoggedIn = true;
         this.permissions = this.storageService.getUser().permissions;
+        console.log(this.permissions);
+
       }
 
   }

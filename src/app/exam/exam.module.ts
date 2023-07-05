@@ -18,8 +18,8 @@ import { CodeQuestionComponent } from './Components/questions-render-exam/code-q
 import { ExamStudentsComponent } from './Components/exam-students/exam-students.component';
 
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
-import { PreventUrlChangeGuard } from './prevent-url-change.guard';
-import { PreventRenderWithoutAttemptGuard } from './hasVisitedAttemptRoute.guard';
+import { PreventUrlChangeGuard } from './guards/prevent-url-change.guard';
+import { PreventRenderWithoutAttemptGuard } from './guards/hasVisitedAttemptRoute.guard';
 import { AttemptExamByAppComponent } from './Components/attempt-exam-by-app/attempt-exam-by-app.component';
 
 @NgModule({
