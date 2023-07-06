@@ -17,6 +17,7 @@ export class AttemptExamComponent implements OnInit {
   examInfo!: Exam;
   examId!: number;
   userId:number=0;
+  permissions: Object[] = [];
   attemptId:number=0;
   result:any;
 
@@ -36,7 +37,11 @@ export class AttemptExamComponent implements OnInit {
   ngOnInit(): void {
     this.getExamInfo();
     this.userId = this.storageService.getUser().userId;
-    this.checkUserAttemptExamBefore(this.userId,this.examId)
+    this.permissions = this.storageService.getUser().permissions;
+    if (!(this.permissions.some((role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'))){
+      
+      this.checkUserAttemptExamBefore(this.userId,this.examId)
+    }
 
   }
 
