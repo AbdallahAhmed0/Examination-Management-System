@@ -21,9 +21,8 @@ export class AttemptExamComponent implements OnInit {
   attemptId:number=0;
   result:any;
 
-  ifUSerAttemptExam:boolean=false;
-  userAttemptsExam:any[]=[];
-  examAttemptsByUser:any[]=[];
+  ifUSerAttemptExam:number = 0;
+
   constructor(
     private _examService: ExamService,
     private _activatedRoute: ActivatedRoute,
@@ -38,13 +37,8 @@ export class AttemptExamComponent implements OnInit {
   ngOnInit(): void {
     this.getExamInfo();
     this.userId = this.storageService.getUser().userId;
-    this.getAllAttemptsByUserId(this.userId);
-    this.getAllUsersAttemptExam(this.examId);
-  this.ifUSerAttemptExam = this.CheckIfStudentAttemptExam(this.userAttemptsExam,this.examAttemptsByUser);
-  console.log(this.userAttemptsExam)
-  if(this.attemptId){
-    this.result = this.getResult(this.attemptId);
-  }
+    this.checkUserAttemptExamBefore(this.userId,this.examId)
+
   }
 
   getExamInfo() {
@@ -54,17 +48,21 @@ export class AttemptExamComponent implements OnInit {
       // err => throwError(err || "an error happened while getting exam info")
     });
   }
-  getAllAttemptsByUserId(userId:number){
-    this._examService.getAllAttemptsByUserId(userId).pipe(
-      tap((data) => {
-      this.userAttemptsExam = data;
-    }));
-  }
-  getAllUsersAttemptExam(examId:number){
-    this._examService.getAllUsersAttemptExam(examId).subscribe(data =>{
-      this.examAttemptsByUser = data;
+  checkUserAttemptExamBefore(userId:number,examId:number){
+    this._examService.getAllAttemptsByUserId(userId).subscribe((userAttemptsExam) => {
+
+      this._examService.getAllUsersAttemptExam(examId).subscribe(examAttemptsByUser =>{
+
+        this.ifUSerAttemptExam = this.CheckIfStudentAttemptExam(userAttemptsExam,examAttemptsByUser);
+        if(this.ifUSerAttemptExam){
+          this._examService.getResult(this.ifUSerAttemptExam).subscribe(result =>{
+            this.result = result;
+          })
+        }
+      });
+
     });
-    }
+  }
   startExam(examId: any) {
     const dialogRef = this.dialog.open(StartExamDialogeComponent, {
       width: '400px',
@@ -89,20 +87,15 @@ export class AttemptExamComponent implements OnInit {
     });
 
   }
-  CheckIfStudentAttemptExam(array1: any[], array2: any[]): boolean {
+  CheckIfStudentAttemptExam(array1: any[], array2: any[]): number {
       for (let obj1 of array1) {
         for (let obj2 of array2) {
           if (obj1.id === obj2.id) {
-            return true;
+            return obj1.id;
           }
         }
       }
-      return false;
-    }
-    getResult(id:number):any{
-      this._examService.getResult(id).subscribe(result =>{
-        return result;
-      })
+      return 0;
     }
   }
 

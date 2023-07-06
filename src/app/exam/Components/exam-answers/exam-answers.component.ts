@@ -37,8 +37,9 @@ export class ExamAnswersComponent implements OnInit {
   }
 
   getExamAnswers(examAttemptId: number) {
-    this._examService.getAllExamAnswers(examAttemptId).subscribe((response)=> {
+    this._examService.getAllExamAnswers(examAttemptId).subscribe((response) => {
       this.examAnswers = response;
+      console.log(response)
       this.standardQuestionAnswers=this.examAnswers.standardQuestionAnswers;
       this.codeStudentAnswers =this.examAnswers.codeStudentAnswers;
     });

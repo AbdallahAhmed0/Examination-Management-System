@@ -19,11 +19,17 @@ export class MatchingQuestionComponent implements OnInit {
               private fb:FormBuilder) { }
 
   ngOnInit(): void {
-
-    this.answerForm = this.fb.group({
-      questionId: [this.question.id],
-      textAnswer: [this.savedAnswer[this.question.id]]
-    });
+    if(this.savedAnswer[this.question.id]){
+      this.answerForm = this.fb.group({
+        questionId: [this.question.id],
+        textAnswer: [this.savedAnswer[this.question.id]]
+      });
+    }else{
+      this.answerForm = this.fb.group({
+        questionId: [this.question.id],
+        textAnswer: ['']
+      });
+    }
     this.answer.emit(this.answerForm.value);
     this.answerForm.valueChanges.subscribe(()=>{
       this.answer.emit(this.answerForm.value);
