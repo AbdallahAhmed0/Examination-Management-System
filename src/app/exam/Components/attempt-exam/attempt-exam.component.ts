@@ -51,7 +51,7 @@ export class AttemptExamComponent implements OnInit {
   checkUserAttemptExamBefore(userId:number,examId:number){
     this._examService.getAllAttemptsByUserId(userId).subscribe((userAttemptsExam) => {
 
-      this._examService.getAllUsersAttemptExam(examId).subscribe(examAttemptsByUser =>{
+      this._examService.getAllUsersAttemptExam(examId).subscribe((examAttemptsByUser) =>{
 
         this.ifUSerAttemptExam = this.CheckIfStudentAttemptExam(userAttemptsExam,examAttemptsByUser);
         if(this.ifUSerAttemptExam){
