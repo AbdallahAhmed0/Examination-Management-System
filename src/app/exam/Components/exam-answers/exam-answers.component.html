@@ -18,9 +18,9 @@
             <ng-container *ngFor="let ans of questionObject.question.questionAnswers">
               <mat-radio-button
                 [ngClass]="{'correct--answer':ans.correctAnswer,
-                          'wrong--answer': isSelected(ans.id , [questionObject.questionAnswers[0]])&& !ans.correctAnswer}"
+                          'wrong--answer': isSelected(ans.id , questionObject.questionAnswers)&& !ans.correctAnswer}"
                 class="example-radio-button question__answers--answer" [value]="ans.answerText" disabled="true"
-                [checked]="isSelected( ans.id , [questionObject.questionAnswers[0]])">
+                [checked]="isSelected( ans.id , questionObject.questionAnswers)">
                 <p class=" my-0 align-items-center" [innerHTML]="sanitizeHtml(ans.answerText)">
                 </p>
                 <!-- {{ans.answerText}} -->
@@ -49,17 +49,17 @@
           <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
             <mat-radio-button class="example-radio-button question__answers--answer" value="ans1" disabled="true"
               [ngClass]="{
-                'correct--answer':questionObject.question.questionAnswers[0].answerText === 'true',
+                'correct--answer':questionObject.question.questionAnswers[0].answerText === 'true'  && questionObject.question.questionAnswers[0].correctAnswer === true,
                 'wrong--answer':questionObject.question.questionAnswers[0].answerText === 'true' && questionObject.question.questionAnswers[0].correctAnswer === false}"
               [checked]="questionObject.question.questionAnswers[0].answerText === 'true'" value="true">
               True</mat-radio-button>
             <ng-container *ngIf="questionObject.question.questionAnswers[0].answerText === 'true'">
               <small class="color-info d-block ms-2">{{questionObject.question.questionAnswers[0].comment}}</small>
             </ng-container>
-            <mat-radio-button class=" example-radio-button question__answers--answer" value="ans1" disabled="true"
+            <mat-radio-button class=" example-radio-button question__answers--answer" value="ans2" disabled="true"
               [ngClass]="{
-              'correct--answer':questionObject.question.questionAnswers[0].answerText === 'false',
-              'wrong--answer':questionObject.question.questionAnswers[0].answerText === 'false' && questionObject.question.questionAnswers[0].correctAnswer === false}"
+              'correct--answer':questionObject.question.questionAnswers[0].answerText === 'false' && questionObject.question.questionAnswers[0].correctAnswer === false,
+              'wrong--answer':questionObject.question.questionAnswers[0].answerText === 'false' && questionObject.question.questionAnswers[0].correctAnswer === true}"
               value="false" [checked]="questionObject.question.questionAnswers[0].answerText === 'false'">
               false</mat-radio-button>
           </mat-radio-group>
@@ -74,9 +74,9 @@
         <ng-container *ngIf="questionObject.question.questionType === 'Matching'">
           <div class=" example-radio-button question__answers--answer ">
             <p class="">
-              <b>Input:</b> <span class="question__answers--answer " [ngClass]="{'correct--answer':questionObject.questionAnswers[0].correctAnswer,
-                            'wrong--answer':!questionObject.questionAnswers[0].correctAnswer}"
-                [innerHtml]="sanitizeHtml(questionObject.questionAnswers[0].answerText)"></span>
+              <b>Student Answer:</b> <span class="question__answers--answer " [ngClass]="{'correct--answer':questionObject.question.points == questionObject.points,
+                            'wrong--answer':!questionObject.question.points == questionObject.points}"
+                [innerHtml]="sanitizeHtml(questionObject.answerCompleteQuestion)"></span>
             </p>
             <p class="">
               <b>System Answer:</b> <span class="question__answers--answer"

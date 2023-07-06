@@ -28,6 +28,8 @@ export class MultibleAnswersQuestionComponent implements OnInit {
     });
     this.addAnswer();
     this.setAnswerIds(this.savedAnswer);
+    this.convertFormatFormToSentArrayOfIDs()
+
     this.answerForm.valueChanges.subscribe(() => {
       this.convertFormatFormToSentArrayOfIDs()
     });

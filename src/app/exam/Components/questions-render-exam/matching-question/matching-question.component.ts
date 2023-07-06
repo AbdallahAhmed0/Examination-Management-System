@@ -24,6 +24,7 @@ export class MatchingQuestionComponent implements OnInit {
       questionId: [this.question.id],
       textAnswer: [this.savedAnswer[this.question.id]]
     });
+    this.answer.emit(this.answerForm.value);
     this.answerForm.valueChanges.subscribe(()=>{
       this.answer.emit(this.answerForm.value);
     });
