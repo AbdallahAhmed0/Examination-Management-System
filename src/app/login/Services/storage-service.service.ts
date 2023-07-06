@@ -57,15 +57,15 @@ export class StorageServiceService {
     return false;
   }
   saveAttemptData(data:any){
-    window.sessionStorage.removeItem('AttEMPT_DATA');
-    window.sessionStorage.setItem('AttEMPT_DATA', JSON.stringify(data));
+    window.localStorage.removeItem('AttEMPT_DATA');
+    window.localStorage.setItem('AttEMPT_DATA', JSON.stringify(data));
 
   }
   getAttemptData():any {
-    return window.sessionStorage.getItem('AttEMPT_DATA');
+    return window.localStorage.getItem('AttEMPT_DATA');
   }
   removeAttemptData(){
-    window.sessionStorage.removeItem('AttEMPT_DATA');
+    window.localStorage.removeItem('AttEMPT_DATA');
   }
 
 }

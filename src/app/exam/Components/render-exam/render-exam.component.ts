@@ -59,11 +59,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     const examId = parseInt(this.route.snapshot.paramMap.get('id') as string);
     this.renderExam(examId);
 
-     // Delay before getting attempt Data from local storage
-  setTimeout(() => {
     this.attemptData = JSON.parse(this.storageServices.getAttemptData());
-    console.log(this.attemptData.id);
-  }, 2000); // Adjust the delay time (in milliseconds) as needed
 
     if(!this.attemptData){
       this.router.navigate(['/exams']);

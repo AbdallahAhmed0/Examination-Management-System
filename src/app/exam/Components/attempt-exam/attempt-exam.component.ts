@@ -37,14 +37,11 @@ export class AttemptExamComponent implements OnInit {
   ngOnInit(): void {
     this.getExamInfo();
     this.userId = this.storageService.getUser().userId;
-    this._examService.getAllAttemptsByUserId(this.userId).subscribe(data=>{
-      this.userAttemptsExam = data;
-    });
-    this._examService.getAllUsersAttemptExam(this.examId).subscribe(data =>{
-      this.examAttemptsByUser = data;
-    });
-
+    this.getAllAttemptsByUserId(this.userId);
+    this.getAllUsersAttemptExam(this.examId);
   this.ifUSerAttemptExam = this.CheckIfStudentAttemptExam(this.userAttemptsExam,this.examAttemptsByUser);
+  console.log(this.examAttemptsByUser)
+  console.log(this.ifUSerAttemptExam)
   if(this.attemptId){
     this.result = this.getResult(this.attemptId);
   }
@@ -57,8 +54,16 @@ export class AttemptExamComponent implements OnInit {
       // err => throwError(err || "an error happened while getting exam info")
     });
   }
-
-
+  getAllAttemptsByUserId(userId:number){
+    this._examService.getAllAttemptsByUserId(userId).subscribe(data=>{
+      this.userAttemptsExam = data;
+    });
+  }
+  getAllUsersAttemptExam(examId:number){
+    this._examService.getAllUsersAttemptExam(examId).subscribe(data =>{
+      this.examAttemptsByUser = data;
+    });
+    }
   startExam(examId: any) {
     const dialogRef = this.dialog.open(StartExamDialogeComponent, {
       width: '400px',

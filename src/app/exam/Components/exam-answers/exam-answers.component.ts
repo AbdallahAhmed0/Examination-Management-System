@@ -3,6 +3,7 @@ import { Answer, QuestionAnswer } from '../../Models/question-answer-interface';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ExamService } from '../../Services/exam.service';
 import { ActivatedRoute } from '@angular/router';
+import { response } from 'express';
 @Component({
   selector: 'app-exam-answers',
   templateUrl: './exam-answers.component.html',
@@ -39,6 +40,7 @@ export class ExamAnswersComponent implements OnInit {
   getExamAnswers(examAttemptId: number) {
     this._examService.getAllExamAnswers(examAttemptId).subscribe((response) => {
       this.examAnswers = response;
+      console.log(response)
       this.standardQuestionAnswers=this.examAnswers.standardQuestionAnswers;
       this.codeStudentAnswers =this.examAnswers.codeStudentAnswers;
     });
@@ -47,7 +49,8 @@ export class ExamAnswersComponent implements OnInit {
   getResult(attemptId: number) {
     this._examService
       .getResult(attemptId)
-      .subscribe((response) => (this.examResult = response));
+      .subscribe((response) => {(this.examResult = response);
+      console.log(response)});
   }
 
   // check if selected using ID
