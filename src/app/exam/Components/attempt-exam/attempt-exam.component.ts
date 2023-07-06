@@ -57,6 +57,7 @@ export class AttemptExamComponent implements OnInit {
         if(this.ifUSerAttemptExam){
           this._examService.getResult(this.ifUSerAttemptExam).subscribe(result =>{
             this.result = result;
+            
           })
         }
       });
