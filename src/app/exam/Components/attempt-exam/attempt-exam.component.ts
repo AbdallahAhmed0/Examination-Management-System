@@ -6,6 +6,7 @@ import { StartExamDialogeComponent } from 'src/app/Shared/material/start-exam-di
 import { MatDialog } from '@angular/material/dialog';
 import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
+import { tap } from 'rxjs';
 @Component({
   selector: 'app-attempt-exam',
   templateUrl: './attempt-exam.component.html',
@@ -40,8 +41,7 @@ export class AttemptExamComponent implements OnInit {
     this.getAllAttemptsByUserId(this.userId);
     this.getAllUsersAttemptExam(this.examId);
   this.ifUSerAttemptExam = this.CheckIfStudentAttemptExam(this.userAttemptsExam,this.examAttemptsByUser);
-  console.log(this.examAttemptsByUser)
-  console.log(this.ifUSerAttemptExam)
+  console.log(this.userAttemptsExam)
   if(this.attemptId){
     this.result = this.getResult(this.attemptId);
   }
@@ -55,9 +55,10 @@ export class AttemptExamComponent implements OnInit {
     });
   }
   getAllAttemptsByUserId(userId:number){
-    this._examService.getAllAttemptsByUserId(userId).subscribe(data=>{
+    this._examService.getAllAttemptsByUserId(userId).pipe(
+      tap((data) => {
       this.userAttemptsExam = data;
-    });
+    }));
   }
   getAllUsersAttemptExam(examId:number){
     this._examService.getAllUsersAttemptExam(examId).subscribe(data =>{
