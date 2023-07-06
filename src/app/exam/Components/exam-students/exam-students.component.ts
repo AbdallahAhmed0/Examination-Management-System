@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { ExamService } from './../../Services/exam.service';
+import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 
 
 @Component({
@@ -22,18 +23,23 @@ export class ExamStudentsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  id!: number;
+  examId!: number;
+  userId:number=0;
+
 
 
   constructor(private ExamService:ExamService,
-    private activatedRoute:ActivatedRoute) { }
+              private activatedRoute:ActivatedRoute,
+              private storageService:StorageServiceService
+              ) { }
 
   ngOnInit(): void {
 
-    this.subExStudents =this.activatedRoute.paramMap.subscribe((paramMap)=>{
-        this.id=Number(paramMap.get('id'));
-            this.ExamService.getAllUsersAttemptExam(this.id).subscribe(data=>{
+    this.userId = this.storageService.getUser().userId;
 
+    this.subExStudents =this.activatedRoute.paramMap.subscribe((paramMap)=>{
+        this.examId=Number(paramMap.get('id'));
+            this.ExamService.getAllUsersAttemptExam(this.examId).subscribe(data=>{
               this.dataSource = new MatTableDataSource(data);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
@@ -49,6 +55,10 @@ export class ExamStudentsComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  
+  getAttemptID(){
+
   }
 
   ngOnDestroy(): void {

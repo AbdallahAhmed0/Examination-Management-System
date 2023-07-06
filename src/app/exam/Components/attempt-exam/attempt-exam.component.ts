@@ -6,7 +6,6 @@ import { StartExamDialogeComponent } from 'src/app/Shared/material/start-exam-di
 import { MatDialog } from '@angular/material/dialog';
 import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
-import { tap } from 'rxjs';
 @Component({
   selector: 'app-attempt-exam',
   templateUrl: './attempt-exam.component.html',
@@ -49,20 +48,7 @@ export class AttemptExamComponent implements OnInit {
     });
   }
   checkUserAttemptExamBefore(userId:number,examId:number){
-    this._examService.getAllAttemptsByUserId(userId).subscribe((userAttemptsExam) => {
 
-      this._examService.getAllUsersAttemptExam(examId).subscribe((examAttemptsByUser) =>{
-
-        this.ifUSerAttemptExam = this.CheckIfStudentAttemptExam(userAttemptsExam,examAttemptsByUser);
-        if(this.ifUSerAttemptExam){
-          this._examService.getResult(this.ifUSerAttemptExam).subscribe(result =>{
-            this.result = result;
-            
-          })
-        }
-      });
-
-    });
   }
   startExam(examId: any) {
     const dialogRef = this.dialog.open(StartExamDialogeComponent, {
@@ -88,15 +74,5 @@ export class AttemptExamComponent implements OnInit {
     });
 
   }
-  CheckIfStudentAttemptExam(array1: any[], array2: any[]): number {
-      for (let obj1 of array1) {
-        for (let obj2 of array2) {
-          if (obj1.id === obj2.id) {
-            return obj1.id;
-          }
-        }
-      }
-      return 0;
-    }
-  }
+}
 
