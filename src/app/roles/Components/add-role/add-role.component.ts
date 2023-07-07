@@ -30,10 +30,9 @@ export class AddRoleComponent implements OnInit {
         name: privilege.name,
         checked: false,
       }));
-      console.log(this.privileges);
 
       // Divide the privileges into 8 groups with 5 privileges in each group
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 5; i++) {
         this.privilegeGroups.push({
           name: `${i + 1}`,
           privileges: this.privileges.slice(i * 5, (i + 1) * 5),

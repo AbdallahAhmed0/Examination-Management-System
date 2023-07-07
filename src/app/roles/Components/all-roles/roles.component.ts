@@ -29,19 +29,21 @@ export class RolesComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;
-    if (
-      this.permissions.some(
-        (role: any) => role.authority === 'SHOW_ADMINS_LIST_ROLE'
-      )
-    ) {
+
+    if (this.permissions.some(
+      (role: any) => role.authority === 'MANAGE_ROLE'
+    ))
+    {
       this.getRoles();
     }
   }
   getRoles() {
+
     this.rolesService.getRoles().subscribe((res) => {
       this.allRoles = res;
       this.dataSource = this.allRoles;
     });
+
   }
   addRole() {
     this.router.navigate([`roles/add`]);

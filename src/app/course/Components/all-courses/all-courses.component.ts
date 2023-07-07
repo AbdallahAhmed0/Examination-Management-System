@@ -7,80 +7,125 @@ import { DialogeComponent } from '../../../Shared/material/dialog/dialog.compone
 import { CustomDialogeComponent } from 'src/app/Shared/material/custom-dialoge/custom-dialoge.component';
 import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
 
-
 @Component({
   selector: 'app-all-courses',
   templateUrl: './all-courses.component.html',
-  styleUrls: ['./all-courses.component.scss']
+  styleUrls: ['./all-courses.component.scss'],
 })
 export class AllCoursesComponent implements OnInit {
-  courses!:Course[];
+  courses!: Course[];
   permissions: Object[] = [];
+  permittedToManageCourses: boolean = false;
+  permittedToShowCourses: boolean = false;
+  ableToShowCoursesOfAdmin: boolean = false;
+  ableToShowCoursesOfGroup: boolean = false;
 
-  sentDataToDialoge:object={value:'',header:''};
-  constructor(private courseService:CourseService,
-              public dialog: MatDialog,
-              private storageService: StorageServiceService) { }
+  sentDataToDialoge: object = { value: '', header: '' };
+  constructor(
+    private courseService: CourseService,
+    public dialog: MatDialog,
+    private storageService: StorageServiceService
+  ) {}
 
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;
-    if (
+
+    this.permittedToManageCourses =
       this.permissions.some(
-        (role: any) => role.authority === 'SHOW_COURSES_LIST_ROLE'
-      )
-    ) {
-    this.getCourses()
-    }
-  }
-
-getCourses(){
-
-  this.courseService.getAllCourses().subscribe(data=>{
-    this.courses=data
-  })
-}
-
-deleteCourse(course:any){
-  // check if course contain Teachers
-  if(course.admins.length){
-    const dialogRef = this.dialog.open(CustomDialogeComponent, {
-      width: '400px',
-      height: '280px',
-      data: { value: 'Must Delete All Teachers in this Course Before Delete.',
-              header:'Not Allowed' } // Pass the value as an object property
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-    });
-      // check if course contain Exams
-  }else if(course.numOfExams){
-    const dialogRef = this.dialog.open(CustomDialogeComponent, {
-      width: '400px',
-      height: '280px',
-      data: { value: 'Must Delete All Exams in this Course Before Delete.',
-              header:'Not Allowed' } // Pass the value as an object property
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-    });
-  }else{
-  const dialogRef = this.dialog.open(DialogeComponent, {
-    width: '400px',
-    height:'280px'
-    });
-
-  dialogRef.afterClosed().subscribe((result) => {
-    if (result === 'confirm') {
-
-      this.courseService.deleteCourse(course.id).subscribe(
-        (data)=>{
-          window.location.reload();
-          this.courseService.openSnackBar("Deleted");
-        }
+        (role: any) => role.authority === 'MANAGE_COURSES_ROLE'
+      ) &&
+      this.permissions.some(
+        (role: any) => role.authority === 'MANAGE_ADMIN_ROLE'
+      ) &&
+      this.permissions.some(
+        (role: any) => role.authority === 'SHOW_COURSES_OF_ADMIN_ROLE'
+      ) &&
+      this.permissions.some(
+        (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
+      ) &&
+      this.permissions.some(
+        (role: any) => role.authority === 'SHOW_COURSE_EXAMS_ROLE'
       );
+
+    this.permittedToShowCourses =
+      this.permissions.some(
+        (role: any) => role.authority === 'SHOW_COURSES_OF_ADMIN_ROLE'
+      ) ||
+      this.permissions.some(
+        (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
+      ) ||
+      this.permissions.some(
+        (role: any) => role.authority === 'MANAGE_COURSES_ROLE'
+        );
+        console.log(this.permittedToShowCourses);
+
+        this.ableToShowCoursesOfAdmin = this.permissions.some(
+          (role: any) => role.authority === 'SHOW_COURSES_OF_ADMIN_ROLE'
+        );
+
+        this.ableToShowCoursesOfGroup = this.permissions.some(
+          (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
+        );
+
+    if (this.permittedToShowCourses || this.permittedToManageCourses) {
+      this.getCourses();
     }
+
+    if  (this.ableToShowCoursesOfAdmin) {
+      this.getCourses();
+    }
+
+    if (this.ableToShowCoursesOfGroup) {
+      this.getCourses();
+    }
+
+  }
+
+  getCourses() {
+    this.courseService.getAllCourses().subscribe((data) => {
+      this.courses = data;
     });
   }
-}
 
+  deleteCourse(course: any) {
+    // check if course contain Teachers
+    if (course.admins.length) {
+      const dialogRef = this.dialog.open(CustomDialogeComponent, {
+        width: '400px',
+        height: '280px',
+        data: {
+          value: 'Must Delete All Teachers in this Course Before Delete.',
+          header: 'Not Allowed',
+        }, // Pass the value as an object property
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {});
+      // check if course contain Exams
+    } else if (course.numOfExams) {
+      const dialogRef = this.dialog.open(CustomDialogeComponent, {
+        width: '400px',
+        height: '280px',
+        data: {
+          value: 'Must Delete All Exams in this Course Before Delete.',
+          header: 'Not Allowed',
+        }, // Pass the value as an object property
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {});
+    } else {
+      const dialogRef = this.dialog.open(DialogeComponent, {
+        width: '400px',
+        height: '280px',
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === 'confirm') {
+          this.courseService.deleteCourse(course.id).subscribe((data) => {
+            window.location.reload();
+            this.courseService.openSnackBar('Deleted');
+          });
+        }
+      });
+    }
+  }
 }

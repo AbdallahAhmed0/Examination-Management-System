@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       this.isLoggedIn = true;
       this.permissions = this.storageService.getUser().permissions;
     }
-  }
+    }
 
   onSubmit() {
     this.authenticationService
@@ -51,18 +51,22 @@ export class LoginComponent implements OnInit {
         next: (response) => {
           // reset error
           this.errorMessage = '';
+          console.log(response.token);
+
           const helper = new JwtHelperService();
           const decodedToken = helper.decodeToken(response.token);
 
           this.storageService.saveUser(decodedToken, response);
           this.permissions = decodedToken.permissions;
-          console.log(response.token);
           if (
             this.permissions.some(
               (role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'
             ) ||
             this.permissions.some(
               (role: any) => role.authority === 'SHOW_EXAM_ROLE'
+            ) ||
+            this.permissions.some(
+              (role: any) => role.authority === 'DASHBOARD_ROLE'
             )
           ) {
             this.router.navigate(['/dashboard']);
