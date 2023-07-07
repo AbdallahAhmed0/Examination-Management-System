@@ -30,8 +30,8 @@ isLogin:boolean = false;
     this.storageService.loggedIn$.subscribe((isLoggedIn: boolean) => {
       // Handle the login status change
       this.isLogin =isLoggedIn;
-
     });
+    this.storageService.startExpirationTimer()
 
   }
 

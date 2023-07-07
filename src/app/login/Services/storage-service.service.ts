@@ -78,11 +78,18 @@ export class StorageServiceService {
   private intervalId:any;
 
 
-  private startExpirationTimer() {
-    const expirationTime = parseInt(this.tokenPayload.exp, 10) * 1000;// Convert expiration time to milliseconds
+  startExpirationTimer() {
+    let expirationTime:number;
+
+    const storedexpirationTime = localStorage.getItem('expirationTime');
+    if (storedexpirationTime) {
+      expirationTime = Number(storedexpirationTime);
+    } else {
+      expirationTime = parseInt(this.tokenPayload.exp, 10) * 1000;// Convert expiration time to milliseconds
+      localStorage.setItem('expirationTime', expirationTime.toString());
+    }
 
     this.intervalId = setInterval(() => {
-      console.log(expirationTime,Date.now())
         if (expirationTime <= Date.now()) {
           // logout
           this.clean();
