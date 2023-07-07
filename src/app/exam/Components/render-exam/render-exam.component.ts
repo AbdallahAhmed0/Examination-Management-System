@@ -240,18 +240,6 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
   submitExam(): void {
 
-    this.saveAnswersById(this.attemptData.id,this.answerID);
-    this.saveAnswersByText(this.attemptData.id,this.answerMatching);
-   // to sent question by question
-    this.answerCoding.forEach(ques=>{
-      this.saveAnswersByCoding(this.attemptData.id,ques.questionId,ques.language,ques.code);
-    })
-    clearInterval(this.intervalId);
-    this.answerID = [];
-    this.answerMatching = [];
-    this.answerCoding = [];
-
-
     const dialogRef = this.dialog.open(EndExamDialogeComponent, {
       width: '400px',
       height: '280px',
@@ -264,6 +252,18 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
 }
 endExam(){
+  
+  this.saveAnswersById(this.attemptData.id,this.answerID);
+  this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+ // to sent question by question
+  this.answerCoding.forEach(ques=>{
+    this.saveAnswersByCoding(this.attemptData.id,ques.questionId,ques.language,ques.code);
+  })
+  clearInterval(this.intervalId);
+  this.answerID = [];
+  this.answerMatching = [];
+  this.answerCoding = [];
+
   localStorage.removeItem('examStartTime');
   const observer={
     next: (answer:any) => {
