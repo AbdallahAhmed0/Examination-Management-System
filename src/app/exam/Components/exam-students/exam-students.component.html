@@ -56,7 +56,7 @@
         <ng-container matColumnDef="actions" >
           <th mat-header-cell *matHeaderCellDef mat-sort-header > Actions </th>
           <td mat-cell  *matCellDef="let row" >
-            <button mat-raised-button class="attempt-btn"(click)="getAttemptID()">show Answers</button>
+            <button mat-raised-button class="attempt-btn"[routerLink]="['/exams/showAnswers/',row.attemptId]">show Answers</button>
           </td>
         </ng-container>
 

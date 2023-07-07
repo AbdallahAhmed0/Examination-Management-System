@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, interval } from 'rxjs';
 
 
 const USER_KEY = 'auth-user';
@@ -11,7 +12,7 @@ export class StorageServiceService {
   private loggedInSubject: BehaviorSubject<boolean>;
   public loggedIn$: Observable<boolean>;
 
-  constructor() {
+  constructor(private route:Router) {
     // Initialize the loggedInSubject and loggedIn$ with the saved login status
     this.loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
     this.loggedIn$ = this.loggedInSubject.asObservable();
@@ -28,6 +29,9 @@ export class StorageServiceService {
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
     window.sessionStorage.setItem(TOKEN, JSON.stringify(token));
     this.loggedInSubject.next(true);
+
+    this.startExpirationTimer();
+
   }
 
   public getUser(): any {
@@ -56,6 +60,7 @@ export class StorageServiceService {
 
     return false;
   }
+ // save attempt Data
   saveAttemptData(data:any){
     window.localStorage.removeItem('AttEMPT_DATA');
     window.localStorage.setItem('AttEMPT_DATA', JSON.stringify(data));
@@ -67,5 +72,24 @@ export class StorageServiceService {
   removeAttemptData(){
     window.localStorage.removeItem('AttEMPT_DATA');
   }
+     //////////////////////////////////////////////////
+     // Check Expired User
+  private tokenPayload: any = this.getUser();
+  private intervalId:any;
+
+
+  private startExpirationTimer() {
+    const expirationTime = parseInt(this.tokenPayload.exp, 10) * 1000;// Convert expiration time to milliseconds
+
+    this.intervalId = setInterval(() => {
+      console.log(expirationTime,Date.now())
+        if (expirationTime <= Date.now()) {
+          // logout
+          this.clean();
+          this.route.navigate(['/login'])
+          clearInterval(this.intervalId);
+        }
+      }, 1000);
+    }
 
 }

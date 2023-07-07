@@ -56,10 +56,7 @@ export class ExamStudentsComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  
-  getAttemptID(){
 
-  }
 
   ngOnDestroy(): void {
     this.subExStudents?.unsubscribe();

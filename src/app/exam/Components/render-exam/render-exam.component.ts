@@ -129,6 +129,11 @@ export class RenderExamComponent implements OnInit,OnDestroy {
         clearInterval(this.intervalId);
         localStorage.removeItem('examStartTime');
       }
+      let endTime = new Date(this.exam.endTime);
+      if (endTime.getTime() <= Date.now()) {
+        this.endExam();
+      }
+
     }, 1000);
   }
 
