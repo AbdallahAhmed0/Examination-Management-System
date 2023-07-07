@@ -85,6 +85,15 @@ export class ExamService {
       )
       .pipe(retry(2), catchError(this.handleError));
   }
+  testExam(examId: number, userId: number) {
+
+    return this.httpClient
+      .post(
+        `${environment.APPURL}/exam/testExam/${examId}/${userId}`,
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
 
   renderExam(id: number): Observable<any> {
     return this.httpClient

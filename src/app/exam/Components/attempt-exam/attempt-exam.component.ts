@@ -18,8 +18,7 @@ export class AttemptExamComponent implements OnInit {
   examId!: number;
   userId:number=0;
   permissions: Object[] = [];
-  attemptId:number=0;
-  result:any;
+  attemptError:any;
 
   ifUSerAttemptExam:number = 0;
 
@@ -38,22 +37,13 @@ export class AttemptExamComponent implements OnInit {
     this.getExamInfo();
     this.userId = this.storageService.getUser().userId;
     this.permissions = this.storageService.getUser().permissions;
-    if (!(this.permissions.some((role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'))){
-      
-      this.checkUserAttemptExamBefore(this.userId,this.examId)
-    }
-
   }
-
   getExamInfo() {
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('examId'));
     this._examService.getExamById(this.examId).subscribe((data) => {
       this.examInfo = data;
       // err => throwError(err || "an error happened while getting exam info")
     });
-  }
-  checkUserAttemptExamBefore(userId:number,examId:number){
-
   }
   startExam(examId: any) {
     const dialogRef = this.dialog.open(StartExamDialogeComponent, {
@@ -62,22 +52,40 @@ export class AttemptExamComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
-
-        //accses to start exam
-        this.preventGuard.setAttemptRoute(true);
-        this._examService
-        .attemptExam(this.examId, this.userId)
-        .subscribe((data) => {
-
-        //save attempt Data in local storage
-          this.storageService.saveAttemptData(data);
-          this._examService.renderExam(examId);
-          this.router.navigate(['exams/render/', examId]); //This should take the user to the exam
-
-      });
+        // check permissions if solve Exam or Test exam
+        if (this.permissions.some((role: any) => role.authority === 'TEST_EXAM_ROLE')){
+          this.testExam(examId);
+          }
+    else if (this.permissions.some((role: any) => role.authority === 'SOLVE_EXAM_ROLE')){
+          this.solveExam(examId);
+        }
       }
     });
 
+  }
+  solveExam(examId:any){
+    this._examService
+    .attemptExam(examId, this.userId)
+    .subscribe((data) => {
+      //accses to start exam
+      this.preventGuard.setAttemptRoute(true);
+    //save attempt Data in local storage
+      this.storageService.saveAttemptData(data);
+      this._examService.renderExam(examId);
+      this.router.navigate(['exams/render/', examId]); //This should take the user to the exam
+  },
+  (err)=>{ this.attemptError = err.message;}
+  );
+  }
+  testExam(examId:any){
+    this._examService.testExam(examId,this.userId).subscribe((data)=>{
+      //accses to start exam
+      this.preventGuard.setAttemptRoute(true);
+      //save attempt Data in local storage
+      this.storageService.saveAttemptData(data);
+      this._examService.renderExam(examId);
+      this.router.navigate(['exams/render/', examId]); //This should take the user to the exam
+    })
   }
 }
 

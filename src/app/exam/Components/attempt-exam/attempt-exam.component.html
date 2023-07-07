@@ -10,11 +10,15 @@
             <h3>Start Time: <span>{{examInfo.startTime}}</span></h3>
             <h3>End Time: <span>{{examInfo.endTime}}</span></h3>
             <h3>Success Rate: <span>{{examInfo.successRate}}</span></h3>
-            <div class="question__answers--answer " [ngClass]="{'correct--answer':result.passed,
+
+            <!-- <div class="question__answers--answer " [ngClass]="{'correct--answer':result.passed,
         'wrong--answer':!result.passeds}" *ngIf="ifUSerAttemptExam">
-        Score: {{result.score}} ,<span style="margin-left: 30px;">Passed: {{result.passed}}</span> </div>
+        Score: {{result.score}} ,<span style="margin-left: 30px;">Passed: {{result.passed}}</span> </div> -->
+        <div class="question__answers--answer wrong--answer" *ngIf="attemptError">
+          {{attemptError}}
+        </div>
           </div>
-          <button mat-raised-button class="attempt-btn mat-h3" [hidden]="!examInfo.state || ifUSerAttemptExam " (click)="startExam(examInfo.id)">Start Exam</button>
+          <button mat-raised-button class="attempt-btn mat-h3" [hidden]="!examInfo.state || attemptError" (click)="startExam(examInfo.id)">Start Exam</button>
 
         </div>
       </ng-container>
