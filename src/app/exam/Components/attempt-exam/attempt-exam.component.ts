@@ -19,6 +19,7 @@ export class AttemptExamComponent implements OnInit {
   userId:number=0;
   permissions: Object[] = [];
   attemptError:any;
+  expiredExam:boolean=false;
 
   ifUSerAttemptExam:number = 0;
 
@@ -37,6 +38,10 @@ export class AttemptExamComponent implements OnInit {
     this.getExamInfo();
     this.userId = this.storageService.getUser().userId;
     this.permissions = this.storageService.getUser().permissions;
+    let endTime = new Date(this.examInfo?.endTime);
+      if (endTime.getTime() <= Date.now()) {
+        this.expiredExam = true
+      }
   }
   getExamInfo() {
     this.examId = Number(this._activatedRoute.snapshot.paramMap.get('examId'));
@@ -44,6 +49,7 @@ export class AttemptExamComponent implements OnInit {
       this.examInfo = data;
       // err => throwError(err || "an error happened while getting exam info")
     });
+    //check if exam Expired
   }
   startExam(examId: any) {
     const dialogRef = this.dialog.open(StartExamDialogeComponent, {

@@ -18,7 +18,7 @@
           {{attemptError}}
         </div>
           </div>
-          <button mat-raised-button class="attempt-btn mat-h3" [hidden]="!examInfo.state || attemptError" (click)="startExam(examInfo.id)">Start Exam</button>
+          <button mat-raised-button class="attempt-btn mat-h3" [hidden]="!examInfo.state || attemptError ||expiredExam" (click)="startExam(examInfo.id)">Start Exam</button>
 
         </div>
       </ng-container>
