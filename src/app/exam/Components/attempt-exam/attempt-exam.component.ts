@@ -59,7 +59,8 @@ export class AttemptExamComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'confirm') {
         // check permissions if solve Exam or Test exam
-        if (this.permissions.some((role: any) => role.authority === 'TEST_EXAM_ROLE')){
+        if (this.permissions.some((role: any) => role.authority === 'MANAGE_ADMIN_EXAMS_ROLE')||
+        this.permissions.some((role: any) => role.authority === 'MANAGE_EXAMS_ROLE')){
           this.testExam(examId);
           }
     else if (this.permissions.some((role: any) => role.authority === 'SOLVE_EXAM_ROLE')){
