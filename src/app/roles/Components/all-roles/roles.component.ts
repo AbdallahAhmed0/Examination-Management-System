@@ -29,10 +29,9 @@ export class RolesComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;
+
     if (
-      this.permissions.some(
-        (role: any) => role.authority === 'SHOW_ADMINS_LIST_ROLE'
-      )
+      this.permissions.some((role: any) => role.authority === 'MANAGE_ROLE')
     ) {
       this.getRoles();
     }

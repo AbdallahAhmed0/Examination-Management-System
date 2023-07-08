@@ -14,17 +14,23 @@ import { StorageServiceService } from 'src/app/login/Services/storage-service.se
 export class DashbordExamComponent implements OnInit {
   isLiveExamsOpen = true;
   isUpcomingExamsOpen = true;
-  no = 0;
-  visibleExams: Exam[] = [];
+  isClosedExamsOpen = true;
+  activeExams: Exam[] = [];
+  upcomingExams: Exam[] = [];
+  closedExams: Exam[] = [];
   displayedColumns: string[] = [
-    // 'id',
     'examName',
     'course',
     'duration',
-    // 'state',
     'successRate',
   ];
-  dataSource!: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<Exam> = new MatTableDataSource<Exam>([]);
+  activeExamsDataSource: MatTableDataSource<Exam> =
+    new MatTableDataSource<Exam>([]);
+  upcomingExamsDataSource: MatTableDataSource<Exam> =
+    new MatTableDataSource<Exam>([]);
+  closedExamsDataSource: MatTableDataSource<Exam> =
+    new MatTableDataSource<Exam>([]);
   exams!: Exam[];
   permissions: Object[] = [];
 
@@ -40,11 +46,15 @@ export class DashbordExamComponent implements OnInit {
     this.permissions = this.storageService.getUser().permissions;
     if (
       this.permissions.some(
-        (role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'
+        (role: any) => role.authority === 'DASHBOARD_ROLE'
+      ) ||
+      (
+        this.permissions.some(
+          (role: any) => role.authority === 'SHOW_ALL_EXAMS_ROLE'
+        ) 
       )
     ) {
       this.getExams();
-      this.no++;
     }
   }
 
@@ -55,40 +65,71 @@ export class DashbordExamComponent implements OnInit {
   toggleUpcomingExams() {
     this.isUpcomingExamsOpen = !this.isUpcomingExamsOpen;
   }
+  toggleClosedExams() {
+    this.isClosedExamsOpen = !this.isClosedExamsOpen;
+  }
 
   getExams() {
-    this.examService.getAllExams().subscribe((data) => {
-      /** Builds and returns a new User. */
-      const createNewExam = (id: number) => {
-        return {
-          id: id,
-          examName:
-            data[Math.round(Math.random() * (data.length - 1))].examName,
-          duration:
-            data[Math.round(Math.random() * (data.length - 1))].duration,
-          course: data[Math.round(Math.random() * (data.length - 1))].course,
-          state: data[Math.round(Math.random() * (data.length - 1))].state,
-          startTime:
-            data[Math.round(Math.random() * (data.length - 1))].startTime,
-          EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
-        };
-      };
+    const currentDate = new Date();
+    this.examService.getAllExams().subscribe(
+      (data) => {
+        data.forEach((exam) => {
+          const startTime = new Date(exam.startTime);
+          const endTime = new Date(exam.endTime);
 
-      const activeExams = data.filter((exam) => exam.state);
+          if (startTime <= currentDate && endTime >= currentDate) {
+            // exam is active
+            this.activeExams.push(exam);
+          } else if (startTime > currentDate) {
+            // exam is upcoming
+            this.upcomingExams.push(exam);
+          } else {
+            // exam is closed
+            this.closedExams.push(exam);
+          }
+        });
 
-      // Create users
-      const exam = Array.from({ length: length }, (_, k) =>
-        createNewExam(k + 1)
-      );
+        this.configureDataSources(data);
+      },
+      (error) => {
+        console.error(error);
+        // Handle the error appropriately
+      }
+    );
+  }
 
-      // Assign the data to the data source for the table to render
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+  configureDataSources(data: Exam[]) {
+    this.activeExamsDataSource.data = this.activeExams;
+    this.upcomingExamsDataSource.data = this.upcomingExams;
+    this.closedExamsDataSource.data = this.closedExams;
 
-      this.exams = data;
+    const sortingDataAccessor = (data: Exam, sortHeaderId: string) => {
+      switch (sortHeaderId) {
+        case 'examName':
+          return data.examName;
+        case 'course':
+          return data.course.courseName;
+        case 'duration':
+          return data.duration;
+        case 'successRate':
+          return data.successRate;
+        default:
+          return '';
+      }
+    };
 
-      console.log(data);
-    });
+    this.activeExamsDataSource.sortingDataAccessor = sortingDataAccessor;
+    this.upcomingExamsDataSource.sortingDataAccessor = sortingDataAccessor;
+    this.closedExamsDataSource.sortingDataAccessor = sortingDataAccessor;
+
+    this.dataSource.data = [
+      ...this.activeExams,
+      ...this.upcomingExams,
+      ...this.closedExams,
+    ];
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
+    this.exams = data;
   }
 }

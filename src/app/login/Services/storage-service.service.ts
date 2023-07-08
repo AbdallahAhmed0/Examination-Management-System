@@ -53,6 +53,19 @@ export class StorageServiceService {
     return {};
   }
 
+  // save attempt Data
+  saveAttemptData(data:any){
+    window.localStorage.removeItem('AttEMPT_DATA');
+    window.localStorage.setItem('AttEMPT_DATA', JSON.stringify(data));
+
+  }
+  getAttemptData():any {
+    return window.localStorage.getItem('AttEMPT_DATA');
+  }
+  removeAttemptData(){
+    window.localStorage.removeItem('AttEMPT_DATA');
+  }
+
   public isLoggedIn(): boolean {
     const user = window.sessionStorage.getItem(USER_KEY);
     if (user) {

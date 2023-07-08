@@ -3,7 +3,7 @@
 
   <div>
 
-    <button mat-button class="btn-add" style="color: #007bff" (click)="add()">
+    <button mat-button class="btn-add" style="color: #007bff" (click)="add()" *ngIf="permittedToAddExam">
       <mat-icon>add</mat-icon> Add Exam
     </button>
     <button
@@ -11,6 +11,7 @@
       class="btn-add"
       (click)="exportData()"
       style="color: #007bff"
+      *ngIf="permittedToAddExam"
     >
       <mat-icon>exit_to_app</mat-icon> Export Exams
     </button>

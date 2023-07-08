@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { AdminsService } from '../../Services/admins.service';
 import { Admin } from './../../Models/admin';
 import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
@@ -33,6 +33,9 @@ export class AllAdminsComponent implements OnInit, OnDestroy {
   subAdmin?: Subscription;
   admins!: Admin[];
   permissions: Object[] = [];
+  permittedToManageAdmins: boolean = false;
+  permittedToShowAdmins: boolean = false;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -46,13 +49,18 @@ export class AllAdminsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;
-    if (
-      this.permissions.some(
-        (role: any) => role.authority === 'SHOW_ADMINS_LIST_ROLE'
-      )
-    ) {
+    this.permittedToShowAdmins = this.permissions.some(
+      (role: any) => role.authority === 'SHOW_ADMINS_LIST_ROLE'
+    );
+
+    this.permittedToManageAdmins = (this.permissions.some(
+      (role: any) => role.authority === 'MANAGE_ADMIN_ROLE'
+    ));
+
+    if (this.permittedToShowAdmins || this.permittedToManageAdmins){
       this.getAdmins();
     }
+
   }
 
   applyFilter(event: Event) {
@@ -88,6 +96,7 @@ export class AllAdminsComponent implements OnInit, OnDestroy {
   }
 
   getAdmins() {
+
     this.subAdmin = this.adminService.getAllAdmins().subscribe((data) => {
       // Assign the data to the data source for the table to render
       this.dataSource = new MatTableDataSource(data);
@@ -97,6 +106,7 @@ export class AllAdminsComponent implements OnInit, OnDestroy {
       this.admins = data;
     });
   }
+
   exportData() {
     const headings = [
       'id',

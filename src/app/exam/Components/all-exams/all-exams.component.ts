@@ -33,6 +33,7 @@ export class AllExamsComponent implements OnInit {
 
   exams!: Exam[];
   permissions: Object[] = [];
+  permittedToAddExam: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -52,6 +53,9 @@ export class AllExamsComponent implements OnInit {
       )
     ) {
     this.getExams();
+    }
+    if (this.permissions.some((role: any) => role.authority === 'ADD_EXAM_ROLE')) {
+      this.permittedToAddExam = true;
     }
   }
 

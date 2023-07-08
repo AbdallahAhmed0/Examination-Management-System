@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './Shared/Guards/auth.guard';
 import { DashbordExamComponent } from './dashboard/dashboard-admin/dashbord-exam/dashbord-exam.component';
 import { AuthGuardLogin } from './Shared/Guards/AuthLogin.guard';
+import { DashboardAdminComponent } from './dashboard/dashboard-admin/dashboard-admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -13,7 +14,7 @@ const routes: Routes = [
   },
   {
     path:'dashboard',
-    component:DashbordExamComponent,
+    component:DashboardAdminComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -22,7 +23,7 @@ const routes: Routes = [
       import("./admins/admins.module").then((a) => a.AdminsModule),
       canActivate: [AuthGuard],
     },
-      
+
   {
     path: "roles",
     loadChildren: () =>
