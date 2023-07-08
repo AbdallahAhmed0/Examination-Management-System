@@ -32,7 +32,6 @@ isLogin:boolean = false;
       this.isLogin =isLoggedIn;
     });
     this.storageService.startExpirationTimer()
-
   }
 
   ngAfterViewInit() {
