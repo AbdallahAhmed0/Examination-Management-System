@@ -20,6 +20,7 @@ export class StorageServiceService {
 
   clean(): void {
     window.sessionStorage.clear();
+    window.localStorage.clear();
     this.loggedInSubject.next(false);
   }
 
