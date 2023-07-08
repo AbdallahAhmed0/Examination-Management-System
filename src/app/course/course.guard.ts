@@ -17,11 +17,9 @@ export class CourseGuard implements CanActivate {
 
        this.userPer = this.storageService.getUser().permissions
       console.log(this.userPer);
-      if ( this.userPer.some((role:any) => role.authority === 'SHOW_COURSE_DETAILS_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'DELETE_COURSE_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'SHOW_COURSE_EXAMS_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'SAVE_COURSE_ROLE') ) {
+      if ( this.userPer.some((role:any) => role.authority === 'MANAGE_COURSES_ROLE') ||
+           this.userPer.some((role:any) => role.authority === 'SHOW_COURSES_OF_ADMIN_ROLE') ||
+           this.userPer.some((role:any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE')  ) {
 
                          return true;
 

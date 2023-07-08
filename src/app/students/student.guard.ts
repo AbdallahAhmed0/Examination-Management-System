@@ -16,12 +16,10 @@ export class StudentGuard implements CanActivate {
 
        this.userPer = this.storageService.getUser().permissions
       console.log(this.userPer);
-      if ( this.userPer.some((role:any) => role.authority === 'ADD_STUDENT_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'DELETE_STUDENT_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'SHOW_STUDENTS_LIST_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'SHOW_STUDENT_DETAILS_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'DELETE_COURSE_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'UPDATE_STUDENT_ROLE') ) {
+      if ( this.userPer.some((role:any) => role.authority === 'MANAGE_STUDENT_ROLE') ||
+           this.userPer.some((role:any) => role.authority === 'SHOW_ALL_STUDENTS_ROLE') ||
+           this.userPer.some((role:any) => role.authority === 'SHOW_STUDENTS_COURSE_ROLE')
+            ) {
 
                          return true;
 

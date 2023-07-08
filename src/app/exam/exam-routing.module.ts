@@ -24,9 +24,9 @@ const routes: Routes = [
   canActivate: [PreventRenderWithoutAttemptGuard]
 
 },
-  {path:'showAnswers/:attemptId',component:ExamAnswersComponent},
-  {path:'code',component:CodeQuestionComponent},
-  {path:"showStudents/:id",component:ExamStudentsComponent}
+  {path:'showAnswers/:attemptId',canActivate:[ExamGuard],component:ExamAnswersComponent},
+  {path:'code',canActivate:[ExamGuard],component:CodeQuestionComponent},
+  {path:"showStudents/:id",canActivate:[ExamGuard],component:ExamStudentsComponent}
 
 ];
 

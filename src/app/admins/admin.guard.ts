@@ -17,10 +17,8 @@ export class AdminGuard implements CanActivate {
        this.userPer = this.storageService.getUser().permissions
       console.log(this.userPer);
       if ( this.userPer.some((role:any) => role.authority === 'SHOW_ADMIN_DETAILS_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'DELETE_ADMIN_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'ADD_ADMIN_ROLE') ||
            this.userPer.some((role:any) => role.authority === 'SHOW_ADMINS_LIST_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'UPDATE_ADMIN_ROLE') ) {
+           this.userPer.some((role:any) => role.authority === 'MANAGE_ADMIN_ROLE') ) {
 
                          return true;
 

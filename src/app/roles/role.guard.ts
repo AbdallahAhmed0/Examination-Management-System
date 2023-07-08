@@ -16,9 +16,7 @@ export class RoleGuard implements CanActivate {
 
        this.userPer = this.storageService.getUser().permissions
       console.log(this.userPer);
-      if ( this.userPer.some((role:any) => role.authority === "UPDATE_ROLE_ROLE") ||
-           this.userPer.some((role:any) => role.authority === 'DELETE_ROLE_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'ADD_ROLE_ROLE') ||
+      if ( this.userPer.some((role:any) => role.authority === "MANAGE_ROLE") ||
            this.userPer.some((role:any) => role.authority === 'SHOW_ROLES_LIST_ROLE')
            ) {
 
