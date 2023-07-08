@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogeComponent } from '../../../Shared/material/dialog/dialog.component';
 import { CustomDialogeComponent } from 'src/app/Shared/material/custom-dialoge/custom-dialoge.component';
 import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
+import { CourseSharedServiceService } from 'src/app/Shared/course-shared-service.service';
 
 @Component({
   selector: 'app-all-courses',
@@ -19,67 +20,55 @@ export class AllCoursesComponent implements OnInit {
   permittedToShowCourses: boolean = false;
   ableToShowCoursesOfAdmin: boolean = false;
   ableToShowCoursesOfGroup: boolean = false;
+  adminCourses: Course[] = [];
+  adminId: number = 0;
 
   sentDataToDialoge: object = { value: '', header: '' };
   constructor(
     private courseService: CourseService,
     public dialog: MatDialog,
-    private storageService: StorageServiceService
+    private storageService: StorageServiceService,
+    private courseSharedService: CourseSharedServiceService
   ) {}
 
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;
 
-    this.permittedToManageCourses =
-      this.permissions.some(
-        (role: any) => role.authority === 'MANAGE_COURSES_ROLE'
-      ) &&
-      this.permissions.some(
-        (role: any) => role.authority === 'MANAGE_ADMIN_ROLE'
-      ) &&
-      this.permissions.some(
-        (role: any) => role.authority === 'SHOW_COURSES_OF_ADMIN_ROLE'
-      ) &&
-      this.permissions.some(
-        (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
-      ) &&
-      this.permissions.some(
-        (role: any) => role.authority === 'SHOW_COURSE_EXAMS_ROLE'
-      );
+    this.permittedToManageCourses = this.permissions.some(
+      (role: any) => role.authority === 'MANAGE_COURSES_ROLE'
+    );
 
-    this.permittedToShowCourses =
-      this.permissions.some(
-        (role: any) => role.authority === 'SHOW_COURSES_OF_ADMIN_ROLE'
-      ) ||
-      this.permissions.some(
-        (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
-      ) ||
-      this.permissions.some(
-        (role: any) => role.authority === 'MANAGE_COURSES_ROLE'
-        );
-        console.log(this.permittedToShowCourses);
+    this.ableToShowCoursesOfAdmin = this.permissions.some(
+      (role: any) => role.authority === 'SHOW_COURSES_OF_ADMIN_ROLE'
+    );
 
-        this.ableToShowCoursesOfAdmin = this.permissions.some(
-          (role: any) => role.authority === 'SHOW_COURSES_OF_ADMIN_ROLE'
-        );
+    this.ableToShowCoursesOfGroup = this.permissions.some(
+      (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
+    );
 
-        this.ableToShowCoursesOfGroup = this.permissions.some(
-          (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
-        );
-
-    if (this.permittedToShowCourses || this.permittedToManageCourses) {
+    if (this.permittedToManageCourses) {
       this.getCourses();
+    } else if (this.ableToShowCoursesOfAdmin) {
+      this.courses = this.getAdminCourses();
     }
-
-    if  (this.ableToShowCoursesOfAdmin) {
-      this.getCourses();
-    }
-
-    if (this.ableToShowCoursesOfGroup) {
-      this.getCourses();
-    }
-
+    //else if (this.ableToShowCoursesOfGroup) {
+    //   this.getCourses();
+    // }
   }
+
+  getAdminCourses() : Course[]{
+    this.adminCourses = this.courseSharedService.getCoursesByAdminId(
+      this.storageService.getUser().userId
+    );
+    return this.adminCourses;
+  }
+
+  // getGroupCourses() : Course[]{
+  //   this.adminCourses = this.courseSharedService.getCoursesByAdminId(
+  //     this.storageService.getUser().userId
+  //   );
+  //   return this.adminCourses;
+  // }
 
   getCourses() {
     this.courseService.getAllCourses().subscribe((data) => {

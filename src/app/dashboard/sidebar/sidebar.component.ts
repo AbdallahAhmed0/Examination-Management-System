@@ -77,7 +77,7 @@ export class SidebarComponent implements OnInit {
     // Exams
     if (
       this.permissions.some(
-        (role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'
+        (role: any) => role.authority === 'MANAGE_EXAMS_ROLE'
       ) ||
       this.permissions.some((role: any) => role.authority === 'SHOW_EXAM_ROLE')
     ) {

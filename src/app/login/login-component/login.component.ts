@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
       this.isLoggedIn = true;
       this.permissions = this.storageService.getUser().permissions;
     }
+    
     }
 
   onSubmit() {
