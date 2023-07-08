@@ -49,14 +49,12 @@ export class AllExamsComponent implements OnInit {
     this.permissions = this.storageService.getUser().permissions;
     if (
       this.permissions.some(
-        (role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'
+        (role: any) => role.authority === 'MANAGE_EXAMS_ROLE'
       )
     ) {
     this.getExams();
     }
-    if (this.permissions.some((role: any) => role.authority === 'ADD_EXAM_ROLE')) {
-      this.permittedToAddExam = true;
-    }
+  
   }
 
   applyFilter(event: Event) {
