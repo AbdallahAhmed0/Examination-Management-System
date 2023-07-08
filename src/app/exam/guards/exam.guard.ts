@@ -16,14 +16,11 @@ export class ExamGuard implements CanActivate {
 
        this.userPer = this.storageService.getUser().permissions
       console.log(this.userPer);
-      if ( this.userPer.some((role:any) => role.authority === 'SHOW_QUESTION_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'TEST_EXAM_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'DELETE_EXAM_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'ADD_EXAM_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'SHOW_EXAM_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'SHOW_EXAMS_LIST_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'DELETE_QUESTION_ROLE') ||
-           this.userPer.some((role:any) => role.authority === 'SHOW_QUESTION_ROLE')  ) {
+      if (
+           this.userPer.some((role:any) => role.authority === 'MANAGE_EXAMS_ROLE') ||
+           this.userPer.some((role:any) => role.authority === 'MANAGE_ADMIN_EXAMS_ROLE') ||
+           this.userPer.some((role:any) => role.authority === 'SOLVE_EXAM_ROLE')
+             ) {
 
                          return true;
 
