@@ -85,6 +85,15 @@ export class ExamService {
       )
       .pipe(retry(2), catchError(this.handleError));
   }
+  testExam(examId: number, userId: number) {
+
+    return this.httpClient
+      .post(
+        `${environment.APPURL}/exam/testExam/${examId}/${userId}`,
+        this.httpOption
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
 
   testExam(examId: number, userId: number) {
 
@@ -104,12 +113,12 @@ export class ExamService {
 
   getAllAttemptsByUserId(userId:number):Observable<any[]>{
     return this.httpClient
-    .get<any[]>(`${environment.APPURL}/exam/attempts/${userId}`, this.httpOption)
+    .get<any[]>(`${environment.APPURL}/exam/attempts/${userId}`)
     .pipe(retry(2), catchError(this.handleError));
 }
 getAllUsersAttemptExam(examId:number):Observable<any[]>{
   return this.httpClient
-  .get<any[]>(`${environment.APPURL}/exam/usersAttemptedExam/${examId}`, this.httpOption)
+  .get<any[]>(`${environment.APPURL}/exam/usersAttemptedExam/${examId}`)
   .pipe(retry(2), catchError(this.handleError));
 }
   endExam(examAttemptId: number): Observable<any> {
@@ -135,7 +144,7 @@ getAllUsersAttemptExam(examId:number):Observable<any[]>{
   }
   getResult(attemptId: number): Observable<any> {
     return this.httpClient
-      .get(`${environment.APPURL}/exam/getResult/${attemptId}`, this.httpOption)
+      .get(`${environment.APPURL}/exam/getResult/${attemptId}`)
       .pipe(retry(2), catchError(this.handleError));
   }
   getStatusCode(attemptId:number,questionId:number):Observable<any> {
