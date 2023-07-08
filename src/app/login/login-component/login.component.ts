@@ -59,16 +59,13 @@ export class LoginComponent implements OnInit {
           console.log(response.token);
           if (
             this.permissions.some(
-              (role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'
-            ) ||
-            this.permissions.some(
-              (role: any) => role.authority === 'SHOW_EXAM_ROLE'
+              (role: any) => role.authority === 'DASHBOARD_ROLE'
             )
           ) {
             this.router.navigate(['/dashboard']);
           } else if (
             this.permissions.some(
-              (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
+              (role: any) => role.authority === 'MANAGE_STUDENT_ROLE'
             )
           ) {
             this.router.navigate(['/courses']);

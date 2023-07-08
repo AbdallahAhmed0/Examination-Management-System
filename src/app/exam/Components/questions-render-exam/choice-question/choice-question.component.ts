@@ -26,7 +26,7 @@ constructor(private sanitizer: DomSanitizer,
       answersIds: this.fb.array([])
     });
     this.addAnswer();
-
+    this.answer.emit(this.answerForm.value);
     this.answerForm.valueChanges.subscribe(()=>{
       this.answer.emit(this.answerForm.value);
     });

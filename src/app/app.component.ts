@@ -2,7 +2,6 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs';
 import { StorageService } from './login/Services/storage.service';
 
 @Component({
@@ -28,11 +27,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.storageService.loggedIn$.subscribe((isLoggedIn: boolean) => {
-      // Handle the login status change
-      this.isLogin = isLoggedIn;
 
+      this.isLogin =isLoggedIn;
     });
-
+    this.storageService.startExpirationTimer()
   }
 
   ngAfterViewInit() {

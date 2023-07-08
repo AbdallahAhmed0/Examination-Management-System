@@ -1,15 +1,15 @@
 import { ExamService } from './../../Services/exam.service';
 import { Question, Exam } from './../../Models/exam';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { coding } from 'src/app/question/Models/codingQuestion';
 import { MatDialog } from '@angular/material/dialog';
 import { EndExamDialogeComponent } from 'src/app/Shared/material/end-exam-dialoge/end-exam-dialoge.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
 import { tap } from 'rxjs';
+import { StorageService } from 'src/app/login/Services/storage.service';
+import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
 
 @Component({
   selector: 'app-render-exam',
@@ -49,16 +49,18 @@ export class RenderExamComponent implements OnInit,OnDestroy {
     private router:Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private preventGuard: PreventRenderWithoutAttemptGuard
+    private storageServices:StorageService,
+    private preventGuard:PreventRenderWithoutAttemptGuard,
+
   ) {}
 
 
   ngOnInit(): void {
     const examId = parseInt(this.route.snapshot.paramMap.get('id') as string);
     this.renderExam(examId);
-    // Get the array parameter from the state object
-    this.attemptData = history.state.data;
-    console.log(history.state.data)
+
+    this.attemptData = JSON.parse(this.storageServices.getAttemptData());
+
     if(!this.attemptData){
       this.router.navigate(['/exams']);
     }
@@ -78,7 +80,6 @@ export class RenderExamComponent implements OnInit,OnDestroy {
         // Handle regular questions
         const regularQuestions = data.questions;
         this.questionPages = this.chunk([...this.codeQuestions,...regularQuestions], +data.questionsPerPage);
-        console.log(data)
         this.questionsPerPage = +data.questionsPerPage;
       }
     });
@@ -86,35 +87,57 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
 
   startTimer(duration: number) {
-    let minutes = duration;
-    let seconds = 0;
+    const storedStartTime = localStorage.getItem('examStartTime');
+    let startTime: number;
+
+    if (storedStartTime) {
+      startTime = Number(storedStartTime);
+    } else {
+      startTime = Date.now();
+      localStorage.setItem('examStartTime', startTime.toString());
+    }
+
+    const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    const remainingTime = duration * 60 - elapsedTime;
+
+    if (remainingTime <= 0) {
+      this.endExam();
+      return;
+    }
+
+    let minutes = Math.floor(remainingTime / 60);
+    let seconds = remainingTime % 60;
+
     this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-    // Create a setInterval function that will update the remaining time every second
     this.intervalId = setInterval(() => {
-      // Decrement the seconds
       seconds--;
       if (seconds < 0) {
-        // Decrement the minutes if seconds reach 0
         minutes--;
         if (minutes < 0) {
-          // Submit the exam if time is up
+          this.endExam();
+          clearInterval(this.intervalId);
+          return;
         } else {
           seconds = 59;
         }
       }
-      // Update the remaining time
       this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-      // Check if both minutes and seconds are equal to 0
+
       if (minutes === 0 && seconds === 0) {
-        // Submit the exam if time is up
-        this.submitExam();
+        this.endExam();
         clearInterval(this.intervalId);
+        localStorage.removeItem('examStartTime');
       }
+      let endTime = new Date(this.exam.endTime);
+      if (endTime.getTime() <= Date.now()) {
+        this.endExam();
+      }
+
     }, 1000);
   }
 
-  chunk(questions: Question[], size: number): Question[][] {
+    chunk(questions: Question[], size: number): Question[][] {
     return Array.from(
       { length: Math.ceil(questions.length / size) },
       (_, index) => questions.slice(index * size, index * size + size)
@@ -167,20 +190,6 @@ export class RenderExamComponent implements OnInit,OnDestroy {
           }
         })
       ).subscribe();
-    // check if Answer Compilation Error
-      // this.examService.getStatusCode(attemptId, questionId).pipe(
-      //   tap((response:any) => {
-      //   this.statusCode = response
-      //     if(!this.statusCode.status){
-      //         const snackBarRef = this.snackBar.open('Compilation Error '+this.statusCode.log, 'Close', {
-      //           duration: 7000,
-      //           verticalPosition: 'top',
-      //           panelClass: ['mat-toolbar', 'mat-warn']
-      //         })
-
-      //       }
-      //     })
-      //   ).subscribe();
     }
 
 
@@ -215,6 +224,7 @@ export class RenderExamComponent implements OnInit,OnDestroy {
   }
 
   savePage(): void {
+    console.log(this.attemptData)
     this.saveAnswersById(this.attemptData.id,this.answerID);
     this.saveAnswersByText(this.attemptData.id,this.answerMatching);
     // to sent question by question
@@ -230,18 +240,6 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
   submitExam(): void {
 
-    this.saveAnswersById(this.attemptData.id,this.answerID);
-    this.saveAnswersByText(this.attemptData.id,this.answerMatching);
-   // to sent question by question
-    this.answerCoding.forEach(ques=>{
-      this.saveAnswersByCoding(this.attemptData.id,ques.questionId,ques.language,ques.code);
-    })
-    clearInterval(this.intervalId);
-    this.answerID = [];
-    this.answerMatching = [];
-    this.answerCoding = [];
-
-
     const dialogRef = this.dialog.open(EndExamDialogeComponent, {
       width: '400px',
       height: '280px',
@@ -254,11 +252,25 @@ export class RenderExamComponent implements OnInit,OnDestroy {
 
 }
 endExam(){
+
+  this.saveAnswersById(this.attemptData.id,this.answerID);
+  this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+ // to sent question by question
+  this.answerCoding.forEach(ques=>{
+    this.saveAnswersByCoding(this.attemptData.id,ques.questionId,ques.language,ques.code);
+  })
+  clearInterval(this.intervalId);
+  this.answerID = [];
+  this.answerMatching = [];
+  this.answerCoding = [];
+
+  localStorage.removeItem('examStartTime');
   const observer={
     next: (answer:any) => {
       // sent to guards to allow change routing
       this.examService.variableSubject.next(true);
       this.preventGuard.setAttemptRoute(false);
+
       // create result
       this.examService.createResult(this.attemptData.id).subscribe(
         data =>{ console.log(data) });
@@ -269,11 +281,10 @@ endExam(){
     }else{
       this.router.navigate(['/courses']);
     }
-    history.pushState(null, '');
   }
   }
   this.examService.endExam(this.attemptData.id).subscribe(observer);
-
+  // remove Attempt Date on local storge
 }
 ngOnDestroy(): void {
   clearInterval(this.intervalId);
