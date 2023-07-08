@@ -17,8 +17,8 @@ const routes: Routes = [
   {path: '', canActivate:[ExamGuard] , component:AllExamsComponent},
   {path:'add',canActivate:[ExamGuard] ,component:AddExamComponent},
   {path:'edit/:id',canActivate:[ExamGuard] ,component:EditExamComponent},
-  {path:'attempt/:examId',component:AttemptExamComponent},
-  {path:'attemptByApp/:examId',component:AttemptExamByAppComponent},
+  {path:'attempt/:examId',canActivate:[ExamGuard],component:AttemptExamComponent},
+  {path:'attemptByApp/:examId',canActivate:[ExamGuard],component:AttemptExamByAppComponent},
   {path:'render/:id',component:RenderExamComponent,
   canDeactivate: [PreventUrlChangeGuard],
   canActivate: [PreventRenderWithoutAttemptGuard]
