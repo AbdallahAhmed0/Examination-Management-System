@@ -1,11 +1,11 @@
 <!-- if user not login -->
 
-<mat-sidenav-container *ngIf="!isLogin()">
+<mat-sidenav-container *ngIf="isLogin">
 
   <app-header [sidenav]="sidenav"></app-header>
   <router-outlet></router-outlet>
 
-  <mat-sidenav #sidenav="matSidenav" [style.width.px]="!sidenav.close ? 80 : 250"
+  <mat-sidenav #sidenav="matSidenav" opened mode="side" [style.width.px]="!sidenav.close ? 80 : 250"
     class="mat-elevation-z8">
 
     <app-sidebar></app-sidebar>
@@ -14,7 +14,7 @@
 </mat-sidenav-container>
 
 <!-- if user login -->
-<div *ngIf="isLogin()">
+<div *ngIf="!isLogin">
   <router-outlet></router-outlet>
 </div>
 

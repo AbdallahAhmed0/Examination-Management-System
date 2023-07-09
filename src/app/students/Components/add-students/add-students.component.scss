@@ -1,14 +1,24 @@
 .container{
 
   margin: 35px;
-
+  @media (max-width: 992px) {
+    margin: 25px 0px ;
+  }
   p{
       font-size: 27px;
+      @media (max-width: 992px) {
+        font-size: 23px;
+      }
   }
 }
 .btn-list{
 font-size: 18px;
 margin-top: 50px;
+@media (max-width: 992px) {
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
 }
 .form{
   margin: 40px;
@@ -17,6 +27,14 @@ margin-top: 50px;
   width: 75%;
   background: #f6f4f4;
 
+  @media (max-width: 992px) {
+    width: 90%;
+    margin: 10px auto;
+  }
+  @media (max-width: 768px) {
+    width: 97%;
+    margin: 10px auto;
+  }
   .add{
       background: #3cb5be;
       color: #ffffff;
@@ -25,15 +43,38 @@ margin-top: 50px;
       padding: 20px;
       border-radius: 10px;
       width: 100%;
+      @media (max-width: 992px) {
+        font-size: 20px;
+      }
   }
 }
 form{
   margin:20px 30px;
+  @media (max-width: 1210px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
+  @media (max-width: 992px) {
+    margin: 20px;
+  }
   mat-form-field{
       width: 40%;
       display: inline-block;
       margin: 20px 30px ;
+      @media (max-width: 1210px) {
+        width: 90%;
+        margin: 12px 20px;
+      }
+      @media (max-width: 992px) {
+        width: 100%;
+        margin: 10px 15px;
+      }
+      @media (max-width: 768px) {
+        width: 100%;
+        margin: 5px 5px;
+      }
 
   }
 
@@ -41,11 +82,15 @@ form{
 .checkbox{
   margin: 20px 0px ;
   font-size: 20px;
-
+  @media (max-width: 1210px) {
+    align-self: flex-start;
+  }
   .check{
       margin: 0 50px;
       font-size: 18px;
-
+      @media (max-width: 992px) {
+        font-size: 17px;
+      }
   }
 
 
@@ -58,7 +103,9 @@ form{
   margin-bottom: 20px;
   background: rgb(14, 175, 14);
   color: #ffffff;
-
+  @media (max-width: 1210px) {
+    align-self: flex-start;
+  }
 }
 small{
   font-size: 14px;

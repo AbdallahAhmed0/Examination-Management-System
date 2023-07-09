@@ -26,36 +26,42 @@ td, th {
   font-size: 15px;
 
 }
-
-.delete{
-background: #f20202;
-color: #fff;
-font-size: 30px;
-width: 45px;
-height: 45px;
-padding: 8px;
-margin: 10px 0px;
-border-radius: 6px;
-border: none;
-text-align: center;
+a{
+  cursor: pointer;
 }
-.edit{
-
-color: #fff;
-border: none;
-padding: 8px;
-margin: 10px 0px;
-border-radius: 6px;
-font-size: 30px;
-background: #0cd463;
-width: 45px;
-height: 45px;
-text-align: center;
-
+.delete-icon{
+  background: #f20202;
+  color: #fff;
+  font-size: 30px;
+  width: 45px;
+  height: 45px;
+  padding: 8px;
+  margin: 10px 0px;
+  border-radius: 6px;
+  text-align: center;
 }
-.delete:hover{
+
+.edit-icon{
+  background: #0cd463;
+  color: #fff;
+  font-size: 30px;
+  width: 45px;
+  height: 45px;
+  padding: 8px;
+  margin: 10px 0px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.delete-icon:hover{
   background: #dc0808;
 }
-.edit:hover{
+.edit-icon:hover{
   background: #0aae51;
+}
+
+@media (max-width: 992px){
+  table{
+    width: 85%;
+  }
 }

@@ -26,6 +26,14 @@ span{
   }
 
 }
+::ng-deep .mat-menu-panel.header-menu {
+  background:#FFF;
+}
+
+::ng-deep .mat-menu-panel.header-menu .mat-menu-item {
+  color: #000;
+}
+
 mat-icon{
     color: rgb(124, 122, 122);
     overflow: visible;

@@ -1,77 +1,147 @@
 import { ExamService } from './../../Services/exam.service';
-import { Question, Exam, Answer } from './../../Models/exam';
-import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Question, Exam } from './../../Models/exam';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
+import { ActivatedRoute, Router } from '@angular/router';
+import { coding } from 'src/app/question/Models/codingQuestion';
+import { MatDialog } from '@angular/material/dialog';
+import { EndExamDialogeComponent } from 'src/app/Shared/material/end-exam-dialoge/end-exam-dialoge.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { StorageService } from 'src/app/login/Services/storage.service';
+import { PreventRenderWithoutAttemptGuard } from '../../guards/hasVisitedAttemptRoute.guard';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-render-exam',
   templateUrl: './render-exam.component.html',
-  styleUrls: ['./render-exam.component.scss']
+  styleUrls: ['./render-exam.component.scss'],
 })
-export class RenderExamComponent implements OnInit {
+export class RenderExamComponent implements OnInit,OnDestroy {
 
-  exam?: any;
+  exam: Exam = {} as Exam;
   responseString: string | undefined;
-  answerQustion = [];
+  answerID:any[] = [];
+  answerMatching:any[] = [];
+  answerCoding:any[] = [];
 
-  questions: Question[]=[];
-  questionForms: FormGroup[] = [];
+  questions: Question[] = [];
+  codeQuestions:coding[]=[];
   questionPages: Question[][] = [];
-  currentPageIndex = 0;
+  currentPageIndex:number = 1;
+  questionsPerPage!:number;
 
-  nextButtonLabel = 'Save';
+  remainingTime!: string;
+  attemptData: any;
+  intervalId:any;
 
-  examId!: number;
+  statusCode:any={status:'',log:''};
 
-  constructor(private examService: ExamService,private _activatedRoute:ActivatedRoute
-              ,private sanitizer: DomSanitizer, private formBuilder: FormBuilder) { }
+  // when click previous and next send value to questions components untile save in form
+  sentAnswerToChoice:{[key: string]: any} = {};
+  sentAnswerToMultibleAnswers:{[key: string]: any} = {};
+  sentAnswerToTrue_False:{[key: string]: any} = {};
+  sentAnswerToMatching:{[key: string]: any} = {};
+  sentAnswerToCoding:{[key: string]: any} = {};
+
+  constructor(
+    private examService: ExamService,
+    private route: ActivatedRoute,
+    private router:Router,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private storageServices:StorageService,
+    private preventGuard:PreventRenderWithoutAttemptGuard,
+
+  ) {}
+
 
   ngOnInit(): void {
+    const examId = parseInt(this.route.snapshot.paramMap.get('id') as string);
+    this.renderExam(examId);
 
-    this.examId = Number(this._activatedRoute.snapshot.paramMap.get('id'));
+    this.attemptData = JSON.parse(this.storageServices.getAttemptData());
 
+    if(!this.attemptData){
+      this.router.navigate(['/exams']);
+    }
+  }
 
-    this.examService.renderExam(this.examId).subscribe(data => {
+  renderExam(examId: number): void {
+    this.examService.renderExam(examId).subscribe((data) => {
       this.exam = data;
-      this.questions = this.exam.questions;
-      this.questionPages = this.chunk(this.questions,3);
+      this.startTimer(this.exam.duration);
 
-      console.log(this.exam)
 
-       // Initialize a form group for each question
-    this.questionForms = this.questions.map(question => {
-      const formGroup = this.formBuilder.group({
-        answerIds: []
-      });
-      return formGroup;
-    });
+      if (data.codeQuestionDtos) {
+        // Handle code questions
+          this.codeQuestions = data.codeQuestionDtos;
+      }
+      if (data.questions) {
+        // Handle regular questions
+        const regularQuestions = data.questions;
+        this.questionPages = this.chunk([...this.codeQuestions,...regularQuestions], +data.questionsPerPage);
+        this.questionsPerPage = +data.questionsPerPage;
+      }
     });
   }
 
-  chunk(questions: Question[], size: number): Question[][] {
+
+  startTimer(duration: number) {
+    const storedStartTime = localStorage.getItem('examStartTime');
+    let startTime: number;
+
+    if (storedStartTime) {
+      startTime = Number(storedStartTime);
+    } else {
+      startTime = Date.now();
+      localStorage.setItem('examStartTime', startTime.toString());
+    }
+
+    const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    const remainingTime = duration * 60 - elapsedTime;
+
+    if (remainingTime <= 0) {
+      this.endExam();
+      return;
+    }
+
+    let minutes = Math.floor(remainingTime / 60);
+    let seconds = remainingTime % 60;
+
+    this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    this.intervalId = setInterval(() => {
+      seconds--;
+      if (seconds < 0) {
+        minutes--;
+        if (minutes < 0) {
+          this.endExam();
+          clearInterval(this.intervalId);
+          return;
+        } else {
+          seconds = 59;
+        }
+      }
+      this.remainingTime = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+      if (minutes === 0 && seconds === 0) {
+        this.endExam();
+        clearInterval(this.intervalId);
+        localStorage.removeItem('examStartTime');
+      }
+      let endTime = new Date(this.exam.endTime);
+      if (endTime.getTime() <= Date.now()) {
+        this.endExam();
+      }
+
+    }, 1000);
+  }
+
+    chunk(questions: Question[], size: number): Question[][] {
     return Array.from(
       { length: Math.ceil(questions.length / size) },
       (_, index) => questions.slice(index * size, index * size + size)
     );
-  }
-
-  saveAnswer(): void {
-    // Save the answer to the current question.
-  }
-
-  nextQuestion(): void {
-    // Move to the next question on the current page.
-  }
-
-  previousQuestion(): void {
-    // Move to the previous question on the current page.
-  }
-
-  changePage(pageIndex: number) {
-    this.currentPageIndex = pageIndex;
   }
 
   previousPage() {
@@ -80,28 +150,143 @@ export class RenderExamComponent implements OnInit {
 
   nextPage() {
     this.currentPageIndex++;
-
-  }
-
-  // onNext() {
-  //   if (this.questionForms.valid) {
-  //     const data = this.form.value;
-  //     this.http.post('your-api-url', data).subscribe(response => {
-  //       // handle the response from the server
-  //       // navigate to the next page
-  //     });
-  //   } else {
-  //     // handle the case when the form is not valid
-  //   }
-  // }
-  // Sanitize the HTML content with the DomSanitizer service
-  sanitizeHtml(html: string): any {
-    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
 
+
+  saveAnswersById(attemptId:any ,answers: any[]): void {
+    const observer={
+      next: (answer:any) => {
+      },
+      error: (err:Error)=>{
+        //Take dicition when occur Error
+        }
+    }
+    this.examService.saveSelectedStudentAnswer(attemptId,answers).subscribe(observer);
+  }
+
+  saveAnswersByText(attemptId:any, answers: any[]): void {
+    const observer={
+      next: (answer:any) => {
+      },
+      error: (err:Error)=>{
+        //Take dicition when occur Error
+        }
+    }
+    this.examService.saveCompleteStudentAnswer(attemptId,answers).subscribe(observer);
+  }
+  saveAnswersByCoding(attemptId:number,questionId:number,language:string,code:string): void {
+
+    this.examService.saveJudgeCodeQuestion(attemptId,questionId,language,code).pipe(
+      tap((response:any) => {
+      this.statusCode = response
+        if(!this.statusCode.status){
+            const snackBarRef = this.snackBar.open('Compilation Error '+this.statusCode.log, 'Close', {
+              duration: 7000,
+              verticalPosition: 'top',
+              panelClass: ['mat-toolbar', 'mat-warn']
+            })
+
+          }
+        })
+      ).subscribe();
+    }
+
+
+
+
+  addAnswerByIDs(answer:any,questionType:any){
+
+    const existingAnswerIndex = this.answerID.findIndex(a => a.questionId === answer.questionId);
+    existingAnswerIndex !== -1 ? this.answerID[existingAnswerIndex] = answer :this.answerID.push(answer);
+
+    if(questionType == 'Multiple_choice'){
+      this.sentAnswerToChoice[answer.questionId] = answer.answersIds;
+    }
+    else if(questionType == 'Multiple_Answers'){
+      this.sentAnswerToMultibleAnswers[answer.questionId] = answer.answersIds;
+    }
+    else{
+      this.sentAnswerToTrue_False[answer.questionId] = answer.answersIds;
+    }
+  }
+  addAnswerByString(answer:any){
+    const existingAnswerIndex = this.answerMatching.findIndex(a => a.questionId === answer.questionId);
+    existingAnswerIndex !== -1 ? this.answerMatching[existingAnswerIndex] = answer :this.answerMatching.push(answer);
+
+    this.sentAnswerToMatching[answer.questionId] = answer.textAnswer;
+  }
+  addAnswerByCoding(answer:any){
+    const existingAnswerIndex = this.answerCoding.findIndex(a => a.questionId === answer.questionId);
+    existingAnswerIndex !== -1 ? this.answerCoding[existingAnswerIndex] = answer :this.answerCoding.push(answer);
+
+    this.sentAnswerToCoding[answer.questionId] = answer;
+  }
+
+  savePage(): void {
+    console.log(this.attemptData)
+    this.saveAnswersById(this.attemptData.id,this.answerID);
+    this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+    // to sent question by question
+    this.answerCoding.forEach(ques=>{
+      this.saveAnswersByCoding(this.attemptData.id,ques.questionId,ques.language,ques.code);
+      console.log(this.attemptData.id,ques.questionId,ques.language,ques.code)
+    })
+    console.log("ID",this.answerID,"matching",this.answerMatching,"Coding",this.answerCoding)
+    this.answerID = [];
+    this.answerMatching = [];
+    this.answerCoding = [];
+  }
+
+  submitExam(): void {
+
+    const dialogRef = this.dialog.open(EndExamDialogeComponent, {
+      width: '400px',
+      height: '280px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'confirm') {
+        this.endExam();
+      }
+    });
 
 }
+endExam(){
 
+  this.saveAnswersById(this.attemptData.id,this.answerID);
+  this.saveAnswersByText(this.attemptData.id,this.answerMatching);
+ // to sent question by question
+  this.answerCoding.forEach(ques=>{
+    this.saveAnswersByCoding(this.attemptData.id,ques.questionId,ques.language,ques.code);
+  })
+  clearInterval(this.intervalId);
+  this.answerID = [];
+  this.answerMatching = [];
+  this.answerCoding = [];
 
+  localStorage.removeItem('examStartTime');
+  const observer={
+    next: (answer:any) => {
+      // sent to guards to allow change routing
+      this.examService.variableSubject.next(true);
+      this.preventGuard.setAttemptRoute(false);
 
+      // create result
+      this.examService.createResult(this.attemptData.id).subscribe(
+        data =>{ console.log(data) });
+
+      if(this.exam.showResult){
+      //go to Show Answer Page
+      this.router.navigate([`/exams/showAnswers/${this.attemptData.id}`]);
+    }else{
+      this.router.navigate(['/courses']);
+    }
+  }
+  }
+  this.examService.endExam(this.attemptData.id).subscribe(observer);
+  // remove Attempt Date on local storge
+}
+ngOnDestroy(): void {
+  clearInterval(this.intervalId);
+}
+}

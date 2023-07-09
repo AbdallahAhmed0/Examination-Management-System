@@ -1,0 +1,32 @@
+<div class="center-container">
+  <mat-card class="card">
+
+    <div class="mat-card-content">
+      <div class="card-image">
+      <img src="../../../assets/Online-Examination-System.jpg" alt="Image" />
+    </div>
+
+    <div class="form">
+      <form #form="ngForm" [formGroup]="passwordForm" (ngSubmit)="submitForm()">
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" formControlName="confirmPassword" required>
+          <mat-error *ngIf="passwordsDoNotMatch()">Passwords do not match</mat-error>
+        </mat-form-field>
+
+
+          <button class="button" mat-raised-button color="primary" [disabled]="form.invalid" type="submit">Submit</button>
+
+
+      </form>
+    </div>
+    </div>
+  </mat-card>
+</div>
+
+

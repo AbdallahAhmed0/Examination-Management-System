@@ -1,0 +1,106 @@
+<section class="container">
+  <div class="answers__container">
+    <div class="result ">
+      <h3>Total Score : {{examResult?.score}} %</h3>
+      <h3> Status : {{(examResult?.passed == true) ? "Passed":"Failed"}}</h3>
+    </div>
+
+    <!-- Question Block Standard Questions -->
+    <div *ngFor="let questionObject of standardQuestionAnswers" class="question question__container">
+      <p class="question__body" [innerHTML]="sanitizeHtml(questionObject.question.questionText)">
+      </p>
+      <div class="question__answers--container">
+        <h4 class="score color-info">Score : {{questionObject.points}} / {{questionObject.question.points}} </h4>
+
+        <!-- =========== IF Multiple Choice =========== -->
+        <ng-container *ngIf="questionObject.question.questionType ==='Multiple_choice'">
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+            <ng-container *ngFor="let ans of questionObject.question.questionAnswers">
+              <mat-radio-button
+                [ngClass]="{'correct--answer':ans.correctAnswer,
+                          'wrong--answer': isSelected(ans.id , questionObject.questionAnswers)&& !ans.correctAnswer}"
+                class="example-radio-button question__answers--answer" [value]="ans.answerText" disabled="true"
+                [checked]="isSelected( ans.id , questionObject.questionAnswers)">
+                <p class=" my-0 align-items-center" [innerHTML]="sanitizeHtml(ans.answerText)">
+                </p>
+                <!-- {{ans.answerText}} -->
+              </mat-radio-button>
+              <small class="color-info d-block ms-2">{{ans.comment}}</small>
+            </ng-container>
+          </mat-radio-group>
+        </ng-container>
+
+        <!-- =========== IF Multiple Answers =========== -->
+        <ng-container *ngIf="questionObject.question.questionType ==='Multiple_Answers'">
+          <ng-container *ngFor="let ans of questionObject.question.questionAnswers">
+            <mat-checkbox [class.correct--answer]="ans.correctAnswer" [ngClass]="{'correct--answer':ans.correctAnswer,
+          'wrong--answer': isSelected(ans.id , questionObject.questionAnswers)&& !ans.correctAnswer}"
+              [checked]="ans.correctAnswer" class="example-radio-button question__answers--answer"
+              [value]="ans.answerText" disabled="true" [checked]="isSelected( ans.id , questionObject.questionAnswers)">
+              <!-- {{ans.answerText}} -->
+              <p class=" my-0" [innerHTML]="sanitizeHtml(ans.answerText)"></p>
+            </mat-checkbox>
+            <small class="color-info d-block ms-2">{{ans.comment}}</small>
+          </ng-container>
+        </ng-container>
+
+        <!-- =========== IF True False Question =========== -->
+        <ng-container *ngIf="questionObject.question.questionType === 'True_False'">
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+            <mat-radio-button class="example-radio-button question__answers--answer" value="ans1" disabled="true"
+              [ngClass]="{'correct--answer':questionObject.questionAnswers[0]?.correctAnswer,
+              'wrong--answer': !(questionObject.questionAnswers.length) && questionObject.questionAnswers[0]?.correctAnswer}"
+              [checked]="questionObject.question.points === questionObject.points" value="true">
+              True</mat-radio-button>
+            <ng-container *ngIf="questionObject.question.questionAnswers[0].answerText === 'true'">
+              <small class="color-info d-block ms-2">{{questionObject.question.questionAnswers[0]?.comment}}</small>
+            </ng-container>
+            <mat-radio-button class=" example-radio-button question__answers--answer" value="ans2" disabled="true"
+            [ngClass]="{'correct--answer':!(questionObject.questionAnswers[0]?.correctAnswer),
+            'wrong--answer':  !(questionObject.questionAnswers.length) && !(questionObject.questionAnswers[0]?.correctAnswer)}"
+            [checked]="!(questionObject.question.points === questionObject.points)" >
+              false</mat-radio-button>
+          </mat-radio-group>
+          <ng-container *ngIf="questionObject.question.questionAnswers[0].answerText === 'false'">
+            <small class="color-info d-block ms-2">{{questionObject.question.questionAnswers[0].comment}}</small>
+          </ng-container>
+
+        </ng-container>
+
+
+        <!-- =========== IF Matching Question =========== -->
+        <ng-container *ngIf="questionObject.question.questionType === 'Matching'">
+          <div class=" example-radio-button question__answers--answer ">
+            <p class="">
+              <b>Student Answer:</b> <span class="question__answers--answer " [ngClass]="{'correct--answer':questionObject.question.points == questionObject.points,
+                            'wrong--answer':!questionObject.question.points == questionObject.points}"
+                [innerHtml]="sanitizeHtml(questionObject.answerCompleteQuestion)"></span>
+            </p>
+            <p class="">
+              <b>System Answer:</b> <span class="question__answers--answer"
+                [innerHtml]="sanitizeHtml(questionObject.question.questionAnswers[0].answerText)"></span>
+              <small class="color-info d-block ms-2">{{questionObject.question.questionAnswers[0].comment}}</small>
+            </p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+  <!-- Question Block Coding Questions -->
+  <div *ngFor="let questionObject of codeStudentAnswers" class="question question__container">
+    <p class="question__body" [innerHTML]="sanitizeHtml(questionObject.question.questionText)">
+    </p>
+    <div class="question__answers--container">
+      <h4 class="score color-info">Score : {{questionObject.points}} / {{questionObject.question.points}} </h4>
+
+              <!-- =========== Coding Question =========== -->
+        <div class=" example-radio-button question__answers--answer ">
+          <span class="question__answers--answer " [ngClass]="{'correct--answer':questionObject.passedTestCases,
+          'wrong--answer':!questionObject.passedTestCases}">
+          Number Of Test Cases Passed: {{questionObject.passedTestCases}}</span>
+          <p [innerHTML]="sanitizeHtml(questionObject.submission)"></p>
+        </div>
+    </div>
+  </div>
+  </div>
+</section>

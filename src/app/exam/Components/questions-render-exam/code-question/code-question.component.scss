@@ -1,0 +1,24 @@
+.header{
+  text-align: center;
+  margin: 10px;
+}
+.desc{
+  margin: 15px;
+  margin-bottom: 25px;
+}
+h1{
+  font-size: 26px;
+  font-weight: 500;
+}
+.testCase{
+  border: 1px solid rgb(68, 68, 68);
+}
+.input-example,.output-example{
+  border: 1px solid rgb(68, 68, 68);
+  padding: 3px;
+  background: #efefef;
+}
+button.checked {
+  background-color: yellow;
+  font-weight: bold;
+}

@@ -1,67 +1,114 @@
-.contianer{
-    margin: 35px;
+.contianer {
+  margin: 35px;
 
-    p{
-        font-size: 30px;
+  p {
+    font-size: 30px;
+    @media (max-width: 992px) {
+      font-size: 23px;
     }
+  }
 }
-.btn-list{
+.btn-list {
   font-size: 18px;
   margin-top: 50px;
-}
-.form{
-    margin: 40px;
-    border: 2px solid rgb(211, 208, 208);
-    border-radius: 10px;
-    width: 80%;
-
-    .edit{
-        background: #3cb5be;
-        color: #ffffff;
-        height: 60px;
-        font-size: 25px;
-        padding: 20px;
-        border-radius: 10px;
-        width: 100%;
-    }
-}
-form{
-    margin: 20px 30px;
-
-    mat-form-field{
-        width: 40%;
-        display: inline-block;
-        margin:20px 30px;
-
-    }
-
-}
-.checkbox{
-    margin: 20px 0px ;
-    font-size: 20px;
-
-    .check{
-        margin: 0 50px;
-        font-size: 18px;
-
-    }
-
-
-}
-.submit{
-    width: 90px;
-    height: 40px;
+  @media (max-width: 992px) {
+    margin-top: 20px;
     font-size: 18px;
-    margin-left: 50px;
-    margin-bottom: 20px;
-    background: rgb(14, 175, 14);
-    color: #ffffff;
-
+  }
 }
-small{
+.form {
+  margin: 40px;
+  border: 2px solid rgb(211, 208, 208);
+  border-radius: 10px;
+  width: 80%;
+  background: #f6f4f4;
+
+  @media (max-width: 992px) {
+    width: 90%;
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  .edit {
+    background: #3cb5be;
+    color: #ffffff;
+    height: 60px;
+    font-size: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+
+    @media (max-width: 992px) {
+      font-size: 20px;
+    }
+  }
+}
+form {
+  margin: 20px 30px;
+  @media (max-width: 1210px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (max-width: 992px) {
+    margin: 20px;
+  }
+
+  mat-form-field {
+    width: 40%;
+    display: inline-block;
+    margin: 20px 30px;
+    @media (max-width: 1210px) {
+      width: 90%;
+      margin: 12px 20px;
+    }
+    @media (max-width: 992px) {
+      width: 100%;
+      margin: 10px 15px;
+    }
+    @media (max-width: 768px) {
+      width: 100%;
+      margin: 5px 5px;
+    }
+  }
+}
+.checkbox {
+  margin: 20px 0px;
+  font-size: 20px;
+  @media (max-width: 1210px) {
+    align-self: flex-start;
+  }
+
+  .check {
+    margin: 0 50px;
+    font-size: 18px;
+    @media (max-width: 992px) {
+      font-size: 17px;
+    }
+  }
+}
+.submit {
+  width: 90px;
+  height: 40px;
+  font-size: 18px;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  background: rgb(14, 175, 14);
+  color: #ffffff;
+  @media (max-width: 1210px) {
+    align-self: flex-start;
+  }
+}
+app-check-role {
+  width: 100%;
+}
+
+small {
   font-size: 14px;
-    color: #ff3232;
-    position: absolute;
-    margin: 12px 0px;
-    display: block;
+  color: #ff3232;
+  position: absolute;
+  margin: 12px 0px;
+  display: block;
 }

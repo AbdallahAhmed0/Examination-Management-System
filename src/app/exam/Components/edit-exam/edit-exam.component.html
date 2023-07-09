@@ -59,13 +59,14 @@
 </mat-form-field><br>
 <br>
 <mat-form-field appearance="fill">
-  <mat-label>Select Course</mat-label>
+  <mat-label>{{editCourse.name}}</mat-label>
   <mat-select formControlName="course" matinput >
-    <mat-option *ngFor="let course of theCourses" [value]=course>{{course.courseName}}</mat-option>
+    <mat-option *ngFor="let course of theCourses" [value]='course'>{{course.courseName}}</mat-option>
   </mat-select>
   <mat-error *ngIf="course?.hasError('required')">
     you must choose course
 </mat-error>
+
 
 </mat-form-field>
 <mat-form-field appearance="fill" >
@@ -93,19 +94,22 @@
 
 
 </mat-form-field>
+
 <br>
+<mat-form-field appearance="fill" >
 
+  <mat-label>Number question per page</mat-label>
+  <input matInput type="number" formControlName="questionsPerPage"  required>
 
+  <mat-error *ngIf="duration?.hasError('required')">
+    Number question per page is Required!
+  </mat-error>
 
+</mat-form-field>
+<mat-slide-toggle color="primary" class="btn-toggle" [checked]="showResult?.value" formControlName="showResult" >Show Result</mat-slide-toggle>
+<mat-slide-toggle color="primary" class="btn-toggle" [checked]="noCheatingApp?.value" formControlName="noCheatingApp" >noCheatingApp</mat-slide-toggle>
 
-
-
-
-
-
-
-
-  <button mat-raised-button [disabled]="examform.invalid" class="submit" type="submit">Submit</button>
+<button mat-raised-button [disabled]="examform.invalid" class="submit" type="submit">Save</button>
   </form>
   </div>
   </div>

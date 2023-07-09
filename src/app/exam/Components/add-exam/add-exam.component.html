@@ -41,7 +41,7 @@
 
   <mat-label>Sucees Rate :{{sliderValue}}% </mat-label>
 
-  <mat-slider showTickMarks matSliderThumb [(ngModel)]="sliderValue" formControlName="successRate"  min="0" max="100" thumbLabel required >
+  <mat-slider showTickMarks matSliderThumb [(ngModel)]="sliderValue" formControlName="successRate"   min="0" max="100" thumbLabel required >
     <input matInput matSliderThumb     >
   </mat-slider>
   <mat-error *ngIf="successRate?.hasError('required')">
@@ -76,18 +76,25 @@
 <mat-form-field appearance="fill" >
 
   <mat-label>End time</mat-label>
-  <input matInput type="datetime-local" formControlName="endTime"   required>
+  <input matInput type="datetime-local" formControlName="endTime"(mouseleave)="dateCompareValidator()"  required>
 
   <mat-error *ngIf="endTime?.hasError('required')">
-      Exam Date is Required!
+      Exam  end Date is Required!
   </mat-error>
+  <small style="color: red;" *ngIf="datecompare">
+    <mat-error >
+    Exam end Date  must be bigger
+  </mat-error>
+  </small>
+
+
 
 </mat-form-field>
 <br>
-<mat-form-field appearance="fill" >
+<mat-form-field appearance="fill"  >
 
   <mat-label>Number question per page</mat-label>
-  <input matInput type="number" formControlName="questionsPerPage"  required>
+  <input matInput type="number" formControlName="questionsPerPage" (mouseenter)="dateCompareValidator()" required>
 
   <mat-error *ngIf="duration?.hasError('required')">
     Number question per page is Required!
@@ -95,19 +102,9 @@
 
 </mat-form-field>
 <mat-slide-toggle color="primary" class="btn-toggle" [checked]="showResult?.value" formControlName="showResult" >Show Result</mat-slide-toggle>
+<mat-slide-toggle color="primary" class="btn-toggle" [checked]="noCheatingApp?.value" formControlName="noCheatingApp" >noCheatingApp</mat-slide-toggle>
 
-
-
-
-
-
-
-
-
-
-
-
-  <button mat-raised-button [disabled]="examform.invalid" class="submit" type="submit">Submit</button>
+  <button mat-raised-button [disabled]="examform.invalid || datecompare" class="submit" type="submit">Submit</button>
   </form>
   </div>
   </div>

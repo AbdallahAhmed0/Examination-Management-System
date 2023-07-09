@@ -50,24 +50,25 @@ export class AddCourseComponent implements OnInit {
 
   }
   addCourse(){
-    let teachers =[] ;
-    for (const item of this.items) {
-      teachers.push(item.id)
-    }
-    this.teachers?.setValue(teachers)
-    console.log(this.newCourse.value);
     const observer={
       next: (course:Course) => {
         this.router.navigateByUrl('/courses');
         this.courseService.openSnackBar('Added');
       },
       error: (err:Error)=>{
+
         this.consoleError = err.message
         }
     }
+    let teachers =[] ;
+    for (const item of this.items) {
+      teachers.push(item.id)
+    }
+    this.teachers?.setValue(teachers)
     console.log(this.newCourse.value);
 
-   this.subCourse= this.courseService.addCourse(this.newCourse.value).subscribe(observer);
+
+  this.subCourse= this.courseService.saveCourse(this.newCourse.value).subscribe(observer);
 
 
   }

@@ -1,0 +1,63 @@
+<form [formGroup]="codingForm" (ngSubmit)="onSubmit()">
+  <div class="card">
+    <p class="index">{{ indexComponent }}.</p>
+    <div class="actions">
+      <a title="delete" (click)="deleteQuestion(id?.value)"><mat-icon class="delete">delete</mat-icon></a>
+    </div>
+    <div class="header">
+      <div class="input-container">
+        <input type="text" class="inp-header" formControlName="header" placeholder="Name" required/>
+        <mat-error *ngIf="header?.touched && header?.hasError('required')">
+          Name is Required!
+      </mat-error>
+        <input type="number" min="0" class="inp-header" formControlName="timeLimit" placeholder="Time limit per second" required />
+        <mat-error *ngIf="timeLimit?.touched && timeLimit?.hasError('required')">
+          TimeLimit is Required!
+      </mat-error>
+        <input type="hidden" min="0" class="inp-header" formControlName="points" placeholder="Points" required />
+      </div>
+    </div>
+
+    <!-- Descritopn Question -->
+    <div class="editor">
+      <textarea [froalaEditor]="froalaOptions('Description Question')" (input)="autoResize($event.target)"
+      formControlName="questionText" required >{{ descriptionQuestion }}
+      </textarea>
+      <mat-error *ngIf="questionText?.touched && questionText?.hasError('required')">
+        Description Question is required!
+      </mat-error>
+
+    </div>
+
+    <!-- Test Cases -->
+    <div formArrayName="testCases">
+      <p class="example">Example:</p>
+      <div *ngFor="let testCase of testCases.controls; let i=index" class="cases">
+        <div [formGroupName]="i">
+          <div class="input-container-2">
+            <textarea class="test-Case" formControlName="input" placeholder="Input" (keydown)="onKeyDown($event)"(input)="autoResize($event.target)" required></textarea>
+            <textarea class="test-Case" formControlName="expectedOutput" placeholder="Output" (keydown)="onKeyDown($event)" (input)="autoResize($event.target)" required></textarea>
+            <input type="number" min="0" class="test-Case test-Case-point" formControlName="points" placeholder="Points" required />
+
+            <button mat-icon-button type="button" (click)="removeTestCase(i)" *ngIf="testCases.length > 1" >
+              <mat-icon class="delete-icon">delete</mat-icon>
+            </button>
+          </div>
+          <mat-error *ngIf="testCase.get('input')?.touched && testCase.get('input')?.hasError('required')">
+            input is Required!
+        </mat-error>
+        <mat-error *ngIf="testCase.get('expectedOutput')?.touched && testCase.get('expectedOutput')?.hasError('required')">
+          Output is Required!
+      </mat-error>
+      <mat-error *ngIf="testCase.get('points')?.touched && testCase.get('points')?.hasError('required')">
+        points is Required!
+    </mat-error>
+          </div>
+      </div>
+    </div>
+
+    <button mat-button type="button" class="add-test-case" (click)="addTestCase()">
+      <mat-icon>add</mat-icon>Add TestCase
+    </button>
+  </div>
+</form>

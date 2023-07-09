@@ -7,6 +7,8 @@
   border: 2px solid rgb(211, 208, 208);
   border-radius: 10px;
   width: 80%;
+  background: #f6f4f4;
+
 
 .import{
   background: #3cb5be;
@@ -59,4 +61,24 @@ mat-label{
 .btn-list{
   font-size: 17px;
   margin-top: 50px;
+}
+@media (max-width: 992px){
+  .btn-list {
+    font-size: 15px;
+    margin-top: 15px;
+  }
+  .import{
+    height: 20px;
+    font-size: 15px;
+    padding: 2px;
+    border-radius: 10px;
+    width: 100%;
+  }
+  .form{
+    margin: 20px;
+    border: 1px solid rgb(211, 208, 208);
+    border-radius: 10px;
+    width: 95%;
+
+  }
 }

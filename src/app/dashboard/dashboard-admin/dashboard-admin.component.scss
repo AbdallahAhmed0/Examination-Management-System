@@ -1,0 +1,88 @@
+
+
+.content-wrapper{
+  min-height: 802px;
+}
+
+.content-header {
+  padding: 15px 0.5rem;
+}
+
+.row{
+  margin-right: 5.5px;
+  margin-left:  5.5px;
+  --bs-gutter-x: 0.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 16px;
+}
+
+.col-lg-3{
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+
+.bg-info {
+  background-color: #17a2b8 !important;
+}
+.small-box {
+  border-radius: 0.25rem;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.small-box h3{
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    padding: 0;
+    white-space: nowrap;
+    color: #ffffff !important;
+}
+
+.small-box p {
+  font-size: 16px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  color: #ffffff !important;
+}
+
+.bg-warning p, .bg-warning h3,.bg-primary p, .bg-primary h3{
+  color: #000000 !important;
+}
+
+.small-box .icon {
+  color: rgba(0, 0, 0, 0.15);
+  z-index: 0;
+}
+
+mat-icon{
+  font-size: 60px;
+  top: 20px;
+  position: absolute;
+  right: 42px;
+  top: 22px;
+  transition: all 0.3s linear;
+  overflow:visible
+}
+
+.icon:hover{
+  font-size: 65px;
+  transition: 0.3s ease-out;
+}
+
+.col-lg-12{
+  margin-bottom: 15px;
+}
+.exams-icon{
+  font-size: 25px;
+}
+
+button {
+  position: static;
+}

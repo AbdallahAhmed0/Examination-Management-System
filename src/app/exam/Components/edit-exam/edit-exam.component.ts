@@ -23,32 +23,37 @@ export class EditExamComponent implements OnInit {
   theCourses?:Course[];
   sliderValue?:number;
 
+  editCourse!:any;
 
   constructor(private router:Router,
-     private examService:ExamService,
+    private examService:ExamService,
     private fb:FormBuilder,
     private activatedRoute:ActivatedRoute,
     private courseService:CourseService) { }
     ngOnInit(): void {
+      this.getCourses()
 
       this.subRoute= this.activatedRoute.paramMap.subscribe((paramMap)=>{
         this.id=Number(paramMap.get('id'));
 
         this.examService.getExamById(this.id).subscribe(data =>{
             this.exam=data;
-            console.log(data);
+            this.editCourse=this.exam.course;
             this.sliderValue=data.successRate
-
+            this.sliderValue=data.successRate
 
 
             this.newExam = this.fb.group({
               examName:[data.examName,[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
               duration:[data.duration,[Validators.required]],
               successRate:[data.successRate,Validators.required],
-              course:["",Validators.required],
+              course:[data.course,Validators.required],
               state:[false,[]],
-              startTime:[ "",[Validators.required]],
-              endTime:["",[Validators.required]]
+              questionsPerPage:[data.questionsPerPage,[Validators.required]],
+              showResult: [data.showResult],
+              noCheatingApp:[data.noCheatingApp],
+              startTime:[this.formatDateToform(data.startTime.toString()),[Validators.required]],
+              endTime:[this.formatDateToform(data.endTime.toString()),[Validators.required]]
 
             })
 
@@ -77,7 +82,7 @@ export class EditExamComponent implements OnInit {
       this.EditExam.id=this.id.toString();
 
 
-        this.subExam= this.examService.updateExam(this.EditExam).subscribe(observer);
+        this.subExam= this.examService.saveExam(this.EditExam).subscribe(observer);
 
     }
     goback(){
@@ -90,7 +95,6 @@ export class EditExamComponent implements OnInit {
     }
     transformDate(time:any){
       let transformedDate
-      console.log(time);
 
 
      let myDate = new Date(time);
@@ -108,6 +112,16 @@ export class EditExamComponent implements OnInit {
      transformedDate = `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
      return transformedDate
     }
+     formatDateToform(dateString: string): string {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+
 
 
     get examName(){
@@ -128,6 +142,15 @@ export class EditExamComponent implements OnInit {
     }
     get course(){
       return this.newExam.get('course')
+    }
+    get questionsPerPage(){
+      return this.newExam.get('questionsPerPage')
+    }
+  get showResult(){
+      return this.newExam.get('showResult')
+    }
+    get noCheatingApp(){
+      return this.newExam.get('noCheatingApp')
     }
 
   }
