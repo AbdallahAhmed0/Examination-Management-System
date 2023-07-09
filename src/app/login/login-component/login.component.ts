@@ -8,7 +8,7 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../Services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { StorageService } from '../Services/storage.service';
+import { StorageService} from '../Services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -65,15 +65,10 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/dashboard']);
           } else if (
             this.permissions.some(
-              (role: any) => role.authority === 'MANAGE_STUDENT_ROLE'
+              (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
             )
           ) {
             this.router.navigate(['/courses']);
-          } else {
-            // not logged in so redirect to login page with the return url
-
-            this.router.navigate(['/attempt/1']);
-            // this.router.navigate(['/login']);
           }
           this.isLoginFailed = false;
           this.isLoggedIn = true;

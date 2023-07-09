@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, first } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { CustomDialogeComponent } from '../Shared/material/custom-dialoge/custom-dialoge.component';
-import { ExamService } from './Services/exam.service';
+import { CustomDialogeComponent } from '../../Shared/material/custom-dialoge/custom-dialoge.component';
+import { ExamService } from '../Services/exam.service';
+
 
 @Injectable()
 export class PreventUrlChangeGuard implements CanDeactivate<any> {

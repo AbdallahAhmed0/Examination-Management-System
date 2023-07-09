@@ -7,9 +7,9 @@ import { coding } from 'src/app/question/Models/codingQuestion';
 import { MatDialog } from '@angular/material/dialog';
 import { EndExamDialogeComponent } from 'src/app/Shared/material/end-exam-dialoge/end-exam-dialoge.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { tap } from 'rxjs';
 import { StorageService } from 'src/app/login/Services/storage.service';
-import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
+import { PreventRenderWithoutAttemptGuard } from '../../guards/hasVisitedAttemptRoute.guard';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-render-exam',

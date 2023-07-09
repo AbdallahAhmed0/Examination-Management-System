@@ -13,7 +13,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
         const token = this.storageService.getToken();
         const isLoggedIn = this.storageService.isLoggedIn();
-        const isApiUrl = request.url.startsWith('http://142.93.192.45:8087/api');
+        const isApiUrl = request.url.startsWith(`${environment.APPURL}`);
         if (isLoggedIn ) {
             request = request.clone({
                 setHeaders: {

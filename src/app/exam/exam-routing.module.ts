@@ -8,29 +8,31 @@ import { RenderExamComponent } from './Components/render-exam/render-exam.compon
 import { ExamAnswersComponent } from './Components/exam-answers/exam-answers.component';
 import { CodeQuestionComponent } from './Components/questions-render-exam/code-question/code-question.component';
 import { ExamStudentsComponent } from './Components/exam-students/exam-students.component';
-import { PreventUrlChangeGuard } from './prevent-url-change.guard';
-import { PreventRenderWithoutAttemptGuard } from './hasVisitedAttemptRoute.guard';
+import { PreventUrlChangeGuard } from './guards/prevent-url-change.guard';
+import { PreventRenderWithoutAttemptGuard } from './guards/hasVisitedAttemptRoute.guard';
 import { AttemptExamByAppComponent } from './Components/attempt-exam-by-app/attempt-exam-by-app.component';
+import { ExamGuard } from './guards/exam.guard';
 
 const routes: Routes = [
-  {path: '', component:AllExamsComponent},
-  {path:'add',component:AddExamComponent},
-  {path:'edit/:id',component:EditExamComponent},
-  {path:'attempt/:examId',component:AttemptExamComponent},
-  {path:'attemptByApp/:examId',component:AttemptExamByAppComponent},
+  {path: '', canActivate:[ExamGuard] , component:AllExamsComponent},
+  {path:'add',canActivate:[ExamGuard] ,component:AddExamComponent},
+  {path:'edit/:id',canActivate:[ExamGuard] ,component:EditExamComponent},
+  {path:'attempt/:examId',canActivate:[ExamGuard],component:AttemptExamComponent},
+  {path:'attemptByApp/:examId',canActivate:[ExamGuard],component:AttemptExamByAppComponent},
   {path:'render/:id',component:RenderExamComponent,
   canDeactivate: [PreventUrlChangeGuard],
   canActivate: [PreventRenderWithoutAttemptGuard]
 
 },
-  {path:'showAnswers/:attemptId',component:ExamAnswersComponent},
-  {path:'code',component:CodeQuestionComponent},
-  {path:"showStudents/:id",component:ExamStudentsComponent}
+  {path:'showAnswers/:attemptId',canActivate:[ExamGuard],component:ExamAnswersComponent},
+  {path:'code',canActivate:[ExamGuard],component:CodeQuestionComponent},
+  {path:"showStudents/:id",canActivate:[ExamGuard],component:ExamStudentsComponent}
 
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[ExamGuard]
 })
 export class ExamRoutingModule { }

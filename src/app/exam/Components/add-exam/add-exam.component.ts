@@ -1,7 +1,7 @@
 
 
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ExamService }  from './../../Services/exam.service'
 
@@ -21,7 +21,8 @@ export class AddExamComponent implements OnInit {
   newExam!: FormGroup;
   subExam?:Subscription;
   theCourses?:Course[];
-  sliderValue?:number;
+  sliderValue?:number=50;
+  datecompare=false;
 
 
   constructor(private router:Router,
@@ -34,14 +35,14 @@ export class AddExamComponent implements OnInit {
     this.newExam=this.fb.group({
       examName:['',[Validators.required, Validators.minLength(3),Validators.maxLength(20)]],
       duration:["",[Validators.required]],
-      successRate:[0,Validators.required],
+      successRate:[50,Validators.required],
       course:["",[Validators.required]],
       state:[false,[]],
       questionsPerPage:["",[Validators.required]],
       showResult: [true],
       noCheatingApp:[true],
       startTime:["",[Validators.required]],
-      endTime:["",[Validators.required]]
+      endTime:["",[Validators.required,]]
 
     })
 
@@ -53,8 +54,23 @@ export class AddExamComponent implements OnInit {
   addExam(){
     let  start = this.startTime?.value
     let  end = this.endTime?.value
-    console.log(start);
-    console.log(typeof(start));
+    this.newExam.valueChanges.subscribe(x=>{
+      console.log(x);
+      this.datecompare
+
+
+    })
+
+
+    this.endTime?.valueChanges.subscribe(x=>{
+
+      console.log("valuechanges");
+      console.log(this.datecompare);
+      this.dateCompareValidator()
+
+    })
+
+    console.log(this.datecompare);
 
 
 
@@ -71,7 +87,9 @@ export class AddExamComponent implements OnInit {
         }
     }
 
-    this.subExam= this.examService.saveExam(this.newExam.value).subscribe(observer);
+
+
+   // this.subExam= this.examService.saveExam(this.newExam.value).subscribe(observer);
 
 }
 
@@ -102,6 +120,43 @@ export class AddExamComponent implements OnInit {
     hours = hours ? hours : 12;
     transformedDate = `${year}-${month}-${day} ${hours}:${minutes} ${ampm}`;
     return transformedDate
+  }
+  dateCompareValidator() {
+    const firstDateControl = this.newExam.get('startTime');
+    const secondDateControl = this.newExam.get('endTime');
+    const duration = this.newExam.get('duration')?.value
+
+
+    console.log("enterd");
+
+
+    if (firstDateControl && secondDateControl && duration ) {
+      const firstDate = new Date(firstDateControl.value);
+      const secondDate = new Date(secondDateControl.value);
+      const timeDiffInMillis = secondDate.getTime() - firstDate.getTime();
+      const timeDiffInMins = Math.floor(timeDiffInMillis / (1000 * 60));
+
+      console.log(timeDiffInMins);
+
+      console.log(duration);
+      console.log(this.datecompare);
+
+
+      if (duration > timeDiffInMins ) {
+        console.log("validated");
+
+
+        this.datecompare = true; // form is not working
+
+       }
+
+      else{
+       this.datecompare = false;
+      }
+
+    }
+
+    return null;
   }
   get examName(){
     return this.newExam.get('examName')

@@ -2,7 +2,7 @@
 
         <h2>Examination Management System</h2>
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="permittedToViewDashboard"></mat-divider>
 
         <!-- <button mat-button class="menu-button">
             <mat-icon>person</mat-icon>

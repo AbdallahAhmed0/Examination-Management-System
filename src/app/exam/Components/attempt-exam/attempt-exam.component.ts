@@ -4,8 +4,8 @@ import { Exam } from '../../Models/exam';
 import { ExamService } from '../../Services/exam.service';
 import { StartExamDialogeComponent } from 'src/app/Shared/material/start-exam-dialoge/start-exam-dialoge.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PreventRenderWithoutAttemptGuard } from '../../guards/hasVisitedAttemptRoute.guard';
 import { StorageService } from 'src/app/login/Services/storage.service';
-import { PreventRenderWithoutAttemptGuard } from '../../hasVisitedAttemptRoute.guard';
 @Component({
   selector: 'app-attempt-exam',
   templateUrl: './attempt-exam.component.html',
