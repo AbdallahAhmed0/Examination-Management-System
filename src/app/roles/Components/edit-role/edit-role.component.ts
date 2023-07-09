@@ -40,13 +40,12 @@ export class EditRoleComponent implements OnInit {
               (p) => p.id === privilege.id
             ),
           }));
-          console.log(this.privileges);
 
           // Divide the privileges into 8 groups with 5 privileges in each group
-          for (let i = 0; i < 8; i++) {
+          for (let i = 0; i < 4; i++) {
             this.privilegeGroups.push({
               name: `${i + 1}`,
-              privileges: this.privileges.slice(i * 5, (i + 1) * 5),
+              privileges: this.privileges.slice(i * 4, (i + 1) * 4),
             });
           }
         });

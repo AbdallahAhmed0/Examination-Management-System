@@ -28,7 +28,7 @@ ngOnInit(): void {
     });
 
     this.addAnswer();
-
+    this.answer.emit(this.answerForm.value);
     this.answerForm.valueChanges.subscribe(()=>{
       this.answer.emit(this.answerForm.value);
     })

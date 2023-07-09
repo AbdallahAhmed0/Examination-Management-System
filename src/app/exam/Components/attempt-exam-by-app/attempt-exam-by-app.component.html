@@ -12,10 +12,7 @@
             <h3>End Time: <span>{{examInfo.endTime}}</span></h3>
             <h3>Success Rate: <span>{{examInfo.successRate}}</span></h3>
           </div>
-        </div>
-        <div class="question__answers--answer " [ngClass]="{'correct--answer':result.passed,
-        'wrong--answer':!result.passeds}" *ngIf="ifUSerAttemptExam">
-        Score: {{result.score}} ,Passed: {{result.passed}} </div>
+      </div>
       </ng-container>
     </div>
   </section>

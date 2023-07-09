@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import {  Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { User } from '../Model/user';
-import { catchError, map, retry, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { StorageServiceService } from 'src/app/login/Services/storage-service.service';
+
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +42,7 @@ export class AuthService {
   }
 
   constructor(private http: HttpClient,
-              private storageService:StorageServiceService,
+              private storageService:StorageService,
               private route:Router) {
 
         this.httpOption = {
@@ -63,6 +62,5 @@ export class AuthService {
   logout() {
     this.storageService.clean();
     this.route.navigate(['/login'])
-
   }
 }
