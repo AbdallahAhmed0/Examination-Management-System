@@ -18,6 +18,7 @@ export class CourseDetailComponent implements OnInit {
   course ?: Course;
   Exams!:Exam[];
   admins !:any;
+  
 
   constructor(private courseService:CourseService,
               private activatedRoute:ActivatedRoute) { }
@@ -34,6 +35,6 @@ export class CourseDetailComponent implements OnInit {
       })
     })
   }
-  
+
 
 }

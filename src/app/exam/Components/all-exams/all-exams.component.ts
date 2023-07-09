@@ -10,6 +10,8 @@ import { DialogeComponent } from '../../../Shared/material/dialog/dialog.compone
 
 import * as XLSX from 'xlsx';
 import { StorageService } from 'src/app/login/Services/storage.service';
+import { CourseSharedServiceService } from 'src/app/Shared/course-shared-service.service';
+import { Course } from 'src/app/course/course.model';
 
 @Component({
   selector: 'app-all-exams',
@@ -34,6 +36,8 @@ export class AllExamsComponent implements OnInit {
   exams!: Exam[];
   permissions: Object[] = [];
   permittedToAddExam: boolean = false;
+  adminCourses: Course[] = [];
+  adminExams: Exam[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -42,7 +46,8 @@ export class AllExamsComponent implements OnInit {
     private examService: ExamService,
     private router: Router,
     private dialog: MatDialog,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private sharedCourseService: CourseSharedServiceService
   ) {}
 
   ngOnInit() {
@@ -53,8 +58,24 @@ export class AllExamsComponent implements OnInit {
       )
     ) {
     this.getExams();
+    }else if (this.permissions.some(
+      (role: any) => role.authority === 'SHOW_COURSE_EXAMS_ROLE'
+    )) {
+      this.getAdminExams(this.adminCourses);
     }
-  
+
+  }
+
+  getAdminCourses() : Course[]{
+    this.adminCourses = this.sharedCourseService.getCoursesByAdminId(
+      this.storageService.getUser().userId
+    );
+    return this.adminCourses;
+  }
+
+  getAdminExams(adminCourses: Course[]): Exam[]{
+    this.adminExams = this.sharedCourseService.getExamsForCourses(adminCourses);
+    return this.adminExams;
   }
 
   applyFilter(event: Event) {

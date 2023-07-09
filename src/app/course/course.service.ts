@@ -78,7 +78,7 @@ export class CourseService {
       .get<Exam[]>(`${environment.APPURL}/exam/getAllCourseExams/${id}`)
       .pipe(retry(2), catchError(this.handleError));
   }
-  
+
   getCourseById(id: number): Observable<Course> {
     return this.httpClient
       .get<Course>(`${environment.APPURL}/courses/get/${id}`, this.httpOption)
@@ -106,6 +106,20 @@ export class CourseService {
       .get<Student[]>(
         `${environment.APPURL}/courses/getStudentsByCourseId/${courseId}`
       )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getCoursesByGroupId(groupId: number): Observable<Course[]> {
+    return this.httpClient
+      .get<Course[]>(
+        `${environment.APPURL}/courses/groupCourses/${groupId}`
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getStudentGroup(userId: number): Observable<number> {
+    return this.httpClient
+      .get<number>(`${environment.APPURL}/groups/StudentGroup/${userId}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 

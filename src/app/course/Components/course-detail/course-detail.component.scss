@@ -78,6 +78,9 @@ h2 {
   &:hover {
     background: darken(#0cd463, 15%);
   }
+  &:disabled {
+    background: darken(#e0eae4, 15%);
+  }
 }
 
 .active{

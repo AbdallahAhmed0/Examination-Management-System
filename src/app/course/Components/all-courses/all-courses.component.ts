@@ -22,7 +22,9 @@ export class AllCoursesComponent implements OnInit {
   ableToShowCoursesOfAdmin: boolean = false;
   ableToShowCoursesOfGroup: boolean = false;
   adminCourses: Course[] = [];
+  groupCourses: Course[] = [];
   adminId: number = 0;
+  studentGroup: number = 0;
 
   sentDataToDialoge:object={value:'',header:''};
   constructor(private courseService:CourseService,
@@ -51,9 +53,11 @@ export class AllCoursesComponent implements OnInit {
     } else if (this.ableToShowCoursesOfAdmin) {
       this.courses = this.getAdminCourses();
     }
-    //else if (this.ableToShowCoursesOfGroup) {
-    //   this.getCourses();
-    // }
+    else if (this.ableToShowCoursesOfGroup) {
+      this.courses = this.getGroupCourses();
+    }
+
+    console.log(this.storageService.getToken());
   }
 
   getAdminCourses() : Course[]{
@@ -63,12 +67,18 @@ export class AllCoursesComponent implements OnInit {
     return this.adminCourses;
   }
 
-  // getGroupCourses() : Course[]{
-  //   this.adminCourses = this.courseSharedService.getCoursesByAdminId(
-  //     this.storageService.getUser().userId
-  //   );
-  //   return this.adminCourses;
-  // }
+  getGroupCourses() : Course[]{
+    this.courseService.getStudentGroup(this.storageService.getUser().userId).subscribe((data) => {
+      this.studentGroup = data;
+    });
+    this.courseService.getCoursesByGroupId(this.studentGroup).subscribe(
+      (data) => {
+        this.groupCourses = data;
+        console.log(this.groupCourses);
+      }
+    );
+    return this.groupCourses;
+  }
 
   getCourses() {
     this.courseService.getAllCourses().subscribe((data) => {
