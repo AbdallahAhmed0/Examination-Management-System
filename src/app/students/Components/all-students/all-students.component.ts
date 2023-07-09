@@ -11,6 +11,7 @@ import * as XLSX from 'xlsx';
 import { StorageService } from 'src/app/login/Services/storage.service';
 import { CourseSharedServiceService } from 'src/app/Shared/course-shared-service.service';
 import { Student } from '../../Models/student';
+import { CourseService } from 'src/app/course/course.service';
 
 @Component({
   selector: 'app-all-students',
@@ -46,13 +47,12 @@ export class AllStudentsComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private storageService: StorageService,
-    private courseSharedService:CourseSharedServiceService
-  ) {}
+    private courseService:CourseService
+      ) {}
 
 
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;
-    console.log(this.permissions);
 
     this.permittedToShowAllStudents = this.permissions.some(
       (role: any) => role.authority === 'SHOW_ALL_STUDENTS_ROLE'
@@ -108,11 +108,15 @@ export class AllStudentsComponent implements OnInit {
     this.router.navigate(['students/add']);
   }
   getStudentsOfAdmins(){
-    console.log(      this.courseSharedService.getStudentsByAdminId(this.storageService.getUser().userId)
-    )
-    this.createTable(
-      this.courseSharedService.getStudentsByAdminId(this.storageService.getUser().userId)
-      );
+    const adminId:number = this.storageService.getUser().userId;
+    this.courseService.getCoursesByAdminId(adminId).subscribe( courses => {
+      for (let course of courses) {
+        let courseId: number = course.id? course.id : 0;
+        this.courseService.getStudentsByCourseId(courseId).subscribe( data => {
+          this.createTable(data);
+        })
+    }
+  });
   }
 
   getAllStudents() {

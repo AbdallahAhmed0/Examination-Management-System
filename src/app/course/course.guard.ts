@@ -16,7 +16,6 @@ export class CourseGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
        this.userPer = this.storageService.getUser().permissions
-      console.log(this.userPer);
       if (  this.userPer.some((role:any) => role.authority === 'MANAGE_COURSES_ROLE') ||
             this.userPer.some((role:any) => role.authority === 'SHOW_COURSES_OF_ADMIN_ROLE') ||
             this.userPer.some((role:any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE')  ) {

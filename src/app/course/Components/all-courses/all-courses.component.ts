@@ -54,9 +54,10 @@ export class AllCoursesComponent implements OnInit {
     else if (this.ableToShowCoursesOfGroup) {
 
       this.courseService.getStudentGroup(this.storageService.getUser().userId).subscribe((studentGroup) => {
-
+        console.log(studentGroup)
         this.courseService.getCoursesByGroupId(studentGroup).subscribe(
           (data) => {
+            console.log(data)
             this.courses = data;
           });
         });
