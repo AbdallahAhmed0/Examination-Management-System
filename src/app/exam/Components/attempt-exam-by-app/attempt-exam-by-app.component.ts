@@ -29,8 +29,6 @@ export class AttemptExamByAppComponent implements OnInit {
     this.getExamInfo();
     this.userId = this.storageService.getUser().userId;
 
-    this.solveExam(this.examId);
-
   }
 
   getExamInfo() {
@@ -39,14 +37,5 @@ export class AttemptExamByAppComponent implements OnInit {
       this.examInfo = data;
       // err => throwError(err || "an error happened while getting exam info")
     });
-  }
-  solveExam(examId:any){
-    this._examService
-    .attemptExam(examId, this.userId)
-    .subscribe((data) => {
-      //accses to start exam
-  },
-  (err)=>{ this.attemptError = err.message;}
-  );
   }
   }

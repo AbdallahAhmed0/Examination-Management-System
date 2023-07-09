@@ -98,7 +98,7 @@
 
     <mat-card-content *ngIf="isUpcomingExamsOpen">
       <div class="table-responsive" id="liveExamsTable">
-        <table mat-table class="table m-0" [dataSource]="upcomingExamsDataSource" matSort>
+        <table mat-table   [dataSource]="upcomingExamsDataSource" matSort>
           <!-- ID Column -->
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
