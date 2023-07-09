@@ -22,7 +22,8 @@
     <p>Success rate: {{ exam.successRate }}%</p>
     <p>State: <span [ngClass]="{'active': exam.state,'inActive': !exam.state}">{{ exam.state ? 'Active' : 'Inactive' }}</span></p>
     <p>Show result: {{ exam.showResult ? 'Yes' : 'No' }}</p>
-    <button mat-raised-button class="attempt-btn " [routerLink]="['/exams/attempt/',exam.id]" [disabled]="!exam.state">attempt Exam</button>
+    <button mat-menu-item class="attempt-btn "*ngIf="!exam.noCheatingApp" [routerLink]="['attempt/', exam.id]">Attempt Exam</button>
+    <button mat-menu-item class="attempt-btn "*ngIf="exam.noCheatingApp" [routerLink]="['attemptByApp/', exam.id]">Attempt Exam</button>
 
   </div>
 </div>
