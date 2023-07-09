@@ -21,23 +21,30 @@ export class CourseSharedServiceService {
     return courses;
   }
 
-  getExamsForCourses(courses: Course[]): Exam[] {
+  getExamsForCourses(adminId:number): Exam[] {
     let exams: Exam[] = [];
+    this.courseService.getCoursesByAdminId(adminId).subscribe( courses => {
     for (let course of courses) {
       let courseId: number = course.id? course.id : 0;
       this.courseService.getExamsForCourse(courseId).subscribe( data => {
         exams.push(...data);
       });
     }
-    return exams;
-  }
+  });
+  return exams;
 
-  getStudentsByCourseId(courseId: number): Student[] {
+  }
+  getStudentsByAdminId(adminId: number):any{
     let students: Student[] = [];
-    this.courseService.getStudentsByCourseId(courseId).subscribe( data => {
-      students.push(...data);
-    });
-    return students;
+    this.courseService.getCoursesByAdminId(adminId).subscribe( courses => {
+      console.log(courses)
+      for (let course of courses) {
+        let courseId: number = course.id? course.id : 0;
+        this.courseService.getStudentsByCourseId(courseId).subscribe( data => {
+          return data;
+      })
+    }
+  });
   }
 
 }

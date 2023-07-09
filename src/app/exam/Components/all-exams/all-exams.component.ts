@@ -36,7 +36,6 @@ export class AllExamsComponent implements OnInit {
   exams!: Exam[];
   permissions: Object[] = [];
   permittedToAddExam: boolean = false;
-  adminCourses: Course[] = [];
   adminExams: Exam[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -59,23 +58,18 @@ export class AllExamsComponent implements OnInit {
     ) {
     this.getExams();
     }else if (this.permissions.some(
-      (role: any) => role.authority === 'SHOW_COURSE_EXAMS_ROLE'
+      (role: any) => role.authority === 'MANAGE_ADMIN_EXAMS_ROLE'
     )) {
-      this.getAdminExams(this.adminCourses);
+      this.getAdminExams();
     }
 
   }
 
-  getAdminCourses() : Course[]{
-    this.adminCourses = this.sharedCourseService.getCoursesByAdminId(
-      this.storageService.getUser().userId
-    );
-    return this.adminCourses;
-  }
 
-  getAdminExams(adminCourses: Course[]): Exam[]{
-    this.adminExams = this.sharedCourseService.getExamsForCourses(adminCourses);
-    return this.adminExams;
+  getAdminExams(){
+    this.adminExams = this.sharedCourseService.getExamsForCourses(this.storageService.getUser().userId
+    );
+    this.createTable(this.adminExams);
   }
 
   applyFilter(event: Event) {
@@ -89,37 +83,38 @@ export class AllExamsComponent implements OnInit {
 
   getExams() {
     this.examService.getAllExams().subscribe((data) => {
-      /** Builds and returns a new User. */
-      const createNewExam = (id: number) => {
-        return {
-          id: id,
-          examName:
-            data[Math.round(Math.random() * (data.length - 1))].examName,
-          duration:
-            data[Math.round(Math.random() * (data.length - 1))].duration,
-          course: data[Math.round(Math.random() * (data.length - 1))].course,
-          state: data[Math.round(Math.random() * (data.length - 1))].state,
-          startTime:
-            data[Math.round(Math.random() * (data.length - 1))].startTime,
-          EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
-        };
-      };
-
-      // Create users
-
-      const exam = Array.from({ length: length }, (_, k) =>
-        createNewExam(k + 1)
-      );
-
-      // Assign the data to the data source for the table to render
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-      this.exams = data;
+      this.createTable(data);
     });
   }
+createTable(data:any){
+  const createNewExam = (id: number) => {
+    return {
+      id: id,
+      examName:
+        data[Math.round(Math.random() * (data.length - 1))].examName,
+      duration:
+        data[Math.round(Math.random() * (data.length - 1))].duration,
+      course: data[Math.round(Math.random() * (data.length - 1))].course,
+      state: data[Math.round(Math.random() * (data.length - 1))].state,
+      startTime:
+        data[Math.round(Math.random() * (data.length - 1))].startTime,
+      EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
+    };
+  };
 
+  // Create users
+
+  const exam = Array.from({ length: length }, (_, k) =>
+    createNewExam(k + 1)
+  );
+
+  // Assign the data to the data source for the table to render
+  this.dataSource = new MatTableDataSource(data);
+  this.dataSource.paginator = this.paginator;
+  this.dataSource.sort = this.sort;
+
+  this.exams = data;
+}
   edit(id: number) {
     this.router.navigate(['exams/edit', id]);
   }
