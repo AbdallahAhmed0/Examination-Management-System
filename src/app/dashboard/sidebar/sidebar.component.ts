@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
   permittedToViewCourses: boolean = false;
   permittedToViewExams: boolean = false;
   permittedToViewRoles: boolean = false;
-
+  permittedToViewCoursesGroup:boolean = false;
   constructor(private storageService: StorageService) {}
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;
@@ -83,6 +83,12 @@ export class SidebarComponent implements OnInit {
       this.permissions.some((role: any) => role.authority === 'MANAGE_ROLE')
     ) {
       this.permittedToViewRoles = true;
+    }
+    // Group Courses
+    if (
+      this.permissions.some((role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE')
+    ) {
+      this.permittedToViewCoursesGroup = true;
     }
   }
 }
