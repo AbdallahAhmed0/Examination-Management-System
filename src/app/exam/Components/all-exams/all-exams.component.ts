@@ -10,6 +10,9 @@ import { DialogeComponent } from '../../../Shared/material/dialog/dialog.compone
 
 import * as XLSX from 'xlsx';
 import { StorageService } from 'src/app/login/Services/storage.service';
+import { CourseSharedServiceService } from 'src/app/Shared/course-shared-service.service';
+import { Course } from 'src/app/course/course.model';
+import { CourseService } from 'src/app/course/course.service';
 
 @Component({
   selector: 'app-all-exams',
@@ -34,6 +37,8 @@ export class AllExamsComponent implements OnInit {
   exams!: Exam[];
   permissions: Object[] = [];
   permittedToAddExam: boolean = false;
+  adminExams: Exam[] = [];
+  courses:Course[]=[];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -42,7 +47,9 @@ export class AllExamsComponent implements OnInit {
     private examService: ExamService,
     private router: Router,
     private dialog: MatDialog,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private sharedCourseService: CourseSharedServiceService,
+    private courseService:CourseService
   ) {}
 
   ngOnInit() {
@@ -53,8 +60,24 @@ export class AllExamsComponent implements OnInit {
       )
     ) {
     this.getExams();
+    }else if (this.permissions.some(
+      (role: any) => role.authority === 'MANAGE_ADMIN_EXAMS_ROLE'
+    )) {
+      this.getAdminExams();
     }
-  
+
+  }
+
+
+  getAdminExams(){
+    this.courseService.getCoursesByAdminId(this.storageService.getUser().userId).subscribe( courses => {
+      for (let course of courses) {
+        let courseId: number = course.id? course.id : 0;
+      this.courseService.getExamsofCourse(courseId).subscribe(data=>{
+          this.createTable(data);
+        });
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -68,37 +91,38 @@ export class AllExamsComponent implements OnInit {
 
   getExams() {
     this.examService.getAllExams().subscribe((data) => {
-      /** Builds and returns a new User. */
-      const createNewExam = (id: number) => {
-        return {
-          id: id,
-          examName:
-            data[Math.round(Math.random() * (data.length - 1))].examName,
-          duration:
-            data[Math.round(Math.random() * (data.length - 1))].duration,
-          course: data[Math.round(Math.random() * (data.length - 1))].course,
-          state: data[Math.round(Math.random() * (data.length - 1))].state,
-          startTime:
-            data[Math.round(Math.random() * (data.length - 1))].startTime,
-          EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
-        };
-      };
-
-      // Create users
-
-      const exam = Array.from({ length: length }, (_, k) =>
-        createNewExam(k + 1)
-      );
-
-      // Assign the data to the data source for the table to render
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-      this.exams = data;
+      this.createTable(data);
     });
   }
+createTable(data:any){
+  const createNewExam = (id: number) => {
+    return {
+      id: id,
+      examName:
+        data[Math.round(Math.random() * (data.length - 1))].examName,
+      duration:
+        data[Math.round(Math.random() * (data.length - 1))].duration,
+      course: data[Math.round(Math.random() * (data.length - 1))].course,
+      state: data[Math.round(Math.random() * (data.length - 1))].state,
+      startTime:
+        data[Math.round(Math.random() * (data.length - 1))].startTime,
+      EndTime: data[Math.round(Math.random() * (data.length - 1))].endTime,
+    };
+  };
 
+  // Create users
+
+  const exam = Array.from({ length: length }, (_, k) =>
+    createNewExam(k + 1)
+  );
+
+  // Assign the data to the data source for the table to render
+  this.dataSource = new MatTableDataSource(data);
+  this.dataSource.paginator = this.paginator;
+  this.dataSource.sort = this.sort;
+
+  this.exams = data;
+}
   edit(id: number) {
     this.router.navigate(['exams/edit', id]);
   }

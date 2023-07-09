@@ -55,25 +55,11 @@ export class AddExamComponent implements OnInit {
     let  start = this.startTime?.value
     let  end = this.endTime?.value
     this.newExam.valueChanges.subscribe(x=>{
-      console.log(x);
       this.datecompare
-
-
     })
-
-
     this.endTime?.valueChanges.subscribe(x=>{
-
-      console.log("valuechanges");
-      console.log(this.datecompare);
       this.dateCompareValidator()
-
     })
-
-    console.log(this.datecompare);
-
-
-
     this.startTime?.setValue(this.transformDate(start))
     this.endTime?.setValue(this.transformDate(end))
 
@@ -86,10 +72,7 @@ export class AddExamComponent implements OnInit {
         this.consoleError = err.message
         }
     }
-
-
-
-   // this.subExam= this.examService.saveExam(this.newExam.value).subscribe(observer);
+    this.subExam= this.examService.saveExam(this.newExam.value).subscribe(observer);
 
 }
 

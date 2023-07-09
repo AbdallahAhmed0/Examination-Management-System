@@ -17,18 +17,15 @@ export class SidebarComponent implements OnInit {
   permittedToViewCourses: boolean = false;
   permittedToViewExams: boolean = false;
   permittedToViewRoles: boolean = false;
-
+  permittedToViewCoursesGroup:boolean = false;
   constructor(private storageService: StorageService) {}
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;
 
     // Dashboard
-    if ((
+    if (
       this.permissions.some((role: any) => role.authority === 'DASHBOARD_ROLE')
-    ) ||
-    (
-    this.permissions.some((role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE')
-    ))
+    )
     {
       this.permittedToViewDashboard = true;
     }
@@ -66,9 +63,6 @@ export class SidebarComponent implements OnInit {
       ) ||
       this.permissions.some(
         (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
-      ) ||
-      this.permissions.some(
-        (role: any) => role.authority === 'SHOW_COURSE_EXAMS_ROLE'
       )
     ) {
       this.permittedToViewCourses = true;
@@ -79,7 +73,7 @@ export class SidebarComponent implements OnInit {
       this.permissions.some(
         (role: any) => role.authority === 'MANAGE_EXAMS_ROLE'
       ) ||
-      this.permissions.some((role: any) => role.authority === 'SHOW_EXAM_ROLE')
+      this.permissions.some((role: any) => role.authority === 'MANAGE_ADMIN_EXAMS_ROLE')
     ) {
       this.permittedToViewExams = true;
     }
@@ -89,6 +83,12 @@ export class SidebarComponent implements OnInit {
       this.permissions.some((role: any) => role.authority === 'MANAGE_ROLE')
     ) {
       this.permittedToViewRoles = true;
+    }
+    // Group Courses
+    if (
+      this.permissions.some((role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE')
+    ) {
+      this.permittedToViewCoursesGroup = true;
     }
   }
 }

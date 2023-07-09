@@ -5,20 +5,25 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DialogeComponent } from 'src/app/Shared/material/dialog/dialog.component';
-import { Student } from '../../Models/student';
 import { StudentsService } from '../../Services/students.service';
 
 import * as XLSX from 'xlsx';
 import { StorageService } from 'src/app/login/Services/storage.service';
+import { CourseSharedServiceService } from 'src/app/Shared/course-shared-service.service';
+import { Student } from '../../Models/student';
+import { CourseService } from 'src/app/course/course.service';
 
 @Component({
   selector: 'app-all-students',
   templateUrl: './all-students.component.html',
   styleUrls: ['./all-students.component.scss'],
 })
-export class AllStudentsComponent implements OnInit, OnChanges {
+export class AllStudentsComponent implements OnInit {
   permittedToManageStudents: boolean = false;
-  permittedToShowStudents: boolean = false;
+  permittedToShowAllStudents: boolean = false;
+  permittedToShowStudentsCourse:boolean =false;
+
+  adminStudents:Student[]=[];
   permissions: Object[] = [];
   displayedColumns: string[] = [
     'id',
@@ -28,7 +33,6 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     'universityId',
     'group',
     'enable',
-    // 'actions',
   ];
 
   dataSource!: MatTableDataSource<any>;
@@ -42,19 +46,19 @@ export class AllStudentsComponent implements OnInit, OnChanges {
     private studentService: StudentsService,
     private router: Router,
     private dialog: MatDialog,
-    private storageService: StorageService
-  ) {}
+    private storageService: StorageService,
+    private courseService:CourseService
+      ) {}
 
-  ngOnChanges(): void {
-    this.getStudents();
-  }
 
   ngOnInit(): void {
     this.permissions = this.storageService.getUser().permissions;
-    console.log(this.permissions);
 
-    this.permittedToShowStudents = this.permissions.some(
+    this.permittedToShowAllStudents = this.permissions.some(
       (role: any) => role.authority === 'SHOW_ALL_STUDENTS_ROLE'
+    );
+    this.permittedToShowStudentsCourse = this.permissions.some(
+      (role: any) => role.authority === 'SHOW_STUDENTS_COURSE_ROLE'
     );
 
     this.permittedToManageStudents =
@@ -62,11 +66,14 @@ export class AllStudentsComponent implements OnInit, OnChanges {
         (role: any) => role.authority === 'MANAGE_STUDENT_ROLE'
       );
 
-    if (this.permittedToShowStudents || this.permittedToManageStudents) {
-      this.getStudents();
-    }
     if (this.permittedToManageStudents) {
       this.displayedColumns.push('actions');
+    }
+     if (this.permittedToShowAllStudents) {
+      this.getAllStudents();
+    }
+    else if(this.permittedToShowStudentsCourse){
+      this.getStudentsOfAdmins()
     }
   }
 
@@ -100,37 +107,50 @@ export class AllStudentsComponent implements OnInit, OnChanges {
   add() {
     this.router.navigate(['students/add']);
   }
+  getStudentsOfAdmins(){
+    const adminId:number = this.storageService.getUser().userId;
+    this.courseService.getCoursesByAdminId(adminId).subscribe( courses => {
+      for (let course of courses) {
+        let courseId: number = course.id? course.id : 0;
+        this.courseService.getStudentsByCourseId(courseId).subscribe( data => {
+          this.createTable(data);
+        })
+    }
+  });
+  }
 
-  getStudents() {
+  getAllStudents() {
     this.studentService.getAllStudents().subscribe((data) => {
-      /** Builds and returns a new User. */
-      const createNewStudent = (id: number) => {
-        return {
-          id: id,
-          firstName:
-            data[Math.round(Math.random() * (data.length - 1))].firstName,
-          lastName:
-            data[Math.round(Math.random() * (data.length - 1))].lastName,
-          universityId:
-            data[Math.round(Math.random() * (data.length - 1))].universityId,
-          email: data[Math.round(Math.random() * (data.length - 1))].email,
-          group: data[Math.round(Math.random() * (data.length - 1))].group,
-        };
-      };
-
-      // Create users
-
-      const student = Array.from({ length: length }, (_, k) =>
-        createNewStudent(k + 1)
-      );
-
-      // Assign the data to the data source for the table to render
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-      this.students = data;
+      this.createTable(data);
     });
+  }
+  createTable(data:any){
+    const createNewStudent = (id: number) => {
+      return {
+        id: id,
+        firstName:
+          data[Math.round(Math.random() * (data.length - 1))].firstName,
+        lastName:
+          data[Math.round(Math.random() * (data.length - 1))].lastName,
+        universityId:
+          data[Math.round(Math.random() * (data.length - 1))].universityId,
+        email: data[Math.round(Math.random() * (data.length - 1))].email,
+        group: data[Math.round(Math.random() * (data.length - 1))].group,
+      };
+    };
+
+    // Create users
+
+    const student = Array.from({ length: length }, (_, k) =>
+      createNewStudent(k + 1)
+    );
+
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
+    this.students = data;
   }
   exportData() {
     const headings = [
