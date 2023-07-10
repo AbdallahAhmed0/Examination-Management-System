@@ -28,6 +28,7 @@ export class CodeQuestionComponent implements OnInit {
     if(this.savedAnswer[this.question.id]){
       this.code = this.savedAnswer[this.question.id].code;
     }
+    this.onCodeChange(this.code);
   }
 
 changeLanguage(language: string): void {
