@@ -6,13 +6,7 @@
         <form class="example-form" #form="ngForm" (ngSubmit)="addRole()">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Add Role</mat-label>
-            <input
-              matInput
-              placeholder="Role"
-              [(ngModel)]="roleName"
-              name="roleName"
-              required
-            />
+            <input matInput placeholder="Role" [(ngModel)]="roleName" name="roleName" required />
           </mat-form-field>
 
           <mat-card>
@@ -23,26 +17,21 @@
               <div *ngFor="let group of privilegeGroups" class="group-container">
                 <div class="group-header">{{ group.name }}</div>
                 <div *ngFor="let privilege of group.privileges" class="privilege-checkbox">
-                  <mat-checkbox [(ngModel)]="privilege.checked" [name]="'privilege-' + privilege.id"></mat-checkbox>
-                  <label>{{privilege.name}}</label>
+                  <mat-checkbox
+                    [(ngModel)]="privilege.checked"
+                    [name]="'privilege-' + privilege.id"
+                    [disabled]="isCheckboxDisabled(privilege)"
+                  ></mat-checkbox>
+                  <label>{{ privilege.name }}</label>
                 </div>
               </div>
             </mat-card-content>
           </mat-card>
-          <button
-            mat-raised-button
-            type="submit"
-            [disabled]="form.invalid"
-            color="primary"
-          >
-            Add
-          </button>
+          <button mat-raised-button type="submit" [disabled]="form.invalid" color="primary">Add</button>
         </form>
       </div>
     </div>
   </mat-tab>
 
-
-
-  <mat-tab label="All Role"> </mat-tab>
+  <mat-tab label="All Role"></mat-tab>
 </mat-tab-group>

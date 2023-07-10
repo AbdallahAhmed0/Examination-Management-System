@@ -91,4 +91,5 @@ export class SidebarComponent implements OnInit {
       this.permittedToViewCoursesGroup = true;
     }
   }
+  
 }

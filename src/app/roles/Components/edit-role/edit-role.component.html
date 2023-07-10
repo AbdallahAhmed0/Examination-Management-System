@@ -19,7 +19,8 @@
             <div *ngFor="let group of privilegeGroups" class="group-container">
               <div class="group-header">{{ group.name }}</div>
               <div *ngFor="let privilege of group.privileges" class="privilege-checkbox">
-                <mat-checkbox [(ngModel)]="privilege.checked" [name]="'privilege-' + privilege.id"></mat-checkbox>
+                <mat-checkbox [(ngModel)]="privilege.checked" [name]="'privilege-' + privilege.id"
+                [disabled]="isCheckboxDisabled(privilege)"></mat-checkbox>
                 <label>{{privilege.name}}</label>
               </div>
             </div>

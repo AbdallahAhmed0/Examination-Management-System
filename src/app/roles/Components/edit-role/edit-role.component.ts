@@ -64,6 +64,45 @@ export class EditRoleComponent implements OnInit {
         this.goback();
       });
   }
+  isCheckboxDisabled(privilege: { id: number; name: string; checked: boolean }): boolean {
+    if (privilege.name === 'MANAGE_ADMIN_EXAMS_ROLE') {
+      return (
+        this.privileges.some((p) => p.name === 'MANAGE_EXAMS_ROLE' && p.checked) ||
+        this.privileges.some((p) => p.name === 'SOLVE_EXAM_ROLE' && p.checked)
+      );
+    }
+
+    if (privilege.name === 'MANAGE_EXAMS_ROLE' ) {
+      return this.privileges.some((p) => p.name === 'MANAGE_ADMIN_EXAMS_ROLE' && p.checked) ||
+      this.privileges.some((p) => p.name === 'SOLVE_EXAM_ROLE' && p.checked);
+    }
+    if (privilege.name === 'SOLVE_EXAM_ROLE' ) {
+      return this.privileges.some((p) => p.name === 'MANAGE_ADMIN_EXAMS_ROLE' && p.checked) ||
+      this.privileges.some((p) => p.name === 'MANAGE_EXAMS_ROLE' && p.checked);
+    }
+    if (privilege.name === 'SHOW_COURSES_OF_ADMIN_ROLE') {
+      return this.privileges.some((p) => p.name === 'SHOW_COURSE_OF_GROUP_ROLE' && p.checked);
+    }
+
+    if (privilege.name === 'SHOW_COURSE_OF_GROUP_ROLE') {
+      return this.privileges.some((p) => p.name === 'SHOW_COURSES_OF_ADMIN_ROLE' && p.checked);
+    }
+    if (privilege.name === 'SHOW_STUDENTS_COURSE_ROLE') {
+      return this.privileges.some((p) => p.name === 'SHOW_ALL_STUDENTS_ROLE' && p.checked);
+    }
+    if (privilege.name === 'SHOW_ALL_STUDENTS_ROLE') {
+      return this.privileges.some((p) => p.name === 'SHOW_STUDENTS_COURSE_ROLE' && p.checked);
+    }
+    if (privilege.name === 'DASHBOARD_ROLE') {
+      return this.privileges.some((p) => p.name === 'SHOW_COURSE_OF_GROUP_ROLE' && p.checked);
+    }
+    if (privilege.name === 'SHOW_COURSE_OF_GROUP_ROLE') {
+      return this.privileges.some((p) => p.name === 'DASHBOARD_ROLE' && p.checked);
+    }
+    return false;
+  }
+
+
   goback() {
     this.router.navigate(['roles']);
   }
