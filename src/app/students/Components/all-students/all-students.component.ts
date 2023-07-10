@@ -73,7 +73,8 @@ export class AllStudentsComponent implements OnInit {
       this.getAllStudents();
     }
     else if(this.permittedToShowStudentsCourse){
-      this.getStudentsOfAdmins()
+      this.getStudentsOfAdmins();
+
     }
   }
 

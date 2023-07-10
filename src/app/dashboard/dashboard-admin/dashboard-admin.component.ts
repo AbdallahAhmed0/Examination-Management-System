@@ -33,20 +33,37 @@ export class DashboardAdminComponent implements OnInit {
     console.log(this.permissions);
     if ((
       this.permissions.some(
-        (role: any) => role.authority === 'SHOW_EXAMS_LIST_ROLE'
-      )||
+        (role: any) => role.authority === 'MANAGE_EXAMS_ROLE'
+      )&&
       (this.permissions.some(
         (role: any) => role.authority === 'DASHBOARD_ROLE'
       )
       )
     )) {
+      this.courseService.getAllCourses().subscribe((courses: any[]) => {
+        this.totalCourses = courses.length;
+      });
+
     this.examService.getAllExams().subscribe((exams: Exam[]) => {
       this.totalExams = exams.length;
     });
 
-  }else {
-    this.totalExams = 100;
-  }
+  }else if(this.permissions.some(
+    (role: any) => role.authority === 'MANAGE_ADMIN_EXAMS_ROLE'
+  )&&
+  (this.permissions.some(
+    (role: any) => role.authority === 'DASHBOARD_ROLE'
+  ))) {
+    this.courseService.getCoursesByAdminId(this.storageService.getUser().userId).subscribe( courses => {
+      this.totalCourses = courses.length;
+      for (let course of courses) {
+        let courseId: number = course.id? course.id : 0;
+      this.courseService.getExamsofCourse(courseId).subscribe(data=>{
+        console.log(data)
+        this.totalExams = data.length;
+        });
+      }
+    });  }
 
 
     if (
@@ -58,13 +75,17 @@ export class DashboardAdminComponent implements OnInit {
         this.totalStudents = students.length;
       });
     }else {
-      this.totalStudents = 100;
-    }
+      const adminId:number = this.storageService.getUser().userId;
+      this.courseService.getCoursesByAdminId(adminId).subscribe( courses => {
+        for (let course of courses) {
+          let courseId: number = course.id? course.id : 0;
+          this.courseService.getStudentsByCourseId(courseId).subscribe( data => {
+            this.totalStudents = data.length;
+          })
+      }
+    });    }
 
 
-    this.courseService.getAllCourses().subscribe((courses: any[]) => {
-      this.totalCourses = courses.length;
-    });
     this.teacherService.getAllAdmins().subscribe((teachers: any[]) => {
       this.totalTeachers = teachers.length;
     });

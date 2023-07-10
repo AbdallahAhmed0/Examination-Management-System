@@ -22,10 +22,8 @@ export class CourseSharedServiceService {
   }
 
 
-  getStudentsByAdminId(adminId: number):any{
-    let students: Student[] = [];
+   getStudentsByAdminId(adminId: number):any{
     this.courseService.getCoursesByAdminId(adminId).subscribe( courses => {
-      console.log(courses)
       for (let course of courses) {
         let courseId: number = course.id? course.id : 0;
         this.courseService.getStudentsByCourseId(courseId).subscribe( data => {
