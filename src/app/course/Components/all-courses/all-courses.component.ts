@@ -46,7 +46,7 @@ export class AllCoursesComponent implements OnInit {
       (role: any) => role.authority === 'SHOW_COURSE_OF_GROUP_ROLE'
     );
 
-    if (this.permittedToManageCourses) {
+    if (this.permittedToManageCourses && !this.ableToShowCoursesOfAdmin) {
       this.getCourses();
     } else if (this.ableToShowCoursesOfAdmin) {
       this.courses = this.getAdminCourses();
@@ -57,7 +57,6 @@ export class AllCoursesComponent implements OnInit {
         console.log(studentGroup)
         this.courseService.getCoursesByGroupId(studentGroup).subscribe(
           (data) => {
-            console.log(data)
             this.courses = data;
           });
         });

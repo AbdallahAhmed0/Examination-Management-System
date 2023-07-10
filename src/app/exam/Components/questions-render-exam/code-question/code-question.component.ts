@@ -16,10 +16,7 @@ export class CodeQuestionComponent implements OnInit {
   lang:string='java';
   languages = [
     { name: 'java', value: 'java',checked: true },
-    { name: 'C++', value: 'C++',checked: false },
     { name: 'python', value: 'python',checked: false },
-    { name: 'javaScript', value: 'javascript',checked: false },
-    { name: 'C#', value: 'c#',checked: false },
   ];
   editorOptions = {theme: 'vs-dark', language: 'java'};
   code: string= 'class Main{\r\n public static void main(String [] args){\r\n \r\n }\r\n}';
