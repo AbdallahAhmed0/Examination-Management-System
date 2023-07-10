@@ -12,7 +12,12 @@ import { MaterialModule } from './Shared/material/material.module';
 import { AdminsModule } from './admins/admins.module';
 import { RolesModule } from './roles/roles.module';
 import { StudentsModule } from './students/students.module';
-import { CustomDialogeComponent } from './Shared/material/custom-dialoge/custom-dialoge.component';
+import { DashboardAdminComponent } from './dashboard/dashboard-admin/dashboard-admin.component';
+import { DashbordExamComponent } from './dashboard/dashboard-admin/dashbord-exam/dashbord-exam.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './login/Interceptors/jwt.interceptor';
+import { QuestionModule } from './question/question.module';
+import { CourseModule } from './course/course.module';
 
 
 
@@ -21,7 +26,8 @@ import { CustomDialogeComponent } from './Shared/material/custom-dialoge/custom-
     AppComponent,
     HeaderComponent,
     SidebarComponent,
-    CustomDialogeComponent
+    DashboardAdminComponent,
+    DashbordExamComponent
   ],
   imports: [
     BrowserModule,
@@ -31,10 +37,15 @@ import { CustomDialogeComponent } from './Shared/material/custom-dialoge/custom-
     AdminsModule,
     RolesModule,
     StudentsModule,
-    ExamModule
+    ExamModule,
+    QuestionModule,
+    CourseModule
 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

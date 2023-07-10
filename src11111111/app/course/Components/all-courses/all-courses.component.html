@@ -1,0 +1,25 @@
+<button mat-raised-button color="accent" class="btn-list"  [routerLink]="['/courses/add']"><mat-icon>add</mat-icon> Add new Course</button>
+<div class="container">
+<mat-card class="example-card"*ngFor="let course of courses" >
+    <!-- <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{course.courseName}}</mat-card-title>
+      <mat-card-subtitle>{{course.courseCode}}</mat-card-subtitle>
+    </mat-card-header> -->
+    <img mat-card-image [routerLink]="['/courses/detail', course.id]" src="https://www.sonicourses.com/uploads/thumbnails/course_thumbnails/course_thumbnail_soni_39.jpg" alt="Photo of course">
+    <mat-card-content>
+      <p>
+        <mat-card-title>{{course.courseName}}</mat-card-title>
+        <mat-card-subtitle>{{course.courseCode}}</mat-card-subtitle>
+      </p>
+      <div class="actions">
+        <a title="Edit" [routerLink]="['/courses/edit', course.id]">
+          <mat-icon class="edit-icon">edit</mat-icon>
+      </a>
+      <a  title="Delete" (click)="deleteCourse(course)">
+          <mat-icon class="delete-icon">delete</mat-icon>
+      </a>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

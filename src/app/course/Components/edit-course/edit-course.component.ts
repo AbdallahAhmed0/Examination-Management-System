@@ -35,6 +35,8 @@ export class EditCourseComponent implements OnInit {
   ngOnInit(): void {
     this.getGroups()
     this.getAdmins()
+    console.log(this.admins);
+
 
     this.subRoute=this.activatedRoute.paramMap.subscribe((paramMap)=>{
       this.id=Number(paramMap.get('id'));
@@ -43,6 +45,10 @@ export class EditCourseComponent implements OnInit {
 
         this.course=data
         this.items=data.admins
+        console.log(data);
+
+        console.log(this.items);
+
         let chosenGroup
         for(let group of this.theGroups){
           if(data.groupName==group.name){

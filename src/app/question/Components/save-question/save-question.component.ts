@@ -15,6 +15,7 @@ export class SaveQuestionComponent implements OnInit {
 
   consoleError: any;
   formValid: boolean = false;
+  validBeforeAction:boolean = false;
 
   selectedComponents: any[] = [];
   index: number = 1;
@@ -88,23 +89,27 @@ export class SaveQuestionComponent implements OnInit {
   showChoiceQuestions() {
     this.selectedComponents.push({ id: this.index, name: 'Multiple_choice' });
     this.index++;
+    this.validBeforeAction = this.formValid;
     this.formValid = false;
   }
 
   showTextQuestions() {
     this.selectedComponents.push({ id: this.index, name: 'Matching' });
     this.index++;
+    this.validBeforeAction = this.formValid;
     this.formValid = false;
   }
 
   showCodingQuestion() {
     this.selectedComponents.push({ id: this.index, name: 'CODING' });
     this.index++;
+    this.validBeforeAction = this.formValid;
     this.formValid = false;
   }
   showTrue_falseQuestions() {
     this.selectedComponents.push({ id: this.index, name: 'True_False' });
     this.index++;
+    this.validBeforeAction = this.formValid;
     this.formValid = false;
 
   }
@@ -115,6 +120,11 @@ export class SaveQuestionComponent implements OnInit {
     this.questions.splice(i, 1);
     console.log(this.questions)
     this.selectedComponents.splice(i, 1);
+
+    //check formValid
+    if(this.validBeforeAction){
+      this.formValid = true;
+    }
   }
   removeChildCode(id:number,child: any,i:number) {
     if (typeof id === 'number') {
@@ -123,6 +133,10 @@ export class SaveQuestionComponent implements OnInit {
       this.codeQuestions.splice(i, 1);
       console.log(this.codeQuestions)
       this.selectedComponents.splice(i, 1);
+      //check formValid
+    if(this.validBeforeAction){
+      this.formValid = true;
+    }
   }
   removeOptions(option: any) {
     this.options.push(option);
@@ -158,7 +172,6 @@ export class SaveQuestionComponent implements OnInit {
 
   submit() {
     if (this.options.length) {
-      console.log(this.options)
       this.questionService.deleteOptions(this.options);
     }
     if (this.testCases.length) {
@@ -172,7 +185,6 @@ export class SaveQuestionComponent implements OnInit {
 
     let api1ReturnedTrue = false;
     let api2ReturnedTrue = false;
-
     const observer = {
   next: (Question: any[]) => {
     // Check if both API calls have returned true
@@ -187,30 +199,34 @@ export class SaveQuestionComponent implements OnInit {
 };
 
 // Add standard questions
-this.questionService.saveQuestions(filteredQuestions, this.examId).subscribe({
-  next: (response: any) => {
-    // Handle successful response from the first API call
-    api1ReturnedTrue = true;
-    observer.next(response);
-  },
-  error: (error: any) => {
-    // Handle error from the first API call
-    observer.error(error);
-  },
-});
+if(filteredQuestions){
+  this.questionService.saveQuestions(filteredQuestions, this.examId).subscribe({
+    next: (response: any) => {
+      // Handle successful response from the first API call
+      api1ReturnedTrue = true;
+      observer.next(response);
+    },
+    error: (error: any) => {
+      // Handle error from the first API call
+      observer.error(error);
+    },
+  });
 
+}
 // Add coding questions
-this.questionService.saveCodeQuestions(filteredCodeQuestions, this.examId).subscribe({
-  next: (response: any) => {
-    // Handle successful response from the second API call
-    api2ReturnedTrue = true;
-    observer.next(response);
-  },
-  error: (error: any) => {
-    // Handle error from the second API call
-    observer.error(error);
-  },
-});
+if(filteredCodeQuestions){
+  this.questionService.saveCodeQuestions(filteredCodeQuestions, this.examId).subscribe({
+    next: (response: any) => {
+      // Handle successful response from the second API call
+      api2ReturnedTrue = true;
+      observer.next(response);
+    },
+    error: (error: any) => {
+      // Handle error from the second API call
+      observer.error(error);
+    },
+  });
+}
 }
   importData(id: any) {
     this.router.navigate([`save/${id}/import`]);

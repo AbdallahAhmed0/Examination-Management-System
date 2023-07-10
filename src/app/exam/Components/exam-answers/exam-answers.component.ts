@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ExamAnswersComponent implements OnInit {
   attemptId?:number;
-  standardQuestionAnswers:QuestionAnswer[]=[];
+  standardQuestionAnswers:any[]=[];
   codeStudentAnswers:any;
   constructor(
     private sanitizer: DomSanitizer,
@@ -39,6 +39,7 @@ export class ExamAnswersComponent implements OnInit {
   getExamAnswers(examAttemptId: number) {
     this._examService.getAllExamAnswers(examAttemptId).subscribe((response) => {
       this.examAnswers = response;
+      console.log(response)
       this.standardQuestionAnswers=this.examAnswers.standardQuestionAnswers;
       this.codeStudentAnswers =this.examAnswers.codeStudentAnswers;
     });

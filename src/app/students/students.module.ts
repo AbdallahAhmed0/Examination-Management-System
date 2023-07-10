@@ -6,7 +6,7 @@ import { StudentsRoutingModule } from './students-routing.module';
 import { AllStudentsComponent } from './Components/all-students/all-students.component';
 import { AddStudentsComponent } from './Components/add-students/add-students.component';
 import { EditStudentsComponent } from './Components/edit-students/edit-students.component';
-import { HttpClientModule } from '@angular/common/http';
+import {  HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../Shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImportStudentComponent } from './Components/import-student/import-student.component';
@@ -28,5 +28,5 @@ import { ImportStudentComponent } from './Components/import-student/import-stude
         FormsModule,
         RolesModule
     ]
-})
+  })
 export class StudentsModule { }

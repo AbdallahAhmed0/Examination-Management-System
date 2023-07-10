@@ -5,7 +5,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { catchError, Observable, of, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Student } from '../Models/student';
 
@@ -21,19 +21,15 @@ export class StudentsService {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
       // Return an observable with a user-facing error message.
-      return throwError(
-        () => new Error('Error occured, please try again')
-      )
-
+      return throwError(() => new Error('Error occured, please try again'));
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-      return throwError(
-        () => new Error(error.error.message)
-      )
-
+        `Backend returned code ${error.status}, body was: `,
+        error.error
+      );
+      return throwError(() => new Error(error.error.message));
     }
   }
 
@@ -53,7 +49,7 @@ export class StudentsService {
 
   getStudentById(id: number): Observable<Student> {
     return this.httpClient
-      .get<Student>(`${environment.APPURL}/students/get/${id}`, this.httpOption)
+      .get<Student>(`${environment.APPURL}/students/get/${id}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 

@@ -1,77 +1,70 @@
-<mat-sidenav-container>
-
-    <app-header [sidenav]="sidenav"></app-header>
-    <router-outlet></router-outlet>
-
-    <mat-sidenav #sidenav="matSidenav" [style.width.px]="!sidenav.close ? 80 : 250"
-      class="mat-elevation-z8">
 
 
-       <h2 *ngIf="!sidenav.close" >EMS</h2>
-        <h2 *ngIf="sidenav.close">Examination Management System</h2>
+        <h2>Examination Management System</h2>
 
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="permittedToViewDashboard || permittedToViewCoursesGroup"></mat-divider>
 
         <!-- <button mat-button class="menu-button">
             <mat-icon>person</mat-icon>
             <span *ngIf="sidenav.close">Profile</span>
         </button> -->
 
-        <!-- <button mat-button class="menu-button">
+        <button mat-button class="menu-button" *ngIf="permittedToViewDashboard"[routerLink]="['/dashboard']">
             <mat-icon>dashboard</mat-icon>
-            <span *ngIf="sidenav.close">Dashboard</span>
-        </button> -->
-
-
+            <span>Dashboard</span>
+        </button>
+        <button mat-button class="menu-button" *ngIf="permittedToViewCoursesGroup"[routerLink]="['/courses']">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+      </button>
+        <mat-divider *ngIf="permittedToViewAdmins"></mat-divider>
 
             <!-- <button mat-button class="menu-button" [routerLink]="['/save']">
             <mat-icon>assignment</mat-icon>
             <span *ngIf="sidenav.close">Questions</span>
             </button> -->
 
-            <button mat-button class="menu-button" [routerLink]="['/admins']">
+            <button mat-button class="menu-button" [routerLink]="['/admins']" *ngIf="permittedToViewAdmins">
               <mat-icon>account_box</mat-icon>
-              <span *ngIf="sidenav.close">Admins</span>
+              <span>Admins</span>
           </button>
-          <mat-divider></mat-divider>
+          <mat-divider *ngIf="permittedToViewStudents"></mat-divider>
 
-        <button mat-button class="menu-button" [routerLink]="['/students']">
+        <button mat-button class="menu-button" [routerLink]="['/students']" *ngIf="permittedToViewStudents">
             <mat-icon>accessibility_new</mat-icon>
-            <span *ngIf="sidenav.close">Students</span>
+            <span>Students</span>
         </button>
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="permittedToViewCourses"></mat-divider>
 
 
-        <button mat-button class="menu-button" [routerLink]="['/courses']">
+        <button mat-button class="menu-button" [routerLink]="['/courses']" *ngIf="permittedToViewCourses">
           <mat-icon>book</mat-icon>
-          <span *ngIf="sidenav.close">Courses</span>
+          <span>Courses</span>
         </button>
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="permittedToViewExams"></mat-divider>
 
-        <button mat-button class="menu-button" [routerLink]="['/exams']">
+        <button mat-button class="menu-button" [routerLink]="['/exams']" *ngIf="permittedToViewExams">
           <mat-icon>assignment</mat-icon>
-          <span *ngIf="sidenav.close">Exams</span>
+          <span>Exams</span>
           </button>
-          <mat-divider></mat-divider>
+          <mat-divider *ngIf="permittedToViewRoles"></mat-divider>
 
-        <button mat-button class="menu-button" [routerLink]="['/roles']">
+        <button mat-button class="menu-button" [routerLink]="['/roles']" *ngIf="permittedToViewRoles">
             <mat-icon>assessment</mat-icon>
-            <span *ngIf="sidenav.close">Roles</span>
+            <span>Roles</span>
         </button>
         <mat-divider></mat-divider>
 
 <!--
             <button mat-button class="menu-button">
                 <mat-icon>https</mat-icon>
-                <span *ngIf="sidenav.close">Change Password</span>
+                <span>Change Password</span>
             </button>
 
             <mat-divider></mat-divider>
 
             <button mat-button class="menu-button">
                 <mat-icon>help</mat-icon>
-                <span *ngIf="sidenav.close">Help</span>
+                <span>Help</span>
             </button> -->
 
-        </mat-sidenav>
-    </mat-sidenav-container>

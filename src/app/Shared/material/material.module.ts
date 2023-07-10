@@ -47,6 +47,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { DialogeComponent } from './dialog/dialog.component';
 import { EndExamDialogeComponent } from './end-exam-dialoge/end-exam-dialoge.component';
 import { StartExamDialogeComponent } from './start-exam-dialoge/start-exam-dialoge.component';
+import { CustomDialogeComponent } from './custom-dialoge/custom-dialoge.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { StartExamDialogeComponent } from './start-exam-dialoge/start-exam-dialo
   declarations: [
     DialogeComponent,
     EndExamDialogeComponent,
-    StartExamDialogeComponent
+    StartExamDialogeComponent,
+    CustomDialogeComponent
   ],
 
   imports: [

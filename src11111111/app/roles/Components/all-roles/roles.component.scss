@@ -1,0 +1,67 @@
+
+.example-form {
+  min-width: 400px;
+  max-width: 700px;
+  width: 100%;
+
+}
+
+.example-full-width {
+  width: 100%;
+}
+.container{
+
+  margin: 20px 0px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+table {
+  width: 50%;
+}
+td, th {
+  font-size: 15px;
+
+}
+a{
+  cursor: pointer;
+}
+.delete-icon{
+  background: #f20202;
+  color: #fff;
+  font-size: 30px;
+  width: 45px;
+  height: 45px;
+  padding: 8px;
+  margin: 10px 0px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.edit-icon{
+  background: #0cd463;
+  color: #fff;
+  font-size: 30px;
+  width: 45px;
+  height: 45px;
+  padding: 8px;
+  margin: 10px 0px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.delete-icon:hover{
+  background: #dc0808;
+}
+.edit-icon:hover{
+  background: #0aae51;
+}
+
+@media (max-width: 992px){
+  table{
+    width: 85%;
+  }
+}

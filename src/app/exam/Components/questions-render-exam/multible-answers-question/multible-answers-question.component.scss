@@ -6,7 +6,7 @@
 ::ng-deep .check .mat-checkbox-inner-container {
 
   background: #FFF;
-  margin: 5px 20px;
+  margin: 8px 15px;
   width: 20px;
   height: 20px;
 
@@ -15,6 +15,13 @@
   height: 41px;
   padding-top: 15px;
   border: none;
-  display: inherit;
-
+}
+.check{
+  position: relative;
+  width: 20px;
+}
+.answer{
+  font-size: 15px;
+  padding-bottom: 4px;
+  height: 20px;
 }

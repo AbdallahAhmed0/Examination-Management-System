@@ -1,4 +1,3 @@
-
 <div class="contianer"  >
 
   <button mat-button class="btn-list" style="color:#007bff;" (click)="goback()"><mat-icon>menu</mat-icon> All Exams</button>
@@ -108,19 +107,9 @@
 
 </mat-form-field>
 <mat-slide-toggle color="primary" class="btn-toggle" [checked]="showResult?.value" formControlName="showResult" >Show Result</mat-slide-toggle>
+<mat-slide-toggle color="primary" class="btn-toggle" [checked]="noCheatingApp?.value" formControlName="noCheatingApp" >noCheatingApp</mat-slide-toggle>
 
-
-
-
-
-
-
-
-
-
-
-
-  <button mat-raised-button [disabled]="examform.invalid" class="submit" type="submit">Save</button>
+<button mat-raised-button [disabled]="examform.invalid" class="submit" type="submit">Save</button>
   </form>
   </div>
   </div>
