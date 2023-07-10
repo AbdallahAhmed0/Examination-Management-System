@@ -75,6 +75,7 @@ export class AllExamsComponent implements OnInit {
         let courseId: number = course.id? course.id : 0;
       this.courseService.getExamsofCourse(courseId).subscribe(data=>{
           this.createTable(data);
+          console.log(data)
         });
       }
     });
