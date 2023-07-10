@@ -74,6 +74,7 @@ export class AllStudentsComponent implements OnInit {
     }
     else if(this.permittedToShowStudentsCourse){
       this.getStudentsOfAdmins();
+
     }
   }
 
@@ -113,7 +114,6 @@ export class AllStudentsComponent implements OnInit {
       for (let course of courses) {
         let courseId: number = course.id? course.id : 0;
         this.courseService.getStudentsByCourseId(courseId).subscribe( data => {
-          console.log(data)
           this.createTable(data);
         })
     }

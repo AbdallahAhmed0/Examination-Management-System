@@ -22,7 +22,7 @@ export class CourseSharedServiceService {
   }
 
 
-  getStudentsByAdminId(adminId: number):any{
+   getStudentsByAdminId(adminId: number):any{
     this.courseService.getCoursesByAdminId(adminId).subscribe( courses => {
       for (let course of courses) {
         let courseId: number = course.id? course.id : 0;
