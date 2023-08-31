@@ -1,5 +1,5 @@
 # Examination-Management-System
-## The project involved the design and implementation of an online examination platform, which enables the creation of exams, management of questions (Choice, Matching, True and False, and Coding), and the attempt of exams by students.
+##$ The project involved the design and implementation of an online examination platform, which enables the creation of exams, management of questions (Choice, Matching, True and False, and Coding), and the attempt of exams by students.
  
 ![ScreenShot](screenshots/ProductList.PNG)
 ![ScreenShot](screenshots/productDetailes.PNG)
