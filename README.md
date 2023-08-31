@@ -1,4 +1,11 @@
 # Examination-Management-System
+## The project involved the design and implementation of an online examination platform, which enables
+the creation of exams, management of questions (Choice, Matching, True and False, and Coding), and
+the attempt of exams by students.
+
+![ScreenShot](screenshots/ProductList.PNG)
+![ScreenShot](screenshots/productDetailes.PNG)
+![ScreenShot](screenshots/Cart.PNG)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.2.
 
