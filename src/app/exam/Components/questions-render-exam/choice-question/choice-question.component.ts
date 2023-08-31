@@ -8,16 +8,16 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./choice-question.component.scss']
 })
 export class ChoiceQuestionComponent implements OnInit {
-@Input() question!:any;
-@Input() index!:number;
-@Input() savedAnswer:any;
+  @Input() question!: any;
+  @Input() index!: number;
+  @Input() savedAnswer: any;
 
-@Output() answer = new EventEmitter<object>();
+  @Output() answer = new EventEmitter<object>();
 
 
-answerForm!: FormGroup;
-constructor(private sanitizer: DomSanitizer,
-              private fb:FormBuilder) { }
+  answerForm!: FormGroup;
+  constructor(private sanitizer: DomSanitizer,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
 
@@ -27,7 +27,7 @@ constructor(private sanitizer: DomSanitizer,
     });
     this.addAnswer();
     this.answer.emit(this.answerForm.value);
-    this.answerForm.valueChanges.subscribe(()=>{
+    this.answerForm.valueChanges.subscribe(() => {
       this.answer.emit(this.answerForm.value);
     });
 
@@ -40,10 +40,10 @@ constructor(private sanitizer: DomSanitizer,
     const initialValue = savedAnswerForQuestion ? savedAnswerForQuestion[0] : answer;
     this.answers.push(new FormControl(initialValue));
   }
-      // Sanitize the HTML content with the DomSanitizer service
-    sanitizeHtml(html: string): any {
-      return this.sanitizer.bypassSecurityTrustHtml(html);
-    }
+  // Sanitize the HTML content with the DomSanitizer service
+  sanitizeHtml(html: string): any {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
 
 
 }
