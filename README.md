@@ -1,6 +1,5 @@
 # Examination Management System
-
-##Overview
+## Overview
 
 The Examination Management System is a web-based application designed to facilitate the management of courses, exams, and results within an educational institution. It supports three types of users: Super Admins, Professors, and Students. The system allows professors to create and manage exams, students to attend exams and view results, and super admins to oversee the entire process.
 
@@ -50,8 +49,7 @@ The Examination Management System is a web-based application designed to facilit
 - **Result Display:** After submitting an exam, students can view their results.
 
 
-## Demo:
-    ```bash
+## Link Demo:
   https://drive.google.com/file/d/1IWtkho7F-cd3mPD_lauaRmJ5iKLIUbOH/view?usp=drive_link
 
 ## Setup and Installation
@@ -89,7 +87,4 @@ The application will run on http://localhost:4200/.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-
 
