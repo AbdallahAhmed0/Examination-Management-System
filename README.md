@@ -1,5 +1,78 @@
-# Examination-Management-System
-### The project involved the design and implementation of an online examination platform, which enables the creation of exams, management of questions (Choice, Matching, True and False, and Coding), and the attempt of exams by students.
+# Examination Management System
+
+##Overview
+
+The Examination Management System is a web-based application designed to facilitate the management of courses, exams, and results within an educational institution. It supports three types of users: Super Admins, Professors, and Students. The system allows professors to create and manage exams, students to attend exams and view results, and super admins to oversee the entire process.
+
+## Table of Contents
+
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup and Installation](#setup-and-installation)
+- [Project Structure](#project-structure)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+
+## Features
+
+- **Role-Based Access Control:** Different views and functionalities for super admins, professors, and students.
+- **Exam Management:** Create, update, view, and delete exams.
+- **Course Management:** Manage courses, including adding and removing students and professors.
+- **User Management:** Administer user roles and permissions.
+- **Real-Time Exam Attempt:** Students can take exams and view results immediately after submission.
+- **Security:** JWT-based authentication and authorization.
+
+## Technologies Used
+
+- **Angular:** For building the dynamic and responsive user interface.
+- **Angular Material:** For implementing Material Design components.
+- **Froala Editor:** For a WYSIWYG editor to create and edit exam questions.
+- **Monaco Editor:** For a code editor to solve coding questions.
+- **Lazy Loading:** To optimize the application load time by loading modules as needed.
+
+## Project Structure
+
+- **src/app/modules/**
+  - **admin:** Handles admin functionalities like user and course management.
+  - **course:** Manages course-related operations.
+  - **exam:** Contains components for creating and attempting exams.
+  - **student:** Manages student-specific views and actions.
+  - **auth:** Handles authentication, including login and token management.
+  - **shared:** Contains shared components, services, and utilities.
+
+## Usage
+
+- **Login:** Users can log in with their credentials to access the system.
+- **Dashboard:** Depending on their role, users will see a dashboard with relevant options.
+- **Exam Management:** Admins can create and manage exams, while students can attempt them.
+- **Result Display:** After submitting an exam, students can view their results.
+
+
+## Demo:
+    ```bash
+  https://drive.google.com/file/d/1IWtkho7F-cd3mPD_lauaRmJ5iKLIUbOH/view?usp=drive_link
+
+## Setup and Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/AbdallahAhmed0/Examination-Management-System.git
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+
+3. **Run the application:**
+   ```bash
+   ng serve
+ 
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.2.
+The application will run on http://localhost:4200/.
+
+
+ ## ScreenShots
  
 ![ScreenShot](screenshots/dashboard.jpg)
 ![ScreenShot](screenshots/allstudent.jpg)
@@ -13,29 +86,10 @@
 ![ScreenShot](screenshots/answer1.jpg)
 ![ScreenShot](screenshots/answer2.jpg)
 
-### Demo: (https://drive.google.com/file/d/1IWtkho7F-cd3mPD_lauaRmJ5iKLIUbOH/view?usp=drive_link)
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.2.
+## License
 
-## Development server
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
